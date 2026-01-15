@@ -4,6 +4,8 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class LimelightCamera implements AprilTagCamera {
@@ -38,14 +40,14 @@ public class LimelightCamera implements AprilTagCamera {
     }
 
     @Override
-    public Optional<VisionMeasurement> getLatestMeasurement() {
+    public List<VisionMeasurement> getMeasurements(ChassisSpeeds robotSpeeds) {
         var pose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
-        ChassisSpeeds speeds = null; //@TODO Retrieve real speeds from DriveSubsystem
-        if (pose == null || pose.tagCount == 0 || VisionService.isReliable(pose.avgTagDist, speeds)) {
-            return Optional.empty();
+
+        if (pose == null || pose.tagCount == 0 || !VisionService.isReliable(pose.avgTagDist, robotSpeeds)) {
+            return Collections.emptyList();
         }
 
-        return Optional.of(new VisionMeasurement(
+        return List.of(new VisionMeasurement(
                 pose.pose,
                 pose.timestampSeconds,
                 VecBuilder.fill(

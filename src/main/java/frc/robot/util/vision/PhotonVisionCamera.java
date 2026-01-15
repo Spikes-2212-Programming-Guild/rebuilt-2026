@@ -6,7 +6,10 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class PhotonVisionCamera implements AprilTagCamera {
@@ -31,28 +34,36 @@ public class PhotonVisionCamera implements AprilTagCamera {
     }
 
     @Override
-    public Optional<VisionMeasurement> getLatestMeasurement() {
-        var results = camera.getAllUnreadResults();
-        var result = poseEstimator.update(results.get(results.size() - 1));
+    public List<VisionMeasurement> getMeasurements(ChassisSpeeds robotSpeeds) {
+        var allResults = camera.getAllUnreadResults();
+        List<VisionMeasurement> measurements = new ArrayList<>();
 
-        if (result.isEmpty()) return Optional.empty();
+        for (var result : allResults) {
+            var update = poseEstimator.update(result);
+            if (update.isEmpty()) continue;
 
-        var est = result.get();
-        double estDistance = Math.hypot(est.estimatedPose.getX(), est.estimatedPose.getY());
+            var estimate = update.get();
 
-        ChassisSpeeds speeds = null; //@TODO Retrieve real speeds from DriveSubsystem
+            double avgDist = 0.0;
+            for (PhotonTrackedTarget target : estimate.targetsUsed) {
+                avgDist += target.getBestCameraToTarget().getTranslation().getNorm();
+            }
+            avgDist /= estimate.targetsUsed.size();
 
-        if (VisionService.isReliable(estDistance, speeds)) return Optional.empty();
+            if (!VisionService.isReliable(avgDist, robotSpeeds)) continue;
 
-        return Optional.of(new VisionMeasurement(
-                est.estimatedPose.toPose2d(),
-                est.timestampSeconds,
-                VecBuilder.fill(
-                        VisionService.calculateStandardDeviation(STD_DEV_DRIVE_SCALING_FACTOR, estDistance),
-                        VisionService.calculateStandardDeviation(STD_DEV_DRIVE_SCALING_FACTOR, estDistance),
-                        VisionService.calculateStandardDeviation(STD_DEV_ROTATION_SCALING_FACTOR, estDistance)
-                )
-        ));
+            measurements.add(new VisionMeasurement(
+                    estimate.estimatedPose.toPose2d(),
+                    estimate.timestampSeconds,
+                    VecBuilder.fill(
+                            VisionService.calculateStandardDeviation(STD_DEV_DRIVE_SCALING_FACTOR, avgDist),
+                            VisionService.calculateStandardDeviation(STD_DEV_DRIVE_SCALING_FACTOR, avgDist),
+                            VisionService.calculateStandardDeviation(STD_DEV_ROTATION_SCALING_FACTOR, avgDist)
+                    )
+            ));
+        }
+
+        return measurements;
     }
 
     @Override
