@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 import java.util.Optional;
 
-public class LimelightVisionIO implements VisionIO {
+public class LimelightCamera implements AprilTagCamera {
 
     private static final double STD_DEV_DRIVE_SCALING_FACTOR = -1;
     private static final double STD_DEV_ROTATION_SCALING_FACTOR = -1;
@@ -18,8 +18,11 @@ public class LimelightVisionIO implements VisionIO {
     private double lastHeartbeatValue = -1;
     private double lastHeartbeatTime = 0;
 
-    public LimelightVisionIO(String name) {
+    public LimelightCamera(String name, double yaw) {
         limelightName = name;
+        LimelightHelpers.SetRobotOrientation(
+                limelightName, yaw, 0, 0, 0, 0, 0
+        );
     }
 
     @Override
