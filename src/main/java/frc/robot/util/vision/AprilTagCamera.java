@@ -1,9 +1,11 @@
 package frc.robot.util.vision;
 
-import java.util.Optional;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+
+import java.util.List;
 
 public interface AprilTagCamera {
     boolean isConnected();
-    Optional<VisionMeasurement> getLatestMeasurement();
+    List<VisionMeasurement> getMeasurements(ChassisSpeeds robotSpeeds);
     String getName();
 }
