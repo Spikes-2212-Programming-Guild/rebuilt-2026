@@ -4,9 +4,9 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 public class VisionService {
 
-    private static final double MAX_DRIVE_SPEED = -1; // (m / s)
-    private static final double MAX_TURN_SPEED = -1; // (rad / s)
-    private static final double MAX_MEASUREMENT_DISTANCE = -1; // (m)
+    public static final double MAX_DRIVE_SPEED = -1; // (m / s)
+    public static final double MAX_TURN_SPEED = -1; // (rad / s)
+    public static final double MAX_MEASUREMENT_DISTANCE = -1; // (m)
 
     public static double calculateStandardDeviation(double scalingFactor, double distance) {
         return scalingFactor * Math.pow(distance, 2);

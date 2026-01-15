@@ -9,9 +9,7 @@ import org.photonvision.PhotonPoseEstimator;
 
 import java.util.Optional;
 
-public class PhotonVisionIO implements VisionIO {
-
-    private static final String CAMERA_NAME = "photonvision";
+public class PhotonVisionCamera implements AprilTagCamera {
 
     private static final double STD_DEV_DRIVE_SCALING_FACTOR = -1;
     private static final double STD_DEV_ROTATION_SCALING_FACTOR = -1;
@@ -19,7 +17,7 @@ public class PhotonVisionIO implements VisionIO {
     private final PhotonCamera camera;
     private final PhotonPoseEstimator poseEstimator;
 
-    public PhotonVisionIO(String cameraName, AprilTagFieldLayout fieldLayout, Transform3d robotToCamera) {
+    public PhotonVisionCamera(String cameraName, AprilTagFieldLayout fieldLayout, Transform3d robotToCamera) {
         camera = new PhotonCamera(cameraName);
 
         poseEstimator = new PhotonPoseEstimator(
