@@ -1,6 +1,7 @@
-package frc.robot.util.vision;
+package frc.robot.util.vision.cameras;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import frc.robot.util.vision.VisionMeasurement;
 
 import java.util.List;
 
