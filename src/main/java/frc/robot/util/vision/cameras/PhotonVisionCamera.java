@@ -1,16 +1,17 @@
-package frc.robot.util.vision;
+package frc.robot.util.vision.cameras;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import frc.robot.util.vision.VisionMeasurement;
+import frc.robot.util.vision.VisionService;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class PhotonVisionCamera implements AprilTagCamera {
 

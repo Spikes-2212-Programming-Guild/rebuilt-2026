@@ -3,6 +3,7 @@ package frc.robot.util.vision;
 import java.util.ArrayList;
 import java.util.List;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import frc.robot.util.vision.cameras.AprilTagCamera;
 
 public class VisionSystem {
 
