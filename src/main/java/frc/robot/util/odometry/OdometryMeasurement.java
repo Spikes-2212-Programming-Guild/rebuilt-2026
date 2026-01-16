@@ -4,7 +4,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 public record OdometryMeasurement(
-        double timestamp,
-        Rotation2d heading,
+        double timestampSeconds,
+        Rotation2d robotYaw,
         SwerveModulePosition[] wheelPositions
 ) {}
