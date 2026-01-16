@@ -45,6 +45,7 @@ public class RobotPoseEstimator {
 
     public void periodic() {
         odometryManager.applyMeasurements();
+        // TODO - update the vision part once it's complete
         for (VisionMeasurement measurement : visionSystem.getMeasurements(null)) {
             addVisionMeasurement(measurement);
         }

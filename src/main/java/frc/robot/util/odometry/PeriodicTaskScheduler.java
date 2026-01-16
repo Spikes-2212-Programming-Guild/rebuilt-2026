@@ -17,6 +17,7 @@ public class PeriodicTaskScheduler {
         }
     }
 
+    // TODO - consider adding a throw if instance is null
     public static PeriodicTaskScheduler getInstance() {
         return instance;
     }
