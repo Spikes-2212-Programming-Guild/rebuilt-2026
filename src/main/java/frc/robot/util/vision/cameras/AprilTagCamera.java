@@ -6,7 +6,11 @@ import frc.robot.util.vision.VisionMeasurement;
 import java.util.List;
 
 public interface AprilTagCamera {
+
     boolean isConnected();
+
     List<VisionMeasurement> getMeasurements(ChassisSpeeds robotSpeeds);
+
     String getName();
+
 }
