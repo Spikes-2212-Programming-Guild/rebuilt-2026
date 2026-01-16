@@ -13,6 +13,11 @@ public class VisionSystem {
         this.cameras = List.of(cameras);
     }
 
+    /**
+     * Polls all cameras for new data.
+     * @param currentSpeeds Used to check if the robot is moving too fast for clear images.
+     * @return A list of valid measurements from all cameras.
+     */
     public List<VisionMeasurement> getMeasurements(ChassisSpeeds currentSpeeds) {
         List<VisionMeasurement> validMeasurements = new ArrayList<>();
 
