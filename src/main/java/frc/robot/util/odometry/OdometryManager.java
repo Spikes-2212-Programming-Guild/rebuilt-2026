@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 
 public class OdometryManager {
 
-    public static final int UPDATE_FREQUENCY_HZ = 100;
+    public static final int UPDATE_FREQUENCY_HZ = -1;
 
     private static final int MEASUREMENT_OVERFLOW_LIMIT = -1;
 

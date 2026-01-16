@@ -12,10 +12,9 @@ public class PeriodicTaskScheduler {
     }
 
     public static void init(TimedRobot timedRobot) {
-        if (instance != null) {
-            return;
+        if (instance == null) {
+            instance = new PeriodicTaskScheduler(timedRobot);
         }
-        instance = new PeriodicTaskScheduler(timedRobot);
     }
 
     public static PeriodicTaskScheduler getInstance() {
