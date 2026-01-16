@@ -12,8 +12,6 @@ import frc.robot.util.odometry.OdometryManager;
 import frc.robot.util.odometry.OdometryMeasurement;
 import frc.robot.util.odometry.PeriodicTaskScheduler;
 import frc.robot.util.odometry.StandardDeviations;
-import frc.robot.util.vision.VisionMeasurement;
-import frc.robot.util.vision.VisionSystem;
 
 import java.util.function.Supplier;
 
@@ -24,12 +22,11 @@ public class RobotPoseEstimator {
 
     private final SwerveDrivePoseEstimator poseEstimator;
     private final OdometryManager odometryManager;
-    private final VisionSystem visionSystem;
 
     public RobotPoseEstimator(SwerveDriveKinematics kinematics, Rotation2d gyroAngle,
                               SwerveModulePosition[] modulePositions, Pose2d initPose,
                               Supplier<OdometryMeasurement> odometryMeasurementSupplier,
-                              PeriodicTaskScheduler taskScheduler, VisionSystem visionSystem) {
+                              PeriodicTaskScheduler taskScheduler) {
 
         this.poseEstimator = new SwerveDrivePoseEstimator(
                 kinematics, gyroAngle, modulePositions, initPose,
@@ -39,16 +36,11 @@ public class RobotPoseEstimator {
         this.odometryManager = new OdometryManager(
                 this::addOdometryMeasurement, odometryMeasurementSupplier, taskScheduler
         );
-
-        this.visionSystem = visionSystem;
     }
 
     public void periodic() {
         odometryManager.applyMeasurements();
-        // TODO - update the vision part once it's complete
-        for (VisionMeasurement measurement : visionSystem.getMeasurements(null)) {
-            addVisionMeasurement(measurement);
-        }
+        // TODO - add the vision part once it's complete
     }
 
     public Pose2d getEstimatedPose() {
@@ -76,15 +68,6 @@ public class RobotPoseEstimator {
             measurement.timestampSeconds(),
             measurement.robotYaw(),
             measurement.wheelPositions()
-        );
-    }
-
-    public void addVisionMeasurement(VisionMeasurement measurement) {
-        if (measurement == null) return;
-        poseEstimator.addVisionMeasurement(
-                measurement.estimatedPose(),
-                measurement.timestampSeconds(),
-                measurement.standardDeviations()
         );
     }
 }
