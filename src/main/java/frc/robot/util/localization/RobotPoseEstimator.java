@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 public class RobotPoseEstimator {
 
     private static final StandardDeviations ODOMETRY_STD_DEVS =
-            new StandardDeviations(-1, -1);
+            new StandardDeviations(-1, -1, -1);
 
     private final SwerveDrivePoseEstimator poseEstimator;
     private final OdometryManager odometryManager;
