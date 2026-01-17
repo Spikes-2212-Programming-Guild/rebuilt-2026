@@ -20,8 +20,9 @@ public class VisionConstants {
 
     /**
      * Calculates a standard deviation that scales with distance.
-     * @param scalingFactor The baseline trust scalar (e.g. DRIVE_TRUST_SCALAR)
-     * @param distance The distance to the target in meters
+     *
+     * @param scalingFactor the baseline trust scalar (e.g. DRIVE_TRUST_SCALAR)
+     * @param distance      the distance to the target in meters
      * @return The standard deviation to pass to the pose estimator
      */
     public static double calculateStandardDeviation(double scalingFactor, double distance) {
