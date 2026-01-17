@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 public class LimelightCamera implements AprilTagCamera {
 
     private static final double CONNECTION_TIMEOUT_SECONDS = -1.0;
+
     private final String limelightName;
     private final Supplier<Rotation2d> rotationSupplier;
     private double lastHeartbeatValue = -1;
@@ -43,7 +44,6 @@ public class LimelightCamera implements AprilTagCamera {
     public List<VisionMeasurement> getMeasurements(ChassisSpeeds robotSpeeds) {
 
         double robotYawDegrees = rotationSupplier.get().getDegrees();
-
         double robotYawRateDegreesPerSec = Math.toDegrees(robotSpeeds.omegaRadiansPerSecond);
 
         LimelightHelpers.SetRobotOrientation(
@@ -54,7 +54,6 @@ public class LimelightCamera implements AprilTagCamera {
         );
 
         var pose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
-
         if (pose == null || pose.tagCount == 0 || !VisionConstants.isReliable(pose.avgTagDist, robotSpeeds)) {
             return Collections.emptyList();
         }
