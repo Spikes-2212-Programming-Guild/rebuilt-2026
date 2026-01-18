@@ -7,7 +7,8 @@ public class RobotMap {
     }
     
     public interface DIO {
-
+        int TOP_LIMIT_SWITCH_ID = -1;
+        int BOTTOM_LIMIT_SWITCH_ID = -1;
     }
     
     public interface PWM {
