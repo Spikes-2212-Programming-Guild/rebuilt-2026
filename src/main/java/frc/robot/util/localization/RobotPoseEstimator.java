@@ -58,6 +58,10 @@ public class RobotPoseEstimator {
         poseEstimator.resetPose(newPose);
     }
 
+    public void resetRotation(Rotation2d newAngle) {
+        poseEstimator.resetRotation(newAngle);
+    }
+
     public SwerveDrivePoseEstimator getEstimator() {
         return poseEstimator;
     }
