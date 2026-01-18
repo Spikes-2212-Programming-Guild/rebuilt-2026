@@ -9,8 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
 
-    @Override
-    public void robotInit() {
+    public Robot() {
 
     }
 
@@ -21,7 +20,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
-        CommandScheduler.getInstance().cancelAll();
+
     }
 
     @Override
@@ -31,12 +30,10 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-
     }
 
     @Override
     public void autonomousPeriodic() {
-
     }
 
     @Override
