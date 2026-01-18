@@ -7,8 +7,6 @@ import frc.robot.RobotMap;
 
 public class Hood extends SmartMotorControllerGenericSubsystem {
 
-
-
     public enum HoodPose {
 
         TOSS_POSE(-1), MAX_ANGLE(-1), MIN_ANGLE(-1);
