@@ -14,8 +14,8 @@ public class RotateHood extends MoveSmartMotorControllerGenericSubsystem {
 
     private static final RootNamespace namespace = new RootNamespace("rotate hood");
     private static final PIDSettings pidSettings = namespace.addPIDNamespace("rotate hood");
-    private static final FeedForwardSettings feedForwardSettings = namespace.addFeedForwardNamespace("rotate hood",
-            FeedForwardController.ControlMode.LINEAR_POSITION);
+    private static final FeedForwardSettings feedForwardSettings =
+            namespace.addFeedForwardNamespace("rotate hood", FeedForwardController.ControlMode.LINEAR_POSITION);
 
     private final Hood hood;
 

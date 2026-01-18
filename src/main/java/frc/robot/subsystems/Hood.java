@@ -18,14 +18,14 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
         }
     }
 
-    public static final double HOOD_SPEED = 0.1;
+    public static final double HOOD_SPEED = -1.0;
 
     private static final String NAMESPACE_NAME = "hood";
-    private static final double GEAR_RATIO = 1;
+    private static final double GEAR_RATIO = -1.0;
     private static final double DEGREES_IN_ROTATIONS = 360;
     private static final double DISTANCE_PER_PULSE = GEAR_RATIO * DEGREES_IN_ROTATIONS;
 
-    private final TalonFXWrapper talonFX; //@TODO i use talonFX as a place holder that will be change
+    private final TalonFXWrapper talonFX; // I used talonFX as a place holder that will be change
     private final DigitalInput topLimit;
     private final DigitalInput bottomLimit;
 
