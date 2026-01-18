@@ -4,10 +4,13 @@ public class RobotMap {
 
     public interface CAN {
 
+        int HOOD_MOTOR = -1; //@TODO change to the motor type that this will use
     }
     
     public interface DIO {
 
+        int HOOD_TOP_LIMIT = -1;
+        int HOOD_BOTTOM_LIMIT = -1;
     }
     
     public interface PWM {
