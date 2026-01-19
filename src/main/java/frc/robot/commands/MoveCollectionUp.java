@@ -5,10 +5,10 @@ import subsystems.CollectionMovement;
 
 import java.util.function.Supplier;
 
-public class Intake extends MoveGenericSubsystem {
+public class MoveCollectionUp extends MoveGenericSubsystem {
 
     private CollectionMovement collection;
-    public Intake(CollectionMovement collection, Supplier<Double> speedSupplier) {
+    public MoveCollectionUp(CollectionMovement collection, Supplier<Double> speedSupplier) {
         super(collection, speedSupplier);
         this.collection = collection;
     }
@@ -16,8 +16,6 @@ public class Intake extends MoveGenericSubsystem {
     @Override
     public boolean isFinished() {
         if(collection.isAtTopLimitSwitch()){
-            return true;
-        } else if(collection.isAtBottomLimitSwitch()){
             return true;
         }
         return false;
