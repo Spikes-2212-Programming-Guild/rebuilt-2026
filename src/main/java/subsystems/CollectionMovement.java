@@ -5,6 +5,7 @@ import com.spikes2212.util.smartmotorcontrollers.SmartMotorController;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.wpilibj.DigitalInput;
 
+import static frc.robot.RobotMap.CAN.TALON_COLLECTION_MOVEMENT_ID;
 import static frc.robot.RobotMap.DIO.BOTTOM_LIMIT_SWITCH_ID;
 import static frc.robot.RobotMap.DIO.TOP_LIMIT_SWITCH_ID;
 
@@ -18,6 +19,7 @@ public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
             , SmartMotorController... motorControllers) {
         super(namespaceName, motorControllers);
         this.motor = motor;
+        this.motor = new TalonFXWrapper(TALON_COLLECTION_MOVEMENT_ID);
         this.topLimitSwitch = topLimitSwitch;
         this.bottomLimitSwitch = bottomLimitSwitch;
         configLimitSwitches();
