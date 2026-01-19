@@ -8,7 +8,7 @@ import static frc.robot.RobotMap.DIO.BOTTOM_LIMIT_SWITCH_ID;
 import static frc.robot.RobotMap.DIO.TOP_LIMIT_SWITCH_ID;
 
 public class CollectionMove extends GenericSubsystem {
-    private TalonFXWrapper talonFX;
+    private final TalonFXWrapper talonFX;
     private DigitalInput topLimitSwitch;
     private DigitalInput bottomLimitSwitch;
 
