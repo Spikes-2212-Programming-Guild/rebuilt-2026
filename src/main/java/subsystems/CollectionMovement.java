@@ -20,6 +20,7 @@ public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
         this.motor = motor;
         this.topLimitSwitch = topLimitSwitch;
         this.bottomLimitSwitch = bottomLimitSwitch;
+        configLimitSwitches();
     }
 
     public void configLimitSwitches(){
