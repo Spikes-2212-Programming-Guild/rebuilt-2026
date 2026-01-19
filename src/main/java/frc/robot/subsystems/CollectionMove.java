@@ -8,7 +8,8 @@ public class CollectionMove extends MotoredGenericSubsystem {
     private final DigitalInput topLimitSwitch;
     private final DigitalInput bottomLimitSwitch;
 
-    public CollectionMove(String namespaceName, DigitalInput topLimitSwitch, DigitalInput bottomLimitSwitch, MotorController... motorControllers) {
+    public CollectionMove(String namespaceName, DigitalInput topLimitSwitch, DigitalInput bottomLimitSwitch,
+                          MotorController... motorControllers) {
         super(namespaceName, motorControllers);
         this.topLimitSwitch = topLimitSwitch;
         this.bottomLimitSwitch = bottomLimitSwitch;
