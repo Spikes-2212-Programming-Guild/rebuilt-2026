@@ -29,6 +29,12 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
         rightMotor.follow(leftMotor, false);
     }
 
+    // TODO: change canMove when we will have enough information
+    @Override
+    public boolean canMove(double speed) {
+        return super.canMove(speed);
+    }
+
     @Override
     public void configureDashboard() {
         namespace.putNumber("current right velocity", rightMotor::get);
