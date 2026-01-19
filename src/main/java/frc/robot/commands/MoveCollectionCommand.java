@@ -5,12 +5,12 @@ import frc.robot.subsystems.CollectionMove;
 
 import java.util.function.Supplier;
 
-public class MoveCollectionUp extends MoveGenericSubsystem {
+public class MoveCollectionCommand extends MoveGenericSubsystem {
 
     private final CollectionMove collection;
     private Supplier<Double> speedSupplier;
 
-    public MoveCollectionUp(CollectionMove collection, Supplier<Double> speedSupplier) {
+    public MoveCollectionCommand(CollectionMove collection, Supplier<Double> speedSupplier) {
         super(collection, speedSupplier);
         this.collection = collection;
         this.speedSupplier = speedSupplier;
