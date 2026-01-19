@@ -8,6 +8,9 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
 
     private final static String NAMESPACE_NAME = "climb";
 
+    private final TalonFXWrapper rightMotor;
+    private final TalonFXWrapper leftMotor;
+
     private static Climb instance;
 
     public static Climb getInstance() {
@@ -21,11 +24,14 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
 
     private Climb(String namespaceName, TalonFXWrapper leftMotor, TalonFXWrapper rightMotor) {
         super(namespaceName, leftMotor);
+        this.leftMotor = leftMotor;
+        this.rightMotor = rightMotor;
         rightMotor.follow(leftMotor, false);
     }
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("current left velocity", motorController::get);
+        namespace.putNumber("current right velocity", rightMotor::get);
+        namespace.putNumber("current left velocity", leftMotor::get);
     }
 }
