@@ -1,6 +1,5 @@
 package frc.robot.util.localization;
 
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -50,7 +49,8 @@ public class RobotPoseEstimator {
     public Pose2d getEstimatedPoseByLatency(ChassisSpeeds relativeSpeeds, double latencySeconds) {
         double predictedX = relativeSpeeds.vxMetersPerSecond * latencySeconds;
         double predictedY = relativeSpeeds.vyMetersPerSecond * latencySeconds;
-        Rotation2d predictedRotation = Rotation2d.fromRadians(relativeSpeeds.omegaRadiansPerSecond * latencySeconds);
+        Rotation2d predictedRotation =
+                Rotation2d.fromRadians(relativeSpeeds.omegaRadiansPerSecond * latencySeconds);
         return getEstimatedPose().transformBy(new Transform2d(predictedX, predictedY, predictedRotation));
     }
 
