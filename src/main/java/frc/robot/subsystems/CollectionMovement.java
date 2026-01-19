@@ -1,4 +1,4 @@
-package subsystems;
+package frc.robot.subsystems;
 
 import com.spikes2212.command.genericsubsystem.smartmotorcontrollersubsystem.SmartMotorControllerGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.SmartMotorController;
@@ -30,11 +30,13 @@ public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
         bottomLimitSwitch = new DigitalInput(BOTTOM_LIMIT_SWITCH_ID);
     }
 
-    public boolean isAtTopLimitSwitch(){
-        return topLimitSwitch.get();
-    }
-
-    public boolean isAtBottomLimitSwitch(){
-        return bottomLimitSwitch.get();
+    @Override
+    public boolean canMove(double speed) {
+        if(!topLimitSwitch.get()){
+            return true;
+        } else if(!bottomLimitSwitch.get()){
+            return true;
+        }
+        return false;
     }
 }
