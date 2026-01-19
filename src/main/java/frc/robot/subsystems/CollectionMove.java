@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.spikes2212.command.genericsubsystem.GenericSubsystem;
 import com.spikes2212.command.genericsubsystem.smartmotorcontrollersubsystem.SmartMotorControllerGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.SmartMotorController;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
@@ -9,26 +10,26 @@ import static frc.robot.RobotMap.CAN.TALON_COLLECTION_MOVEMENT_ID;
 import static frc.robot.RobotMap.DIO.BOTTOM_LIMIT_SWITCH_ID;
 import static frc.robot.RobotMap.DIO.TOP_LIMIT_SWITCH_ID;
 
-public class CollectionMove extends SmartMotorControllerGenericSubsystem {
+public class CollectionMove extends GenericSubsystem {
     private TalonFXWrapper motor;
     private DigitalInput topLimitSwitch;
     private DigitalInput bottomLimitSwitch;
 
-    public CollectionMove(String namespaceName, TalonFXWrapper motor
-            , DigitalInput topLimitSwitch, DigitalInput bottomLimitSwitch
-            , SmartMotorController... motorControllers) {
-        super(namespaceName, motorControllers);
+    public CollectionMove(String namespaceName, TalonFXWrapper motor, DigitalInput topLimitSwitch
+            , DigitalInput bottomLimitSwitch) {
+        super(namespaceName);
         this.motor = motor;
-        this.motor = new TalonFXWrapper(TALON_COLLECTION_MOVEMENT_ID);
         this.topLimitSwitch = topLimitSwitch;
         this.bottomLimitSwitch = bottomLimitSwitch;
-        configLimitSwitches();
     }
 
     public void configLimitSwitches(){
         topLimitSwitch = new DigitalInput(TOP_LIMIT_SWITCH_ID);
         bottomLimitSwitch = new DigitalInput(BOTTOM_LIMIT_SWITCH_ID);
     }
+
+    @Override
+    protected void apply(double v) {}
 
     @Override
     public boolean canMove(double speed) {
@@ -39,4 +40,12 @@ public class CollectionMove extends SmartMotorControllerGenericSubsystem {
         }
         return false;
     }
+
+    @Override
+    public void stop() {
+        motor.stopMotor();
+    }
+
+    @Override
+    public void configureDashboard() {}
 }
