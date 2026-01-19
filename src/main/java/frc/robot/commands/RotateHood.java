@@ -21,7 +21,7 @@ public class RotateHood extends MoveSmartMotorControllerGenericSubsystem {
 
     public RotateHood(Hood hood, Supplier<Double> setpoint) {
         super(hood, pidSettings, feedForwardSettings, UnifiedControlMode.POSITION,
-                setpoint, true);
+                setpoint, false);
         this.hood = hood;
     }
 
