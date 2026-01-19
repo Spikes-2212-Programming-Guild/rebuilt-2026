@@ -7,4 +7,6 @@ public record OdometryMeasurement(
         double timestampSeconds,
         Rotation2d robotYaw,
         SwerveModulePosition[] wheelPositions
-) {}
+) {
+
+}
