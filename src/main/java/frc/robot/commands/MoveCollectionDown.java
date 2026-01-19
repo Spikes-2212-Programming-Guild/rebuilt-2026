@@ -10,8 +10,8 @@ public class MoveCollectionDown extends MoveGenericSubsystem {
 
     private CollectionMovement collection;
 
-    public MoveCollectionDown(GenericSubsystem subsystem, Supplier<Double> speedSupplier, CollectionMovement collection) {
-        super(subsystem, speedSupplier);
+    public MoveCollectionDown(CollectionMovement collection, Supplier<Double> speedSupplier) {
+        super(collection, speedSupplier);
         this.collection = collection;
     }
 
