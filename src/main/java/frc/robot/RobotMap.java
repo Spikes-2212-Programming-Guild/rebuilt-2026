@@ -3,7 +3,7 @@ package frc.robot;
 public class RobotMap {
 
     public interface CAN {
-
+        int TALON_COLLECTION_MOVEMENT_ID = -1;
     }
     
     public interface DIO {
