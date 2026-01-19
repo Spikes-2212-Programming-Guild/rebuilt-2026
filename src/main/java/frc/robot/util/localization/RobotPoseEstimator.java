@@ -23,8 +23,8 @@ public class RobotPoseEstimator {
     private final SwerveDrivePoseEstimator poseEstimator;
     private final OdometryManager odometryManager;
 
-    public RobotPoseEstimator(SwerveDriveKinematics kinematics, Rotation2d gyroAngle,
-                              SwerveModulePosition[] modulePositions, Pose2d initPose,
+    public RobotPoseEstimator(SwerveDriveKinematics kinematics, Rotation2d gyroYaw,
+                              SwerveModulePosition[] modulePositions, Pose2d initRobotPose,
                               Supplier<OdometryMeasurement> odometryMeasurementSupplier,
                               PeriodicTaskScheduler taskScheduler) {
 
