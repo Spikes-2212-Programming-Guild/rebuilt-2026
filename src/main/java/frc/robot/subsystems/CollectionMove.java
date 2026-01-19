@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 
 public class CollectionMove extends MotoredGenericSubsystem {
+
     private final DigitalInput topLimitSwitch;
     private final DigitalInput bottomLimitSwitch;
 
