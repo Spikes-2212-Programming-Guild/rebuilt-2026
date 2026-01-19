@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import static frc.robot.RobotMap.DIO.BOTTOM_LIMIT_SWITCH_ID;
 import static frc.robot.RobotMap.DIO.TOP_LIMIT_SWITCH_ID;
 
-public class collectionMovement extends SmartMotorControllerGenericSubsystem {
+public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
     private TalonFXWrapper motor;
     private DigitalInput topLimitSwitch;
     private DigitalInput bottomLimitSwitch;
 
-    public collectionMovement(String namespaceName, TalonFXWrapper motor
+    public CollectionMovement(String namespaceName, TalonFXWrapper motor
             , DigitalInput topLimitSwitch, DigitalInput bottomLimitSwitch
             , SmartMotorController... motorControllers) {
         super(namespaceName, motorControllers);
