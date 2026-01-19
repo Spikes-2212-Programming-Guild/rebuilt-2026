@@ -16,6 +16,7 @@ public class CollectionMove extends GenericSubsystem {
             , DigitalInput bottomLimitSwitch) {
         super(namespaceName);
         this.talonFX = talonFX;
+        configLimitSwitches();
         this.topLimitSwitch = topLimitSwitch;
         this.bottomLimitSwitch = bottomLimitSwitch;
     }
