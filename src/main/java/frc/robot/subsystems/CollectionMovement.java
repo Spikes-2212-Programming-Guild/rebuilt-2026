@@ -4,10 +4,7 @@ import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-
-import static frc.robot.RobotMap.CAN.TALON_COLLECTION_MOVEMENT;
-import static frc.robot.RobotMap.DIO.BOTTOM_LIMIT_SWITCH;
-import static frc.robot.RobotMap.DIO.TOP_LIMIT_SWITCH;
+import frc.robot.RobotMap;
 
 public class CollectionMovement extends MotoredGenericSubsystem {
 
@@ -15,12 +12,12 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     private final DigitalInput bottomLimitSwitch;
     private static CollectionMovement instance;
 
-    public static CollectionMovement getInstance(){
-        if(instance == null){
+    public static CollectionMovement getInstance() {
+        if (instance == null) {
             instance = new CollectionMovement("collection movement",
-                    new DigitalInput(TOP_LIMIT_SWITCH),
-                    new DigitalInput(BOTTOM_LIMIT_SWITCH),
-                    new TalonFXWrapper(TALON_COLLECTION_MOVEMENT));
+                    new DigitalInput(RobotMap.DIO.TOP_LIMIT_SWITCH),
+                    new DigitalInput(RobotMap.DIO.BOTTOM_LIMIT_SWITCH),
+                    new TalonFXWrapper(RobotMap.CAN.TALON_COLLECTION_MOVEMENT));
         }
         return instance;
     }
@@ -34,9 +31,9 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        if(!topLimitSwitch.get() && speed > 0){
+        if (!topLimitSwitch.get() && speed > 0) {
             return !topLimitSwitch.get();
-        } else if(!bottomLimitSwitch.get() && speed < 0){
+        } else if (!bottomLimitSwitch.get() && speed < 0) {
             return !bottomLimitSwitch.get();
         }
         return topLimitSwitch.get() || bottomLimitSwitch.get();
