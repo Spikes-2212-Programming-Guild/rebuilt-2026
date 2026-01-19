@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 public class MoveCollectionUp extends MoveGenericSubsystem {
 
     private CollectionMovement collection;
+
     public MoveCollectionUp(CollectionMovement collection, Supplier<Double> speedSupplier) {
         super(collection, speedSupplier);
         this.collection = collection;
