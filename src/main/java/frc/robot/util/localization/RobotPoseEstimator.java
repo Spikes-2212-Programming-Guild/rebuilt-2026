@@ -29,8 +29,8 @@ public class RobotPoseEstimator {
                               PeriodicTaskScheduler taskScheduler) {
 
         this.poseEstimator = new SwerveDrivePoseEstimator(
-                kinematics, gyroAngle, modulePositions, initPose,
-                ODOMETRY_STD_DEVS.toMatrix(), VecBuilder.fill(0, 0, 0)
+                kinematics, gyroYaw, modulePositions, initRobotPose,
+                ODOMETRY_STD_DEVS.toMatrix(), StandardDeviations.EMPTY_STD_DEVS.toMatrix()
         );
 
         this.odometryManager = new OdometryManager(
