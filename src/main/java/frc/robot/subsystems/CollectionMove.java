@@ -4,9 +4,6 @@ import com.spikes2212.command.genericsubsystem.GenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.wpilibj.DigitalInput;
 
-import static frc.robot.RobotMap.DIO.BOTTOM_LIMIT_SWITCH_ID;
-import static frc.robot.RobotMap.DIO.TOP_LIMIT_SWITCH_ID;
-
 public class CollectionMove extends GenericSubsystem {
     private final TalonFXWrapper talonFX;
     private final DigitalInput topLimitSwitch;
@@ -21,13 +18,14 @@ public class CollectionMove extends GenericSubsystem {
     }
 
     @Override
-    protected void apply(double v) {}
+    protected void apply(double v) {
+    }
 
     @Override
     public boolean canMove(double speed) {
-        if(!topLimitSwitch.get()){
+        if (!topLimitSwitch.get()) {
             return true;
-        } else if(!bottomLimitSwitch.get()){
+        } else if (!bottomLimitSwitch.get()) {
             return true;
         }
         return false;
@@ -39,5 +37,6 @@ public class CollectionMove extends GenericSubsystem {
     }
 
     @Override
-    public void configureDashboard() {}
+    public void configureDashboard() {
+    }
 }
