@@ -27,15 +27,11 @@ public class collectionMovement extends SmartMotorControllerGenericSubsystem {
         bottomLimitSwitch = new DigitalInput(BOTTOM_LIMIT_SWITCH_ID);
     }
 
-    public void stopAtTopLimitSwitch(){
-        if(topLimitSwitch.get()){
-            motor.stopMotor();
-        }
+    public boolean isAtTopLimitSwitch(){
+        return topLimitSwitch.get();
     }
 
-    public void stopAtBottomLimitSwitch(){
-        if(bottomLimitSwitch.get()){
-            motor.stopMotor();
-        }
+    public boolean isAtBottomLimitSwitch(){
+        return bottomLimitSwitch.get();
     }
 }
