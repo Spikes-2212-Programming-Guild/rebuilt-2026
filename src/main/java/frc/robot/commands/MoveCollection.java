@@ -10,9 +10,4 @@ public class MoveCollection extends MoveGenericSubsystem {
     public MoveCollection(CollectionMovement collection, Supplier<Double> speedSupplier) {
         super(collection, speedSupplier);
     }
-
-    @Override
-    public boolean isFinished() {
-        return super.subsystem.canMove(speedSupplier.get());
-    }
 }
