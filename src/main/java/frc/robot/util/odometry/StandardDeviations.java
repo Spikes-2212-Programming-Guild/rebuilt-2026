@@ -11,9 +11,9 @@ public record StandardDeviations(double translationX, double translationY, doubl
 
     public Matrix<N3, N1> toMatrix() {
         return VecBuilder.fill(
-                translationXStdDev,
-                translationYStdDev,
-                rotationStdDev
+                translationX,
+                translationY,
+                rotation
         );
     }
 }
