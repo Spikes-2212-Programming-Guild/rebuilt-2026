@@ -19,7 +19,7 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
         return instance;
     }
 
-    public Climb(String namespaceName, TalonFXWrapper leftMotor, TalonFXWrapper rightMotor) {
+    private Climb(String namespaceName, TalonFXWrapper leftMotor, TalonFXWrapper rightMotor) {
         super(namespaceName, leftMotor);
         rightMotor.follow(leftMotor, false);
     }
