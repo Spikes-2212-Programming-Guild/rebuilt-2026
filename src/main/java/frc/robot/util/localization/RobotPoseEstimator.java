@@ -54,14 +54,6 @@ public class RobotPoseEstimator {
         return getEstimatedPose().transformBy(new Transform2d(predictedX, predictedY, predictedRotation));
     }
 
-    public void resetPose(Pose2d newPose) {
-        poseEstimator.resetPose(newPose);
-    }
-
-    public void resetRotation(Rotation2d newAngle) {
-        poseEstimator.resetRotation(newAngle);
-    }
-
     public SwerveDrivePoseEstimator getEstimator() {
         return poseEstimator;
     }
