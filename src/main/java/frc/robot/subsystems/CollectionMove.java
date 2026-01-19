@@ -9,21 +9,15 @@ import static frc.robot.RobotMap.DIO.TOP_LIMIT_SWITCH_ID;
 
 public class CollectionMove extends GenericSubsystem {
     private final TalonFXWrapper talonFX;
-    private DigitalInput topLimitSwitch;
-    private DigitalInput bottomLimitSwitch;
+    private final DigitalInput topLimitSwitch;
+    private final DigitalInput bottomLimitSwitch;
 
     public CollectionMove(String namespaceName, TalonFXWrapper talonFX, DigitalInput topLimitSwitch
             , DigitalInput bottomLimitSwitch) {
         super(namespaceName);
         this.talonFX = talonFX;
-        configLimitSwitches();
         this.topLimitSwitch = topLimitSwitch;
         this.bottomLimitSwitch = bottomLimitSwitch;
-    }
-
-    public void configLimitSwitches(){
-        topLimitSwitch = new DigitalInput(TOP_LIMIT_SWITCH_ID);
-        bottomLimitSwitch = new DigitalInput(BOTTOM_LIMIT_SWITCH_ID);
     }
 
     @Override
