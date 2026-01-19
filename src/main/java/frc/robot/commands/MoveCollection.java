@@ -1,16 +1,16 @@
 package frc.robot.commands;
 
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
-import frc.robot.subsystems.CollectionMove;
+import frc.robot.subsystems.CollectionMovement;
 
 import java.util.function.Supplier;
 
-public class MoveCollectionCommand extends MoveGenericSubsystem {
+public class MoveCollection extends MoveGenericSubsystem {
 
-    private final CollectionMove collection;
+    private final CollectionMovement collection;
     private Supplier<Double> speedSupplier;
 
-    public MoveCollectionCommand(CollectionMove collection, Supplier<Double> speedSupplier) {
+    public MoveCollection(CollectionMovement collection, Supplier<Double> speedSupplier) {
         super(collection, speedSupplier);
         this.collection = collection;
         this.speedSupplier = speedSupplier;
