@@ -31,11 +31,11 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        if (!topLimitSwitch.get() && speed > 0) {
-            return !topLimitSwitch.get();
-        } else if (!bottomLimitSwitch.get() && speed < 0) {
-            return !bottomLimitSwitch.get();
-        }
-        return topLimitSwitch.get() || bottomLimitSwitch.get();
+        return !((bottomLimitSwitch.get() && speed < 0) || (topLimitSwitch.get() && speed > 0));
+    }
+
+    @Override
+    public void configureDashboard() {
+        //@TODO - fill this when ik what i need to put in here
     }
 }
