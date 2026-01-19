@@ -1,24 +1,21 @@
 package frc.robot.subsystems;
 
 import com.spikes2212.command.genericsubsystem.GenericSubsystem;
-import com.spikes2212.command.genericsubsystem.smartmotorcontrollersubsystem.SmartMotorControllerGenericSubsystem;
-import com.spikes2212.util.smartmotorcontrollers.SmartMotorController;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.wpilibj.DigitalInput;
 
-import static frc.robot.RobotMap.CAN.TALON_COLLECTION_MOVEMENT_ID;
 import static frc.robot.RobotMap.DIO.BOTTOM_LIMIT_SWITCH_ID;
 import static frc.robot.RobotMap.DIO.TOP_LIMIT_SWITCH_ID;
 
 public class CollectionMove extends GenericSubsystem {
-    private TalonFXWrapper motor;
+    private TalonFXWrapper talonFX;
     private DigitalInput topLimitSwitch;
     private DigitalInput bottomLimitSwitch;
 
-    public CollectionMove(String namespaceName, TalonFXWrapper motor, DigitalInput topLimitSwitch
+    public CollectionMove(String namespaceName, TalonFXWrapper talonFX, DigitalInput topLimitSwitch
             , DigitalInput bottomLimitSwitch) {
         super(namespaceName);
-        this.motor = motor;
+        this.talonFX = talonFX;
         this.topLimitSwitch = topLimitSwitch;
         this.bottomLimitSwitch = bottomLimitSwitch;
     }
@@ -43,7 +40,7 @@ public class CollectionMove extends GenericSubsystem {
 
     @Override
     public void stop() {
-        motor.stopMotor();
+        talonFX.stopMotor();
     }
 
     @Override
