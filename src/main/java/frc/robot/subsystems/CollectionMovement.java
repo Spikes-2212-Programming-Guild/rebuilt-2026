@@ -34,14 +34,11 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        if (!topLimitSwitch.get() && !bottomLimitSwitch.get()) {
-            return true;
+        if(!topLimitSwitch.get() && speed > 0){
+            return !topLimitSwitch.get();
+        } else if(!bottomLimitSwitch.get() && speed < 0){
+            return !bottomLimitSwitch.get();
         }
-        return false;
-    }
-
-    @Override
-    public void stop() {
-        super.stop();
+        return topLimitSwitch.get() || bottomLimitSwitch.get();
     }
 }
