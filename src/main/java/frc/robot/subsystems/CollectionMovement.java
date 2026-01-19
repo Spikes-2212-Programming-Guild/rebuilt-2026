@@ -5,9 +5,9 @@ import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 
-import static frc.robot.RobotMap.CAN.TALON_COLLECTION_MOVEMENT_ID;
-import static frc.robot.RobotMap.DIO.BOTTOM_LIMIT_SWITCH_ID;
-import static frc.robot.RobotMap.DIO.TOP_LIMIT_SWITCH_ID;
+import static frc.robot.RobotMap.CAN.TALON_COLLECTION_MOVEMENT;
+import static frc.robot.RobotMap.DIO.BOTTOM_LIMIT_SWITCH;
+import static frc.robot.RobotMap.DIO.TOP_LIMIT_SWITCH;
 
 public class CollectionMovement extends MotoredGenericSubsystem {
 
@@ -18,9 +18,9 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     public static CollectionMovement getInstance(){
         if(instance == null){
             instance = new CollectionMovement("collection movement",
-                    new DigitalInput(TOP_LIMIT_SWITCH_ID),
-                    new DigitalInput(BOTTOM_LIMIT_SWITCH_ID),
-                    new TalonFXWrapper(TALON_COLLECTION_MOVEMENT_ID));
+                    new DigitalInput(TOP_LIMIT_SWITCH),
+                    new DigitalInput(BOTTOM_LIMIT_SWITCH),
+                    new TalonFXWrapper(TALON_COLLECTION_MOVEMENT));
         }
         return instance;
     }
