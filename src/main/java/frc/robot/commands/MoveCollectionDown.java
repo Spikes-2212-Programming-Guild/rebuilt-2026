@@ -1,0 +1,25 @@
+package frc.robot.commands;
+
+import com.spikes2212.command.genericsubsystem.GenericSubsystem;
+import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
+import subsystems.CollectionMovement;
+
+import java.util.function.Supplier;
+
+public class MoveCollectionDown extends MoveGenericSubsystem {
+
+    private CollectionMovement collection;
+
+    public MoveCollectionDown(GenericSubsystem subsystem, Supplier<Double> speedSupplier, CollectionMovement collection) {
+        super(subsystem, speedSupplier);
+        this.collection = collection;
+    }
+
+    @Override
+    public boolean isFinished() {
+        if(collection.isAtBottomLimitSwitch()){
+            return true;
+        }
+        return false;
+    }
+}
