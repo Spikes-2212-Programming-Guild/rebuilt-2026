@@ -10,6 +10,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     private final DigitalInput topLimitSwitch;
     private final DigitalInput bottomLimitSwitch;
+
     private static CollectionMovement instance;
 
     public static CollectionMovement getInstance() {
