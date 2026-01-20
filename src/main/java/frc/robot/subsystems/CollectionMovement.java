@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
+import com.spikes2212.dashboard.RootNamespace;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
@@ -8,6 +9,7 @@ import frc.robot.RobotMap;
 
 public class CollectionMovement extends MotoredGenericSubsystem {
 
+    RootNamespace namespace = new RootNamespace("Collection movement");
     private final DigitalInput topLimitSwitch;
     private final DigitalInput bottomLimitSwitch;
 
