@@ -11,7 +11,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     private final DigitalInput topLimit;
     private final DigitalInput bottomLimit;
-    private final TalonFXWrapper talonFX;
+    private final TalonFXWrapper motor;
 
     private static CollectionMovement instance;
 
@@ -26,11 +26,11 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     }
 
     private CollectionMovement(String namespaceName, DigitalInput topLimit, DigitalInput bottomLimit,
-                               TalonFXWrapper talonFX) {
-        super(namespaceName, talonFX);
+                               TalonFXWrapper motor) {
+        super(namespaceName, motor);
         this.topLimit = topLimit;
         this.bottomLimit = bottomLimit;
-        this.talonFX = talonFX;
+        this.motor = motor;
     }
 
     @Override
@@ -42,6 +42,6 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     public void configureDashboard() {
         namespace.putBoolean("top limit input", topLimit::get);
         namespace.putBoolean("bottom limit switch", bottomLimit::get);
-        namespace.putNumber("motor current speed", talonFX::get);
+        namespace.putNumber("motor current speed", motor::get);
     }
 }
