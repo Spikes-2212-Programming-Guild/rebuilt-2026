@@ -7,7 +7,7 @@ import frc.robot.RobotMap;
 
 public class CollectionMovement extends MotoredGenericSubsystem {
 
-    private final static String namespaceName = "collection movement";
+    private final static String NAMESPACE_NAME = "collection movement";
 
     private final DigitalInput topLimit;
     private final DigitalInput bottomLimit;
@@ -17,7 +17,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     public static CollectionMovement getInstance() {
         if (instance == null) {
-            instance = new CollectionMovement(namespaceName,
+            instance = new CollectionMovement(NAMESPACE_NAME,
                     new DigitalInput(RobotMap.DIO.COLLECTION_MOVEMENT_TOP_LIMIT_SWITCH),
                     new DigitalInput(RobotMap.DIO.COLLECTION_MOVEMENT_BOTTOM_LIMIT_SWITCH),
                     new TalonFXWrapper(RobotMap.CAN.COLLECTION_MOVEMENT_TALON_FX_ID));
@@ -25,9 +25,9 @@ public class CollectionMovement extends MotoredGenericSubsystem {
         return instance;
     }
 
-    private CollectionMovement(String namespaceName, DigitalInput topLimit, DigitalInput bottomLimit,
+    private CollectionMovement(String NAMESPACE_NAME, DigitalInput topLimit, DigitalInput bottomLimit,
                                TalonFXWrapper motor) {
-        super(namespaceName, motor);
+        super(NAMESPACE_NAME, motor);
         this.topLimit = topLimit;
         this.bottomLimit = bottomLimit;
         this.motor = motor;
