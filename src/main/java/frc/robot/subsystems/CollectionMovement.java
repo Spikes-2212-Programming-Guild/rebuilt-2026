@@ -9,8 +9,10 @@ import frc.robot.RobotMap;
 public class CollectionMovement extends MotoredGenericSubsystem {
 
     private final static String namespaceName = "Collection movement";
+
     private final DigitalInput topLimitSwitch;
     private final DigitalInput bottomLimitSwitch;
+    private final TalonFXWrapper talonFX;
 
     private static CollectionMovement instance;
 
@@ -25,15 +27,16 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     }
 
     private CollectionMovement(String namespaceName, DigitalInput topLimitSwitch, DigitalInput bottomLimitSwitch,
-                               MotorController... motorControllers) {
-        super(namespaceName, motorControllers);
+                               TalonFXWrapper talonFX) {
+        super(namespaceName, talonFX);
         this.topLimitSwitch = topLimitSwitch;
         this.bottomLimitSwitch = bottomLimitSwitch;
+        this.talonFX = talonFX;
     }
 
     @Override
     public boolean canMove(double speed) {
-        return !((bottomLimitSwitch.get() && speed < 0) || (topLimitSwitch.get() && speed > 0));
+        return ((bottomLimitSwitch.get() && speed > 0) || (topLimitSwitch.get() && speed < 0));
     }
 
     @Override
