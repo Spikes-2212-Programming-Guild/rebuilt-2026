@@ -4,13 +4,13 @@ public class RobotMap {
 
     public interface CAN {
 
-        int TALON_COLLECTION_MOVEMENT = -1;
+        int COLLECTION_MOVEMENT_TALON_FX = -1;
     }
     
     public interface DIO {
 
-        int TOP_LIMIT_SWITCH = -1;
-        int BOTTOM_LIMIT_SWITCH = -1;
+        int COLLECTION_MOVEMENT_TOP_LIMIT_SWITCH = -1;
+        int C0LLECTION_MOVEMENT_BOTTOM_LIMIT_SWITCH = -1;
     }
     
     public interface PWM {
