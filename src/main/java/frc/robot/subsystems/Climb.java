@@ -8,8 +8,8 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
 
     private final static String NAMESPACE_NAME = "climb";
 
-    private final TalonFXWrapper rightMotor;
     private final TalonFXWrapper leftMotor;
+    private final TalonFXWrapper rightMotor;
 
     private static Climb instance;
 
