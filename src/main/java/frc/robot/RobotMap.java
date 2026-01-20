@@ -4,7 +4,7 @@ public class RobotMap {
 
     public interface CAN {
 
-        int COLLECTION_MOVEMENT_TALON_FX = -1;
+        int COLLECTION_MOVEMENT_TALON_FX_ID = -1;
     }
     
     public interface DIO {

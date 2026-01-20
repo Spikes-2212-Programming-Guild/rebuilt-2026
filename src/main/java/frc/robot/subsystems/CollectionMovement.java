@@ -20,7 +20,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
             instance = new CollectionMovement(namespaceName,
                     new DigitalInput(RobotMap.DIO.COLLECTION_MOVEMENT_TOP_LIMIT_SWITCH),
                     new DigitalInput(RobotMap.DIO.COLLECTION_MOVEMENT_BOTTOM_LIMIT_SWITCH),
-                    new TalonFXWrapper(RobotMap.CAN.COLLECTION_MOVEMENT_TALON_FX));
+                    new TalonFXWrapper(RobotMap.CAN.COLLECTION_MOVEMENT_TALON_FX_ID));
         }
         return instance;
     }
