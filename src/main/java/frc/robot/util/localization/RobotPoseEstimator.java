@@ -39,7 +39,7 @@ public class RobotPoseEstimator {
 
     public void periodic() {
         odometryManager.applyMeasurements();
-        // TODO - add the vision part once it's complete
+        // @TODO add the vision part once it's complete
     }
 
     public Pose2d getEstimatedPose() {
