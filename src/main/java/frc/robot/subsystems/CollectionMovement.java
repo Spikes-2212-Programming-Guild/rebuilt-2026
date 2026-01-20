@@ -37,6 +37,8 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     @Override
     public void configureDashboard() {
-        //@TODO - fill this when ik what i need to put in here
+        namespace.putBoolean("top limit input", topLimitSwitch::get);
+        namespace.putBoolean("bottom limit switch", bottomLimitSwitch::get);
+        namespace.putNumber("motor current speed", motorController::get);
     }
 }
