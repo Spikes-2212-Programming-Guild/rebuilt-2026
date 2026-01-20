@@ -35,7 +35,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        return ((!bottomLimit.get() && speed > 0) || (!topLimit.get() && speed < 0));
+        return ((!bottomLimit.get() && speed < 0) || (!topLimit.get() && speed > 0));
     }
 
     @Override
