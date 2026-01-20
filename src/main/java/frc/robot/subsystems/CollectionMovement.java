@@ -7,7 +7,7 @@ import frc.robot.RobotMap;
 
 public class CollectionMovement extends MotoredGenericSubsystem {
 
-    private final static String namespaceName = "Collection movement";
+    private final static String namespaceName = "collection movement";
 
     private final DigitalInput topLimitSwitch;
     private final DigitalInput bottomLimitSwitch;
