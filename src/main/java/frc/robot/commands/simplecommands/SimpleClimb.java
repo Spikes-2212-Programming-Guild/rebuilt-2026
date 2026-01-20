@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 
 public class SimpleClimb extends MoveGenericSubsystem {
 
-    public SimpleClimb(GenericSubsystem subsystem, Supplier<Double> speedSupplier) {
-        super(subsystem, speedSupplier);
+    public SimpleClimb(GenericSubsystem subsystem, Supplier<Double> speed) {
+        super(subsystem, speed);
     }
 }
