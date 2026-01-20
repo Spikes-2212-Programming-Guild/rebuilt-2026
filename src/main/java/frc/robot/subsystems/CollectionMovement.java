@@ -43,6 +43,6 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     public void configureDashboard() {
         namespace.putBoolean("top limit input", topLimitSwitch::get);
         namespace.putBoolean("bottom limit switch", bottomLimitSwitch::get);
-        namespace.putNumber("motor current speed", motorController::get);
+        namespace.putNumber("motor current speed", talonFX::get);
     }
 }
