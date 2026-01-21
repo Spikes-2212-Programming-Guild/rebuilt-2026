@@ -5,9 +5,9 @@ import frc.robot.subsystems.CollectionMovement;
 
 import java.util.function.Supplier;
 
-public class MoveCollectionToSwitch extends MoveGenericSubsystem {
+public class SimpleMoveCollection extends MoveGenericSubsystem {
 
-    public MoveCollectionToSwitch(CollectionMovement collection, Supplier<Double> speed) {
+    public SimpleMoveCollection(CollectionMovement collection, Supplier<Double> speed) {
         super(collection, speed);
     }
 }
