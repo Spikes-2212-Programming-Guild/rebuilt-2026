@@ -37,7 +37,7 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("current right velocity", rightMotor::get);
-        namespace.putNumber("current left velocity", leftMotor::get);
+        namespace.putNumber("current right velocity", rightMotor::getVelocity);
+        namespace.putNumber("current left velocity", leftMotor::getVelocity);
     }
 }
