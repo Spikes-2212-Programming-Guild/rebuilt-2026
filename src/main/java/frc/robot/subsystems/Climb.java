@@ -26,7 +26,7 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
         super(namespaceName, leftMotor);
         this.leftMotor = leftMotor;
         this.rightMotor = rightMotor;
-        rightMotor.follow(leftMotor, false);
+        rightMotor.follow(leftMotor);
     }
 
     // @TODO change canMove when we will have enough information
