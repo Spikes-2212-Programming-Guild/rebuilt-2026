@@ -24,7 +24,7 @@ public class RobotPoseEstimator {
 
     public RobotPoseEstimator(SwerveDriveKinematics kinematics, Rotation2d gyroYaw,
                               SwerveModulePosition[] modulePositions, Pose2d initRobotPose,
-                              Supplier<OdometryMeasurement> odometryMeasurementSupplier,
+                              Supplier<OdometryMeasurement> odometryMeasurement,
                               PeriodicTaskScheduler taskScheduler) {
 
         this.poseEstimator = new SwerveDrivePoseEstimator(
@@ -33,7 +33,7 @@ public class RobotPoseEstimator {
         );
 
         this.odometryManager = new OdometryManager(
-                this::addOdometryMeasurement, odometryMeasurementSupplier, taskScheduler
+                this::addOdometryMeasurement, odometryMeasurement, taskScheduler
         );
     }
 
