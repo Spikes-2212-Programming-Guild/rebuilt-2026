@@ -44,4 +44,9 @@ public class CollectionMovement extends MotoredGenericSubsystem {
         namespace.putBoolean("bottom limit input", bottomLimit::get);
         namespace.putNumber("motor current speed", motor::getVelocity);
     }
+
+    @Override
+    public void stop() {
+        motor.stopMotor();
+    }
 }
