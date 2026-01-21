@@ -25,9 +25,9 @@ public class CollectionMovement extends MotoredGenericSubsystem {
         return instance;
     }
 
-    private CollectionMovement(String NAMESPACE_NAME, DigitalInput topLimit, DigitalInput bottomLimit,
+    private CollectionMovement(String namespaceName, DigitalInput topLimit, DigitalInput bottomLimit,
                                TalonFXWrapper motor) {
-        super(NAMESPACE_NAME, motor);
+        super(namespaceName, motor);
         this.topLimit = topLimit;
         this.bottomLimit = bottomLimit;
         this.motor = motor;
