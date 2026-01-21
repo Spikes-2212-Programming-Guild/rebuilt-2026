@@ -9,7 +9,7 @@ public class Collection extends MotoredGenericSubsystem {
 
     private final static String NAMESPACE_NAME ="collection";
 
-    public Collection(String NAMESPACE_NAME, SmartMotorController motorController) {
+    public Collection(String NAMESPACE_NAME, TalonFXWrapper motorController) {
         super(NAMESPACE_NAME, motorController);
     }
 
