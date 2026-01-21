@@ -1,5 +1,7 @@
 package frc.robot.util.odometry;
 
+import com.spikes2212.dashboard.RootNamespace;
+
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Consumer;
@@ -7,9 +9,13 @@ import java.util.function.Supplier;
 
 public class OdometryManager {
 
-    public static final int UPDATE_FREQUENCY_HZ = -1;
+    private static final RootNamespace namespace = new RootNamespace("odometry manager");
 
-    private static final int MEASUREMENT_OVERFLOW_LIMIT = -1;
+    private static final Supplier<Integer> UPDATE_FREQUENCY_HZ =
+            namespace.addConstantInt("update frequency hz", 50);
+
+    private static final Supplier<Integer> MEASUREMENT_OVERFLOW_LIMIT =
+            namespace.addConstantInt("measurement overflow limit", 5);
 
     private final Queue<OdometryMeasurement> measurementsQueue = new ConcurrentLinkedQueue<>();
     private final Consumer<OdometryMeasurement> measurementConsumer;
@@ -21,10 +27,11 @@ public class OdometryManager {
 
         this.measurementConsumer = measurementConsumer;
         this.measurementSupplier = measurementSupplier;
-        taskScheduler.schedule(this::captureMeasurement, UPDATE_FREQUENCY_HZ, 0);
+        taskScheduler.schedule(this::captureMeasurement, UPDATE_FREQUENCY_HZ.get(), 0);
     }
 
     public void applyMeasurements() {
+        namespace.update();
         while (!measurementsQueue.isEmpty()) {
             OdometryMeasurement measurement = measurementsQueue.poll();
             measurementConsumer.accept(measurement);
@@ -35,7 +42,7 @@ public class OdometryManager {
         OdometryMeasurement measurement = measurementSupplier.get();
         if (measurement == null) return;
 
-        if (measurementsQueue.size() >= MEASUREMENT_OVERFLOW_LIMIT)
+        if (measurementsQueue.size() >= MEASUREMENT_OVERFLOW_LIMIT.get())
             measurementsQueue.poll(); // drop the oldest if the queue is overflowed
 
         measurementsQueue.add(measurement);
