@@ -8,5 +8,4 @@ public record OdometryMeasurement(
         Rotation2d robotYaw,
         SwerveModulePosition[] wheelPositions
 ) {
-
 }
