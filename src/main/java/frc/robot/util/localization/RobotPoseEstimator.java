@@ -1,5 +1,6 @@
 package frc.robot.util.localization;
 
+import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -16,8 +17,14 @@ import java.util.function.Supplier;
 
 public class RobotPoseEstimator {
 
+    private static final RootNamespace namespace = new RootNamespace("robot pose estimator");
+
     private static final StandardDeviations ODOMETRY_STD_DEVS =
-            new StandardDeviations(-1, -1, -1);
+            new StandardDeviations(
+                namespace.addConstantInt("translation x", 0).get(),
+                namespace.addConstantInt("translation y", 0).get(),
+                namespace.addConstantInt("rotation", 0).get()
+            );
 
     private final SwerveDrivePoseEstimator poseEstimator;
     private final OdometryManager odometryManager;
@@ -38,6 +45,7 @@ public class RobotPoseEstimator {
     }
 
     public void periodic() {
+        namespace.update();
         odometryManager.applyMeasurements();
         // @TODO add the vision part once it's complete
     }
