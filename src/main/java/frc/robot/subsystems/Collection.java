@@ -10,6 +10,7 @@ public class Collection extends MotoredGenericSubsystem {
     private final static String NAMESPACE_NAME ="collection";
 
     private static Collection instance;
+    private final TalonFXWrapper motorController;
 
     public static Collection getInstance() {
         if (instance == null) {
@@ -21,6 +22,7 @@ public class Collection extends MotoredGenericSubsystem {
 
     private Collection(String NAMESPACE_NAME, TalonFXWrapper motorController) {
         super(NAMESPACE_NAME, motorController);
+        this.motorController=motorController;
     }
 
     //@TODO will change in future when it will be decided on what causes it to start/stop
@@ -31,6 +33,6 @@ public class Collection extends MotoredGenericSubsystem {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("speed", motorController::get);
+        namespace.putNumber("motor velocity", motorController::getVelocity);
     }
 }
