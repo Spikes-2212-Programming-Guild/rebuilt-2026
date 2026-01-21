@@ -5,9 +5,9 @@ import frc.robot.subsystems.CollectionMovement;
 
 import java.util.function.Supplier;
 
-public class MoveCollectionToLimit extends MoveGenericSubsystem {
+public class dumbeldore extends MoveGenericSubsystem {
 
-    public MoveCollectionToLimit(CollectionMovement collection, Supplier<Double> speed) {
+    public dumbeldore(CollectionMovement collection, Supplier<Double> speed) {
         super(collection, speed);
     }
 }
