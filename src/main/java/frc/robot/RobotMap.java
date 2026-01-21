@@ -6,11 +6,11 @@ public class RobotMap {
 
         int CLIMB_TALON_FX_LEFT_ID = -1;
         int CLIMB_TALON_FX_RIGHT_ID = -1;
-
     }
 
     public interface DIO {
 
+        int CLIMB_INFRARED = -1;
     }
 
     public interface PWM {
