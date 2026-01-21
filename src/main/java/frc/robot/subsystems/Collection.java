@@ -9,10 +9,6 @@ public class Collection extends MotoredGenericSubsystem {
 
     private final static String NAMESPACE_NAME ="collection";
 
-    public Collection(String NAMESPACE_NAME, TalonFXWrapper motorController) {
-        super(NAMESPACE_NAME, motorController);
-    }
-
     private static Collection instance;
 
     public static Collection getInstance() {
@@ -21,6 +17,10 @@ public class Collection extends MotoredGenericSubsystem {
                     new TalonFXWrapper(RobotMap.CAN.COLLECTION_TALON_FX_ID));
         }
         return instance;
+    }
+
+    private Collection(String NAMESPACE_NAME, TalonFXWrapper motorController) {
+        super(NAMESPACE_NAME, motorController);
     }
 
     // will change in future when it will be decided on what causes it to start/stop
