@@ -5,9 +5,9 @@ import frc.robot.subsystems.CollectionMovement;
 
 import java.util.function.Supplier;
 
-public class MoveCollectionToPosition extends MoveGenericSubsystem {
+public class MoveCollectionToLimit extends MoveGenericSubsystem {
 
-    public MoveCollectionToPosition(CollectionMovement collection, Supplier<Double> speed) {
+    public MoveCollectionToLimit(CollectionMovement collection, Supplier<Double> speed) {
         super(collection, speed);
     }
 }
