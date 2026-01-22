@@ -10,7 +10,7 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
 
     private final TalonFXWrapper motor;
 
-private SpinningMagazine(String namespaceName,TalonFXWrapper motor) {
+    private SpinningMagazine(String namespaceName, TalonFXWrapper motor) {
         super(namespaceName, motor);
         this.motor = motor;
     }
@@ -19,7 +19,7 @@ private SpinningMagazine(String namespaceName,TalonFXWrapper motor) {
 
     public static SpinningMagazine getInstance() {
         if (instance == null) {
-            instance = new SpinningMagazine(NAMESPACE_NAME,new TalonFXWrapper(RobotMap.CAN.SPINNING_MAGAZINE_TALON_FX_ID));
+            instance = new SpinningMagazine(NAMESPACE_NAME, new TalonFXWrapper(RobotMap.CAN.SPINNING_MAGAZINE_TALON_FX_ID));
         }
         return instance;
     }
@@ -32,7 +32,7 @@ private SpinningMagazine(String namespaceName,TalonFXWrapper motor) {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("speed", motor::getVelocity);
+        namespace.putNumber("motor speed", motor::getVelocity);
     }
 
 }
