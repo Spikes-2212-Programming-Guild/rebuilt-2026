@@ -8,18 +8,11 @@ import java.util.function.Supplier;
 public class SimpleTransport extends MoveGenericSubsystem {
 
     private final Transport transport;
-    double SPEED= -1;
+    double SPEED = -1;
     public SimpleTransport(Transport transport, Supplier<Double> speed) {
         super(transport, speed);
         this.transport = transport;
-
     }
-
-    @Override
-    public void execute() {
-        this.transport.move((SPEED));
-    }
-
     @Override
     public void end(boolean interrupted) {
         this.transport.stop();

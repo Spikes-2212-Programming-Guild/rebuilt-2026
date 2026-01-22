@@ -10,14 +10,11 @@ public class Transport extends MotoredGenericSubsystem {
 
     private static Transport instance;
 
-    private final TalonFXWrapper motor;
+    private final TalonFXWrapper talonFX;
 
-
-    public Transport(String namespaceName, TalonFXWrapper motor) {
-        super(namespaceName, motor);
-        this.motor = motor;
-
-
+    public Transport(String namespaceName, TalonFXWrapper talonFX) {
+        super(namespaceName, talonFX);
+        this.talonFX = talonFX;
     }
 
     public static Transport getInstance() {
