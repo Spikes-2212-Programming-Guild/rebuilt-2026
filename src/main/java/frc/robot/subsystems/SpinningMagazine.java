@@ -23,8 +23,6 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
         this.motor = motor;
     }
 
-
-
     //@TODO ask what causes it to start/stop and add it
     @Override
     public boolean canMove(double speed) {
