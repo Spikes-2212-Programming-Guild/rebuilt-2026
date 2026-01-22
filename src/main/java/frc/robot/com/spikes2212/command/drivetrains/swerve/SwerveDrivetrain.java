@@ -86,14 +86,30 @@ public abstract class SwerveDrivetrain extends DashboardedSubsystem {
      */
     public void drive(double xSpeed, double ySpeed, double rotationSpeed, boolean isFieldRelative,
                       double timeStep, boolean useVelocityPID) {
+        SwerveModuleState[] states = getDesiredStates(xSpeed, ySpeed, rotationSpeed, isFieldRelative, timeStep);
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, maxPossibleVelocity);
+        setTargetModuleStates(states, useVelocityPID);
+    }
+
+    /**
+     * Gets the desired {@link SwerveModuleState}[].
+     *
+     * @param xSpeed          the desired speed on the x-axis
+     * @param ySpeed          the desired speed on the y-axis
+     * @param rotationSpeed   the desired speed for the drivetrain rotation
+     * @param isFieldRelative whether the drive should be relative to the field or to the robot
+     * @param timeStep        the delta time in which the speeds are updated
+     * @return the desired {@link SwerveModuleState}[]
+     */
+    protected SwerveModuleState[] getDesiredStates(double xSpeed, double ySpeed, double rotationSpeed,
+                                                   boolean isFieldRelative, double timeStep) {
         SwerveModuleState[] states;
         if (isFieldRelative) {
             states = calculateFieldRelativeModuleStates(xSpeed, ySpeed, rotationSpeed, timeStep);
         } else {
             states = calculateRobotRelativeModuleStates(xSpeed, ySpeed, rotationSpeed, timeStep);
         }
-        SwerveDriveKinematics.desaturateWheelSpeeds(states, maxPossibleVelocity);
-        setTargetModuleStates(states, useVelocityPID);
+        return states;
     }
 
     /**
@@ -150,7 +166,6 @@ public abstract class SwerveDrivetrain extends DashboardedSubsystem {
      * @param ySpeed        the desired speed on the y-axis
      * @param rotationSpeed the desired speed for the drivetrain rotation
      * @param timeStep      the derivation of time the speed should be applied
-     *
      * @return the necessary {@link SwerveModuleState}s for robot relative movement
      */
     protected SwerveModuleState[] calculateRobotRelativeModuleStates(double xSpeed, double ySpeed, double rotationSpeed,
