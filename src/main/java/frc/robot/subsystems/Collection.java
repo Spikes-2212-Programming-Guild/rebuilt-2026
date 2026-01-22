@@ -7,7 +7,7 @@ import frc.robot.RobotMap;
 public class Collection extends MotoredGenericSubsystem {
 
     private final static String NAMESPACE_NAME = "collection";
-    private final TalonFXWrapper motorController;
+    private final TalonFXWrapper motor;
     private static Collection instance;
 
     public static Collection getInstance() {
@@ -18,9 +18,9 @@ public class Collection extends MotoredGenericSubsystem {
         return instance;
     }
 
-    private Collection(String NAMESPACE_NAME, TalonFXWrapper motorController) {
-        super(NAMESPACE_NAME, motorController);
-        this.motorController = motorController;
+    private Collection(String NAMESPACE_NAME, TalonFXWrapper motor) {
+        super(NAMESPACE_NAME, motor);
+        this.motor = motor;
     }
 
     //@TODO will change in future when it will be decided on what causes it to start/stop
@@ -31,6 +31,6 @@ public class Collection extends MotoredGenericSubsystem {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("motor velocity", motorController::getVelocity);
+        namespace.putNumber("motor velocity", motor::getVelocity);
     }
 }
