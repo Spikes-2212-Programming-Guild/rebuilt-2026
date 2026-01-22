@@ -9,6 +9,8 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
 
     private final static String NAMESPACE_NAME = "climb";
 
+    private final static boolean LEFT_INVERTED = false;
+
     private final TalonFXWrapper leftMotor;
     private final TalonFXWrapper rightMotor;
     private final DigitalInput infrared;
@@ -20,19 +22,20 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
             instance = new Climb(NAMESPACE_NAME,
                     new TalonFXWrapper(RobotMap.CAN.CLIMB_TALON_FX_LEFT_ID),
                     new TalonFXWrapper(RobotMap.CAN.CLIMB_TALON_FX_RIGHT_ID),
-                    new DigitalInput(RobotMap.DIO.CLIMB_INFRARED)
+                    new DigitalInput(RobotMap.DIO.CLIMB_INFRARED),
+                    LEFT_INVERTED
             );
         }
         return instance;
     }
 
     private Climb(String namespaceName, TalonFXWrapper leftMotor,
-                  TalonFXWrapper rightMotor, DigitalInput infrared) {
+                  TalonFXWrapper rightMotor, DigitalInput infrared, boolean leftInverted) {
         super(namespaceName, leftMotor);
         this.leftMotor = leftMotor;
         this.rightMotor = rightMotor;
         this.infrared = infrared;
-        rightMotor.follow(leftMotor);
+        rightMotor.follow(leftMotor, leftInverted);
     }
 
     @Override
