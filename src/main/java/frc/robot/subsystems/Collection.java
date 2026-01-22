@@ -1,13 +1,12 @@
 package frc.robot.subsystems;
 
 import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
-import com.spikes2212.util.smartmotorcontrollers.SmartMotorController;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import frc.robot.RobotMap;
 
 public class Collection extends MotoredGenericSubsystem {
 
-    private final static String NAMESPACE_NAME ="collection";
+    private final static String NAMESPACE_NAME = "collection";
 
     private static Collection instance;
     private final TalonFXWrapper motorController;
@@ -22,7 +21,7 @@ public class Collection extends MotoredGenericSubsystem {
 
     private Collection(String NAMESPACE_NAME, TalonFXWrapper motorController) {
         super(NAMESPACE_NAME, motorController);
-        this.motorController=motorController;
+        this.motorController = motorController;
     }
 
     //@TODO will change in future when it will be decided on what causes it to start/stop
