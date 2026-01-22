@@ -18,7 +18,7 @@ public class VisionSystem {
     /**
      * Polls all cameras for new data.
      *
-     * @param robotRelativeSpeedSupplier Used to check if the robot is moving too fast for clear images.
+     * @param speedSupplier Used to check if the robot is moving too fast for clear images.
      * @return A list of valid measurements from all cameras.
      */
     public List<VisionMeasurement> getMeasurements(Supplier<ChassisSpeeds> speedSupplier) {
