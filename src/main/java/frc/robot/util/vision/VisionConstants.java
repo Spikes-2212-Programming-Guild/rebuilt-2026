@@ -8,8 +8,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
  */
 public class VisionConstants {
 
-    public static final double MAX_DRIVE_SPEED_M_S = -1;
-    public static final double MAX_TURN_SPEED_RAD_S = -1;
+    public static final double MAX_DRIVE_SPEED_MPS = -1;
+    public static final double MAX_TURN_SPEED_RADPS = -1; //@TODO chane it to Drivetrain when merging the codes
 
     public static final double MAX_TAG_DISTANCE_METERS = -1;
     /**
@@ -39,6 +39,6 @@ public class VisionConstants {
         double driveVelocity = Math.hypot(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond);
         double turnVelocity = Math.abs(speeds.omegaRadiansPerSecond);
 
-        return driveVelocity <= MAX_DRIVE_SPEED_M_S && turnVelocity <= MAX_TURN_SPEED_RAD_S;
+        return driveVelocity <= MAX_DRIVE_SPEED_MPS && turnVelocity <= MAX_TURN_SPEED_RADPS;
     }
 }
