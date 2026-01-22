@@ -11,7 +11,7 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
 
     public SpinningMagazine(TalonFXWrapper motor) {
         super(NAMESPACE_NAME, motor);
-        this.motor=motor;
+        this.motor = motor;
     }
 
     private static SpinningMagazine instance;
