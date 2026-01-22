@@ -10,7 +10,7 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
 
     private final TalonFXWrapper motor;
 
-    public SpinningMagazine(TalonFXWrapper motor) {
+    private SpinningMagazine(TalonFXWrapper motor) {
         super(NAMESPACE_NAME, motor);
         this.motor = motor;
     }
