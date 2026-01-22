@@ -11,10 +11,10 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
         TOSS_POSE(-1), MAX_ANGLE(-1), MIN_ANGLE(-1);
 
-        public final double neededPitch;
+        public final double neededAngle;
 
         HoodPose(double neededPitch) {
-            this.neededPitch = neededPitch;
+            this.neededAngle = neededPitch;
         }
     }
 
@@ -57,9 +57,9 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
     public void calibrateEncoderPosition() {
         if (topLimit.get()) {
-            talonFX.setPosition(HoodPose.MAX_ANGLE.neededPitch);
+            talonFX.setPosition(HoodPose.MAX_ANGLE.neededAngle);
         } else if (bottomLimit.get()) {
-            talonFX.setPosition(HoodPose.MIN_ANGLE.neededPitch);
+            talonFX.setPosition(HoodPose.MIN_ANGLE.neededAngle);
         }
     }
 

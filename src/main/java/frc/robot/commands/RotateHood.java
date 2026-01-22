@@ -26,7 +26,7 @@ public class RotateHood extends MoveSmartMotorControllerGenericSubsystem {
     }
 
     public RotateHood(Hood hood, Hood.HoodPose pose) {
-        this(hood, () -> pose.neededPitch);
+        this(hood, () -> pose.neededAngle);
     }
 
     @Override
