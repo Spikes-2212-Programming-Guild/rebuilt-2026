@@ -7,9 +7,8 @@ import frc.robot.RobotMap;
 public class Collection extends MotoredGenericSubsystem {
 
     private final static String NAMESPACE_NAME = "collection";
-
-    private static Collection instance;
     private final TalonFXWrapper motorController;
+    private static Collection instance;
 
     public static Collection getInstance() {
         if (instance == null) {
