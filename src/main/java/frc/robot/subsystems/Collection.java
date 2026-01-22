@@ -23,10 +23,10 @@ public class Collection extends MotoredGenericSubsystem {
         this.motor = motor;
     }
 
-    //will change in future when it will be decided on what causes it to start/stop
+    //@TODO ask what decides if it works or not and add it
     @Override
     public boolean canMove(double speed) {
-        return super.canMove(speed);
+        return true;
     }
 
     @Override
