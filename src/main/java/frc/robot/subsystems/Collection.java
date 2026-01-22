@@ -20,8 +20,8 @@ public class Collection extends MotoredGenericSubsystem {
         return instance;
     }
 
-    private Collection(String NAMESPACE_NAME, TalonFXWrapper motor) {
-        super(NAMESPACE_NAME, motor);
+    private Collection(String namespaceName, TalonFXWrapper motor) {
+        super(namespaceName, motor);
         this.motor = motor;
     }
 
