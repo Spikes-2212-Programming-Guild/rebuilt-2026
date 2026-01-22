@@ -10,8 +10,8 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
 
     private final TalonFXWrapper motor;
 
-    private SpinningMagazine(TalonFXWrapper motor) {
-        super(NAMESPACE_NAME, motor);
+private SpinningMagazine(String namespaceName,TalonFXWrapper motor) {
+        super(namespaceName, motor);
         this.motor = motor;
     }
 
@@ -19,7 +19,7 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
 
     public static SpinningMagazine getInstance() {
         if (instance == null) {
-            instance = new SpinningMagazine(new TalonFXWrapper(RobotMap.CAN.SPINNING_MAGAZINE_TALON_FX_ID));
+            instance = new SpinningMagazine(NAMESPACE_NAME,new TalonFXWrapper(RobotMap.CAN.SPINNING_MAGAZINE_TALON_FX_ID));
         }
         return instance;
     }
