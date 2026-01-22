@@ -9,6 +9,7 @@ public class Collection extends MotoredGenericSubsystem {
     private final static String NAMESPACE_NAME = "collection";
 
     private final TalonFXWrapper motor;
+
     private static Collection instance;
 
     public static Collection getInstance() {
