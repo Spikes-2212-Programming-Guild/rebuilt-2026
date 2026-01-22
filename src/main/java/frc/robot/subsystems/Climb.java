@@ -40,7 +40,7 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        return !infrared.get();
+        return !(infrared.get() && speed > 0);
     }
 
     @Override
