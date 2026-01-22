@@ -20,9 +20,7 @@ public class PhotonVisionCamera implements AprilTagCamera {
 
     public PhotonVisionCamera(String cameraName, AprilTagFieldLayout fieldLayout, Transform3d robotToCamera) {
         camera = new PhotonCamera(cameraName);
-        poseEstimator = new PhotonPoseEstimator(
-                fieldLayout, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, robotToCamera
-        );
+        poseEstimator = new PhotonPoseEstimator(fieldLayout, robotToCamera);
     }
 
     @Override
@@ -36,7 +34,7 @@ public class PhotonVisionCamera implements AprilTagCamera {
         List<VisionMeasurement> measurements = new ArrayList<>();
 
         for (var result : allResults) {
-            var update = poseEstimator.update(result);
+            var update = poseEstimator.estimateCoprocMultiTagPose(result);
             if (update.isEmpty()) continue;
 
             var estimate = update.get();
