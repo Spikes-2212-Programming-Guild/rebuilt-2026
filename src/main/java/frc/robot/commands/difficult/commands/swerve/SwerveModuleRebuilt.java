@@ -12,7 +12,6 @@ import frc.robot.com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 
 public class SwerveModuleRebuilt extends SwerveModule {
 
-    private final static String NAMESPACE_NAME = "swerve module";
     private final static double DRIVE_GEAR_RATIO = -1;
     private final static double TURN_GEAR_RATIO = -1;
     private final static double WHEAL_DIAMETER_TO_INCHES = -1;
