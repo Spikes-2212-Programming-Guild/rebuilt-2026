@@ -9,6 +9,7 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
     private final static String NAMESPACE_NAME = "spinning magazine";
 
     private final TalonFXWrapper motor;
+
     private static SpinningMagazine instance;
 
     public static SpinningMagazine getInstance() {
