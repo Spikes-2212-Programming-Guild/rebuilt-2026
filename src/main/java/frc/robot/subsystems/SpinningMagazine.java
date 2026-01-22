@@ -7,18 +7,17 @@ import frc.robot.RobotMap;
 
 public class SpinningMagazine extends MotoredGenericSubsystem {
 
-    private final static String namespaceName="spinning magazine";
+    private final static String NAMESPACE_NAME = "spinning magazine";
 
-    public SpinningMagazine(String namespaceName, SmartMotorController motorController) {
-        super(namespaceName, motorController);
+    public SpinningMagazine(String NAMESPACE_NAME, SmartMotorController motorController) {
+        super(NAMESPACE_NAME, motorController);
     }
 
     private static SpinningMagazine instance;
 
     public static SpinningMagazine getInstance() {
         if (instance == null) {
-            instance = new SpinningMagazine(namespaceName,
-                    new TalonFXWrapper(RobotMap.CAN.SPINNING_MAGAZINE_TALON_FX_ID));
+            instance = new SpinningMagazine(NAMESPACE_NAME, new TalonFXWrapper(RobotMap.CAN.SPINNING_MAGAZINE_TALON_FX_ID));
         }
         return instance;
     }
@@ -33,4 +32,5 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
     public void configureDashboard() {
         namespace.putNumber("speed", motorController::get);
     }
+
 }
