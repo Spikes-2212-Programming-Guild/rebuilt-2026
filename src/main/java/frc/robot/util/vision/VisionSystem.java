@@ -21,10 +21,10 @@ public class VisionSystem {
      * @param robotRelativeSpeedSupplier Used to check if the robot is moving too fast for clear images.
      * @return A list of valid measurements from all cameras.
      */
-    public List<VisionMeasurement> getMeasurements(Supplier<ChassisSpeeds> robotRelativeSpeedSupplier) {
+    public List<VisionMeasurement> getMeasurements(Supplier<ChassisSpeeds> speedSupplier) {
         List<VisionMeasurement> validMeasurements = new ArrayList<>();
 
-        ChassisSpeeds currentSpeeds = robotRelativeSpeedSupplier.get();
+        ChassisSpeeds currentSpeeds = speedSupplier.get();
 
         for (AprilTagCamera camera : cameras) {
             if (!camera.isConnected()) continue;
