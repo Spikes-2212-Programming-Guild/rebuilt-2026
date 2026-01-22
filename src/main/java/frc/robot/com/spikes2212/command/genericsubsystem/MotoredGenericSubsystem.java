@@ -1,8 +1,8 @@
 package frc.robot.com.spikes2212.command.genericsubsystem;
 
 import frc.robot.com.spikes2212.dashboard.Namespace;
-import com.spikes2212.util.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import frc.robot.com.spikes2212.util.MotorControllerGroup;
 
 import java.util.function.Supplier;
 

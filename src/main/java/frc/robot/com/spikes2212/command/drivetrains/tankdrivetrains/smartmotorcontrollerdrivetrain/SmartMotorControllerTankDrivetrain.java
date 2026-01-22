@@ -1,11 +1,11 @@
 package frc.robot.com.spikes2212.command.drivetrains.tankdrivetrains.smartmotorcontrollerdrivetrain;
 
-import com.spikes2212.command.drivetrains.tankdrivetrains.TankDrivetrain;
 import frc.robot.com.spikes2212.control.FeedForwardSettings;
 import frc.robot.com.spikes2212.control.PIDSettings;
 import frc.robot.com.spikes2212.control.TrapezoidProfileSettings;
-import com.spikes2212.util.UnifiedControlMode;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.com.spikes2212.util.UnifiedControlMode;
+import frc.robot.com.spikes2212.command.drivetrains.tankdrivetrains.TankDrivetrain;
 
 /**
  * A {@link TankDrivetrain} that runs control loops on an applicable motor controllers.

@@ -1,12 +1,12 @@
 package frc.robot.com.spikes2212.command.genericsubsystem.smartmotorcontrollersubsystem;
 
-import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
+import frc.robot.com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import frc.robot.com.spikes2212.control.FeedForwardSettings;
 import frc.robot.com.spikes2212.control.PIDSettings;
 import frc.robot.com.spikes2212.control.TrapezoidProfileSettings;
-import com.spikes2212.util.UnifiedControlMode;
-import com.spikes2212.util.smartmotorcontrollers.SmartMotorController;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.com.spikes2212.util.UnifiedControlMode;
+import frc.robot.com.spikes2212.util.smartmotorcontrollers.SmartMotorController;
 
 import java.util.List;
 

@@ -3,9 +3,9 @@ package frc.robot.com.spikes2212.command.drivetrains.tankdrivetrains.commands.sm
 import frc.robot.com.spikes2212.command.drivetrains.tankdrivetrains.smartmotorcontrollerdrivetrain.SmartMotorControllerTankDrivetrain;
 import frc.robot.com.spikes2212.control.FeedForwardSettings;
 import frc.robot.com.spikes2212.control.PIDSettings;
-import com.spikes2212.util.UnifiedControlMode;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.com.spikes2212.util.UnifiedControlMode;
 
 import java.util.function.Supplier;
 

@@ -4,7 +4,7 @@ import frc.robot.com.spikes2212.command.drivetrains.tankdrivetrains.smartmotorco
 import frc.robot.com.spikes2212.control.FeedForwardSettings;
 import frc.robot.com.spikes2212.control.PIDSettings;
 import frc.robot.com.spikes2212.control.TrapezoidProfileSettings;
-import com.spikes2212.util.UnifiedControlMode;
+import frc.robot.com.spikes2212.util.UnifiedControlMode;
 
 import java.util.function.Supplier;
 
