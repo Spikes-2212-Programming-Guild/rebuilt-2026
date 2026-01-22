@@ -2,6 +2,9 @@ package frc.robot.commands.difficult.commands.swerve;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import frc.robot.RobotMap;
 import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveDrivetrain;
 import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveModule;
@@ -14,21 +17,42 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
     private final static double TRACK_WIDTH = -1;
     private final static double TRACK_LENGTH = -1;
 
+    private final StructArrayPublisher<SwerveModuleState> currentStates = NetworkTableInstance.getDefault()
+            .getStructArrayTopic("current states", SwerveModuleState.struct).publish();
+    private final StructArrayPublisher<SwerveModuleState> desiredStates = NetworkTableInstance.getDefault()
+            .getStructArrayTopic("desired states", SwerveModuleState.struct).publish();
+
     private final Pigeon2 gyro;
 
     private static DrivetrainRebuilt instance;
 
-public static DrivetrainRebuilt getInstance(){
-    if (instance == null){
-        new DrivetrainRebuilt(NAMESPACE_NAME, SwerveModuleHolder.getFrontLeft(), SwerveModuleHolder.getFrontRight(),
-                SwerveModuleHolder.getBackLeft(), SwerveModuleHolder.getBackRight(),TRACK_WIDTH, TRACK_LENGTH,
-                MAX_POSSIBLE_VELOCITY, new Pigeon2(RobotMap.CAN.SWERVE_GYRO_PIGEON_2_ID));
+    public static DrivetrainRebuilt getInstance() {
+        if (instance == null) {
+            new DrivetrainRebuilt(NAMESPACE_NAME, SwerveModuleHolder.getFrontLeft(), SwerveModuleHolder.getFrontRight(),
+                    SwerveModuleHolder.getBackLeft(), SwerveModuleHolder.getBackRight(), TRACK_WIDTH, TRACK_LENGTH,
+                    MAX_POSSIBLE_VELOCITY, new Pigeon2(RobotMap.CAN.SWERVE_GYRO_PIGEON_2_ID));
+        }
+        return instance;
     }
-    return instance;
-}
+
     private DrivetrainRebuilt(String namespaceName, SwerveModule frontLeftModule, SwerveModule frontRightModule, SwerveModule backLeftModule, SwerveModule backRightModule, double drivetrainTrackWidth, double drivetrainTrackLength, double maxPossibleVelocity, Pigeon2 gyro) {
         super(namespaceName, frontLeftModule, frontRightModule, backLeftModule, backRightModule, drivetrainTrackWidth, drivetrainTrackLength, maxPossibleVelocity);
         this.gyro = gyro;
+
+        setStates(currentStates,
+                new SwerveModuleState[]{
+                        new SwerveModuleState(),
+                        new SwerveModuleState(),
+                        new SwerveModuleState(),
+                        new SwerveModuleState()
+                });
+        setStates(desiredStates,
+                new SwerveModuleState[]{
+                        new SwerveModuleState(),
+                        new SwerveModuleState(),
+                        new SwerveModuleState(),
+                        new SwerveModuleState()
+                });
     }
 
     @Override
@@ -39,6 +63,27 @@ public static DrivetrainRebuilt getInstance(){
     @Override
     public void resetAngleSensor() {
         gyro.reset();
+    }
+
+    @Override
+    public void drive(double xSpeed, double ySpeed, double rotationSpeed, boolean isFieldRelative,
+                      double timeStep, boolean useVelocityPID) {
+        super.drive(xSpeed, ySpeed, rotationSpeed, isFieldRelative,
+                timeStep, useVelocityPID);
+
+        setStates(currentStates,
+                new SwerveModuleState[]{
+                        frontLeftModule.getModuleState(),
+                        frontRightModule.getModuleState(),
+                        backLeftModule.getModuleState(),
+                        backRightModule.getModuleState()
+                });
+
+        setStates(desiredStates, getDesiredStates(xSpeed, ySpeed, rotationSpeed, isFieldRelative, timeStep));
+    }
+
+    public void setStates(StructArrayPublisher<SwerveModuleState> states, SwerveModuleState[] desiredStatesToSet) {
+        states.set(desiredStatesToSet);
     }
 
     @Override
