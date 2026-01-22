@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.difficultCommands;
 
 import com.spikes2212.command.genericsubsystem.commands.smartmotorcontrollergenericsubsystem.MoveSmartMotorControllerGenericSubsystem;
 import com.spikes2212.control.FeedForwardController;
