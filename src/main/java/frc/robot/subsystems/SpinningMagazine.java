@@ -8,7 +8,7 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
 
     private final static String NAMESPACE_NAME = "spinning magazine";
 
-    private final TalonFXWrapper motor;
+    private final TalonFXWrapper motor; //@TODO ask mechanics what motor do we use
 
     private static SpinningMagazine instance;
 
@@ -23,12 +23,6 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
     private SpinningMagazine(String namespaceName, TalonFXWrapper motor) {
         super(namespaceName, motor);
         this.motor = motor;
-    }
-
-    //@TODO ask what causes it to start/stop and add it
-    @Override
-    public boolean canMove(double speed) {
-        return super.canMove(speed);
     }
 
     @Override

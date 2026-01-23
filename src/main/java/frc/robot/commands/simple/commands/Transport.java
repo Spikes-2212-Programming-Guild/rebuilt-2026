@@ -1,4 +1,4 @@
-package frc.robot.simpleCommands;
+package frc.robot.commands.simple.commands;
 
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import frc.robot.subsystems.SpinningMagazine;
@@ -9,5 +9,10 @@ public class Transport extends MoveGenericSubsystem {
 
     public Transport(SpinningMagazine spinningMagazine, Supplier<Double> speed) {
         super(spinningMagazine, speed);
+    }
+
+    @Override
+    public boolean isFinished(){
+        return false;
     }
 }
