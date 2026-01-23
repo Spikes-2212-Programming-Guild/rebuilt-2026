@@ -9,8 +9,8 @@ public class RobotMap {
     
     public interface DIO {
 
-        int HOOD_TOP_LIMIT = -1;
         int HOOD_BOTTOM_LIMIT = -1;
+        int HOOD_ABSOLUTE_ENCODER = -1;
     }
     
     public interface PWM {

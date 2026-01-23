@@ -1,7 +1,6 @@
 package frc.robot.commands.difficultCommands;
 
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
-import com.spikes2212.dashboard.RootNamespace;
 import frc.robot.subsystems.Hood;
 
 public class ResetHoodPose extends MoveGenericSubsystem {
