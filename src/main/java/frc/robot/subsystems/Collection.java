@@ -8,8 +8,7 @@ public class Collection extends MotoredGenericSubsystem {
 
     private final static String NAMESPACE_NAME = "collection";
 
-    private final TalonFXWrapper motor;
-
+    private final TalonFXWrapper motor; //@TODO ask the mechanics what motor to use
     private static Collection instance;
 
     public static Collection getInstance() {
