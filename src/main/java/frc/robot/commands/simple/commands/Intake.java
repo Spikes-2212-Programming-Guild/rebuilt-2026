@@ -10,4 +10,9 @@ public class Intake extends MoveGenericSubsystem {
     public Intake(Collection collection, Supplier<Double> speed) {
         super(collection, speed);
     }
+
+    @Override
+    public boolean isFinished(){
+        return false;
+    }
 }

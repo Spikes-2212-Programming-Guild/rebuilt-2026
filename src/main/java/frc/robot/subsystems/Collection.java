@@ -24,7 +24,6 @@ public class Collection extends MotoredGenericSubsystem {
         this.motor = motor;
     }
 
-    //@TODO ask what decides if it works or not and add it
     @Override
     public boolean canMove(double speed) {
         return true;
