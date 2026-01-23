@@ -88,6 +88,7 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
 
     @Override
     public void configureDashboard() {
+        namespace.putNumber("gyro", getAngle()::getDegrees);
 
     }
 }
