@@ -12,8 +12,6 @@ public class Transport extends MoveGenericSubsystem {
         spinningMagazine.configureDashboard();
     }
 
-
-
     @Override
     public boolean isFinished(){
         return false;
