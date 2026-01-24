@@ -26,6 +26,7 @@ public class Shooter extends MotoredGenericSubsystem {
         super(namespaceName, upperMotor, lowerMotor);
         this.upperMotor = upperMotor;
         this.lowerMotor = lowerMotor;
+        configureDashboard();
     }
 
     @Override
