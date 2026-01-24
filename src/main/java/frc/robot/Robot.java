@@ -4,15 +4,19 @@
 
 package frc.robot;
 
+import com.revrobotics.spark.SparkLowLevel;
+import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Transport;
 
 public class Robot extends TimedRobot {
 
+    private Transport transport;
+
     @Override
     public void robotInit() {
-
-    }
+        SparkMax motor = new SparkMax(RobotMap.CAN.TRANSPORT_NEO_ID, SparkLowLevel.MotorType.kBrushless);}
 
     @Override
     public void robotPeriodic() {
