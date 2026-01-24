@@ -26,4 +26,10 @@ public class Shooter extends MotoredGenericSubsystem {
         this.upperMotor = upperMotor;
         this.lowerMotor = lowerMotor;
     }
+
+    @Override
+    public void configureDashboard() {
+        namespace.putNumber("upper kraken speed", upperMotor::getVelocity);
+        namespace.putNumber("lower kraken speed", lowerMotor::getVelocity);
+    }
 }
