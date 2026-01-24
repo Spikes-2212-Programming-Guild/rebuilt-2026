@@ -36,6 +36,7 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
         this.rightMotor = rightMotor;
         this.infrared = infrared;
         rightMotor.follow(leftMotor, leftInverted);
+        configureDashboard();
     }
 
     @Override
@@ -45,8 +46,8 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("current right velocity", rightMotor::getVelocity);
-        namespace.putNumber("current left velocity", leftMotor::getVelocity);
+        namespace.putNumber("right velocity", rightMotor::getVelocity);
+        namespace.putNumber("left velocity", leftMotor::getVelocity);
         namespace.putBoolean("infrared", infrared::get);
     }
 }
