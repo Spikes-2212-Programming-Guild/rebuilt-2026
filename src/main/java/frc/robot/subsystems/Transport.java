@@ -23,4 +23,14 @@ public class Transport extends MotoredGenericSubsystem {
         super(namespaceName, talonFX);
         this.talonFX = talonFX;
     }
+
+    @Override
+    protected void apply(double speed) {
+        super.apply(speed);
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+    }
 }

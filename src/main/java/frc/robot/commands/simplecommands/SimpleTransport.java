@@ -23,4 +23,3 @@ public class SimpleTransport extends MoveGenericSubsystem {
         this.transport.stop();
     }
 }
-
