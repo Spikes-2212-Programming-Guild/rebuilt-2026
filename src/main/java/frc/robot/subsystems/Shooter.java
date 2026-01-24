@@ -8,9 +8,9 @@ public class Shooter extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "shooter";
 
-    private final TalonFXWrapper upperMotor;
+    private final TalonFXWrapper rightMotor;
     private final TalonFXWrapper middleMotor;
-    private final TalonFXWrapper lowerMotor;
+    private final TalonFXWrapper leftMotor;
 
     private static Shooter instance;
 
@@ -24,19 +24,19 @@ public class Shooter extends MotoredGenericSubsystem {
         return instance;
     }
 
-    private Shooter(String namespaceName, TalonFXWrapper upperMotor,TalonFXWrapper middleMotor,
-                    TalonFXWrapper lowerMotor) {
-        super(namespaceName, upperMotor, middleMotor, lowerMotor);
-        this.upperMotor = upperMotor;
+    private Shooter(String namespaceName, TalonFXWrapper rightMotor, TalonFXWrapper middleMotor,
+                    TalonFXWrapper leftMotor) {
+        super(namespaceName, rightMotor, middleMotor, leftMotor);
+        this.rightMotor = rightMotor;
         this.middleMotor = middleMotor;
-        this.lowerMotor = lowerMotor;
+        this.leftMotor = leftMotor;
         configureDashboard();
     }
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("upper kraken speed", upperMotor::getVelocity);
+        namespace.putNumber("upper kraken speed", rightMotor::getVelocity);
         namespace.putNumber("middle kraken speed", middleMotor::getVelocity);
-        namespace.putNumber("lower kraken speed", lowerMotor::getVelocity);
+        namespace.putNumber("lower kraken speed", leftMotor::getVelocity);
     }
 }
