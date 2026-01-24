@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.util.vision.drivers.LimelightHelpers;
+import frc.robot.util.vision.drivers.LimelightHelpers.PoseEstimate;
 import frc.robot.util.vision.VisionMeasurement;
 import frc.robot.util.vision.VisionConstants;
 
@@ -14,20 +15,16 @@ import java.util.function.Supplier;
 
 public class LimelightCamera implements AprilTagCamera {
 
-    private static final double CONNECTION_TIMEOUT_SECONDS = -1.0;
+    private static final double CONNECTION_TIMEOUT_SECONDS = 1.0;
 
     private final String limelightName;
-    private final Supplier<Rotation2d> rotation;
+    private final Supplier<Rotation2d> rotationSupplier;
     private double lastHeartbeatValue = -1;
     private double lastHeartbeatTime = 0;
 
-    /**
-     * @param name             the name of the limelight
-     * @param rotationSupplier a supplier that returns the robot's current Gyro rotation
-     */
     public LimelightCamera(String name, Supplier<Rotation2d> rotationSupplier) {
         this.limelightName = name;
-        this.rotation = rotationSupplier;
+        this.rotationSupplier = rotationSupplier;
     }
 
     @Override
@@ -41,10 +38,21 @@ public class LimelightCamera implements AprilTagCamera {
     }
 
     @Override
-    public List<VisionMeasurement> getMeasurements(ChassisSpeeds robotRelativeSpeeds) {
+    public List<VisionMeasurement> getMeasurements(ChassisSpeeds robotSpeeds) {
+        updateRobotOrientation(robotSpeeds);
 
-        double robotYawDegrees = rotation.get().getDegrees();
-        double robotYawRateDegreesPerSec = Math.toDegrees(robotRelativeSpeeds.omegaRadiansPerSecond);
+        var pose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
+
+        if (!isValid(pose, robotSpeeds)) {
+            return Collections.emptyList();
+        }
+
+        return List.of(createMeasurement(pose));
+    }
+
+    private void updateRobotOrientation(ChassisSpeeds robotSpeeds) {
+        double robotYawDegrees = rotationSupplier.get().getDegrees();
+        double robotYawRateDegreesPerSec = Math.toDegrees(robotSpeeds.omegaRadiansPerSecond);
 
         LimelightHelpers.SetRobotOrientation(
                 limelightName,
@@ -52,13 +60,17 @@ public class LimelightCamera implements AprilTagCamera {
                 robotYawRateDegreesPerSec,
                 0, 0, 0, 0
         );
+    }
 
-        var pose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
-        if (pose == null || pose.tagCount == 0 || !VisionConstants.isReliable(pose.avgTagDist, robotRelativeSpeeds)) {
-            return Collections.emptyList();
+    private boolean isValid(PoseEstimate pose, ChassisSpeeds robotSpeeds) {
+        if (pose == null || pose.tagCount == 0) {
+            return false;
         }
+        return VisionConstants.isReliable(pose.avgTagDist, robotSpeeds);
+    }
 
-        return List.of(new VisionMeasurement(
+    private VisionMeasurement createMeasurement(PoseEstimate pose) {
+        return new VisionMeasurement(
                 pose.pose,
                 pose.timestampSeconds,
                 VecBuilder.fill(
@@ -66,7 +78,7 @@ public class LimelightCamera implements AprilTagCamera {
                         VisionConstants.calculateStandardDeviation(VisionConstants.DRIVE_TRUST_SCALAR, pose.avgTagDist),
                         VisionConstants.calculateStandardDeviation(VisionConstants.ANGLE_TRUST_SCALAR, pose.avgTagDist)
                 )
-        ));
+        );
     }
 
     @Override
