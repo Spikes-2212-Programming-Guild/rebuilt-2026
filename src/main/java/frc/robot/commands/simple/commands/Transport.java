@@ -13,7 +13,7 @@ public class Transport extends MoveGenericSubsystem {
     }
 
     @Override
-    public boolean isFinished(){
+    public boolean isFinished() {
         return false;
     }
 }
