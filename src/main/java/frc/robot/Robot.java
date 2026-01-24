@@ -10,8 +10,6 @@ import frc.robot.subsystems.Transport;
 
 public class Robot extends TimedRobot {
 
-    private Transport transport;
-
     @Override
     public void robotInit() {
     }
