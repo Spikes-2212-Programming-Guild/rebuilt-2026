@@ -7,15 +7,10 @@ import frc.robot.RobotMap;
 public class Transport extends MotoredGenericSubsystem {
 
     private final static String NAMESPACE_NAME = "transport";
-
+    int SPEED = -1;
     private static Transport instance;
 
     private final TalonFXWrapper talonFX;
-
-    protected Transport(String namespaceName, TalonFXWrapper talonFX) {
-        super(namespaceName, talonFX);
-        this.talonFX = talonFX;
-    }
 
     public static Transport getInstance() {
         if (instance == null) {
@@ -24,11 +19,12 @@ public class Transport extends MotoredGenericSubsystem {
         return instance;
     }
 
-    protected void apply(double speed) {
-        super.apply(speed);
+    public Transport(String namespaceName, TalonFXWrapper talonFX) {
+        super(namespaceName, talonFX);
+        this.talonFX = talonFX;
     }
 
-    public void stop() {
-        super.stop();
+    public void configureDashboard() {
+        super.configureDashboard();
     }
 }

@@ -13,12 +13,4 @@ public class SimpleTransport extends MoveGenericSubsystem {
         super(transport, speed);
         this.transport = transport;
     }
-
-    public boolean isFinished() {
-        return !this.transport.canMove((Double) this.speedSupplier.get());
-    }
-
-    public void end(boolean interrupted) {
-        this.transport.stop();
-    }
 }
