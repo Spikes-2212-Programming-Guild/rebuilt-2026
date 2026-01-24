@@ -26,7 +26,7 @@ public class Shooter extends MotoredGenericSubsystem {
 
     private Shooter(String namespaceName, TalonFXWrapper upperMotor,TalonFXWrapper middleMotor,
                     TalonFXWrapper lowerMotor) {
-        super(namespaceName, upperMotor,middleMotor, lowerMotor);
+        super(namespaceName, upperMotor, middleMotor, lowerMotor);
         this.upperMotor = upperMotor;
         this.middleMotor = middleMotor;
         this.lowerMotor = lowerMotor;
