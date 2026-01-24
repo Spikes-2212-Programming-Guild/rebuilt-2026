@@ -10,18 +10,14 @@ import frc.robot.util.vision.cameras.AprilTagCamera;
 public class VisionSystem {
 
     private final List<AprilTagCamera> cameras;
+    private final Supplier<ChassisSpeeds> speedSupplier;
 
-    public VisionSystem(AprilTagCamera... cameras) {
+    public VisionSystem(Supplier<ChassisSpeeds> speedSupplier, AprilTagCamera... cameras) {
+        this.speedSupplier = speedSupplier;
         this.cameras = List.of(cameras);
     }
 
-    /**
-     * Polls all cameras for new data.
-     *
-     * @param speedSupplier Used to check if the robot is moving too fast for clear images.
-     * @return A list of valid measurements from all cameras.
-     */
-    public List<VisionMeasurement> getMeasurements(Supplier<ChassisSpeeds> speedSupplier) {
+    public List<VisionMeasurement> getMeasurements() {
         List<VisionMeasurement> validMeasurements = new ArrayList<>();
 
         ChassisSpeeds currentSpeeds = speedSupplier.get();
