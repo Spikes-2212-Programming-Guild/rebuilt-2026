@@ -7,10 +7,11 @@ import frc.robot.RobotMap;
 public class Shooter extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "shooter";
-    private static Shooter instance;
 
     private final TalonFXWrapper upperMotor;
     private final TalonFXWrapper lowerMotor;
+
+    private static Shooter instance;
 
     public static Shooter getInstance() {
         if(instance == null){
