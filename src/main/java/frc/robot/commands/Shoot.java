@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 public class Shoot extends MoveGenericSubsystem {
 
-    public Shoot(Shooter shooter, Supplier<Double> speedSupplier) {
-        super(shooter, speedSupplier);
+    public Shoot(Shooter shooter, Supplier<Double> speed) {
+        super(shooter, speed);
     }
 }
