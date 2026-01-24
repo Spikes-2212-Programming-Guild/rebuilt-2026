@@ -15,8 +15,8 @@ public class Shooter extends MotoredGenericSubsystem {
     public static Shooter getInstance(){
         if(instance == null){
             instance = new Shooter(NAMESPACE_NAME,
-                    new TalonFXWrapper(RobotMap.CAN.UPPER_TALON_FX_SHOOTER_ID),
-                    new TalonFXWrapper(RobotMap.CAN.LOWER_TALON_FX_SHOOTER_ID));
+                    new TalonFXWrapper(RobotMap.CAN.SHOOTER_UPPER_TALON_FX_ID),
+                    new TalonFXWrapper(RobotMap.CAN.SHOOTER_LOWER_TALON_FX_ID));
         }
         return instance;
     }
