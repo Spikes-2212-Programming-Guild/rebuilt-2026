@@ -26,9 +26,4 @@ public class Shooter extends MotoredGenericSubsystem {
         this.upperMotor = upperMotor;
         this.lowerMotor = lowerMotor;
     }
-
-    public void calculateAngleToShoot() {
-        //@TODO fill this method when i know the physics of it
-        //the void is intentional so it gives no error when it doesnt return anything
-    }
 }
