@@ -8,7 +8,7 @@
           <entry name="$PROJECT_DIR$/../../../Public/wpilib/2026/maven/edu/wpi/first/epilogue/epilogue-processor-java/2026.1.1/epilogue-processor-java-2026.1.1.jar" />
           <entry name="$PROJECT_DIR$/../../../Public/wpilib/2026/maven/edu/wpi/first/epilogue/epilogue-runtime-java/2026.1.1/epilogue-runtime-java-2026.1.1.jar" />
         </processorPath>
-        <module name="rebuilt-2026.main" />
+        <module name="rebuilt-2026-season.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />

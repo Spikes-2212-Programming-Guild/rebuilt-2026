@@ -29,7 +29,7 @@ public class PhotonVisionCamera implements AprilTagCamera {
     }
 
     @Override
-    public List<VisionMeasurement> getMeasurements(ChassisSpeeds robotSpeeds) {
+    public List<VisionMeasurement> getMeasurements(ChassisSpeeds robotRelativeSpeeds) {
         var allResults = camera.getAllUnreadResults();
         List<VisionMeasurement> measurements = new ArrayList<>();
 
@@ -47,7 +47,7 @@ public class PhotonVisionCamera implements AprilTagCamera {
                 avgDist /= estimate.targetsUsed.size();
             }
 
-            if (!VisionConstants.isReliable(avgDist, robotSpeeds)) continue;
+            if (!VisionConstants.isReliable(avgDist, robotRelativeSpeeds)) continue;
 
             measurements.add(new VisionMeasurement(
                     estimate.estimatedPose.toPose2d(),

@@ -2,10 +2,6 @@ package frc.robot.util.vision;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
-/**
- * formerly "VisionConstants".
- * Centralizes tuning constants and math helpers for the vision system.
- */
 public class VisionConstants {
 
     public static final double MAX_DRIVE_SPEED_MPS = -1;
