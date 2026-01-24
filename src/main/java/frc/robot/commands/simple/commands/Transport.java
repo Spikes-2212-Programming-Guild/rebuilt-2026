@@ -9,7 +9,10 @@ public class Transport extends MoveGenericSubsystem {
 
     public Transport(SpinningMagazine spinningMagazine, Supplier<Double> speed) {
         super(spinningMagazine, speed);
+        spinningMagazine.configureDashboard();
     }
+
+
 
     @Override
     public boolean isFinished(){
