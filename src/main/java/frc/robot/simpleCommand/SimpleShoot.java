@@ -5,9 +5,9 @@ import frc.robot.subsystems.Shooter;
 
 import java.util.function.Supplier;
 
-public class simpleShoot extends MoveGenericSubsystem {
+public class SimpleShoot extends MoveGenericSubsystem {
 
-    public simpleShoot(Shooter shooter, Supplier<Double> speed) {
+    public SimpleShoot(Shooter shooter, Supplier<Double> speed) {
         super(shooter, speed);
     }
 }
