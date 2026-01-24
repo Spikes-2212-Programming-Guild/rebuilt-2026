@@ -9,6 +9,5 @@ public class SimpleTransport extends MoveGenericSubsystem {
 
     public SimpleTransport(Transport transport, Supplier<Double> speed) {
         super(transport, speed);
-
     }
 }

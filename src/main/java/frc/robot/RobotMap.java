@@ -4,7 +4,7 @@ public class RobotMap {
 
     public interface CAN {
 
-        int SPARK_MAX = -1;
+        int TRANSPORT_SPARK_MAX_ID = -1;
     }
 
     public interface DIO {

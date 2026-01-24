@@ -16,7 +16,7 @@ public class Transport extends MotoredGenericSubsystem {
     public static Transport getInstance() {
         if (instance == null) {
             instance = new Transport(NAMESPACE_NAME,
-                    SparkWrapper.createSparkMax(RobotMap.CAN.SPARK_MAX, SparkLowLevel.MotorType.kBrushless));
+                    SparkWrapper.createSparkMax(RobotMap.CAN.TRANSPORT_SPARK_MAX_ID, SparkLowLevel.MotorType.kBrushless));
         }
         return instance;
     }
