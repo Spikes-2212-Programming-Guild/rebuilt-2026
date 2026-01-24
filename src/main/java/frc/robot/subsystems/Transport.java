@@ -9,7 +9,7 @@ public class Transport extends MotoredGenericSubsystem {
 
     private final static String NAMESPACE_NAME = "transport";
 
-    private final SparkWrapper motor;
+    private final SparkWrapper sparkMax;
 
     private static Transport instance;
 
@@ -21,14 +21,14 @@ public class Transport extends MotoredGenericSubsystem {
         return instance;
     }
 
-    private Transport(String namespaceName, SparkWrapper motor) {
-        super(namespaceName, motor);
-        this.motor = motor;
+    private Transport(String namespaceName, SparkWrapper sparkMax) {
+        super(namespaceName, sparkMax);
+        this.sparkMax = sparkMax;
         configureDashboard();
     }
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber(" velocity ", motor::getVelocity);
+        namespace.putNumber(" velocity ", sparkMax::get);
     }
 }
