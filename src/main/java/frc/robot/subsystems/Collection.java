@@ -25,11 +25,6 @@ public class Collection extends MotoredGenericSubsystem {
     }
 
     @Override
-    public boolean canMove(double speed) {
-        return true;
-    }
-
-    @Override
     public void configureDashboard() {
         namespace.putNumber("motor velocity", motor::getVelocity);
     }
