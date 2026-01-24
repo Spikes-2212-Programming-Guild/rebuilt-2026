@@ -8,7 +8,7 @@ public class Shooter extends MotoredGenericSubsystem {
 
     private final TalonFXWrapper upperMotor;
     private final TalonFXWrapper lowerMotor;
-    static final String NAMESPACE_NAME = "shooter";
+    private static final String NAMESPACE_NAME = "shooter";
 
     private static Shooter instance;
 
