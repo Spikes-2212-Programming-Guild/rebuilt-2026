@@ -8,6 +8,10 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "shooter";
 
+    private final double GEAR_RATIO = -1;
+    private final double WHEEL_DIAMETER_TO_INCHES = -1;
+    private final double INCHES_TO_METERS = -1;
+
     private static Shooter instance;
 
     public static Shooter getInstance() {
@@ -29,5 +33,9 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
     @Override
     public void configureDashboard() {
         namespace.putNumber("shooter motors", super.motorController::get);
+    }
+
+    public double velocityToMetersPerSecond(){
+        return GEAR_RATIO*WHEEL_DIAMETER_TO_INCHES*INCHES_TO_METERS;
     }
 }
