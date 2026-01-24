@@ -1,4 +1,4 @@
-package frc.robot.simpleCommand;
+package frc.robot.commands.simplecommand;
 
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import frc.robot.subsystems.Shooter;
