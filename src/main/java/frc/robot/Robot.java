@@ -16,7 +16,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        SparkMax motor = new SparkMax(RobotMap.CAN.TRANSPORT_NEO_ID, SparkLowLevel.MotorType.kBrushless);}
+        SparkMax motor = new SparkMax(RobotMap.CAN.SPARK_MAX, SparkLowLevel.MotorType.kBrushless);}
 
     @Override
     public void robotPeriodic() {

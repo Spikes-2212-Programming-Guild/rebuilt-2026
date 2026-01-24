@@ -7,10 +7,8 @@ import java.util.function.Supplier;
 
 public class SimpleTransport extends MoveGenericSubsystem {
 
-    private final Transport transport;
-
     public SimpleTransport(Transport transport, Supplier<Double> speed) {
         super(transport, speed);
-        this.transport = transport;
+
     }
 }
