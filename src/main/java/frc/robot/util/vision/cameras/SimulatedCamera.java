@@ -64,7 +64,7 @@ public class SimulatedCamera implements AprilTagCamera {
     }
 
     @Override
-    public List<VisionMeasurement> getMeasurements(ChassisSpeeds robotSpeeds) {
+    public List<VisionMeasurement> getMeasurements(ChassisSpeeds robotRelativeSpeeds) {
         visionSim.update(simulatedRobotPoseSupplier.get());
 
         var results = cameraSim.getCamera().getAllUnreadResults();
@@ -86,8 +86,8 @@ public class SimulatedCamera implements AprilTagCamera {
 
         if (avgDist >= VisionConstants.MAX_TAG_DISTANCE_METERS) return Collections.emptyList();
 
-        double driveVelocity = Math.hypot(robotSpeeds.vxMetersPerSecond, robotSpeeds.vyMetersPerSecond);
-        double turnVelocity = Math.abs(robotSpeeds.omegaRadiansPerSecond);
+        double driveVelocity = Math.hypot(robotRelativeSpeeds.vxMetersPerSecond, robotRelativeSpeeds.vyMetersPerSecond);
+        double turnVelocity = Math.abs(robotRelativeSpeeds.omegaRadiansPerSecond);
 
         if (driveVelocity > VisionConstants.MAX_DRIVE_SPEED_MPS ||
                 turnVelocity > VisionConstants.MAX_TURN_SPEED_RADPS) return Collections.emptyList();

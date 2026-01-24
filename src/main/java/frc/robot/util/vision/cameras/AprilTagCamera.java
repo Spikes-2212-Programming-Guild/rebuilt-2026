@@ -9,7 +9,7 @@ public interface AprilTagCamera {
 
     boolean isConnected();
 
-    List<VisionMeasurement> getMeasurements(ChassisSpeeds robotSpeeds);
+    List<VisionMeasurement> getMeasurements(ChassisSpeeds robotRelativeSpeeds);
 
     String getName();
 

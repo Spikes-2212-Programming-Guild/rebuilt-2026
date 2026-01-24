@@ -17,7 +17,7 @@ public class LimelightCamera implements AprilTagCamera {
     private static final double CONNECTION_TIMEOUT_SECONDS = -1.0;
 
     private final String limelightName;
-    private final Supplier<Rotation2d> rotationSupplier;
+    private final Supplier<Rotation2d> rotation;
     private double lastHeartbeatValue = -1;
     private double lastHeartbeatTime = 0;
 
@@ -27,7 +27,7 @@ public class LimelightCamera implements AprilTagCamera {
      */
     public LimelightCamera(String name, Supplier<Rotation2d> rotationSupplier) {
         this.limelightName = name;
-        this.rotationSupplier = rotationSupplier;
+        this.rotation = rotationSupplier;
     }
 
     @Override
@@ -41,10 +41,10 @@ public class LimelightCamera implements AprilTagCamera {
     }
 
     @Override
-    public List<VisionMeasurement> getMeasurements(ChassisSpeeds robotSpeeds) {
+    public List<VisionMeasurement> getMeasurements(ChassisSpeeds robotRelativeSpeeds) {
 
-        double robotYawDegrees = rotationSupplier.get().getDegrees();
-        double robotYawRateDegreesPerSec = Math.toDegrees(robotSpeeds.omegaRadiansPerSecond);
+        double robotYawDegrees = rotation.get().getDegrees();
+        double robotYawRateDegreesPerSec = Math.toDegrees(robotRelativeSpeeds.omegaRadiansPerSecond);
 
         LimelightHelpers.SetRobotOrientation(
                 limelightName,
@@ -54,7 +54,7 @@ public class LimelightCamera implements AprilTagCamera {
         );
 
         var pose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
-        if (pose == null || pose.tagCount == 0 || !VisionConstants.isReliable(pose.avgTagDist, robotSpeeds)) {
+        if (pose == null || pose.tagCount == 0 || !VisionConstants.isReliable(pose.avgTagDist, robotRelativeSpeeds)) {
             return Collections.emptyList();
         }
 
