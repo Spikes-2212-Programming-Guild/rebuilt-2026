@@ -12,6 +12,11 @@ public class Transport extends MotoredGenericSubsystem {
 
     private final TalonFXWrapper talonFX;
 
+    protected Transport(String namespaceName, TalonFXWrapper talonFX) {
+        super(namespaceName, talonFX);
+        this.talonFX = talonFX;
+    }
+
     public static Transport getInstance() {
         if (instance == null) {
             instance = new Transport(NAMESPACE_NAME, new TalonFXWrapper(RobotMap.CAN.TRANSPORT_TALON_FX_ID));
@@ -19,17 +24,10 @@ public class Transport extends MotoredGenericSubsystem {
         return instance;
     }
 
-    public Transport(String namespaceName, TalonFXWrapper talonFX) {
-        super(namespaceName, talonFX);
-        this.talonFX = talonFX;
-    }
-
-    @Override
     protected void apply(double speed) {
         super.apply(speed);
     }
 
-    @Override
     public void stop() {
         super.stop();
     }

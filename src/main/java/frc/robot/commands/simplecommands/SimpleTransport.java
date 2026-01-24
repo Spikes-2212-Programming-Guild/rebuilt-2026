@@ -18,7 +18,6 @@ public class SimpleTransport extends MoveGenericSubsystem {
         return !this.transport.canMove((Double) this.speedSupplier.get());
     }
 
-    @Override
     public void end(boolean interrupted) {
         this.transport.stop();
     }
