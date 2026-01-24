@@ -12,7 +12,7 @@ public class Shooter extends MotoredGenericSubsystem {
     private final TalonFXWrapper upperMotor;
     private final TalonFXWrapper lowerMotor;
 
-    public static Shooter getInstance(){
+    public static Shooter getInstance() {
         if(instance == null){
             instance = new Shooter(NAMESPACE_NAME,
                     new TalonFXWrapper(RobotMap.CAN.SHOOTER_UPPER_TALON_FX_ID),
@@ -27,7 +27,7 @@ public class Shooter extends MotoredGenericSubsystem {
         this.lowerMotor = lowerMotor;
     }
 
-    public void calculateAngleToShoot(){
+    public void calculateAngleToShoot() {
         //@TODO fill this method when i know the physics of it
         //the void is intentional so it gives no error when it doesnt return anything
     }
