@@ -12,16 +12,15 @@ public class Transport extends MotoredGenericSubsystem {
 
     private final TalonFXWrapper talonFX;
 
+    public static Transport getInstance() {
+        if (instance == null) {
+            instance = new Transport(NAMESPACE_NAME, new TalonFXWrapper(RobotMap.CAN.TRANSPORT_TALON_FX_ID));
+        }
+        return instance;
+    }
+
     public Transport(String namespaceName, TalonFXWrapper talonFX) {
         super(namespaceName, talonFX);
         this.talonFX = talonFX;
-    }
-
-    public static Transport getInstance() {
-        if (instance == null) {
-            instance = new Transport(NAMESPACE_NAME,
-                    new TalonFXWrapper(RobotMap.CAN.TRANSPORT_TALON_FX_ID));
-        }
-        return instance;
     }
 }
