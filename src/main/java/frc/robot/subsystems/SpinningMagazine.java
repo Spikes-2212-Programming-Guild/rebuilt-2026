@@ -6,7 +6,7 @@ import frc.robot.RobotMap;
 
 public class SpinningMagazine extends MotoredGenericSubsystem {
 
-    private final static String NAMESPACE_NAME = "spinning magazine";
+    private static final String NAMESPACE_NAME = "spinning magazine";
 
     private final TalonFXWrapper motor; //@TODO ask mechanics what motor do we use
 
