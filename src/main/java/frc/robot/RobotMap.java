@@ -4,7 +4,7 @@ public class RobotMap {
 
     public interface CAN {
 
-        int SPINNING_MAGAZINE_TALON_FX_ID = -1;
+        int SPINNING_MAGAZINE_SPARK_WRAPPER_ID = -1;
     }
 
     public interface DIO {

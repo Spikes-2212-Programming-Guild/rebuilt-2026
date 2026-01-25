@@ -9,6 +9,5 @@ public class SimpleTransport extends MoveGenericSubsystem {
 
     public SimpleTransport(SpinningMagazine spinningMagazine, Supplier<Double> speed) {
         super(spinningMagazine, speed);
-        spinningMagazine.configureDashboard();
     }
 }

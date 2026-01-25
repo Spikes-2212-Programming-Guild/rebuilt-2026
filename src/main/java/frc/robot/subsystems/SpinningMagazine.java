@@ -1,28 +1,31 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.SparkLowLevel;
 import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
-import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
-import frc.robot.RobotMap;
+import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
+import static frc.robot.RobotMap.CAN.SPINNING_MAGAZINE_SPARK_WRAPPER_ID;
 
 public class SpinningMagazine extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "spinning magazine";
 
-    private final TalonFXWrapper motor; //@TODO ask mechanics what motor do we use
+    private final SparkWrapper motor;
 
     private static SpinningMagazine instance;
 
     public static SpinningMagazine getInstance() {
         if (instance == null) {
             instance = new SpinningMagazine(NAMESPACE_NAME,
-                    new TalonFXWrapper(RobotMap.CAN.SPINNING_MAGAZINE_TALON_FX_ID));
+                    SparkWrapper.createSparkMax(SPINNING_MAGAZINE_SPARK_WRAPPER_ID, SparkLowLevel.MotorType.fromId(1)));
         }
         return instance;
     }
 
-    private SpinningMagazine(String namespaceName, TalonFXWrapper motor) {
+    private SpinningMagazine(String namespaceName, SparkWrapper motor){
         super(namespaceName, motor);
         this.motor = motor;
+        configureDashboard();
+
     }
 
     @Override
