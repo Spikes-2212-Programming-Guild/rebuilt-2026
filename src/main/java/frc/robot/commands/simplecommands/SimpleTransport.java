@@ -11,9 +11,4 @@ public class SimpleTransport extends MoveGenericSubsystem {
         super(spinningMagazine, speed);
         spinningMagazine.configureDashboard();
     }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
 }
