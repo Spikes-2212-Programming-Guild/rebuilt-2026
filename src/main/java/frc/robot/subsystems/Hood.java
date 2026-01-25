@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import com.spikes2212.command.genericsubsystem.smartmotorcontrollersubsystem.SmartMotorControllerGenericSubsystem;
-import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
+import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Timer;
@@ -20,15 +20,16 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
     }
 
     private static final String NAMESPACE_NAME = "hood";
-    private static final double GEAR_RATIO = -1.0;
     private static final double DEGREES_IN_ROTATIONS = 360;
+    private static final double SECONDES_IN_MINUTE = 360;
+    private static final double GEAR_RATIO = -1.0;
     private static final double DISTANCE_PER_PULSE = GEAR_RATIO * DEGREES_IN_ROTATIONS;
 
-    private static final double MOTION_EPSILON = 1.0;     // Minimum degrees change to be considered "moving"
-    private static final double STALL_TIME_LIMIT = 0.5;   // Seconds to wait before triggering stall protection
-    private static final double MIN_SPEED_TO_CHECK = 0.1; // Minimum motor power to check for stall
+    private static final double MOTION_EPSILON = -1.0;     // Minimum degrees change to be considered "moving"
+    private static final double STALL_TIME_LIMIT = -1.0;   // Seconds to wait before triggering stall protection
+    private static final double MIN_SPEED_TO_CHECK = -1.0; // Minimum motor power to check for stall
 
-    private final TalonFXWrapper talonFX;
+    private final SparkWrapper sparkMax;
     private final DigitalInput bottomLimit;
     private final DutyCycleEncoder absoluteEncoder;
 
@@ -41,25 +42,26 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
     public static Hood getInstance() {
         if (instance == null) {
             instance = new Hood(NAMESPACE_NAME,
-                    new TalonFXWrapper(RobotMap.CAN.HOOD_MOTOR),
+                    SparkWrapper.createSparkMax(RobotMap.CAN.HOOD_MOTOR, CANSparkMax.MotorType.kBrushless),
                     new DigitalInput(RobotMap.DIO.HOOD_BOTTOM_LIMIT),
                     new DutyCycleEncoder(RobotMap.DIO.HOOD_ABSOLUTE_ENCODER));
         }
         return instance;
     }
 
-    private Hood(String namespaceName, TalonFXWrapper talonFX, DigitalInput bottomLimit, DutyCycleEncoder absoluteEncoder) {
-        super(namespaceName, talonFX);
-        this.talonFX = talonFX;
+    private Hood(String namespaceName, SparkWrapper sparkMax, DigitalInput bottomLimit,
+                 DutyCycleEncoder absoluteEncoder) {
+        super(namespaceName, sparkMax);
+        this.sparkMax = sparkMax;
         this.bottomLimit = bottomLimit;
         this.absoluteEncoder = absoluteEncoder;
 
-        talonFX.setEncoderConversionFactor(DISTANCE_PER_PULSE);
+        sparkMax.setVelocityConversionFactor(DISTANCE_PER_PULSE / SECONDES_IN_MINUTE);
         configureDashboard();
     }
 
     public double getAbsDegrees() {
-        return absoluteEncoder.get() * 360.0;
+        return absoluteEncoder.get() * DEGREES_IN_ROTATIONS;
     }
 
     @Override
@@ -98,14 +100,14 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
     public void calibrateEncoderPosition() {
         if (bottomLimit.get()) {
-            talonFX.setPosition(HoodPose.MIN_ANGLE.neededAngle);
+            sparkMax.setPosition(HoodPose.MIN_ANGLE.neededAngle);
         }
     }
 
     public void configureDashboard() {
         namespace.putBoolean("bottom limit", bottomLimit::get);
-        namespace.putNumber("hood pose", talonFX::getPosition);
-        namespace.putNumber("Abs Encoder Deg", this::getAbsDegrees);
+        namespace.putNumber("hood pose", sparkMax::getPosition);
+        namespace.putNumber("abs encoder deg", this::getAbsDegrees);
         namespace.putBoolean("Is Stalled", () -> isStalled);
     }
 }
