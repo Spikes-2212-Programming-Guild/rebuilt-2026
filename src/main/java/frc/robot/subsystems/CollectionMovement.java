@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.RobotMap;
 
@@ -21,7 +20,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
         if (instance == null) {
             instance = new CollectionMovement(NAMESPACE_NAME,
                     new DutyCycleEncoder(-1)
-                    ,new TalonFXWrapper(RobotMap.CAN.COLLECTION_MOVEMENT_TALON_FX_ID));
+                    , new TalonFXWrapper(RobotMap.CAN.COLLECTION_MOVEMENT_TALON_FX_ID));
         }
         return instance;
     }
@@ -33,13 +32,13 @@ public class CollectionMovement extends MotoredGenericSubsystem {
         this.motor = motor;
     }
 
-    public void syncEncoder(){
+    public void syncEncoder() {
         boolean upperSynced = false;
         boolean lowerSynced = false;
-        if(throughBore.get() == ABSOLUTE_UPPER_DEG && upperSynced){
+        if (throughBore.get() == ABSOLUTE_UPPER_DEG && upperSynced) {
             motor.setPosition(throughBore.get());
             upperSynced = true;
-        } else if(throughBore.get() == ABSOLUTE_LOWER_DEG && lowerSynced){
+        } else if (throughBore.get() == ABSOLUTE_LOWER_DEG && lowerSynced) {
             motor.setPosition(throughBore.get());
             lowerSynced = true;
         }
@@ -47,7 +46,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        return(throughBore.get() != ABSOLUTE_UPPER_DEG && throughBore.get() != ABSOLUTE_LOWER_DEG);
+        return (throughBore.get() != ABSOLUTE_UPPER_DEG && throughBore.get() != ABSOLUTE_LOWER_DEG);
     }
 
     @Override
