@@ -8,6 +8,7 @@ import frc.robot.RobotMap;
 public class CollectionMovement extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "collection movement";
+
     private static final double ABSOLUTE_UPPER_DEG = -1;
     private static final double ABSOLUTE_LOWER_DEG = -1;
 
