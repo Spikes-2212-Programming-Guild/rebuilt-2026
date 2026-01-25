@@ -5,9 +5,9 @@ import frc.robot.subsystems.SpinningMagazine;
 
 import java.util.function.Supplier;
 
-public class Transport extends MoveGenericSubsystem {
+public class SimpleTransport extends MoveGenericSubsystem {
 
-    public Transport(SpinningMagazine spinningMagazine, Supplier<Double> speed) {
+    public SimpleTransport(SpinningMagazine spinningMagazine, Supplier<Double> speed) {
         super(spinningMagazine, speed);
         spinningMagazine.configureDashboard();
     }
