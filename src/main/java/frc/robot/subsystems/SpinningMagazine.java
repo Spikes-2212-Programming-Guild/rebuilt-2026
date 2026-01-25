@@ -16,7 +16,8 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
     public static SpinningMagazine getInstance() {
         if (instance == null) {
             instance = new SpinningMagazine(NAMESPACE_NAME,
-                    SparkWrapper.createSparkMax(SPINNING_MAGAZINE_SPARK_MAX_ID, SparkLowLevel.MotorType.fromId(1)));
+                    SparkWrapper.createSparkMax(SPINNING_MAGAZINE_SPARK_MAX_ID,
+                            SparkLowLevel.MotorType.kBrushless));
         }
         return instance;
     }
@@ -25,11 +26,11 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
         super(namespaceName, motor);
         this.motor = motor;
         configureDashboard();
-
     }
 
     @Override
     public void configureDashboard() {
         namespace.putNumber("motor speed", motor::getVelocity);
     }
+
 }
