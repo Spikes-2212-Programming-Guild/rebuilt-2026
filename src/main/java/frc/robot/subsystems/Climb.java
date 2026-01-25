@@ -7,9 +7,9 @@ import frc.robot.RobotMap;
 
 public class Climb extends SmartMotorControllerGenericSubsystem {
 
-    private final static String NAMESPACE_NAME = "climb";
+    private static final String NAMESPACE_NAME = "climb";
 
-    private final static boolean LEFT_INVERTED = false;
+    private static final boolean LEFT_INVERTED = false;
 
     private final TalonFXWrapper leftMotor;
     private final TalonFXWrapper rightMotor;
