@@ -40,6 +40,6 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
     }
 
     public void configureRelativeEncoder() {
-         rightMotor.setEncoderConversionFactor(GEAR_RATIO * WHEEL_DIAMETER_IN_METERS);
+        rightMotor.setEncoderConversionFactor(GEAR_RATIO * WHEEL_DIAMETER_IN_METERS);
     }
 }
