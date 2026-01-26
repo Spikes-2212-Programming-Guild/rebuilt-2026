@@ -14,7 +14,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     private static final double DEGREES_IN_ROTATIONS = 360;
 
     private final DutyCycleEncoder throughBore;
-    private final TalonFXWrapper motor;
+    private final TalonFXWrapper talonFX;
 
     private static CollectionMovement instance;
 
@@ -28,15 +28,15 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     }
 
     private CollectionMovement(String namespaceName, DutyCycleEncoder throughBore,
-                               TalonFXWrapper motor) {
-        super(namespaceName, motor);
+                               TalonFXWrapper talonFX) {
+        super(namespaceName, talonFX);
         this.throughBore = throughBore;
-        this.motor = motor;
+        this.talonFX = talonFX;
         configureDashboard();
     }
 
     public void resetRelativeEncoderRelativeToAbsoluteEncoder() {
-        motor.setPosition(throughBore.get());
+        talonFX.setPosition(throughBore.get());
     }
 
     @Override
@@ -55,8 +55,8 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("talon relative encoder position", motor::getPosition);
+        namespace.putNumber("talon relative encoder position", talonFX::getPosition);
         namespace.putNumber("through bore position", this::encoderPositionToDegrees);
-        namespace.putNumber("motor current speed", motor::getVelocity);
+        namespace.putNumber("motor current speed", talonFX::getVelocity);
     }
 }
