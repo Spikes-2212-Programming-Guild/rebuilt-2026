@@ -3,6 +3,7 @@ package frc.robot;
 public class RobotMap {
 
     public interface CAN {
+
         int SWERVE_FRONT_LEFT_DRIVE_TALON_FX_ID = -1;
         int SWERVE_FRONT_RIGHT_DRIVE_TALON_FX_ID = -1;
         int SWERVE_BACK_LEFT_DRIVE_TALON_FX_ID = -1;
