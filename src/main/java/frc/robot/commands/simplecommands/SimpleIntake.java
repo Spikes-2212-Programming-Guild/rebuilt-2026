@@ -10,5 +10,4 @@ public class SimpleIntake extends MoveGenericSubsystem {
     public SimpleIntake(Collection collection, Supplier<Double> speed) {
         super(collection, speed);
     }
-
 }
