@@ -10,7 +10,7 @@ import frc.robot.subsystems.Hood;
 
 public class Robot extends TimedRobot {
 
-    private Hood hood = Hood.getInstance();
+    private final Hood hood = Hood.getInstance();
 
     @Override
     public void robotInit() {
