@@ -11,7 +11,6 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     private static final double ABSOLUTE_UPPER_DEG = -1;
     private static final double ABSOLUTE_LOWER_DEG = -1;
-    private static final double GEAR_RATIO = -1;
     private static final double ROTATIONS_TO_DEG = 360;
 
     private final DutyCycleEncoder throughBore;
