@@ -9,26 +9,27 @@ public class Transport extends MotoredGenericSubsystem {
 
     private final static String NAMESPACE_NAME = "transport";
 
-    private final SparkWrapper sparkMax;
+    private final SparkWrapper motor;
 
     private static Transport instance;
 
     public static Transport getInstance() {
         if (instance == null) {
             instance = new Transport(NAMESPACE_NAME,
-                    SparkWrapper.createSparkMax(RobotMap.CAN.TRANSPORT_SPARK_MAX_ID, SparkLowLevel.MotorType.kBrushless));
+                    SparkWrapper.createSparkMax(RobotMap.CAN.TRANSPORT_SPARK_MAX_ID,
+                            SparkLowLevel.MotorType.kBrushless));
         }
         return instance;
     }
 
-    private Transport(String namespaceName, SparkWrapper sparkMax) {
-        super(namespaceName, sparkMax);
-        this.sparkMax = sparkMax;
+    private Transport(String namespaceName, SparkWrapper motor) {
+        super(namespaceName, motor);
+        this.motor = motor;
         configureDashboard();
     }
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber(" velocity ", sparkMax::get);
+        namespace.putNumber(" motor velocity ", motor::getVelocity);
     }
 }
