@@ -42,22 +42,22 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        if (speed < 0 && encoderPositionToDeg() == ABSOLUTE_UPPER_DEG) {
+        if (speed < 0 && encoderPositionToDegrees() == ABSOLUTE_UPPER_DEG) {
             return true;
-        } else if (speed > 0 && encoderPositionToDeg() == ABSOLUTE_LOWER_DEG) {
+        } else if (speed > 0 && encoderPositionToDegrees() == ABSOLUTE_LOWER_DEG) {
             return true;
         }
         return false;
     }
 
-    public double encoderPositionToDeg() {
+    public double encoderPositionToDegrees() {
         return throughBore.get() * ROTATIONS_TO_DEG;
     }
 
     @Override
     public void configureDashboard() {
         namespace.putNumber("talon relative encoder position", motor::getPosition);
-        namespace.putNumber("through bore position", this::encoderPositionToDeg);
+        namespace.putNumber("through bore position", this::encoderPositionToDegrees);
         namespace.putNumber("motor current speed", motor::getVelocity);
     }
 }
