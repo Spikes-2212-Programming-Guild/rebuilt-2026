@@ -36,7 +36,7 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("motors", motorController::get);
+        namespace.putNumber("motors speed", motorController::get);
     }
 
     public void configureRelativeEncoder() {
