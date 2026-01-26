@@ -8,7 +8,7 @@ public class Collection extends MotoredGenericSubsystem {
 
     private final static String NAMESPACE_NAME = "collection";
 
-    private final TalonFXWrapper motor;
+    private final TalonFXWrapper talonFX;
 
     private static Collection instance;
 
@@ -20,14 +20,14 @@ public class Collection extends MotoredGenericSubsystem {
         return instance;
     }
 
-    private Collection(String namespaceName, TalonFXWrapper motor) {
-        super(namespaceName, motor);
-        this.motor = motor;
+    private Collection(String namespaceName, TalonFXWrapper talonFX) {
+        super(namespaceName, talonFX);
+        this.talonFX = talonFX;
         configureDashboard();
     }
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("motor velocity", motor::getVelocity);
+        namespace.putNumber("motor velocity", talonFX::getVelocity);
     }
 }
