@@ -9,6 +9,8 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "collection movement";
 
+    private static final boolean IS_INVERTED = false;
+
     private static final double ABSOLUTE_UPPER_DEG = -1;
     private static final double ABSOLUTE_LOWER_DEG = -1;
     private static final double DEGREES_IN_ROTATIONS = 360;
@@ -22,15 +24,17 @@ public class CollectionMovement extends MotoredGenericSubsystem {
         if (instance == null) {
             instance = new CollectionMovement(NAMESPACE_NAME,
                     new DutyCycleEncoder(RobotMap.DIO.COLLECTION_MOVEMENT_THROUGH_BORE_ID),
-                    new TalonFXWrapper(RobotMap.CAN.COLLECTION_MOVEMENT_TALON_FX_ID));
+                    new TalonFXWrapper(RobotMap.CAN.COLLECTION_MOVEMENT_TALON_FX_ID),
+                    IS_INVERTED);
         }
         return instance;
     }
 
     private CollectionMovement(String namespaceName, DutyCycleEncoder throughBore,
-                               TalonFXWrapper talonFX) {
+                               TalonFXWrapper talonFX, boolean isInverted) {
         super(namespaceName, talonFX);
         this.throughBore = throughBore;
+        throughBore.setInverted(isInverted);
         this.talonFX = talonFX;
         configureDashboard();
     }
