@@ -11,7 +11,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     private static final double ABSOLUTE_UPPER_DEG = -1;
     private static final double ABSOLUTE_LOWER_DEG = -1;
-    private static final double ROTATIONS_TO_DEG = 360;
+    private static final double DEGREES_IN_ROTATIONS = 360;
 
     private final DutyCycleEncoder throughBore;
     private final TalonFXWrapper motor;
@@ -50,7 +50,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     }
 
     public double encoderPositionToDegrees() {
-        return throughBore.get() * ROTATIONS_TO_DEG;
+        return throughBore.get() * DEGREES_IN_ROTATIONS;
     }
 
     @Override
