@@ -7,6 +7,7 @@ import frc.robot.RobotMap;
 public class Shooter extends SmartMotorControllerGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "shooter";
+
     private static final double GEAR_RATIO = -1;
     private static final double WHEEL_DIAMETER_IN_METERS = 0.1016;//converted 4 inches to meters
 
