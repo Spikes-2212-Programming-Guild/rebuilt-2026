@@ -9,7 +9,7 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "spinning magazine";
 
-    private final SparkWrapper motor;
+    private final SparkWrapper sparkMax;
 
     private static SpinningMagazine instance;
 
@@ -22,14 +22,14 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
         return instance;
     }
 
-    private SpinningMagazine(String namespaceName, SparkWrapper motor){
-        super(namespaceName, motor);
-        this.motor = motor;
+    private SpinningMagazine(String namespaceName, SparkWrapper sparkMax){
+        super(namespaceName, sparkMax);
+        this.sparkMax = sparkMax;
         configureDashboard();
     }
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("motor speed", motor::getVelocity);
+        namespace.putNumber("sparkMax speed", sparkMax::getVelocity);
     }
 }
