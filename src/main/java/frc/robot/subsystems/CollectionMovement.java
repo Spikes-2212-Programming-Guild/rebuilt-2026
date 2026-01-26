@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class CollectionMovement extends MotoredGenericSubsystem {
@@ -23,7 +22,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     public static CollectionMovement getInstance() {
         if (instance == null) {
             instance = new CollectionMovement(NAMESPACE_NAME,
-                    new DutyCycleEncoder(RobotMap.DIO.COLLECTION_MOVEMENT_THROUGH_BORE_ENCODER_ID),
+                    new DutyCycleEncoder(RobotMap.DIO.COLLECTION_MOVEMENT_THROUGH_BORE_ID),
                     new TalonFXWrapper(RobotMap.CAN.COLLECTION_MOVEMENT_TALON_FX_ID));
         }
         return instance;
