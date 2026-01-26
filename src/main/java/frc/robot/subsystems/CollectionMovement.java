@@ -47,10 +47,14 @@ public class CollectionMovement extends MotoredGenericSubsystem {
                 (speed > 0 && throughBore.get() * ROTATIONS_TO_DEG == ABSOLUTE_LOWER_DEG));
     }
 
+    public double encoderPositionToDeg(){
+        return throughBore.get() * ROTATIONS_TO_DEG;
+    }
+
     @Override
     public void configureDashboard() {
         namespace.putNumber("talon relative encoder position", motor::getPosition);
-        namespace.putNumber("through bore position", throughBore::get);
+        namespace.putNumber("through bore position", this::encoderPositionToDeg);
         namespace.putNumber("motor current speed", motor::getVelocity);
     }
 }
