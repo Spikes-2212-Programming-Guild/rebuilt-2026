@@ -39,7 +39,7 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
         namespace.putNumber("motors speed", motorController::get);
     }
 
-    public void configureRelativeEncoder() {
+    private void configureRelativeEncoder() {
         masterMotor.setEncoderConversionFactor(GEAR_RATIO * WHEEL_DIAMETER_IN_METERS);
     }
 }
