@@ -53,9 +53,4 @@ public class CollectionMovement extends MotoredGenericSubsystem {
         namespace.putNumber("through bore position", throughBore::get);
         namespace.putNumber("motor current speed", motor::getVelocity);
     }
-
-    @Override
-    public void stop() {
-        motor.stopMotor();
-    }
 }
