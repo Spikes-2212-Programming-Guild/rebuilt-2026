@@ -7,7 +7,9 @@ import frc.robot.RobotMap;
 
 public class Transport extends MotoredGenericSubsystem {
 
-    private final static String NAMESPACE_NAME = "transport";
+    private static final String NAMESPACE_NAME = "transport";
+
+    public static final double SPEED  = -1.0;
 
     private final SparkWrapper motor;
 
