@@ -33,16 +33,11 @@ public class CollectionMovement extends MotoredGenericSubsystem {
         super(namespaceName, motor);
         this.throughBore = throughBore;
         this.motor = motor;
-        syncEncoder();
         configureDashboard();
     }
 
     public void syncEncoder() {
-        if (throughBore.get() == ABSOLUTE_UPPER_DEG) {
-            motor.setPosition(throughBore.get()* GEAR_RATIO);
-        } else if (throughBore.get() == ABSOLUTE_LOWER_DEG) {
-            motor.setPosition(throughBore.get()*GEAR_RATIO);
-        }
+        motor.setPosition(throughBore.get());
     }
 
     @Override

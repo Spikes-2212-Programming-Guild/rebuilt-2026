@@ -7,7 +7,15 @@ import java.util.function.Supplier;
 
 public class SimpleMoveCollection extends MoveGenericSubsystem {
 
+    private final CollectionMovement collection;
+
     public SimpleMoveCollection(CollectionMovement collection, Supplier<Double> speed) {
         super(collection, speed);
+        this.collection = collection;
+    }
+
+    @Override
+    public void initialize() {
+        collection.syncEncoder();
     }
 }
