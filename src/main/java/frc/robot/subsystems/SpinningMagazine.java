@@ -30,7 +30,6 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("motor speed",
-                motor::getVelocity);
+        namespace.putNumber("motor speed", motor::getVelocity);
     }
 }
