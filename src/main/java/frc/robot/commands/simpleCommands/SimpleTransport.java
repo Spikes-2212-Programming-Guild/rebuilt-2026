@@ -1,4 +1,4 @@
-package frc.robot.commands.simple.commands;
+package frc.robot.commands.simpleCommands;
 
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import frc.robot.subsystems.Transport;
