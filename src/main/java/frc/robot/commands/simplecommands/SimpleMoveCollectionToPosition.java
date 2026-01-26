@@ -5,11 +5,11 @@ import frc.robot.subsystems.CollectionMovement;
 
 import java.util.function.Supplier;
 
-public class SimpleMoveCollection extends MoveGenericSubsystem {
+public class SimpleMoveCollectionToPosition extends MoveGenericSubsystem {
 
     private final CollectionMovement collection;
 
-    public SimpleMoveCollection(CollectionMovement collection, Supplier<Double> speed) {
+    public SimpleMoveCollectionToPosition(CollectionMovement collection, Supplier<Double> speed) {
         super(collection, speed);
         this.collection = collection;
     }
