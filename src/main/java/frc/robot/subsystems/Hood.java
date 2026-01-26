@@ -73,8 +73,10 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
     /**
      * Checks if the encoder is changing while the motor is supposed to be moving.
+     * Resets the timer if movement exceeds MOTION_EPSILON, indicating healthy operation.
+     * Flags the motor as stalled if position remains static for longer than STALL_TIME_LIMIT.
      */
-    private void checkForStall() {
+    private void checkForStall() { //@TODO check if we need to add a tolerance
         double currentPos = getAbsDegrees();
         double currentTime = Timer.getFPGATimestamp();
 
