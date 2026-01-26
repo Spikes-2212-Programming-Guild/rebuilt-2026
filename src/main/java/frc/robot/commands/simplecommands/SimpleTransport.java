@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 
 public class SimpleTransport extends MoveGenericSubsystem {
 
-    public SimpleTransport(SpinningMagazine spinningMagazine, Supplier<Double> speed){
-        super(spinningMagazine, speed);
+    public SimpleTransport(SpinningMagazine spinningMagazine){
+    super(spinningMagazine, SpinningMagazine.SPEED);
     }
 }

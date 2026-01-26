@@ -11,6 +11,8 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
 
     private final SparkWrapper sparkMax;
 
+    public static final double SPEED  = -1.0;
+
     private static SpinningMagazine instance;
 
     public static SpinningMagazine getInstance() {
@@ -30,6 +32,6 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("sparkMax speed", sparkMax::getVelocity);
+        namespace.putNumber("sparkMax speed", SPEED);
     }
 }
