@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkLowLevel;
 import com.spikes2212.command.genericsubsystem.smartmotorcontrollersubsystem.SmartMotorControllerGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
-import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Timer;
@@ -12,7 +11,7 @@ import frc.robot.RobotMap;
 public class Hood extends SmartMotorControllerGenericSubsystem {
 
     public enum HoodPose {
-        TOSS_POSE(-1), MAX_ANGLE(-1), MIN_ANGLE(-1);
+        TOSS_POSE(-1), MAX_ANGLE(-1), MIN_ANGLE(0);
 
         public final double neededAngle;
 
@@ -23,7 +22,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "hood";
     private static final double DEGREES_IN_ROTATIONS = 360;
-    private static final double SECONDES_IN_MINUTE = 360;
+    private static final double SECONDES_IN_MINUTE = 60;
     private static final double GEAR_RATIO = -1.0;
     private static final double DISTANCE_PER_PULSE = GEAR_RATIO * DEGREES_IN_ROTATIONS;
 
