@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkLowLevel;
 import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
-import static frc.robot.RobotMap.CAN.SPINNING_MAGAZINE_SPARK_MAX_ID;
+import frc.robot.RobotMap;
 
 public class SpinningMagazine extends MotoredGenericSubsystem {
 
@@ -16,7 +16,7 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
     public static SpinningMagazine getInstance() {
         if (instance == null) {
             instance = new SpinningMagazine(NAMESPACE_NAME,
-                    SparkWrapper.createSparkMax(SPINNING_MAGAZINE_SPARK_MAX_ID,
+                    SparkWrapper.createSparkMax(RobotMap.CAN.SPINNING_MAGAZINE_SPARK_MAX_ID,
                             SparkLowLevel.MotorType.kBrushless));
         }
         return instance;
