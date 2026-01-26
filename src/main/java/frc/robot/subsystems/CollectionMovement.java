@@ -13,6 +13,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     private static final double ABSOLUTE_UPPER_DEG = -1;
     private static final double ABSOLUTE_LOWER_DEG = -1;
     private static final double GEAR_RATIO = -1;
+    private static final double ROTATIONS_TO_DEG = 360;
 
     private final DutyCycleEncoder throughBore;
     private final TalonFXWrapper motor;
@@ -42,7 +43,8 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        return (throughBore.get() != ABSOLUTE_UPPER_DEG && throughBore.get() != ABSOLUTE_LOWER_DEG);
+        return ((speed < 0 && throughBore.get() * ROTATIONS_TO_DEG == ABSOLUTE_UPPER_DEG) ||
+                (speed > 0 && throughBore.get() * ROTATIONS_TO_DEG == ABSOLUTE_LOWER_DEG));
     }
 
     @Override
