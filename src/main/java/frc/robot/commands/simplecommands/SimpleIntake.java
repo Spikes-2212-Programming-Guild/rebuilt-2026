@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 
 public class SimpleIntake extends MoveGenericSubsystem {
 
-    public SimpleIntake(Collection collection, Supplier<Double> speed) {
-        super(collection, speed);
+    public SimpleIntake(Collection collection) {
+        super(collection, Collection.SPEED);
     }
 }

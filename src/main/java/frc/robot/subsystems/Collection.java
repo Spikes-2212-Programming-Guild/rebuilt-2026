@@ -10,6 +10,8 @@ public class Collection extends MotoredGenericSubsystem {
 
     private final TalonFXWrapper talonFX;
 
+    public static final double SPEED  = -1.0;
+
     private static Collection instance;
 
     public static Collection getInstance() {
@@ -28,6 +30,6 @@ public class Collection extends MotoredGenericSubsystem {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("motor velocity", talonFX::getVelocity);
+        namespace.putNumber("motor velocity", SPEED);
     }
 }
