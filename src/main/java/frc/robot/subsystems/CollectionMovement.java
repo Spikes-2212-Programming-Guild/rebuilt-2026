@@ -9,7 +9,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "collection movement";
 
-    private static final boolean IS_INVERTED = false;
+    private static final boolean IS_ENCODER_INVERTED = false;
 
     private static final double ABSOLUTE_UPPER_DEG = -1;
     private static final double ABSOLUTE_LOWER_DEG = -1;
@@ -25,7 +25,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
             instance = new CollectionMovement(NAMESPACE_NAME,
                     new DutyCycleEncoder(RobotMap.DIO.COLLECTION_MOVEMENT_THROUGH_BORE_ID),
                     new TalonFXWrapper(RobotMap.CAN.COLLECTION_MOVEMENT_TALON_FX_ID),
-                    IS_INVERTED);
+                    IS_ENCODER_INVERTED);
         }
         return instance;
     }
