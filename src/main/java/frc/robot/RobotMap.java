@@ -9,8 +9,6 @@ public class RobotMap {
     
     public interface DIO {
 
-        int COLLECTION_MOVEMENT_TOP_LIMIT_SWITCH = -1;
-        int COLLECTION_MOVEMENT_BOTTOM_LIMIT_SWITCH = -1;
     }
     
     public interface PWM {
