@@ -11,7 +11,7 @@ public class Transport extends MotoredGenericSubsystem {
 
     public static final double SPEED  = -1.0;
 
-    private final SparkWrapper motor;
+    private final SparkWrapper sparkMax;
 
     private static Transport instance;
 
@@ -24,14 +24,14 @@ public class Transport extends MotoredGenericSubsystem {
         return instance;
     }
 
-    private Transport(String namespaceName, SparkWrapper motor) {
-        super(namespaceName, motor);
-        this.motor = motor;
+    private Transport(String namespaceName, SparkWrapper sparkMax) {
+        super(namespaceName, sparkMax);
+        this.sparkMax = sparkMax;
         configureDashboard();
     }
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("motor velocity", motor::getVelocity);
+        namespace.putNumber("motor velocity", sparkMax::getVelocity);
     }
 }
