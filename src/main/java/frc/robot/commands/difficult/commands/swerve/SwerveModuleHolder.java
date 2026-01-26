@@ -11,6 +11,7 @@ import frc.robot.com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import frc.robot.com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 
 public class SwerveModuleHolder {
+
     private static final RootNamespace namespace = new RootNamespace("swerve module holder");
 
     private static final boolean FRONT_LEFT_DRIVE_INVERTED = false;
