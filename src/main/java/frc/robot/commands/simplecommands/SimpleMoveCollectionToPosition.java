@@ -16,6 +16,6 @@ public class SimpleMoveCollectionToPosition extends MoveGenericSubsystem {
 
     @Override
     public void initialize() {
-        collection.syncEncoder();
+        collection.resetRelativeEncoderRelativeToAbsoluteEncoder();
     }
 }

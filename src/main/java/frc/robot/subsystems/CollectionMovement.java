@@ -36,7 +36,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
         configureDashboard();
     }
 
-    public void syncEncoder() {
+    public void resetRelativeEncoderRelativeToAbsoluteEncoder() {
         motor.setPosition(throughBore.get());
     }
 
