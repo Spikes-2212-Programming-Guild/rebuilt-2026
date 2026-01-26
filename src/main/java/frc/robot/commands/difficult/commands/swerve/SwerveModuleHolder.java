@@ -33,7 +33,6 @@ public class SwerveModuleHolder {
     private static final double BACK_LEFT_OFFSET = -1;
     private static final double BACK_RIGHT_OFFSET = -1;
 
-
     private static final PIDSettings drivePIDSettings = namespace.addPIDNamespace("drive",
             PIDSettings.EMPTY_PID_SETTINGS);
     private static final PIDSettings turnPIDSettings = namespace.addPIDNamespace("turn",
