@@ -49,6 +49,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     @Override
     public void configureDashboard() {
+        namespace.putNumber("talon relative encoder position", motor::getPosition);
         namespace.putNumber("through bore position", throughBore::get);
         namespace.putNumber("motor current speed", motor::getVelocity);
     }
