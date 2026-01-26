@@ -4,6 +4,7 @@ import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.units.Units;
 import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveModule;
 import frc.robot.com.spikes2212.control.FeedForwardSettings;
 import frc.robot.com.spikes2212.control.PIDSettings;
@@ -60,7 +61,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     @Override
     protected Rotation2d getAbsoluteModuleAngle() {
-        return Rotation2d.fromDegrees(cancoder.getAbsolutePosition().getValueAsDouble() * DEGREES_IN_ROTATION);
+        return Rotation2d.fromDegrees(cancoder.getAbsolutePosition().getValue().in(Units.Degree));
     }
 
     @Override
