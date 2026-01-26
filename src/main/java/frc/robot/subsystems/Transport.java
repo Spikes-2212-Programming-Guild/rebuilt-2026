@@ -32,6 +32,6 @@ public class Transport extends MotoredGenericSubsystem {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("motor velocity", sparkMax::getVelocity);
+        namespace.putNumber("motor velocity", SPEED);
     }
 }
