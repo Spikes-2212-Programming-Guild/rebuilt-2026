@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.SparkLowLevel;
 import com.spikes2212.command.genericsubsystem.smartmotorcontrollersubsystem.SmartMotorControllerGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -42,7 +43,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
     public static Hood getInstance() {
         if (instance == null) {
             instance = new Hood(NAMESPACE_NAME,
-                    SparkWrapper.createSparkMax(RobotMap.CAN.HOOD_MOTOR, CANSparkMax.MotorType.kBrushless),
+                    SparkWrapper.createSparkMax(RobotMap.CAN.HOOD_MOTOR, SparkLowLevel.MotorType.kBrushless),
                     new DigitalInput(RobotMap.DIO.HOOD_BOTTOM_LIMIT),
                     new DutyCycleEncoder(RobotMap.DIO.HOOD_ABSOLUTE_ENCODER));
         }
