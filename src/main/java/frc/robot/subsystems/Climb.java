@@ -11,8 +11,8 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
 
     private static final boolean LEFT_MOTOR_INVERTED = false;
 
-    private final TalonFXWrapper leftTalonFx;
-    private final TalonFXWrapper rightTalonFx;
+    private final TalonFXWrapper leftTalonFX;
+    private final TalonFXWrapper rightTalonFX;
     private final DigitalInput infrared;
 
     private static Climb instance;
@@ -29,13 +29,13 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
         return instance;
     }
 
-    private Climb(String namespaceName, TalonFXWrapper leftTalonFx,
+    private Climb(String namespaceName, TalonFXWrapper leftTalonFX,
                   TalonFXWrapper rightTalonFx, DigitalInput infrared, boolean leftMotorInverted) {
-        super(namespaceName, leftTalonFx);
-        this.leftTalonFx = leftTalonFx;
-        this.rightTalonFx = rightTalonFx;
+        super(namespaceName, leftTalonFX);
+        this.leftTalonFX = leftTalonFX;
+        this.rightTalonFX = rightTalonFx;
         this.infrared = infrared;
-        rightTalonFx.follow(leftTalonFx, leftMotorInverted);
+        rightTalonFx.follow(leftTalonFX, leftMotorInverted);
         configureDashboard();
     }
 
@@ -46,8 +46,8 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("right velocity", rightTalonFx::getVelocity);
-        namespace.putNumber("left velocity", leftTalonFx::getVelocity);
+        namespace.putNumber("right velocity", rightTalonFX::getVelocity);
+        namespace.putNumber("left velocity", leftTalonFX::getVelocity);
         namespace.putBoolean("infrared", infrared::get);
     }
 }
