@@ -42,11 +42,15 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        return ((speed < 0 && encoderPositionToDeg() == ABSOLUTE_UPPER_DEG) ||
-                (speed > 0 && encoderPositionToDeg() == ABSOLUTE_LOWER_DEG));
+        if (speed < 0 && encoderPositionToDeg() == ABSOLUTE_UPPER_DEG) {
+            return true;
+        } else if (speed > 0 && encoderPositionToDeg() == ABSOLUTE_LOWER_DEG) {
+            return true;
+        }
+        return false;
     }
 
-    public double encoderPositionToDeg(){
+    public double encoderPositionToDeg() {
         return throughBore.get() * ROTATIONS_TO_DEG;
     }
 
