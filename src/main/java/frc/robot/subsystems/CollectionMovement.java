@@ -34,7 +34,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
                                TalonFXWrapper talonFX, boolean isInverted) {
         super(namespaceName, talonFX);
         this.throughBore = throughBore;
-        throughBore.setInverted(isInverted);
+        this.throughBore.setInverted(isInverted);
         this.talonFX = talonFX;
         configureDashboard();
     }
