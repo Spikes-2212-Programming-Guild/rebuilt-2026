@@ -8,9 +8,9 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "shooter";
     private static final double GEAR_RATIO = -1;
-    private static final double WHEEL_DIAMETER_IN_METERS = 0.1016; //converted 4 inches to meters
+    private static final double WHEEL_DIAMETER_IN_METERS = 0.1016;//converted 4 inches to meters
 
-    private final TalonFXWrapper primaryMotor;
+    private final TalonFXWrapper masterMotor;
 
     private static Shooter instance;
 
@@ -24,12 +24,12 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
         return instance;
     }
 
-    private Shooter(String namespaceName, TalonFXWrapper primaryMotor, TalonFXWrapper subMiddleMotor,
-                    TalonFXWrapper subLeftMotor) {
-        super(namespaceName, primaryMotor, subMiddleMotor, subLeftMotor);
-        this.primaryMotor = primaryMotor;
-        subMiddleMotor.follow(primaryMotor);
-        subLeftMotor.follow(primaryMotor);
+    private Shooter(String namespaceName, TalonFXWrapper masterMotor, TalonFXWrapper slaveMiddleMotor,
+                    TalonFXWrapper slaveLeftMotor) {
+        super(namespaceName, masterMotor, slaveMiddleMotor, slaveLeftMotor);
+        this.masterMotor = masterMotor;
+        slaveMiddleMotor.follow(masterMotor);
+        slaveLeftMotor.follow(masterMotor);
         configureDashboard();
         configureRelativeEncoder();
     }
@@ -40,6 +40,6 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
     }
 
     public void configureRelativeEncoder() {
-        primaryMotor.setEncoderConversionFactor(GEAR_RATIO * WHEEL_DIAMETER_IN_METERS);
+        masterMotor.setEncoderConversionFactor(GEAR_RATIO * WHEEL_DIAMETER_IN_METERS);
     }
 }
