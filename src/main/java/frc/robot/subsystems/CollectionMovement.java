@@ -11,6 +11,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     private static final double ABSOLUTE_UPPER_DEG = -1;
     private static final double ABSOLUTE_LOWER_DEG = -1;
+    private static final double GEAR_RATIO = -1;
 
     private final DutyCycleEncoder throughBore;
     private final TalonFXWrapper motor;
@@ -34,14 +35,10 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     }
 
     public void syncEncoder() {
-        boolean upperSynced = false;
-        boolean lowerSynced = false;
-        if (throughBore.get() == ABSOLUTE_UPPER_DEG && upperSynced) {
-            motor.setPosition(throughBore.get());
-            upperSynced = true;
-        } else if (throughBore.get() == ABSOLUTE_LOWER_DEG && lowerSynced) {
-            motor.setPosition(throughBore.get());
-            lowerSynced = true;
+        if (throughBore.get() == ABSOLUTE_UPPER_DEG) {
+            motor.setPosition(throughBore.get()* GEAR_RATIO);
+        } else if (throughBore.get() == ABSOLUTE_LOWER_DEG) {
+            motor.setPosition(throughBore.get()*GEAR_RATIO);
         }
     }
 
