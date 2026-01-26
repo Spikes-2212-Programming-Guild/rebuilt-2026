@@ -32,6 +32,8 @@ public class CollectionMovement extends MotoredGenericSubsystem {
         super(namespaceName, motor);
         this.throughBore = throughBore;
         this.motor = motor;
+        syncEncoder();
+        configureDashboard();
     }
 
     public void syncEncoder() {
