@@ -30,6 +30,6 @@ public class Transport extends MotoredGenericSubsystem {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber(" motor velocity ", motor::getVelocity);
+        namespace.putNumber("motor velocity", motor::getVelocity);
     }
 }
