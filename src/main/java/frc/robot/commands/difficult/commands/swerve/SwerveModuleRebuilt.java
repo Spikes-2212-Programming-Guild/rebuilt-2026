@@ -69,8 +69,5 @@ public class SwerveModuleRebuilt extends SwerveModule {
         namespace.putNumber("absolute encoder", getAbsoluteModuleAngle()::getDegrees);
         namespace.putNumber("relative angle", this::getRelativeModuleAngle);
         namespace.putNumber("current velocity", driveMotor::getVelocity);
-
-
-
     }
 }
