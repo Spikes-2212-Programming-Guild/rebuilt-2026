@@ -95,8 +95,11 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        return !((bottomLimit.get() && speed < 0) ||
-                (Math.abs(speed) > MIN_SPEED_TO_CHECK && isStalled));
+        if (bottomLimit.get() && speed < 0) {
+            return false;
+        }
+
+        return !(Math.abs(speed) > MIN_SPEED_TO_CHECK) || !isStalled;
     }
 
     public void calibrateEncoderPosition() {
