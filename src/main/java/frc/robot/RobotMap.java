@@ -9,6 +9,7 @@ public class RobotMap {
     
     public interface DIO {
 
+        int COLLECTION_MOVEMENT_THROUGH_BORE_ENCODER_ID = -1;
     }
     
     public interface PWM {
