@@ -45,9 +45,9 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        if (speed < 0 && encoderPositionToDegrees() == ABSOLUTE_UPPER_DEG) {
+        if (!(speed < 0 && encoderPositionToDegrees() == ABSOLUTE_UPPER_DEG)) {
             return true;
-        } else return speed > 0 && encoderPositionToDegrees() == ABSOLUTE_LOWER_DEG;
+        } else return !(speed > 0 && encoderPositionToDegrees() == ABSOLUTE_LOWER_DEG);
     }
 
     public double encoderPositionToDegrees() {
