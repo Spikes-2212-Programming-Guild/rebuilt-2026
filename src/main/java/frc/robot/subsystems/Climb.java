@@ -46,6 +46,14 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
     }
 
     @Override
+    public boolean canMove(double speed) {
+        return (
+            (speed > 0 && leftTalonFX.getPosition() != MAX_ARM_POSITION) ||
+            (speed < 0 && leftTalonFX.getPosition() != MIN_ARM_POSITION)
+        );
+    }
+
+    @Override
     public void configureDashboard() {
         namespace.putNumber("left position", leftTalonFX::getPosition);
         namespace.putNumber("right position", rightTalonFX::getPosition);
