@@ -14,7 +14,7 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
     private static final double MIN_ARM_POSITION_METERS = -1;
 
     private static final double GEAR_RATIO = -1;
-    private static final double SPOOL_CIRCUMFERENCE_METERS = -1;
+    private static final double SPOOL_DIAMETER_METERS = -1;
 
     private final TalonFXWrapper leftTalonFX;
     private final TalonFXWrapper rightTalonFX;
@@ -43,7 +43,8 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
     }
 
     private void configureRelativeEncoder() {
-        leftTalonFX.setEncoderConversionFactor(SPOOL_CIRCUMFERENCE_METERS * GEAR_RATIO);
+        double spoolCircumference = SPOOL_DIAMETER_METERS * Math.PI;
+        leftTalonFX.setEncoderConversionFactor(spoolCircumference * GEAR_RATIO);
     }
 
     @Override
