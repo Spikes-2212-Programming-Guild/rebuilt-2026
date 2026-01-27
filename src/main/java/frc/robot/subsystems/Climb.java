@@ -58,5 +58,8 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
     public void configureDashboard() {
         namespace.putNumber("left position", leftTalonFX::getPosition);
         namespace.putNumber("right position", rightTalonFX::getPosition);
+
+        namespace.putNumber("left velocity", leftTalonFX::getVelocity);
+        namespace.putNumber("right velocity", rightTalonFX::getVelocity);
     }
 }
