@@ -10,14 +10,11 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
 
     private static final boolean LEFT_MOTOR_INVERTED = false;
 
-    private static final double MAX_ARM_POSITION = -1;
-    private static final double MIN_ARM_POSITION = -1;
+    private static final double MAX_ARM_POSITION_METERS = -1;
+    private static final double MIN_ARM_POSITION_METERS = -1;
 
-    //@TODO check if measuring the distance per rotation instead of calculating works better
     private static final double GEAR_RATIO = -1;
-    private static final double SPOOL_DIAMETER_METERS = -1;
-    private static final double SPOOL_CIRCUMFERENCE_METERS = Math.PI * SPOOL_DIAMETER_METERS;
-    private static final double DISTANCE_PER_ROTATION_METERS = SPOOL_CIRCUMFERENCE_METERS * GEAR_RATIO;
+    private static final double SPOOL_CIRCUMFERENCE_METERS = -1;
 
     private final TalonFXWrapper leftTalonFX;
     private final TalonFXWrapper rightTalonFX;
@@ -40,16 +37,20 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
         super(namespaceName, leftTalonFX);
         this.leftTalonFX = leftTalonFX;
         this.rightTalonFX = rightTalonFx;
-        leftTalonFX.setEncoderConversionFactor(DISTANCE_PER_ROTATION_METERS);
         rightTalonFx.follow(leftTalonFX, leftMotorInverted);
+        configureRelativeEncoder();
         configureDashboard();
+    }
+
+    private void configureRelativeEncoder() {
+        leftTalonFX.setEncoderConversionFactor(SPOOL_CIRCUMFERENCE_METERS * GEAR_RATIO);
     }
 
     @Override
     public boolean canMove(double speed) {
         return (
-            (speed > 0 && leftTalonFX.getPosition() != MAX_ARM_POSITION) ||
-            (speed < 0 && leftTalonFX.getPosition() != MIN_ARM_POSITION)
+            (speed > 0 && leftTalonFX.getPosition() != MAX_ARM_POSITION_METERS) ||
+            (speed < 0 && leftTalonFX.getPosition() != MIN_ARM_POSITION_METERS)
         );
     }
 
