@@ -3,8 +3,8 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkLowLevel;
 import com.spikes2212.command.genericsubsystem.smartmotorcontrollersubsystem.SmartMotorControllerGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.RobotMap;
 
@@ -21,6 +21,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
     }
 
     private static final String NAMESPACE_NAME = "hood";
+
     private static final double DEGREES_IN_ROTATIONS = 360;
     private static final double SECONDES_IN_MINUTE = 60;
     private static final double GEAR_RATIO = -1.0;
@@ -32,7 +33,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
     private final SparkWrapper sparkMax;
     private final DigitalInput bottomLimit;
-    private final DutyCycleEncoder absoluteEncoder;
+    private final AnalogPotentiometer absoluteEncoder;
 
     private double lastPositionDegrees = 0;
     private double lastMoveTime = 0;
@@ -45,13 +46,13 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
             instance = new Hood(NAMESPACE_NAME,
                     SparkWrapper.createSparkMax(RobotMap.CAN.HOOD_MOTOR, SparkLowLevel.MotorType.kBrushless),
                     new DigitalInput(RobotMap.DIO.HOOD_BOTTOM_LIMIT),
-                    new DutyCycleEncoder(RobotMap.DIO.HOOD_ABSOLUTE_ENCODER));
+                    new AnalogPotentiometer(RobotMap.DIO.HOOD_ABSOLUTE_ENCODER, DEGREES_IN_ROTATIONS, 0));
         }
         return instance;
     }
 
     private Hood(String namespaceName, SparkWrapper sparkMax, DigitalInput bottomLimit,
-                 DutyCycleEncoder absoluteEncoder) {
+                 AnalogPotentiometer absoluteEncoder) {
         super(namespaceName, sparkMax);
         this.sparkMax = sparkMax;
         this.bottomLimit = bottomLimit;
@@ -62,7 +63,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
     }
 
     public double getAbsDegrees() {
-        return absoluteEncoder.get() * DEGREES_IN_ROTATIONS;
+        return absoluteEncoder.get();
     }
 
     @Override
@@ -76,7 +77,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
      * Resets the timer if movement exceeds MOTION_EPSILON, indicating healthy operation.
      * Flags the motor as stalled if position remains static for longer than STALL_TIME_LIMIT.
      */
-    private void checkForStall() { //@TODO check if we need to add a tolerance
+    private void checkForStall() {
         double currentPos = getAbsDegrees();
         double currentTime = Timer.getFPGATimestamp();
 
