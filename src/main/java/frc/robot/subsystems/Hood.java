@@ -114,6 +114,6 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
         namespace.putBoolean("bottom limit", bottomLimit::get);
         namespace.putNumber("hood pose", sparkMax::getPosition);
         namespace.putNumber("abs encoder deg", this::getAbsDegrees);
-        namespace.putBoolean("Is Stalled", () -> isStalled);
+        namespace.putBoolean("is stalled", () -> isStalled);
     }
 }
