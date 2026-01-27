@@ -1,4 +1,4 @@
-package frc.robot.commands.difficultCommands;
+package frc.robot.commands.difficultcommands;
 
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import frc.robot.subsystems.Hood;
