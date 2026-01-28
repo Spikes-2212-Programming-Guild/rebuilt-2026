@@ -4,8 +4,8 @@ public class RobotMap {
 
     public interface CAN {
 
-        int CLIMB_TALON_FX_LEFT_ID = -1;
-        int CLIMB_TALON_FX_RIGHT_ID = -1;
+        int CLIMB_SPARK_MAX_LEFT_ID = -1;
+        int CLIMB_SPARK_MAX_RIGHT_ID = -1;
     }
 
     public interface DIO {
