@@ -6,6 +6,21 @@ import frc.robot.RobotMap;
 
 public class Climb extends SmartMotorControllerGenericSubsystem {
 
+    public enum ArmPose {
+
+        TOP(-1), BOTTOM(-1);
+
+        private final double positionMeters;
+
+        public double getPositionMeters() {
+            return positionMeters;
+        }
+
+        ArmPose(double position) {
+            this.positionMeters = position;
+        }
+    }
+
     private static final String NAMESPACE_NAME = "climb";
 
     private static final boolean LEFT_MOTOR_INVERTED = false;
