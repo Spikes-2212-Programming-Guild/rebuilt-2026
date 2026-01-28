@@ -10,7 +10,6 @@ public class RobotMap {
 
     public interface DIO {
 
-        int CLIMB_INFRARED = -1;
     }
 
     public interface PWM {
