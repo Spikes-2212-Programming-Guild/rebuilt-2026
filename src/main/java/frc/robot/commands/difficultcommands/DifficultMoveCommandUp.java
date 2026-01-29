@@ -10,7 +10,7 @@ import frc.robot.subsystems.CollectionMovement;
 
 public class DifficultMoveCommandUp extends MoveSmartMotorControllerGenericSubsystem {
 
-    static double SETPOINTUP = -1;
+     private static final double SETPOINT_UP = -1;
 
     private static final RootNamespace namespace = new RootNamespace("move collection to position");
     private static final PIDSettings pidSettings = namespace.addPIDNamespace("move collection to position");
@@ -21,7 +21,7 @@ public class DifficultMoveCommandUp extends MoveSmartMotorControllerGenericSubsy
 
     public DifficultMoveCommandUp(CollectionMovement collectionMovement){
         super(collectionMovement , pidSettings, feedForwardSettings,
-                UnifiedControlMode.POSITION,() -> SETPOINTUP,true);
+                UnifiedControlMode.POSITION,() -> SETPOINT_UP,true);
         this.collectionMovement = collectionMovement;
     }
 
