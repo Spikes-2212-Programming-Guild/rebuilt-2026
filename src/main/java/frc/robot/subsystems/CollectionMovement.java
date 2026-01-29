@@ -1,13 +1,26 @@
 package frc.robot.subsystems;
 
-import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.command.genericsubsystem.smartmotorcontrollersubsystem.SmartMotorControllerGenericSubsystem;
-import com.spikes2212.util.smartmotorcontrollers.SmartMotorController;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.RobotMap;
 
 public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
+
+    public enum CollectionMovementPose {
+
+        MAX_POSITION(-1), MIN_POSITION(-1);
+
+        private final double neededSpeed;
+
+        public double getNeededSpeed() {
+            return this.neededSpeed;
+        }
+
+        CollectionMovementPose(double neededSpeed) {
+            this.neededSpeed = neededSpeed;
+        }
+    }
 
     private static final String NAMESPACE_NAME = "collection movement";
 
