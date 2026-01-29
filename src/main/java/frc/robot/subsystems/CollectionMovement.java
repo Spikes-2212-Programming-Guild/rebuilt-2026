@@ -1,11 +1,13 @@
 package frc.robot.subsystems;
 
 import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
+import com.spikes2212.command.genericsubsystem.smartmotorcontrollersubsystem.SmartMotorControllerGenericSubsystem;
+import com.spikes2212.util.smartmotorcontrollers.SmartMotorController;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.RobotMap;
 
-public class CollectionMovement extends MotoredGenericSubsystem {
+public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "collection movement";
 
