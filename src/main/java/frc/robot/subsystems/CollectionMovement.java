@@ -25,15 +25,15 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     }
 
     private static final String NAMESPACE_NAME = "collection movement";
-    private static final double MOTION_EPSILON = -1.0;
-    private static final double STALL_TIME_LIMIT = -1.0;   // Seconds to wait before triggering stall protection// Minimum degrees change to be considered "moving"
-    private static CollectionMovement instance;
+    private static final double MOTION_EPSILON = -1.0;     // Minimum degrees change to be considered "moving"
+    private static final double STALL_TIME_LIMIT = -1.0;   // Seconds to wait before triggering stall protection//
+
     private final DutyCycleEncoder absoluteEncoder;
     private final TalonFXWrapper talonFX;
     private double lastPositionDegrees = 0;
     private double lastMoveTime = 0;
     private boolean isStalled = false;
-
+    private static CollectionMovement instance;
 
     public static CollectionMovement getInstance() {
         if (instance == null) {
@@ -54,6 +54,12 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     public double getAbsDegrees() {
         return absoluteEncoder.get();
+    }
+
+    @Override
+    public void periodic() {
+        super.periodic();
+        checkForStall();
     }
 
     private void checkForStall() {
