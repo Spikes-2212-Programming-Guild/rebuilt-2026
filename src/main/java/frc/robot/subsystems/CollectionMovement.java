@@ -49,7 +49,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
             instance = new CollectionMovement(NAMESPACE_NAME,
                     new DutyCycleEncoder(RobotMap.DIO.COLLECTION_MOVEMENT_THROUGH_BORE_ID),
                     new TalonFXWrapper(RobotMap.CAN.COLLECTION_MOVEMENT_TALON_FX_ID),
-                    IS_ENCODER_INVERTED,bottomLimit);
+                    IS_ENCODER_INVERTED, bottomLimit);
         }
         return instance;
     }
@@ -97,7 +97,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
             return false;
         }
 
-        return !(Math.abs(speed) > ABSOLUTE_LOWER_DEG && Math.abs(speed) > ABSOLUTE_UPPER_DEG) || !isStalled;
+        return  speed != 0 || !isStalled;
     }
 
         public double encoderPositionToDegrees () {
