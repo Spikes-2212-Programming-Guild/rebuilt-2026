@@ -71,8 +71,8 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
     @Override
     public boolean canMove(double speed) {
         return (
-            (speed > 0 && leftSparkMax.getPosition() != MAX_ARM_POSITION_METERS) ||
-            (speed < 0 && leftSparkMax.getPosition() != MIN_ARM_POSITION_METERS)
+                (speed > 0 && leftSparkMax.getPosition() < MAX_ARM_POSITION_METERS) ||
+                        (speed < 0 && leftSparkMax.getPosition() > MIN_ARM_POSITION_METERS)
         );
     }
 
