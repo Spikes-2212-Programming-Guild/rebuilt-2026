@@ -35,14 +35,6 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     private boolean isStalled = false;
 
 
-    private CollectionMovement(String namespaceName, DutyCycleEncoder absoluteEncoder,
-                               TalonFXWrapper talonFX) {
-        super(namespaceName, talonFX);
-        this.talonFX = talonFX;
-        this.absoluteEncoder = absoluteEncoder;
-        configureDashboard();
-    }
-
     public static CollectionMovement getInstance() {
         if (instance == null) {
             instance = new CollectionMovement(NAMESPACE_NAME,
@@ -50,6 +42,14 @@ public class CollectionMovement extends MotoredGenericSubsystem {
                     new TalonFXWrapper(RobotMap.CAN.COLLECTION_MOVEMENT_TALON_FX_ID));
         }
         return instance;
+    }
+
+    private CollectionMovement(String namespaceName, DutyCycleEncoder absoluteEncoder,
+                               TalonFXWrapper talonFX) {
+        super(namespaceName, talonFX);
+        this.talonFX = talonFX;
+        this.absoluteEncoder = absoluteEncoder;
+        configureDashboard();
     }
 
     public double getAbsDegrees() {
