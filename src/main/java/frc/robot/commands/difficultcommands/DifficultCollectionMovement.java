@@ -7,11 +7,10 @@ import java.util.function.Supplier;
 
 public class DifficultCollectionMovement extends MoveGenericSubsystem {
 
-    private final CollectionMovement collectionMovement;
+
 
     public DifficultCollectionMovement(CollectionMovement collectionMovement, Supplier<Double> speed) {
         super(collectionMovement, speed);
-        this.collectionMovement = collectionMovement;
     }
 
     public DifficultCollectionMovement(CollectionMovement collectionMovement,
