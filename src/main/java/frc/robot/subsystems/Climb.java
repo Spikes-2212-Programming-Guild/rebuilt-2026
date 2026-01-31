@@ -12,14 +12,14 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
 
         TOP(-1), BOTTOM(-1);
 
-        private final double positionMeters;
+        private final double neededSpeed;
 
-        public double getPositionMeters() {
-            return positionMeters;
+        public double getNeededSpeed() {
+            return neededSpeed;
         }
 
         ArmPose(double position) {
-            this.positionMeters = position;
+            this.neededSpeed = position;
         }
     }
 
