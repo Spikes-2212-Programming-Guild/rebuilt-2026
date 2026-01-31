@@ -5,7 +5,6 @@ import frc.robot.subsystems.CollectionMovement;
 
 public class DifficultCollectionMovement extends MoveGenericSubsystem {
 
-
     public DifficultCollectionMovement(CollectionMovement collectionMovement,
                                        CollectionMovement.CollectionMovementSpeed speed) {
         super(collectionMovement, speed::getNeededSpeed);
