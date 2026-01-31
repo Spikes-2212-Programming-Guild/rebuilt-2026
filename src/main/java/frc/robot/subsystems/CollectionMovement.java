@@ -2,20 +2,19 @@ package frc.robot.subsystems;
 
 import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.RobotMap;
 
 public class CollectionMovement extends MotoredGenericSubsystem {
 
-    public enum CollectionMovementPose {
+    public enum CollectionMovementSpeed {
 
-        MAX_POSITION(-1), MIN_POSITION(-1);
+        MAX_SPEED(-1), MIN_SPEED(-1),SPEED(-1);
 
         private final double neededSpeed;
 
-        CollectionMovementPose(double neededSpeed) {
+        CollectionMovementSpeed(double neededSpeed) {
             this.neededSpeed = neededSpeed;
         }
 
@@ -81,7 +80,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        return speed != 0 || !isStalled;
+        return speed != 0 && !isStalled;
     }
 
     @Override
