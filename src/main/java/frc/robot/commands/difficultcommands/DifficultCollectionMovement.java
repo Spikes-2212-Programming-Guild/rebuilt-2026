@@ -18,9 +18,4 @@ public class DifficultCollectionMovement extends MoveGenericSubsystem {
                                        CollectionMovement.CollectionMovementPose pose) {
         this(collectionMovement, pose::getNeededSpeed);
     }
-
-    @Override
-    public void initialize() {
-        collectionMovement.resetRelativeEncoderRelativeToAbsoluteEncoder();
-    }
 }
