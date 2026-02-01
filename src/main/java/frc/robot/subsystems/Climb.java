@@ -13,9 +13,9 @@ public class Climb extends MotoredGenericSubsystem {
     private static final boolean RIGHT_MOTOR_INVERTED = false;
 
     private static final double MAX_ARM_POSITION_METERS = -1;
-    private static final double MIN_ARM_POSITION_METERS = -1;
+    private static final double MIN_ARM_POSITION_METERS = 0;
 
-    private static final double GEAR_RATIO = -1;
+    private static final double GEAR_RATIO = 1 / 25.0;
     private static final double SPOOL_DIAMETER_METERS = -1;
 
     private final SparkWrapper leftSparkMax;
