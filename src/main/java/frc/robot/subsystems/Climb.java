@@ -2,26 +2,11 @@ package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkLowLevel;
 import com.revrobotics.spark.config.SparkBaseConfig;
-import com.spikes2212.command.genericsubsystem.smartmotorcontrollersubsystem.SmartMotorControllerGenericSubsystem;
+import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import frc.robot.RobotMap;
 
-public class Climb extends SmartMotorControllerGenericSubsystem {
-
-    public enum ArmPose {
-
-        TOP(-1), BOTTOM(-1);
-
-        private final double neededSpeed;
-
-        public double getNeededSpeed() {
-            return neededSpeed;
-        }
-
-        ArmPose(double position) {
-            this.neededSpeed = position;
-        }
-    }
+public class Climb extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "climb";
 
@@ -56,6 +41,7 @@ public class Climb extends SmartMotorControllerGenericSubsystem {
         super(namespaceName, leftSparkMax, rightSparkMax);
         this.leftSparkMax = leftSparkMax;
         this.rightSparkMax = rightSparkMax;
+        //@TODO maybe set the position to 0 at the start or add a "reset" command that does it
         leftSparkMax.setIdleMode(SparkBaseConfig.IdleMode.kBrake);
         rightSparkMax.setIdleMode(SparkBaseConfig.IdleMode.kBrake);
         rightSparkMax.setInverted(rightMotorInverted);
