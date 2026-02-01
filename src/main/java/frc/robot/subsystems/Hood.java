@@ -4,7 +4,6 @@ import com.revrobotics.spark.SparkLowLevel;
 import com.spikes2212.command.genericsubsystem.smartmotorcontrollersubsystem.SmartMotorControllerGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.RobotMap;
 
@@ -32,7 +31,6 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
     private static final double MIN_SPEED_TO_CHECK = -1.0; // Minimum motor power to check for stall
 
     private final SparkWrapper sparkMax;
-    private final DigitalInput bottomLimit;
     private final AnalogPotentiometer absoluteEncoder;
 
     private double lastPositionDegrees = 0;
@@ -45,17 +43,14 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
         if (instance == null) {
             instance = new Hood(NAMESPACE_NAME,
                     SparkWrapper.createSparkMax(RobotMap.CAN.HOOD_MOTOR, SparkLowLevel.MotorType.kBrushless),
-                    new DigitalInput(RobotMap.DIO.HOOD_BOTTOM_LIMIT),
                     new AnalogPotentiometer(RobotMap.DIO.HOOD_ABSOLUTE_ENCODER, DEGREES_IN_ROTATIONS, 0));
         }
         return instance;
     }
 
-    private Hood(String namespaceName, SparkWrapper sparkMax, DigitalInput bottomLimit,
-                 AnalogPotentiometer absoluteEncoder) {
+    private Hood(String namespaceName, SparkWrapper sparkMax, AnalogPotentiometer absoluteEncoder) {
         super(namespaceName, sparkMax);
         this.sparkMax = sparkMax;
-        this.bottomLimit = bottomLimit;
         this.absoluteEncoder = absoluteEncoder;
 
         sparkMax.setVelocityConversionFactor(DISTANCE_PER_PULSE / SECONDES_IN_MINUTE);
@@ -98,21 +93,14 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        if (bottomLimit.get() && speed < 0) {
-            return false;
-        }
-
         return !(Math.abs(speed) > MIN_SPEED_TO_CHECK) || !isStalled;
     }
 
     public void calibrateEncoderPosition() {
-        if (bottomLimit.get()) {
-            sparkMax.setPosition(HoodPose.MIN_ANGLE.neededAngle);
-        }
+        sparkMax.setPosition(getAbsDegrees());
     }
 
     public void configureDashboard() {
-        namespace.putBoolean("bottom limit", bottomLimit::get);
         namespace.putNumber("hood pose", sparkMax::getPosition);
         namespace.putNumber("abs encoder deg", this::getAbsDegrees);
         namespace.putBoolean("is stalled", () -> isStalled);
