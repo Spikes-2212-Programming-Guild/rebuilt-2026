@@ -7,8 +7,23 @@ import java.util.function.Supplier;
 
 public class ClimbToPosition extends MoveGenericSubsystem {
 
-    public ClimbToPosition(Climb climb, Climb.ArmPose armPose) {
-        super(climb, armPose::getNeededSpeed);
+    public enum ClimbPosition {
+
+        TOP(-1), BOTTOM(-1);
+
+        private final double neededSpeed;
+
+        public double getNeededSpeed() {
+            return neededSpeed;
+        }
+
+        ClimbPosition(double neededSpeed) {
+            this.neededSpeed = neededSpeed;
+        }
+    }
+
+    public ClimbToPosition(Climb climb, ClimbPosition climbPosition) {
+        super(climb, climbPosition::getNeededSpeed);
     }
 
     public ClimbToPosition(Climb climb, Supplier<Double> speed) {
