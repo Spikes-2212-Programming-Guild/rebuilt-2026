@@ -29,8 +29,6 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
                     TalonFXWrapper slaveLeftTalonFX) {
         super(namespaceName, masterTalonFX, slaveMiddleTalonFX, slaveLeftTalonFX);
         this.masterTalonFX = masterTalonFX;
-        slaveMiddleTalonFX.follow(masterTalonFX);
-        slaveLeftTalonFX.follow(masterTalonFX);
         configureDashboard();
         configureRelativeEncoder();
     }
