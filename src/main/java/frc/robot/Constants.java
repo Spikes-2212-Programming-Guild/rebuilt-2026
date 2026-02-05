@@ -6,9 +6,9 @@ public final class Constants {
 
         public enum HoodPose {
 
-            SHOOT_POSE1(new double[]{1, 2, 3}, -1.0, -1.0, -1.0),
-            SHOOT_POSE2(new double[]{1, 2, 3}, -1.0, -1.0, -1.0),
-            SHOOT_POSE3(new double[]{1, 2, 3}, -1.0, -1.0, -1.0);
+            SHOOT_POSE1(new double[3], -1.0, -1.0, -1.0),
+            SHOOT_POSE2(new double[3], -1.0, -1.0, -1.0),
+            SHOOT_POSE3(new double[3], -1.0, -1.0, -1.0);
 
             public final double[] neededAngle;
             public final double flywheelQuadraticVector;
@@ -20,6 +20,7 @@ public final class Constants {
                      double flywheelLinearVector,
                      double flywheelInterceptVector) {
                 this.neededAngle = neededAngle;
+
                 this.flywheelQuadraticVector = flywheelQuadraticVector;
                 this.flywheelLinearVector = flywheelLinearVector;
                 this.flywheelInterceptVector = flywheelInterceptVector;
