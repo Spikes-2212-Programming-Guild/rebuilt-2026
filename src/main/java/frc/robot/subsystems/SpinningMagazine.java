@@ -13,6 +13,8 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
 
     public static final double SPEED = -1.0;
 
+    private final double CURRENT_AMP_LIMIT = 40;
+
     private static SpinningMagazine instance;
 
     public static SpinningMagazine getInstance() {
@@ -28,10 +30,16 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
         super(namespaceName, sparkMax);
         this.sparkMax = sparkMax;
         configureDashboard();
+        setCurrentLimit(CURRENT_AMP_LIMIT);
     }
 
     @Override
     public void configureDashboard() {
         namespace.putNumber("sparkMax speed", sparkMax::getVelocity);
+    }
+
+    public void setCurrentLimit(double limit) {
+        sparkMax.getSparkConfiguration().secondaryCurrentLimit(limit);
+        sparkMax.applyConfiguration(sparkMax.getSparkConfiguration());
     }
 }
