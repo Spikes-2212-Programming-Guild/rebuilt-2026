@@ -1,9 +1,11 @@
-package frc.robot.subsystems;
+package frc.robot.util;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.subsystems.ShooterInterpolation;
+import frc.robot.subsystems.ShotSolution;
 
 public class MovingShotAlgorithm {
 
