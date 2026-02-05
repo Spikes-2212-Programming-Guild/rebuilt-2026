@@ -9,7 +9,7 @@ public class Collection extends MotoredGenericSubsystem {
 
     private final static String NAMESPACE_NAME = "collection";
 
-    private final SparkWrapper spark;
+    private final SparkWrapper sparkMax;
 
     public static final double SPEED = -1.0;
 
@@ -26,20 +26,20 @@ public class Collection extends MotoredGenericSubsystem {
         return instance;
     }
 
-    private Collection(String namespaceName, SparkWrapper spark) {
-        super(namespaceName, spark);
-        this.spark = spark;
+    private Collection(String namespaceName, SparkWrapper sparkMax) {
+        super(namespaceName, sparkMax);
+        this.sparkMax = sparkMax;
         configureDashboard();
         setCurrentLimit(CURRENT_LIMIT_AMP);
     }
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("motor velocity", spark::getVelocity);
+        namespace.putNumber("motor velocity", sparkMax::getVelocity);
     }
 
     public void setCurrentLimit(double limit) {
-        spark.getSparkConfiguration().secondaryCurrentLimit(limit);
-        spark.applyConfiguration(spark.getSparkConfiguration());
+        sparkMax.getSparkConfiguration().secondaryCurrentLimit(limit);
+        sparkMax.applyConfiguration(sparkMax.getSparkConfiguration());
     }
 }
