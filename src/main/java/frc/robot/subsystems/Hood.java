@@ -10,6 +10,7 @@ import frc.robot.RobotMap;
 public class Hood extends SmartMotorControllerGenericSubsystem {
 
     public enum HoodPose {
+
         MAX_ANGLE(-1), MIN_ANGLE(0);
 
         public final double neededAngle;
@@ -21,10 +22,10 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "hood";
 
-    private static final double DEGREES_IN_ROTATIONS = 360;
-    private static final double SECONDES_IN_MINUTE = 60;
+    private static final double DEGREES_IN_ROTATION = 360;
+    private static final double SECONDS_IN_MINUTE = 60;
     private static final double GEAR_RATIO = -1.0;
-    private static final double DISTANCE_PER_PULSE = GEAR_RATIO * DEGREES_IN_ROTATIONS;
+    private static final double DISTANCE_PER_PULSE = GEAR_RATIO * DEGREES_IN_ROTATION;
 
     private static final double MOTION_EPSILON = -1.0;     // Minimum degrees change to be considered "moving"
     private static final double STALL_TIME_LIMIT = -1.0;   // Seconds to wait before triggering stall protection
@@ -43,7 +44,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
         if (instance == null) {
             instance = new Hood(NAMESPACE_NAME,
                     SparkWrapper.createSparkMax(RobotMap.CAN.HOOD_MOTOR, SparkLowLevel.MotorType.kBrushless),
-                    new AnalogPotentiometer(RobotMap.DIO.HOOD_ABSOLUTE_ENCODER, DEGREES_IN_ROTATIONS, 0));
+                    new AnalogPotentiometer(RobotMap.DIO.HOOD_ABSOLUTE_ENCODER, DEGREES_IN_ROTATION, 0));
         }
         return instance;
     }
@@ -53,7 +54,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
         this.sparkMax = sparkMax;
         this.absoluteEncoder = absoluteEncoder;
 
-        sparkMax.setVelocityConversionFactor(DISTANCE_PER_PULSE / SECONDES_IN_MINUTE);
+        sparkMax.setVelocityConversionFactor(DISTANCE_PER_PULSE / SECONDS_IN_MINUTE);
         configureDashboard();
     }
 
@@ -102,7 +103,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
     public void configureDashboard() {
         namespace.putNumber("hood pose", sparkMax::getPosition);
-        namespace.putNumber("abs encoder deg", this::getAbsDegrees);
+        namespace.putNumber("abs encoder degrees", this::getAbsDegrees);
         namespace.putBoolean("is stalled", () -> isStalled);
     }
 }
