@@ -31,7 +31,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
     private static final double MOTION_EPSILON = -1.0;     // Minimum degrees change to be considered "moving"
     private static final double STALL_TIME_LIMIT = -1.0;   // Seconds to wait before triggering stall protection
-    private static final double MIN_SPEED_TO_CHECK = -1.0; // Minimum motor power to check for stall
+    private static final double MIN_SPEED = -1.0;
 
     private final SparkWrapper sparkMax;
     private final AnalogPotentiometer absoluteEncoder;
@@ -98,7 +98,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        return !(Math.abs(speed) > MIN_SPEED_TO_CHECK) || !isStalled;
+        return !(Math.abs(speed) > MIN_SPEED) || !isStalled;
     }
 
     public void calibrateEncoderPosition() {
