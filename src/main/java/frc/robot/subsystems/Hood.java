@@ -55,6 +55,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
         this.absoluteEncoder = absoluteEncoder;
 
         sparkMax.setVelocityConversionFactor(DISTANCE_PER_PULSE / SECONDS_IN_MINUTE);
+        sparkMax.setPositionConversionFactor(DISTANCE_PER_PULSE);
         configureDashboard();
     }
 
