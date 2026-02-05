@@ -18,7 +18,7 @@ public class DifficultShoot extends MoveSmartMotorControllerGenericSubsystem {
     private static final FeedForwardSettings ffSettings = namespace.
             addFeedForwardNamespace("difficult shoot", FeedForwardSettings.EMPTY_FF_SETTINGS);
 
-    public DifficultShoot(Shooter shooter, Supplier<Double> setpoint) {
-        super(shooter, pidSettings, ffSettings, UnifiedControlMode.VELOCITY, setpoint, true);
+    public DifficultShoot(Shooter shooter, Supplier<Double> speed) {
+        super(shooter, pidSettings, ffSettings, UnifiedControlMode.VELOCITY, speed, true);
     }
 }
