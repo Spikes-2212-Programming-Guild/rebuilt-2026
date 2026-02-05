@@ -20,7 +20,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
-        hood.calibrateEncoderPosition();
     }
 
     @Override
@@ -35,7 +34,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-
+        hood.calibrateEncoderPosition();
     }
 
     @Override
@@ -45,7 +44,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-
+        hood.calibrateEncoderPosition();
     }
 
     @Override
