@@ -27,6 +27,8 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
     private static final double GEAR_RATIO = -1.0;
     private static final double DISTANCE_PER_PULSE = GEAR_RATIO * DEGREES_IN_ROTATION;
 
+    private static final double CURRENT_LIMIT = -1.0;
+
     private static final double MOTION_EPSILON = -1.0;     // Minimum degrees change to be considered "moving"
     private static final double STALL_TIME_LIMIT = -1.0;   // Seconds to wait before triggering stall protection
     private static final double MIN_SPEED_TO_CHECK = -1.0; // Minimum motor power to check for stall
@@ -54,6 +56,8 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
         this.sparkMax = sparkMax;
         this.absoluteEncoder = absoluteEncoder;
 
+
+        sparkMax.getSparkConfiguration().secondaryCurrentLimit(CURRENT_LIMIT);
         sparkMax.setVelocityConversionFactor(DISTANCE_PER_PULSE / SECONDS_IN_MINUTE);
         sparkMax.setPositionConversionFactor(DISTANCE_PER_PULSE);
         configureDashboard();
