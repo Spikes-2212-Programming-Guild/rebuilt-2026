@@ -15,7 +15,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     private final static double DRIVE_GEAR_RATIO = -1;
     private final static double TURN_GEAR_RATIO = -1;
-    private final static double WHEAL_DIAMETER_TO_INCHES = -1;
+    private final static double WHEEL_DIAMETER_INCHES = -1;
     private final static double INCHES_TO_METERS = 0.0254;
     private final static int DEGREES_IN_ROTATION = 360;
     private final static int SECONDS_IN_MINUTE = 60;
@@ -40,7 +40,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     @Override
     protected void configureDriveController() {
-        driveMotor.setEncoderConversionFactor(DRIVE_GEAR_RATIO * WHEAL_DIAMETER_TO_INCHES *
+        driveMotor.setEncoderConversionFactor(DRIVE_GEAR_RATIO * WHEEL_DIAMETER_INCHES *
                 INCHES_TO_METERS * Math.PI);
     }
 
