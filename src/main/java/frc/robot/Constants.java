@@ -27,7 +27,7 @@ public final class Constants {
             }
         }
 
-        public static final class STRATEGY {
+        public static final class ShootingRanges {
 
             public static final double SWITCH_POINT_1_TO_2 = -1.0;
             public static final double SWITCH_POINT_2_TO_3 = -1.0;
