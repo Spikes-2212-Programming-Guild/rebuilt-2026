@@ -15,6 +15,7 @@ public class DifficultShoot extends MoveSmartMotorControllerGenericSubsystem {
 
     private static final PIDSettings pidSettings = namespace.
             addPIDNamespace("difficult shoot", PIDSettings.EMPTY_PID_SETTINGS);
+
     private static final FeedForwardSettings ffSettings = namespace.
             addFeedForwardNamespace("difficult shoot", FeedForwardSettings.EMPTY_FF_SETTINGS);
 
