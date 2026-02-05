@@ -41,4 +41,12 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
     private void configureRelativeEncoder() {
         masterTalonFX.setEncoderConversionFactor(GEAR_RATIO * WHEEL_DIAMETER_IN_METERS);
     }
+
+    private double getCurrentSpeed(){
+        return masterTalonFX.getVelocity();
+    }
+
+    private void setSpeed(double speed){
+        masterTalonFX.set(speed);
+    }
 }
