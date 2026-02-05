@@ -5,7 +5,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Constants.ShooterConstants;
 
-public class MovingShotAlgo {
+public class MovingShotAlgorithm {
 
     public static ShotSolution calculateMovingShot(Pose2d robotPose, ChassisSpeeds fieldRelativeSpeeds) {
 
