@@ -38,7 +38,6 @@ public class PhotonVisionCamera implements AprilTagCamera {
 
             var estimate = update.get();
 
-            // Calculate Average Distance
             double avgDist = 0.0;
             if (!estimate.targetsUsed.isEmpty()) {
                 for (PhotonTrackedTarget target : estimate.targetsUsed) {
@@ -47,10 +46,8 @@ public class PhotonVisionCamera implements AprilTagCamera {
                 avgDist /= estimate.targetsUsed.size();
             }
 
-            // Validate
             if (!VisionConstants.isReliable(avgDist, robotSpeeds)) continue;
 
-            // Reuse static logic
             measurements.add(VisionConstants.createMeasurement(
                     estimate.estimatedPose.toPose2d(),
                     estimate.timestampSeconds,
