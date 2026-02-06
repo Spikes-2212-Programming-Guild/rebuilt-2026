@@ -1,6 +1,5 @@
 package frc.robot.util.vision.cameras;
 
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
@@ -40,14 +39,17 @@ public class LimelightCamera implements AprilTagCamera {
     @Override
     public List<VisionMeasurement> getMeasurements(ChassisSpeeds robotSpeeds) {
         updateRobotOrientation(robotSpeeds);
-
         var pose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
 
         if (!isValid(pose, robotSpeeds)) {
             return Collections.emptyList();
         }
 
-        return List.of(createMeasurement(pose));
+        return List.of(VisionConstants.createMeasurement(
+                pose.pose,
+                pose.timestampSeconds,
+                pose.avgTagDist
+        ));
     }
 
     private void updateRobotOrientation(ChassisSpeeds robotSpeeds) {
@@ -67,18 +69,6 @@ public class LimelightCamera implements AprilTagCamera {
             return false;
         }
         return VisionConstants.isReliable(pose.avgTagDist, robotSpeeds);
-    }
-
-    private VisionMeasurement createMeasurement(PoseEstimate pose) {
-        return new VisionMeasurement(
-                pose.pose,
-                pose.timestampSeconds,
-                VecBuilder.fill(
-                        VisionConstants.calculateStandardDeviation(VisionConstants.DRIVE_TRUST_SCALAR, pose.avgTagDist),
-                        VisionConstants.calculateStandardDeviation(VisionConstants.DRIVE_TRUST_SCALAR, pose.avgTagDist),
-                        VisionConstants.calculateStandardDeviation(VisionConstants.ANGLE_TRUST_SCALAR, pose.avgTagDist)
-                )
-        );
     }
 
     @Override
