@@ -18,7 +18,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     private final static double DRIVE_GEAR_RATIO = 1 / 6.12;
     private final static double TURN_GEAR_RATIO = (double) 7 / 150;
-    private final static double WHEEL_DIAMETER_METERS = -1;
+    private final static double WHEEL_DIAMETER_METERS = 0.1016;
     private final static int DEGREES_IN_ROTATION = 360;
     private final static int SECONDS_IN_MINUTE = 60;
     private final static int ABSOLUTE_POSITION_DISCONTINUITY_POINT = 1;
