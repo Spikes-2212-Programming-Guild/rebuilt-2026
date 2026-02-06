@@ -43,14 +43,14 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
                 drivetrainTrackLength, maxPossibleVelocity);
         this.gyro = gyro;
 
-        setStates(currentStates,
+        setStructArrayStates(currentStates,
                 new SwerveModuleState[]{
                         new SwerveModuleState(),
                         new SwerveModuleState(),
                         new SwerveModuleState(),
                         new SwerveModuleState()
                 });
-        setStates(desiredStates,
+        setStructArrayStates(desiredStates,
                 new SwerveModuleState[]{
                         new SwerveModuleState(),
                         new SwerveModuleState(),
@@ -75,7 +75,7 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
         super.drive(xSpeed, ySpeed, rotationSpeed, isFieldRelative,
                 timeStep, useVelocityPID);
 
-        setStates(currentStates,
+        setStructArrayStates(currentStates,
                 new SwerveModuleState[]{
                         frontLeftModule.getModuleState(),
                         frontRightModule.getModuleState(),
@@ -83,10 +83,11 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
                         backRightModule.getModuleState()
                 });
 
-        setStates(desiredStates, getDesiredStates(xSpeed, ySpeed, rotationSpeed, isFieldRelative, timeStep));
+        setStructArrayStates(desiredStates, getDesiredStates(xSpeed, ySpeed, rotationSpeed, isFieldRelative, timeStep));
     }
 
-    public void setStates(StructArrayPublisher<SwerveModuleState> states, SwerveModuleState[] desiredStatesToSet) {
+    public void setStructArrayStates(StructArrayPublisher<SwerveModuleState> states,
+                                     SwerveModuleState[] desiredStatesToSet) {
         states.set(desiredStatesToSet);
     }
 
