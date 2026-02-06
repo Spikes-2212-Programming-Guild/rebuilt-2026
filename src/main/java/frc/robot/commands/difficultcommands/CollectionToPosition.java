@@ -12,7 +12,6 @@ import java.util.function.Supplier;
 
 public class CollectionToPosition extends MoveSmartMotorControllerGenericSubsystem {
 
-
     private static final double OPEN_POSE = -1;
     private static final double CLOSE_POSE = -1;
 
