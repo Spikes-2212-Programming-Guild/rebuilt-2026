@@ -1,11 +1,10 @@
 package frc.robot.util.vision.cameras;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.util.vision.VisionMeasurement;
-import frc.robot.util.vision.VisionConstants; // Import the new class
+import frc.robot.util.vision.VisionConstants;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.targeting.PhotonTrackedTarget;
@@ -29,7 +28,7 @@ public class PhotonVisionCamera implements AprilTagCamera {
     }
 
     @Override
-    public List<VisionMeasurement> getMeasurements(ChassisSpeeds robotRelativeSpeeds) {
+    public List<VisionMeasurement> getMeasurements(ChassisSpeeds robotSpeeds) {
         var allResults = camera.getAllUnreadResults();
         List<VisionMeasurement> measurements = new ArrayList<>();
 
@@ -39,6 +38,7 @@ public class PhotonVisionCamera implements AprilTagCamera {
 
             var estimate = update.get();
 
+            // Calculate Average Distance
             double avgDist = 0.0;
             if (!estimate.targetsUsed.isEmpty()) {
                 for (PhotonTrackedTarget target : estimate.targetsUsed) {
@@ -47,16 +47,14 @@ public class PhotonVisionCamera implements AprilTagCamera {
                 avgDist /= estimate.targetsUsed.size();
             }
 
-            if (!VisionConstants.isReliable(avgDist, robotRelativeSpeeds)) continue;
+            // Validate
+            if (!VisionConstants.isReliable(avgDist, robotSpeeds)) continue;
 
-            measurements.add(new VisionMeasurement(
+            // Reuse static logic
+            measurements.add(VisionConstants.createMeasurement(
                     estimate.estimatedPose.toPose2d(),
                     estimate.timestampSeconds,
-                    VecBuilder.fill(
-                            VisionConstants.calculateStandardDeviation(VisionConstants.DRIVE_TRUST_SCALAR, avgDist),
-                            VisionConstants.calculateStandardDeviation(VisionConstants.DRIVE_TRUST_SCALAR, avgDist),
-                            VisionConstants.calculateStandardDeviation(VisionConstants.ANGLE_TRUST_SCALAR, avgDist)
-                    )
+                    avgDist
             ));
         }
 
