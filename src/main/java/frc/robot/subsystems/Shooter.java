@@ -45,4 +45,12 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
     public void setSpeed(double speed){
         masterTalonFX.set(speed);
     }
+
+    public double getVelocity() {
+        return masterTalonFX.getVelocity();
+    }
+
+    public void stop() {
+        masterTalonFX.stopMotor();
+    }
 }
