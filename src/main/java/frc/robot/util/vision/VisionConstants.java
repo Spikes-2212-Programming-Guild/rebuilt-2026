@@ -35,9 +35,9 @@ public class VisionConstants {
                 pose,
                 timestamp,
                 VecBuilder.fill(
-                        calculateStandardDeviation(DRIVE_TRUST_SCALAR, avgDist),
-                        calculateStandardDeviation(DRIVE_TRUST_SCALAR, avgDist),
-                        calculateStandardDeviation(ANGLE_TRUST_SCALAR, avgDist)
+                        calculateStandardDeviation(DRIVE_TRUST_SCALAR, avgDist), // X Standard Deviation (Meters)
+                        calculateStandardDeviation(DRIVE_TRUST_SCALAR, avgDist), // Y Standard Deviation (Meters)
+                        calculateStandardDeviation(ANGLE_TRUST_SCALAR, avgDist)  // Theta Standard Deviation (Radians)
                 )
         );
     }
