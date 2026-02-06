@@ -13,7 +13,7 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
 
     private final static String NAMESPACE_NAME = "swerve drivetrain";
 
-    private final static double MAX_POSSIBLE_VELOCITY = -1;
+    public final static double MAX_POSSIBLE_VELOCITY = -1;
     private final static double TRACK_WIDTH = -1;
     private final static double TRACK_LENGTH = -1;
 

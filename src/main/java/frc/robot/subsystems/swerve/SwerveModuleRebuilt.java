@@ -4,7 +4,10 @@ import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveModule;
 import frc.robot.com.spikes2212.control.FeedForwardSettings;
 import frc.robot.com.spikes2212.control.PIDSettings;
@@ -15,8 +18,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     private final static double DRIVE_GEAR_RATIO = -1;
     private final static double TURN_GEAR_RATIO = -1;
-    private final static double WHEEL_DIAMETER_INCHES = -1;
-    private final static double INCHES_TO_METERS = 0.0254;
+    private final static double WHEEL_DIAMETER_METERS = -1;
     private final static int DEGREES_IN_ROTATION = 360;
     private final static int SECONDS_IN_MINUTE = 60;
     private final static int ABSOLUTE_POSITION_DISCONTINUITY_POINT = 1;
@@ -40,8 +42,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     @Override
     protected void configureDriveController() {
-        driveMotor.setEncoderConversionFactor(DRIVE_GEAR_RATIO * WHEEL_DIAMETER_INCHES *
-                INCHES_TO_METERS * Math.PI);
+        driveMotor.setEncoderConversionFactor(DRIVE_GEAR_RATIO * WHEEL_DIAMETER_METERS * Math.PI);
     }
 
     @Override
@@ -68,6 +69,27 @@ public class SwerveModuleRebuilt extends SwerveModule {
     public void configureDashboard() {
         namespace.putNumber("absolute encoder", getAbsoluteModuleAngle()::getDegrees);
         namespace.putNumber("relative angle", this::getRelativeModuleAngle);
-        namespace.putNumber("current velocity", driveMotor::getVelocity);
+        namespace.putNumber("current drive velocity", driveMotor::getVelocity);
+        namespace.putNumber("current turn velocity", turnMotor::getVelocity);
+
+        namespace.putCommand("set angle to 0", new FunctionalCommand(() -> {},
+                () -> setTargetState(
+                        new SwerveModuleState(0, Rotation2d.fromDegrees(0)),
+                        DrivetrainRebuilt.MAX_POSSIBLE_VELOCITY, false
+                ), b -> stop(), () -> false));
+
+        namespace.putCommand("drive at 0.2", new RunCommand(() -> driveMotor.set(0.2)){
+            @Override
+            public void end(boolean interrupted){
+                driveMotor.stopMotor();
+            }
+        });
+
+        namespace.putCommand("turn at 0.2", new RunCommand(() -> turnMotor.set(0.2)){
+            @Override
+            public void end(boolean interrupted){
+                turnMotor.stopMotor();
+            }
+        });
     }
 }
