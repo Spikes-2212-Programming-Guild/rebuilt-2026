@@ -15,8 +15,8 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
         public final double neededAngle;
 
-        HoodPose(double neededPitch) {
-            this.neededAngle = neededPitch;
+        HoodPose(double neededAngle) {
+            this.neededAngle = neededAngle;
         }
     }
 
@@ -27,11 +27,10 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
     private static final double GEAR_RATIO = -1.0;
     private static final double DISTANCE_PER_PULSE = GEAR_RATIO * DEGREES_IN_ROTATION;
 
-    private static final double CURRENT_LIMIT = -1.0;
+    private static final double CURRENT_LIMIT_AMP = 40;
 
     private static final double MOTION_EPSILON = -1.0;     // Minimum degrees change to be considered "moving"
     private static final double STALL_TIME_LIMIT = -1.0;   // Seconds to wait before triggering stall protection
-    private static final double MIN_SPEED = -1.0;
 
     private final SparkWrapper sparkMax;
     private final AnalogPotentiometer absoluteEncoder;
@@ -56,10 +55,14 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
         this.sparkMax = sparkMax;
         this.absoluteEncoder = absoluteEncoder;
 
-        sparkMax.applyConfiguration(sparkMax.getSparkConfiguration().secondaryCurrentLimit(CURRENT_LIMIT));
+        configureHoodConversionsFactor();
+        configureDashboard();
+    }
+
+    private void configureHood() {
+        sparkMax.applyConfiguration(sparkMax.getSparkConfiguration().secondaryCurrentLimit(CURRENT_LIMIT_AMP));
         sparkMax.setVelocityConversionFactor(DISTANCE_PER_PULSE / SECONDS_IN_MINUTE);
         sparkMax.setPositionConversionFactor(DISTANCE_PER_PULSE);
-        configureDashboard();
     }
 
     public double getAbsDegrees() {
@@ -98,7 +101,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        return !(Math.abs(speed) > MIN_SPEED) || !isStalled;
+        return !isStalled;
     }
 
     public void calibrateEncoderPosition() {
