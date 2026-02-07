@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 public class DifficultShootWithPID extends MoveSmartMotorControllerGenericSubsystem {
 
-    private static final RootNamespace namespace = new RootNamespace("difficult shoot - pid");
+    private static final RootNamespace namespace = new RootNamespace("difficult shoot with pid");
 
     private static final PIDSettings pidSettings = namespace.
             addPIDNamespace("difficult shoot", PIDSettings.EMPTY_PID_SETTINGS);
@@ -20,6 +20,6 @@ public class DifficultShootWithPID extends MoveSmartMotorControllerGenericSubsys
             addFeedForwardNamespace("difficult shoot", FeedForwardSettings.EMPTY_FF_SETTINGS);
 
     public DifficultShootWithPID(Shooter shooter, Supplier<Double> speed) {
-        super(shooter, pidSettings, ffSettings, UnifiedControlMode.VELOCITY, speed, true);
+        super(shooter, pidSettings, ffSettings, UnifiedControlMode.VELOCITY, speed, false);
     }
 }
