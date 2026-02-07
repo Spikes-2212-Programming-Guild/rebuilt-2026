@@ -9,7 +9,7 @@ import frc.robot.subsystems.Shooter;
 
 import java.util.function.Supplier;
 
-public class DifficultShootWithPID extends MoveSmartMotorControllerGenericSubsystem {
+public class ShootWithPID extends MoveSmartMotorControllerGenericSubsystem {
 
     private static final RootNamespace namespace = new RootNamespace("difficult shoot with pid");
 
@@ -19,7 +19,7 @@ public class DifficultShootWithPID extends MoveSmartMotorControllerGenericSubsys
     private static final FeedForwardSettings ffSettings = namespace.
             addFeedForwardNamespace("difficult shoot", FeedForwardSettings.EMPTY_FF_SETTINGS);
 
-    public DifficultShootWithPID(Shooter shooter, Supplier<Double> speed) {
+    public ShootWithPID(Shooter shooter, Supplier<Double> speed) {
         super(shooter, pidSettings, ffSettings, UnifiedControlMode.VELOCITY, speed, false);
     }
 }
