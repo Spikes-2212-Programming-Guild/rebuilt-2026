@@ -55,7 +55,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
         this.sparkMax = sparkMax;
         this.absoluteEncoder = absoluteEncoder;
 
-        configureHoodConversionsFactor();
+        configureHood();
         configureDashboard();
     }
 
