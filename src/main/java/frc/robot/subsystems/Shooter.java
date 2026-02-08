@@ -11,7 +11,7 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
 
     private static final double GEAR_RATIO = 1;
     private static final double WHEEL_DIAMETER_IN_METERS = 0.1016;//converted 4 inches to meters
-    private final double CURRENT_MOTOR_LIMIT = -1;
+    private final double CURRENT_LIMIT_AMP = 40;
 
     private final TalonFXWrapper masterTalonFX;
 
@@ -38,7 +38,7 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
         this.masterTalonFX = masterTalonFX;
         this.IS_INVERTED = isInverted;
         masterTalonFX.setInverted(isInverted);
-        masterTalonFX.getConfigurator().apply(new CurrentLimitsConfigs().withSupplyCurrentLimit(CURRENT_MOTOR_LIMIT));
+        masterTalonFX.getConfigurator().apply(new CurrentLimitsConfigs().withSupplyCurrentLimit(CURRENT_LIMIT_AMP));
         configureDashboard();
         configureRelativeEncoder();
     }
