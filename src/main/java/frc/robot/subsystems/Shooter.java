@@ -39,8 +39,8 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
         this.IS_INVERTED = isInverted;
         masterTalonFX.setInverted(isInverted);
         masterTalonFX.getConfigurator().apply(new CurrentLimitsConfigs().withSupplyCurrentLimit(CURRENT_LIMIT_AMP));
-        configureDashboard();
         configureRelativeEncoder();
+        configureDashboard();
     }
 
     @Override
