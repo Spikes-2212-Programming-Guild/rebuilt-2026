@@ -15,7 +15,9 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
 
     private final TalonFXWrapper masterTalonFX;
 
-    private final boolean IS_INVERTED;
+    private static final boolean IS_MASTER_INVERTED = false;
+    private static final boolean IS_SLAVE_MIDDLE_INVERTED = false;
+    private static final boolean IS_SLAVE_LEFT_INVERTED = false;
 
     private static Shooter instance;
 
@@ -24,20 +26,20 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
             instance = new Shooter(NAMESPACE_NAME,
                     new TalonFXWrapper(RobotMap.CAN.SHOOTER_UPPER_TALON_FX_ID),
                     new TalonFXWrapper(RobotMap.CAN.SHOOTER_MIDDLE_TALON_FX_ID),
-                    new TalonFXWrapper(RobotMap.CAN.SHOOTER_LOWER_TALON_FX_ID),
-                    getInstance().IS_INVERTED);
+                    new TalonFXWrapper(RobotMap.CAN.SHOOTER_LOWER_TALON_FX_ID));
         }
         return instance;
     }
 
     private Shooter(String namespaceName, TalonFXWrapper masterTalonFX, TalonFXWrapper slaveMiddleTalonFX,
-                    TalonFXWrapper slaveLeftTalonFX, boolean isInverted) {
+                    TalonFXWrapper slaveLeftTalonFX) {
         super(namespaceName, masterTalonFX);
         this.masterTalonFX = masterTalonFX;
-        this.IS_INVERTED = isInverted;
         slaveMiddleTalonFX.follow(masterTalonFX);
         slaveLeftTalonFX.follow(masterTalonFX);
-        masterTalonFX.setInverted(isInverted);
+        masterTalonFX.setInverted(IS_MASTER_INVERTED);
+        slaveMiddleTalonFX.setInverted(IS_SLAVE_MIDDLE_INVERTED);
+        slaveLeftTalonFX.setInverted(IS_SLAVE_LEFT_INVERTED);
         masterTalonFX.getConfigurator().apply(new CurrentLimitsConfigs().
                 withSupplyCurrentLimit(CURRENT_LIMIT_AMP));
         configureRelativeEncoder();
