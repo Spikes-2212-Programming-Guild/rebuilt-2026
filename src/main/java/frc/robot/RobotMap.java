@@ -4,7 +4,7 @@ public class RobotMap {
 
     public interface CAN {
 
-        int HOOD_MOTOR = -1; //@TODO change to the motor type that this will use
+        int HOOD_SPARK_MAX = -1;
     }
     
     public interface DIO {

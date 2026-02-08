@@ -44,7 +44,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
     public static Hood getInstance() {
         if (instance == null) {
             instance = new Hood(NAMESPACE_NAME,
-                    SparkWrapper.createSparkMax(RobotMap.CAN.HOOD_MOTOR, SparkLowLevel.MotorType.kBrushless),
+                    SparkWrapper.createSparkMax(RobotMap.CAN.HOOD_SPARK_MAX, SparkLowLevel.MotorType.kBrushless),
                     new AnalogPotentiometer(RobotMap.DIO.HOOD_ABSOLUTE_ENCODER, DEGREES_IN_ROTATION, 0));
         }
         return instance;
