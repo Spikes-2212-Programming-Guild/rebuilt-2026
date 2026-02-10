@@ -18,21 +18,22 @@ import frc.robot.com.spikes2212.util.smartmotorcontrollers.SmartMotorController;
  */
 public abstract class SwerveModule extends DashboardedSubsystem {
 
+    protected static final double DEGREES_IN_ROTATIONS = 360;
+    private static final double DEGREES_TO_FLIP = 180;
+    private static final double MAX_DISTANCE_TO_ROTATE = 90;
+
     protected final SmartMotorController driveMotor;
     protected final SmartMotorController turnMotor;
 
     protected final boolean driveMotorInverted;
     protected final boolean turnMotorInverted;
     protected final double absoluteEncoderOffset;
+    protected final double speedLimit;
 
     protected final PIDSettings driveMotorPIDSettings;
     protected final PIDSettings turnMotorPIDSettings;
     protected final FeedForwardSettings driveMotorFeedForwardSettings;
     protected final FeedForwardSettings turnMotorFeedForwardSettings;
-
-    protected static final double DEGREES_IN_ROTATIONS = 360;
-    private static final double DEGREES_TO_FLIP = 180;
-    private static final double MAX_DISTANCE_TO_ROTATE = 90;
 
 
     /**
@@ -48,12 +49,13 @@ public abstract class SwerveModule extends DashboardedSubsystem {
      * @param turnMotorPIDSettings          the turn motor pid settings
      * @param driveMotorFeedForwardSettings the drive motor feed forward settings
      * @param turnMotorFeedForwardSettings  the turn motor feed forward settings
+     * @param speedLimit                    a speed limit intended for dealing with stick drift
      */
     public SwerveModule(String namespaceName, SmartMotorController driveMotor, SmartMotorController turnMotor,
                         boolean driveMotorInverted, boolean turnMotorInverted, double absoluteEncoderOffset,
                         PIDSettings driveMotorPIDSettings, PIDSettings turnMotorPIDSettings,
                         FeedForwardSettings driveMotorFeedForwardSettings,
-                        FeedForwardSettings turnMotorFeedForwardSettings) {
+                        FeedForwardSettings turnMotorFeedForwardSettings, double speedLimit) {
         super(namespaceName);
         this.driveMotor = driveMotor;
         this.turnMotor = turnMotor;
@@ -64,6 +66,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
         this.turnMotorPIDSettings = turnMotorPIDSettings;
         this.driveMotorFeedForwardSettings = driveMotorFeedForwardSettings;
         this.turnMotorFeedForwardSettings = turnMotorFeedForwardSettings;
+        this.speedLimit = speedLimit;
         driveMotor.setInverted(driveMotorInverted);
         turnMotor.setInverted(!turnMotorInverted);
         configureTurnController();
@@ -98,6 +101,9 @@ public abstract class SwerveModule extends DashboardedSubsystem {
      * @param useVelocityPID      whether the module will drive with P.I.D for the velocity
      */
     public void setTargetState(SwerveModuleState targetState, double maxPossibleVelocity, boolean useVelocityPID) {
+        if (targetState.speedMetersPerSecond < speedLimit) {
+            stop();
+        }
         targetState = optimize(targetState, getRelativeModuleAngle());
         setTargetAngle(targetState.angle);
         setTargetVelocity(targetState.speedMetersPerSecond, maxPossibleVelocity, useVelocityPID);
@@ -120,7 +126,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
     /**
      * Optimizes the {@link SwerveModule} angle
      *
-     * @param targetState the desired state of the {@link SwerveModule}
+     * @param targetState  the desired state of the {@link SwerveModule}
      * @param currentAngle the current angle of the {@link SwerveModule} in degrees
      * @return the optimized {@link SwerveModuleState}
      */
