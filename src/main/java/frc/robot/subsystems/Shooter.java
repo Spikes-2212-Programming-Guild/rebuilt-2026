@@ -13,7 +13,9 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
     private static final double WHEEL_DIAMETER_IN_METERS = 0.1016;//converted 4 inches to meters
     private final double CURRENT_LIMIT_AMP = 40;
 
-    private final TalonFXWrapper masterTalonFX;
+    private final TalonFXWrapper rightTalonFX;
+    private final TalonFXWrapper middleTalonFX;
+    private final TalonFXWrapper leftTalonFX;
 
     private static final boolean RIGHT_INVERTED = false;
     private static final boolean MIDDLE_INVERTED = false;
@@ -34,7 +36,15 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
     private Shooter(String namespaceName, TalonFXWrapper rightTalonFX, TalonFXWrapper middleTalonFX,
                     TalonFXWrapper leftTalonFX) {
         super(namespaceName, rightTalonFX);
-        this.masterTalonFX = rightTalonFX;
+        this.rightTalonFX = rightTalonFX;
+        this.middleTalonFX = middleTalonFX;
+        this.leftTalonFX = leftTalonFX;
+        configureMotors();
+        configureRelativeEncoder();
+        configureDashboard();
+    }
+
+    private void configureMotors() {
         middleTalonFX.follow(rightTalonFX);
         leftTalonFX.follow(rightTalonFX);
         rightTalonFX.setInverted(RIGHT_INVERTED);
@@ -42,8 +52,6 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
         leftTalonFX.setInverted(LEFT_INVERTED);
         rightTalonFX.getConfigurator().apply(new CurrentLimitsConfigs().
                 withSupplyCurrentLimit(CURRENT_LIMIT_AMP));
-        configureRelativeEncoder();
-        configureDashboard();
     }
 
     @Override
@@ -52,18 +60,18 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
     }
 
     private void configureRelativeEncoder() {
-        masterTalonFX.setEncoderConversionFactor(GEAR_RATIO * WHEEL_DIAMETER_IN_METERS);
+        rightTalonFX.setEncoderConversionFactor(GEAR_RATIO * WHEEL_DIAMETER_IN_METERS);
     }
 
     public void setSpeed(double speed) {
-        masterTalonFX.set(speed);
+        rightTalonFX.set(speed);
     }
 
     public double getVelocity() {
-        return masterTalonFX.getVelocity();
+        return rightTalonFX.getVelocity();
     }
 
     public void stop() {
-        masterTalonFX.stopMotor();
+        rightTalonFX.stopMotor();
     }
 }
