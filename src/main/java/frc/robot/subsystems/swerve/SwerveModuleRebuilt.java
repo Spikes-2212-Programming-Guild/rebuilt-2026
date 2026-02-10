@@ -1,5 +1,6 @@
 package frc.robot.subsystems.swerve;
 
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
@@ -24,6 +25,9 @@ public class SwerveModuleRebuilt extends SwerveModule {
     private final static int SECONDS_IN_MINUTE = 60;
     private final static int ABSOLUTE_POSITION_DISCONTINUITY_POINT = 1;
 
+    private final static int DRIVE_CURRENT_LIMIT_AMP = 40;
+    private final static int TURN_CURRENT_LIMIT_AMP = 40;
+
     private final static double DRIVE_MOTOR_ROTATION_TO_WHEEL_ROTATIONS =
             DRIVE_GEAR_RATIO * WHEEL_DIAMETER_METERS * Math.PI;
     private final static double TURN_VELOCITY_IN_ROTATION =
@@ -46,6 +50,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
         this.driveMotor = driveMotor;
         this.turnMotor = turnMotor;
         this.cancoder = cancoder;
+        setCurrents();
     }
 
     @Override
@@ -71,6 +76,14 @@ public class SwerveModuleRebuilt extends SwerveModule {
     @Override
     protected Rotation2d getAbsoluteModuleAngle() {
         return Rotation2d.fromDegrees(cancoder.getAbsolutePosition().getValue().in(Units.Degree));
+    }
+
+    public void setCurrents() {
+        driveMotor.getConfigurator().apply(new CurrentLimitsConfigs().
+                withSupplyCurrentLimit(DRIVE_CURRENT_LIMIT_AMP));
+        turnMotor.applyConfiguration(turnMotor.getSparkConfiguration().
+                secondaryCurrentLimit(TURN_CURRENT_LIMIT_AMP));
+
     }
 
     @Override
