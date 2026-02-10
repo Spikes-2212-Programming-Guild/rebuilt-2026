@@ -13,13 +13,14 @@ public class ShootWithBangBang extends MoveGenericSubsystem {
 
     private final RootNamespace namespace = new RootNamespace("shoot with bang bang");
 
+    private final FeedForwardSettings ffSettings = namespace.addFeedForwardNamespace("ff controller",
+            FeedForwardSettings.EMPTY_FF_SETTINGS);
+
     private static final double DEFAULT_TOLERANCE = -1.0;
 
     private final Shooter shooter;
     private final Supplier<Double> setpointSpeed;
     private final BangBangController bangBangController;
-    private final FeedForwardSettings ffSettings = namespace.addFeedForwardNamespace("ff controller",
-            FeedForwardSettings.EMPTY_FF_SETTINGS);
     private final FeedForwardController ffController;
 
     public ShootWithBangBang(Shooter shooter, Supplier<Double> speed, Supplier<Double> tolerance) {
