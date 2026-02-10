@@ -70,8 +70,4 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
     public double getVelocity() {
         return rightTalonFX.getVelocity();
     }
-
-    public void stop() {
-        rightTalonFX.stopMotor();
-    }
 }
