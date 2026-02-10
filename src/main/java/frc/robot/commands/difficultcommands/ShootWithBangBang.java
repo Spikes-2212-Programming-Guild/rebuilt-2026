@@ -28,6 +28,6 @@ public class ShootWithBangBang extends MoveGenericSubsystem {
     @Override
     public void execute() {
         double output = bangBangController.calculate(shooter.getVelocity(), setpointSpeed.get());
-        shooter.setSpeed(output);
+        shooter.move(output);
     }
 }
