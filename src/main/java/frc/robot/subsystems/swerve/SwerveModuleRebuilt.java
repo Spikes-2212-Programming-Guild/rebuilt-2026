@@ -16,6 +16,7 @@ import frc.robot.com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 
 public class SwerveModuleRebuilt extends SwerveModule {
 
+    private final static double MIN_SPEED_LIMIT = 0;
     private final static double DRIVE_GEAR_RATIO = 1 / 6.12;
     private final static double TURN_GEAR_RATIO = (double) 7 / 150;
     private final static double WHEEL_DIAMETER_METERS = 0.1016;
@@ -34,7 +35,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
                                FeedForwardSettings turnMotorFeedForwardSettings, CANcoder cancoder) {
         super(namespaceName, driveMotor, turnMotor, driveMotorInverted, turnMotorInverted, absoluteEncoderOffset,
                 driveMotorPIDSettings, turnMotorPIDSettings, driveMotorFeedForwardSettings,
-                turnMotorFeedForwardSettings);
+                turnMotorFeedForwardSettings, MIN_SPEED_LIMIT);
         this.driveMotor = driveMotor;
         this.turnMotor = turnMotor;
         this.cancoder = cancoder;
