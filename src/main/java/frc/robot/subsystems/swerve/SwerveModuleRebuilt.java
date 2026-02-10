@@ -24,6 +24,13 @@ public class SwerveModuleRebuilt extends SwerveModule {
     private final static int SECONDS_IN_MINUTE = 60;
     private final static int ABSOLUTE_POSITION_DISCONTINUITY_POINT = 1;
 
+    private final static double DRIVE_MOTOR_ROTATION_TO_WHEEL_ROTATIONS =
+            DRIVE_GEAR_RATIO * WHEEL_DIAMETER_METERS * Math.PI;
+    private final static double TURN_VELOCITY_IN_ROTATION =
+            (TURN_GEAR_RATIO * DEGREES_IN_ROTATION) / SECONDS_IN_MINUTE;
+    private final static double TURN_POSITION_IN_ROTATION =
+            TURN_GEAR_RATIO * DEGREES_IN_ROTATION;
+
     private final TalonFXWrapper driveMotor;
     private final SparkWrapper turnMotor;
     private final CANcoder cancoder;
@@ -43,13 +50,13 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     @Override
     protected void configureDriveController() {
-        driveMotor.setEncoderConversionFactor(DRIVE_GEAR_RATIO * WHEEL_DIAMETER_METERS * Math.PI);
+        driveMotor.setEncoderConversionFactor(DRIVE_MOTOR_ROTATION_TO_WHEEL_ROTATIONS);
     }
 
     @Override
     protected void configureTurnController() {
-        turnMotor.setPositionConversionFactor(TURN_GEAR_RATIO * DEGREES_IN_ROTATION);
-        turnMotor.setVelocityConversionFactor((TURN_GEAR_RATIO * DEGREES_IN_ROTATION) / SECONDS_IN_MINUTE);
+        turnMotor.setPositionConversionFactor(TURN_POSITION_IN_ROTATION);
+        turnMotor.setVelocityConversionFactor(TURN_VELOCITY_IN_ROTATION);
     }
 
     @Override
