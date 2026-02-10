@@ -14,8 +14,8 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
     private final static String NAMESPACE_NAME = "swerve drivetrain";
 
     public final static double MAX_POSSIBLE_VELOCITY = -1;
-    private final static double TRACK_WIDTH = -1;
-    private final static double TRACK_LENGTH = -1;
+    private final static double TRACK_WIDTH = 0.545;
+    private final static double TRACK_LENGTH = 0.545;
 
     private final StructArrayPublisher<SwerveModuleState> currentStates = NetworkTableInstance.getDefault()
             .getStructArrayTopic("current states", SwerveModuleState.struct).publish();
