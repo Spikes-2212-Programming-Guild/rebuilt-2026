@@ -51,7 +51,6 @@ public class Robot extends TimedRobot {
         OI oi = new OI();
         drivetrain.setDefaultCommand(new Drive(drivetrain, oi::getLeftX, oi::getLeftX, oi::getRightX, true,
                 false));
-
     }
 
     @Override
