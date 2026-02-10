@@ -31,16 +31,16 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
         return instance;
     }
 
-    private Shooter(String namespaceName, TalonFXWrapper masterTalonFX, TalonFXWrapper slaveMiddle,
-                    TalonFXWrapper slaveLeft) {
-        super(namespaceName, masterTalonFX);
-        this.masterTalonFX = masterTalonFX;
-        slaveMiddle.follow(masterTalonFX);
-        slaveLeft.follow(masterTalonFX);
-        masterTalonFX.setInverted(MASTER_INVERTED);
-        slaveMiddle.setInverted(SLAVE_MIDDLE_INVERTED);
-        slaveLeft.setInverted(SLAVE_LEFT_INVERTED);
-        masterTalonFX.getConfigurator().apply(new CurrentLimitsConfigs().
+    private Shooter(String namespaceName, TalonFXWrapper rightTalonFX, TalonFXWrapper middleTalonFX,
+                    TalonFXWrapper leftTalonFX) {
+        super(namespaceName, rightTalonFX);
+        this.masterTalonFX = rightTalonFX;
+        middleTalonFX.follow(rightTalonFX);
+        leftTalonFX.follow(rightTalonFX);
+        rightTalonFX.setInverted(MASTER_INVERTED);
+        middleTalonFX.setInverted(SLAVE_MIDDLE_INVERTED);
+        leftTalonFX.setInverted(SLAVE_LEFT_INVERTED);
+        rightTalonFX.getConfigurator().apply(new CurrentLimitsConfigs().
                 withSupplyCurrentLimit(CURRENT_LIMIT_AMP));
         configureRelativeEncoder();
         configureDashboard();
