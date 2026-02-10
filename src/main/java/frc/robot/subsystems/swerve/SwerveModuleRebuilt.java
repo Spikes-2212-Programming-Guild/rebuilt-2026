@@ -29,9 +29,9 @@ public class SwerveModuleRebuilt extends SwerveModule {
     private final CANcoder cancoder;
 
     public SwerveModuleRebuilt(String namespaceName, TalonFXWrapper driveMotor, SparkWrapper turnMotor,
-                               boolean driveMotorInverted, boolean turnMotorInverted, double absoluteEncoderOffset,
-                               PIDSettings driveMotorPIDSettings, PIDSettings turnMotorPIDSettings,
-                               FeedForwardSettings driveMotorFeedForwardSettings,
+                               boolean driveMotorInverted, boolean turnMotorInverted,
+                               double absoluteEncoderOffset, PIDSettings driveMotorPIDSettings,
+                               PIDSettings turnMotorPIDSettings, FeedForwardSettings driveMotorFeedForwardSettings,
                                FeedForwardSettings turnMotorFeedForwardSettings, CANcoder cancoder) {
         super(namespaceName, driveMotor, turnMotor, driveMotorInverted, turnMotorInverted, absoluteEncoderOffset,
                 driveMotorPIDSettings, turnMotorPIDSettings, driveMotorFeedForwardSettings,

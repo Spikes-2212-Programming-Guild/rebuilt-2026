@@ -37,10 +37,11 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
     }
 
     private DrivetrainRebuilt(String namespaceName, SwerveModule frontLeftModule, SwerveModule frontRightModule,
-                              SwerveModule backLeftModule, SwerveModule backRightModule, double drivetrainTrackWidth,
-                              double drivetrainTrackLength, double maxPossibleVelocity, Pigeon2 gyro) {
-        super(namespaceName, frontLeftModule, frontRightModule, backLeftModule, backRightModule, drivetrainTrackWidth,
-                drivetrainTrackLength, maxPossibleVelocity);
+                              SwerveModule backLeftModule, SwerveModule backRightModule,
+                              double drivetrainTrackWidth, double drivetrainTrackLength, double maxPossibleVelocity,
+                              Pigeon2 gyro) {
+        super(namespaceName, frontLeftModule, frontRightModule, backLeftModule, backRightModule,
+                drivetrainTrackWidth, drivetrainTrackLength, maxPossibleVelocity);
         this.gyro = gyro;
 
         setStructArrayStates(currentStates,
@@ -84,7 +85,8 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
                         backRightModule.getModuleState()
                 });
 
-        setStructArrayStates(desiredStates, getDesiredStates(xSpeed, ySpeed, rotationSpeed, isFieldRelative, timeStep));
+        setStructArrayStates(desiredStates, getDesiredStates(xSpeed, ySpeed, rotationSpeed, isFieldRelative,
+                timeStep));
     }
 
     public void setStructArrayStates(StructArrayPublisher<SwerveModuleState> states,

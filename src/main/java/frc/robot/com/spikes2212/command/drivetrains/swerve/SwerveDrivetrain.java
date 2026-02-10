@@ -68,11 +68,11 @@ public abstract class SwerveDrivetrain extends DashboardedSubsystem {
      * @param drivetrainTrackLength the length of the drivetrain
      * @param maxPossibleVelocity   the maximum possible velocity of the drive motors
      */
-    public SwerveDrivetrain(SwerveModule frontLeftModule, SwerveModule frontRightModule, SwerveModule backLeftModule,
-                            SwerveModule backRightModule, double drivetrainTrackWidth, double drivetrainTrackLength,
-                            double maxPossibleVelocity) {
-        this(getClassName(DEFAULT_NAMESPACE_NAME), frontLeftModule, frontRightModule, backLeftModule, backRightModule,
-                drivetrainTrackWidth, drivetrainTrackLength, maxPossibleVelocity);
+    public SwerveDrivetrain(SwerveModule frontLeftModule, SwerveModule frontRightModule,
+                            SwerveModule backLeftModule, SwerveModule backRightModule, double drivetrainTrackWidth,
+                            double drivetrainTrackLength, double maxPossibleVelocity) {
+        this(getClassName(DEFAULT_NAMESPACE_NAME), frontLeftModule, frontRightModule, backLeftModule,
+                backRightModule, drivetrainTrackWidth, drivetrainTrackLength, maxPossibleVelocity);
     }
 
     /**
