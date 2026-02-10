@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.difficultcommands.Drive;
 import frc.robot.subsystems.swerve.DrivetrainRebuilt;
 
 public class Robot extends TimedRobot {
@@ -46,6 +47,10 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
+
+        OI oi = new OI();
+        drivetrain.setDefaultCommand(new Drive(drivetrain, oi::getLeftX, oi::getLeftX, oi::getRightX, true,
+                false));
 
     }
 
