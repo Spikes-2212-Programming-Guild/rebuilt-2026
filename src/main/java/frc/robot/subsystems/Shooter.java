@@ -63,10 +63,6 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
         leftTalonFX.setEncoderConversionFactor(GEAR_RATIO * WHEEL_DIAMETER_IN_METERS);
     }
 
-    public void setSpeed(double speed) {
-        leftTalonFX.set(speed);
-    }
-
     public double getVelocity() {
         return leftTalonFX.getVelocity();
     }
