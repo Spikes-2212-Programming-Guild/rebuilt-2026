@@ -11,7 +11,7 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
 
     private static final double GEAR_RATIO = 1;
     private static final double WHEEL_DIAMETER_IN_METERS = 0.1016;//converted 4 inches to meters
-    private final double CURRENT_LIMIT_AMP = 40;
+    private static final double CURRENT_LIMIT_AMP = 40;
 
     private final TalonFXWrapper rightTalonFX;
     private final TalonFXWrapper middleTalonFX;
