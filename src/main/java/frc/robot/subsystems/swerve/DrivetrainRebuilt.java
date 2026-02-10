@@ -38,8 +38,8 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
 
     private DrivetrainRebuilt(String namespaceName, SwerveModule frontLeftModule, SwerveModule frontRightModule,
                               SwerveModule backLeftModule, SwerveModule backRightModule,
-                              double drivetrainTrackWidth, double drivetrainTrackLength, double maxPossibleVelocity,
-                              Pigeon2 gyro) {
+                              double drivetrainTrackWidth, double drivetrainTrackLength,
+                              double maxPossibleVelocity, Pigeon2 gyro) {
         super(namespaceName, frontLeftModule, frontRightModule, backLeftModule, backRightModule,
                 drivetrainTrackWidth, drivetrainTrackLength, maxPossibleVelocity);
         this.gyro = gyro;
