@@ -6,9 +6,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.swerve.DrivetrainRebuilt;
 
 public class Robot extends TimedRobot {
 
+    DrivetrainRebuilt drivetrain = DrivetrainRebuilt.getInstance();
     @Override
     public void robotInit() {
 
@@ -31,7 +33,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-
+        drivetrain.resetFieldRelativity();
+        drivetrain.resetRelativeEncoders();
     }
 
     @Override
@@ -41,6 +44,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        drivetrain.resetFieldRelativity();
+        drivetrain.resetRelativeEncoders();
 
     }
 
