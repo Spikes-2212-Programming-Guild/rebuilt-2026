@@ -60,7 +60,7 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
 
         poseEstimator = new RobotPoseEstimator(
                 getKinematics(), gyro.getRotation2d(), swerveModulePositions, new Pose2d(),
-                () -> new OdometryMeasurement(Timer.getFPGATimestamp(), gyro.getRotation2d(), swerveModulePositions),
+                () -> new OdometryMeasurement(Timer.getFPGATimestamp(), getAngle(), swerveModulePositions),
                 PeriodicTaskScheduler.getInstance());
 
         setStates(currentStates,
@@ -78,7 +78,11 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
                         new SwerveModuleState()
                 });
     }
-
+    /*
+    is it more right to use getAngle in the constructor or use the gyro.getYaw?
+    do they return the same type?
+    they both return rotation2d lemme check the differences rq
+     */
     @Override
     public Rotation2d getAngle() {
         return Rotation2d.fromDegrees(gyro.getYaw().getValueAsDouble());
