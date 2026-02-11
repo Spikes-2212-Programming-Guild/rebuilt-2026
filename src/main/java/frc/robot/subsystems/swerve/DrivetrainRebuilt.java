@@ -3,20 +3,19 @@ package frc.robot.subsystems.swerve;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveDrivetrain;
 import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveModule;
 import frc.robot.util.localization.RobotPoseEstimator;
 import frc.robot.util.odometry.OdometryMeasurement;
 import frc.robot.util.odometry.PeriodicTaskScheduler;
-
-import java.util.function.Supplier;
 
 public class DrivetrainRebuilt extends SwerveDrivetrain {
 
@@ -25,6 +24,10 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
     private final static double MAX_POSSIBLE_VELOCITY = -1;
     private final static double TRACK_WIDTH = -1;
     private final static double TRACK_LENGTH = -1;
+    private final static double POSITION_TOLERANCE = -1;
+    private final static double POSITION_VELOCITY_TOLERANCE = -1;
+    private final static double ROTATION_TOLERANCE_IN_DEGREES = -1;
+    private static final double ROTATION_VELOCITY_TOLERANCE = -1;
 
     private final StructArrayPublisher<SwerveModuleState> currentStates = NetworkTableInstance.getDefault()
             .getStructArrayTopic("current states", SwerveModuleState.struct).publish();
@@ -78,11 +81,7 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
                         new SwerveModuleState()
                 });
     }
-    /*
-    is it more right to use getAngle in the constructor or use the gyro.getYaw?
-    do they return the same type?
-    they both return rotation2d lemme check the differences rq
-     */
+
     @Override
     public Rotation2d getAngle() {
         return Rotation2d.fromDegrees(gyro.getYaw().getValueAsDouble());
@@ -119,6 +118,54 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
                  frontRightModule.getModulePosition(), backLeftModule.getModulePosition(),
                  backRightModule.getModulePosition()};
         return swerveModulePositions;
+    }
+
+    public Pose2d getEstimatedPose(){
+        return poseEstimator.getEstimatedPose();
+    }
+
+    public void resetPose(Pose2d newPose){
+        poseEstimator.resetPose(newPose);
+    }
+
+    public ChassisSpeeds getSelfRelativeSpeeds(){
+        return kinematics.toChassisSpeeds(frontLeftModule.getModuleState(),
+                frontRightModule.getModuleState(),
+                backLeftModule.getModuleState(),
+                backRightModule.getModuleState());
+    }
+
+    public Pose2d getFixedPoseByLatency(double latency){
+        return poseEstimator.getEstimatedPoseByLatency(getSelfRelativeSpeeds(), latency);
+    }
+
+    public void driveSelfRelative(ChassisSpeeds speeds, double deltaTime, boolean useVelocityPID){
+        ChassisSpeeds deltaSpeeds = ChassisSpeeds.discretize(speeds, deltaTime);
+        SwerveModuleState[] swerveModuleState = kinematics.toSwerveModuleStates(deltaSpeeds);
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleState, MAX_POSSIBLE_VELOCITY);
+        setTargetModuleStates(swerveModuleState, useVelocityPID);
+    }
+
+    private ChassisSpeeds getFieldRelativeSpeeds(){
+        return ChassisSpeeds.fromFieldRelativeSpeeds(getSelfRelativeSpeeds(), getAngle());
+    }
+
+    private boolean atAxis(double currentAxisPose, double targetAxisPose, double currentVelocity){
+        boolean isAtPose = Math.abs(currentAxisPose - targetAxisPose) <= POSITION_TOLERANCE;
+        boolean isRobotStill = Math.abs(currentVelocity) <= POSITION_VELOCITY_TOLERANCE;
+        return isAtPose && isRobotStill;
+    }
+
+    private boolean atRotation(Rotation2d rotation2d){
+        boolean isAtRotation = rotation2d.minus(getAngle()).getDegrees() <= ROTATION_TOLERANCE_IN_DEGREES;
+        boolean isRotationStill = Math.abs(getSelfRelativeSpeeds().omegaRadiansPerSecond) <= ROTATION_VELOCITY_TOLERANCE;
+        return isAtRotation && isRotationStill;
+    }
+
+    public boolean atPose(Pose2d pose2d){
+        boolean atXAxis = atAxis(getEstimatedPose().getX(), pose2d.getX(), getFieldRelativeSpeeds().vxMetersPerSecond);
+        boolean atYAxis = atAxis(getEstimatedPose().getY(), pose2d.getY(), getFieldRelativeSpeeds().vyMetersPerSecond);
+        return atXAxis && atYAxis && atRotation(pose2d.getRotation());
     }
 
     @Override

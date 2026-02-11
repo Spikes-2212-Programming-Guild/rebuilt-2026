@@ -66,6 +66,10 @@ public class RobotPoseEstimator {
         return poseEstimator;
     }
 
+    public void resetPose(Pose2d newPose){
+        getEstimator().resetPose(newPose);
+    }
+
     public void addOdometryMeasurement(OdometryMeasurement measurement) {
         if (measurement == null) return;
         poseEstimator.updateWithTime(

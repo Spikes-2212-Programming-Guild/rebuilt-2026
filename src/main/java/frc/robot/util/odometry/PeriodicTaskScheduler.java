@@ -8,6 +8,8 @@ public class PeriodicTaskScheduler {
 
     public static PeriodicTaskScheduler instance;
 
+    //should be in robot init
+
     public static void init(TimedRobot timedRobot){
         if(instance != null){
             return;
