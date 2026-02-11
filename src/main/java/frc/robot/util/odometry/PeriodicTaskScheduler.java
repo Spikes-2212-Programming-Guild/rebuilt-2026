@@ -6,7 +6,20 @@ public class PeriodicTaskScheduler {
 
     private final TimedRobot timedRobot;
 
-    public PeriodicTaskScheduler(TimedRobot timedRobot) {
+    public static PeriodicTaskScheduler instance;
+
+    public static void init(TimedRobot timedRobot){
+        if(instance != null){
+            return;
+        }
+        instance = new PeriodicTaskScheduler(timedRobot);
+    }
+
+    public static PeriodicTaskScheduler getInstance(){
+        return instance;
+    }
+
+    private PeriodicTaskScheduler(TimedRobot timedRobot) {
         this.timedRobot = timedRobot;
     }
 
