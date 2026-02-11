@@ -1,13 +1,22 @@
 package frc.robot.subsystems.swerve;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.wpilibj.Timer;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveDrivetrain;
 import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveModule;
+import frc.robot.util.localization.RobotPoseEstimator;
+import frc.robot.util.odometry.OdometryMeasurement;
+import frc.robot.util.odometry.PeriodicTaskScheduler;
+
+import java.util.function.Supplier;
 
 public class DrivetrainRebuilt extends SwerveDrivetrain {
 
@@ -23,6 +32,10 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
             .getStructArrayTopic("desired states", SwerveModuleState.struct).publish();
 
     private final Pigeon2 gyro;
+
+    private final RobotPoseEstimator poseEstimator;
+
+    private SwerveModulePosition [] swerveModulePositions;
 
     private static DrivetrainRebuilt instance;
 
@@ -42,6 +55,13 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
         super(namespaceName, frontLeftModule, frontRightModule, backLeftModule, backRightModule, drivetrainTrackWidth,
                 drivetrainTrackLength, maxPossibleVelocity);
         this.gyro = gyro;
+
+        swerveModulePositions = getModulePositions();
+
+        poseEstimator = new RobotPoseEstimator(
+                getKinematics(), gyro.getRotation2d(), swerveModulePositions, new Pose2d(),
+                () -> new OdometryMeasurement(Timer.getFPGATimestamp(), gyro.getRotation2d(), swerveModulePositions),
+                PeriodicTaskScheduler.getInstance());
 
         setStates(currentStates,
                 new SwerveModuleState[]{
@@ -88,6 +108,13 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
 
     public void setStates(StructArrayPublisher<SwerveModuleState> states, SwerveModuleState[] desiredStatesToSet) {
         states.set(desiredStatesToSet);
+    }
+
+    private SwerveModulePosition[] getModulePositions(){
+         swerveModulePositions = new SwerveModulePosition[]{frontLeftModule.getModulePosition(),
+                 frontRightModule.getModulePosition(), backLeftModule.getModulePosition(),
+                 backRightModule.getModulePosition()};
+        return swerveModulePositions;
     }
 
     @Override
