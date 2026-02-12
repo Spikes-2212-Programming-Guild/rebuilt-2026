@@ -40,7 +40,7 @@ public class AutonomousContainer {
 
     private static final double ROBOT_POSE_LATENCY = -1;
     private static final double FF_SCALER = -1;
-    private static final double DELTA_TIME = -1;
+    private static final double TIME_STEP = 0.02;
     private static final double PID_TO_POSE_TIMEOUT = -1;
 
     private final DrivetrainRebuilt drivetrain;
@@ -90,7 +90,7 @@ public class AutonomousContainer {
         ChassisSpeeds pidCorrection = pathRelativeSpeedsByPID(pathplannerTargetPose);
         ChassisSpeeds scaledFeedForward = getScaledFFSpeeds(feedForwardSpeeds);
         ChassisSpeeds output = pidCorrection.plus(scaledFeedForward);
-        drivetrain.driveSelfRelative(output, DELTA_TIME, true);
+        drivetrain.driveSelfRelative(output, TIME_STEP, true);
     }
 
     private Command PIDtoTargetPose(Pose2d targetPose, double timeoutSeconds){
@@ -101,7 +101,7 @@ public class AutonomousContainer {
     }
 
     private void PIDtoPose(Pose2d targetPose){
-        drivetrain.driveSelfRelative(pathRelativeSpeedsByPID(targetPose), DELTA_TIME, true);
+        drivetrain.driveSelfRelative(pathRelativeSpeedsByPID(targetPose), TIME_STEP, true);
     }
 
     public Command correctPathToPose(Pose2d targetPose, PathConstraints constraints) {
