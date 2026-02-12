@@ -11,7 +11,7 @@ public class Transport extends MotoredGenericSubsystem {
 
     public static final double SPEED = -1.0;
 
-    private static final double CURRENT_LIMIT_AMP = 40.0;
+    private static final int CURRENT_LIMIT_AMP = 40;
 
     private final SparkWrapper sparkMax;
 
