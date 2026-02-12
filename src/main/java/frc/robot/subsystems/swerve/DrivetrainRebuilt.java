@@ -28,7 +28,7 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
 
     public static DrivetrainRebuilt getInstance() {
         if (instance == null) {
-            new DrivetrainRebuilt(NAMESPACE_NAME, SwerveModuleHolder.getFrontLeft(),
+            instance = new DrivetrainRebuilt(NAMESPACE_NAME, SwerveModuleHolder.getFrontLeft(),
                     SwerveModuleHolder.getFrontRight(), SwerveModuleHolder.getBackLeft(),
                     SwerveModuleHolder.getBackRight(), TRACK_WIDTH, TRACK_LENGTH, MAX_POSSIBLE_VELOCITY,
                     new Pigeon2(RobotMap.CAN.SWERVE_GYRO_PIGEON_2_ID));
