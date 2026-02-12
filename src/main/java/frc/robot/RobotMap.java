@@ -3,6 +3,10 @@ package frc.robot;
 public class RobotMap {
 
     public interface CAN {
+        
+        int SHOOTER_UPPER_TALON_FX_ID = -1;
+        int SHOOTER_MIDDLE_TALON_FX_ID = -1;
+        int SHOOTER_LOWER_TALON_FX_ID = -1;
 
         int COLLECTION_SPARK_MAX_ID = -1;
       
