@@ -13,9 +13,6 @@ import java.util.function.Supplier;
 public class CollectionToPosition extends MoveSmartMotorControllerGenericSubsystem {
 
 
-    private static final double OPEN_POSE = -1;
-    private static final double CLOSE_POSE = -1;
-
     private static final RootNamespace namespace = new RootNamespace("move to position");
     private static final PIDSettings pidSettings = namespace.addPIDNamespace("move to position");
     private static final FeedForwardSettings feedForwardSettings = namespace.addFeedForwardNamespace
@@ -23,6 +20,6 @@ public class CollectionToPosition extends MoveSmartMotorControllerGenericSubsyst
 
     public CollectionToPosition(CollectionMovement collectionMovement, Supplier<Double> setpoint) {
         super(collectionMovement, pidSettings, feedForwardSettings,
-                UnifiedControlMode.POSITION, setpoint, true);
+                UnifiedControlMode.POSITION, setpoint, false);
     }
 }
