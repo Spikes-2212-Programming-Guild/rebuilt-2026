@@ -139,13 +139,6 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
         return poseEstimator.getEstimatedPoseByLatency(getSpeeds(), latency);
     }
 
-    public void driveSelfRelative(ChassisSpeeds speeds, double deltaTime, boolean useVelocityPID) {
-        ChassisSpeeds deltaSpeeds = ChassisSpeeds.discretize(speeds, deltaTime);
-        SwerveModuleState[] swerveModuleState = kinematics.toSwerveModuleStates(deltaSpeeds);
-        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleState, MAX_POSSIBLE_VELOCITY);
-        setTargetModuleStates(swerveModuleState, useVelocityPID);
-    }
-
     private ChassisSpeeds getFieldRelativeSpeeds() {
         return ChassisSpeeds.fromFieldRelativeSpeeds(getSelfRelativeSpeeds(), getAngle());
     }
