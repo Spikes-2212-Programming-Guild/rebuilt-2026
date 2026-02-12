@@ -63,7 +63,7 @@ public class AutonomousContainer {
                 drivetrain::getEstimatedPose,
                 drivetrain::resetPose,
                 drivetrain::getSpeeds,
-                this::driveCorrection,
+                this::updatePathFollowingOutput,
                 new PPHolonomicDriveController(
                         new PIDConstants(X_PID_CONTROLLER.getP(), X_PID_CONTROLLER.getI(), X_PID_CONTROLLER.getD()),
                         new PIDConstants(Y_PID_CONTROLLER.getP(), Y_PID_CONTROLLER.getI(), Y_PID_CONTROLLER.getD())),
@@ -90,16 +90,18 @@ public class AutonomousContainer {
         return feedForwardSpeeds.times(FF_SCALER);
     }
 
-    public void driveCorrection(ChassisSpeeds feedForwardSpeeds) {
+    public void updatePathFollowingOutput(ChassisSpeeds feedForwardSpeeds) {
         ChassisSpeeds pidCorrection = pathRelativeSpeedsByPID(pathplannerTargetPose);
         ChassisSpeeds scaledFeedForward = getScaledFFSpeeds(feedForwardSpeeds);
         ChassisSpeeds output = pidCorrection.plus(scaledFeedForward);
-        drivetrain.driveSelfRelative(output, TIME_STEP, true);
+        drivetrain.drive(output.vxMetersPerSecond,
+                output.vyMetersPerSecond,
+                output.omegaRadiansPerSecond,
+                false, TIME_STEP, true);
     }
 
     private Command PIDtoTargetPose(Pose2d targetPose) {
-        return new FunctionalCommand(() -> {
-        },
+        return new FunctionalCommand(() -> {},
                 () -> PIDtoPose(targetPose),
                 (interrupted) -> {
                 },
@@ -107,7 +109,13 @@ public class AutonomousContainer {
     }
 
     private void PIDtoPose(Pose2d targetPose) {
-        drivetrain.driveSelfRelative(pathRelativeSpeedsByPID(targetPose), TIME_STEP, true);
+        drivetrain.drive(
+                pathRelativeSpeedsByPID(targetPose).vxMetersPerSecond,
+                pathRelativeSpeedsByPID(targetPose).vyMetersPerSecond,
+                pathRelativeSpeedsByPID(targetPose).omegaRadiansPerSecond,
+                false,
+                TIME_STEP,
+                true);
     }
 
     public Command correctPathToPose(Pose2d targetPose, PathConstraints constraints) {
@@ -121,7 +129,7 @@ public class AutonomousContainer {
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> pathplannerTargetPose = pose);
     }
 
-    private static PIDController setPIDSettingsIntoController(PIDSettings pidSettings){
+    private static PIDController setPIDSettingsIntoController(PIDSettings pidSettings) {
         return new PIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
     }
 
