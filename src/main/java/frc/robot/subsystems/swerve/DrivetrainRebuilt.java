@@ -25,8 +25,8 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
     private final static double TRACK_WIDTH = -1;
     private final static double TRACK_LENGTH = -1;
 
-    private final static double POSITION_TOLERANCE = -1;
-    private final static double POSITION_VELOCITY_TOLERANCE = -1;
+    private final static double TRANSLATION_POSE_TOLERANCE = -1;
+    private final static double TRANSLATION_VELOCITY_TOLERANCE = -1;
     private final static double ROTATION_TOLERANCE_IN_DEGREES = -1;
     private static final double ROTATION_VELOCITY_TOLERANCE = -1;
 
@@ -151,8 +151,8 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
     }
 
     private boolean atAxis(double currentAxisPose, double targetAxisPose, double currentVelocity) {
-        boolean isAtPose = Math.abs(currentAxisPose - targetAxisPose) <= POSITION_TOLERANCE;
-        boolean isRobotStill = Math.abs(currentVelocity) <= POSITION_VELOCITY_TOLERANCE;
+        boolean isAtPose = Math.abs(currentAxisPose - targetAxisPose) <= TRANSLATION_POSE_TOLERANCE;
+        boolean isRobotStill = Math.abs(currentVelocity) <= TRANSLATION_VELOCITY_TOLERANCE;
         return isAtPose && isRobotStill;
     }
 
