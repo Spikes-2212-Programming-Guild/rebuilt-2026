@@ -10,7 +10,7 @@ public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "collection movement";
     private static final double DEGREES_IN_ROTATION = 360;
-    private static final double MOTOR_CURRENT_LIMIT = 40;
+    private static final double CURRENT_LIMIT_AMP = 40;
     private static final double OPEN_POSE = -1;
     private static final double CLOSE_POSE = -1;
     private final DutyCycleEncoder absoluteEncoder;
@@ -33,7 +33,7 @@ public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
         this.talonFX = talonFX;
         this.absoluteEncoder = absoluteEncoder;
         talonFX.getConfigurator().apply(new CurrentLimitsConfigs()
-                .withSupplyCurrentLimit(MOTOR_CURRENT_LIMIT));
+                .withSupplyCurrentLimit(CURRENT_LIMIT_AMP));
         configureDashboard();
     }
 
