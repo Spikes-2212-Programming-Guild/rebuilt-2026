@@ -65,8 +65,10 @@ public class AutonomousContainer {
                 drivetrain::getSpeeds,
                 this::updatePathFollowingOutput,
                 new PPHolonomicDriveController(
-                        new PIDConstants(X_PID_CONTROLLER.getP(), X_PID_CONTROLLER.getI(), X_PID_CONTROLLER.getD()),
-                        new PIDConstants(Y_PID_CONTROLLER.getP(), Y_PID_CONTROLLER.getI(), Y_PID_CONTROLLER.getD())),
+                        new PIDConstants(X_PID_CONTROLLER.getP(), X_PID_CONTROLLER.getI(),
+                                X_PID_CONTROLLER.getD()),
+                        new PIDConstants(Y_PID_CONTROLLER.getP(), Y_PID_CONTROLLER.getI(),
+                                Y_PID_CONTROLLER.getD())),
                 CONFIG,
                 this::shouldMirror,
                 drivetrain);
