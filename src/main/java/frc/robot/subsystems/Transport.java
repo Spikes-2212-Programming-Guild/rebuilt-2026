@@ -9,7 +9,9 @@ public class Transport extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "transport";
 
-    public static final double SPEED  = -1.0;
+    public static final double SPEED = -1.0;
+
+    private static final double CURRENT_LIMIT_AMP = 40.0;
 
     private final SparkWrapper sparkMax;
 
@@ -27,11 +29,17 @@ public class Transport extends MotoredGenericSubsystem {
     private Transport(String namespaceName, SparkWrapper sparkMax) {
         super(namespaceName, sparkMax);
         this.sparkMax = sparkMax;
+        setCurrentLimit(CURRENT_LIMIT_AMP);
         configureDashboard();
+    }
+
+    public void setCurrentLimit(double limit) {
+        sparkMax.getSparkConfiguration().secondaryCurrentLimit(limit);
+        sparkMax.applyConfiguration(sparkMax.getSparkConfiguration());
     }
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("motor velocity",sparkMax::getVelocity);
+        namespace.putNumber("motor velocity", sparkMax::getVelocity);
     }
 }
