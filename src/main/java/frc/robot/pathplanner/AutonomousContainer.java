@@ -17,8 +17,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.com.spikes2212.control.PIDSettings;
 import frc.robot.com.spikes2212.dashboard.RootNamespace;
 import frc.robot.subsystems.swerve.DrivetrainRebuilt;
+import frc.robot.subsystems.swerve.SwerveModuleHolder;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -33,8 +35,10 @@ public class AutonomousContainer {
     private static final TrapezoidProfile.Constraints pathConstraints =
             new TrapezoidProfile.Constraints(CONFIG.moduleConfig.maxDriveVelocityMPS, -1);
 
-    private static final PIDController X_PID_CONTROLLER = new PIDController(-1, -1, -1);
-    private static final PIDController Y_PID_CONTROLLER = new PIDController(-1, -1, -1);
+    private static final PIDController X_PID_CONTROLLER =
+            setPIDSettingsIntoController(SwerveModuleHolder.getFrontLeft().getDriveMotorPIDSettings());
+    private static final PIDController Y_PID_CONTROLLER =
+            setPIDSettingsIntoController(SwerveModuleHolder.getFrontLeft().getTurnMotorPIDSettings());
     private static final ProfiledPIDController ROTATIONAL_PID_CONTROLLER =
             new ProfiledPIDController(-1, -1, -1, pathConstraints);
 
@@ -115,6 +119,10 @@ public class AutonomousContainer {
 
     private void updatePathplannerPose() {
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> pathplannerTargetPose = pose);
+    }
+
+    private static PIDController setPIDSettingsIntoController(PIDSettings pidSettings){
+        return new PIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
     }
 
     public boolean shouldMirror() {
