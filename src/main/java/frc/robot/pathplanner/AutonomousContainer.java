@@ -62,7 +62,7 @@ public class AutonomousContainer {
         AutoBuilder.configure(
                 drivetrain::getEstimatedPose,
                 drivetrain::resetPose,
-                drivetrain::getSelfRelativeSpeeds,
+                drivetrain::getSpeeds,
                 this::driveCorrection,
                 new PPHolonomicDriveController(
                         new PIDConstants(X_PID_CONTROLLER.getP(), X_PID_CONTROLLER.getI(), X_PID_CONTROLLER.getD()),
