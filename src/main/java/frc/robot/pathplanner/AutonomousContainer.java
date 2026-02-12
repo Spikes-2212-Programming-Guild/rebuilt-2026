@@ -93,11 +93,11 @@ public class AutonomousContainer {
         drivetrain.driveSelfRelative(output, TIME_STEP, true);
     }
 
-    private Command PIDtoTargetPose(Pose2d targetPose, double timeoutSeconds){
+    private Command PIDtoTargetPose(Pose2d targetPose){
         return new FunctionalCommand(() -> {},
                 () -> PIDtoPose(targetPose),
                 (interrupted) -> {},
-                () -> drivetrain.atPose(targetPose)).withTimeout(timeoutSeconds);
+                () -> drivetrain.atPose(targetPose)).withTimeout(PID_TO_POSE_TIMEOUT);
     }
 
     private void PIDtoPose(Pose2d targetPose){
@@ -107,7 +107,7 @@ public class AutonomousContainer {
     public Command correctPathToPose(Pose2d targetPose, PathConstraints constraints) {
         return new SequentialCommandGroup(
                 AutoBuilder.pathfindToPose(targetPose, constraints),
-                PIDtoTargetPose(targetPose, PID_TO_POSE_TIMEOUT)
+                PIDtoTargetPose(targetPose)
         );
     }
 
