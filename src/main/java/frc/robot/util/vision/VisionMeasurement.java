@@ -9,4 +9,5 @@ public record VisionMeasurement(
         Pose2d estimatedPose,
         double timestampSeconds,
         Matrix<N3, N1> standardDeviations
-) {}
+) {
+}

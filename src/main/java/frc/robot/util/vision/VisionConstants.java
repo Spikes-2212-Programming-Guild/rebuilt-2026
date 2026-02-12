@@ -12,17 +12,18 @@ public class VisionConstants {
     public static final double MAX_TURN_SPEED_RAD_S = -1;
 
     public static final double MAX_TAG_DISTANCE_METERS = -1;
-
-    // Increase these numbers to trust vision LESS. Decrease to trust MORE.
-    // Drive 0.05 = ~5cm trust at 1 meter. Trust falls off with distance squared.
+    /**
+     *Increase these numbers to trust vision LESS. Decrease to trust MORE.
+     *Drive 0.05 = ~5cm trust at 1 meter. Trust falls off with distance squared.
+     */
     public static final double DRIVE_TRUST_SCALAR = -1;
     public static final double ANGLE_TRUST_SCALAR = -1;
 
     /**
      * Calculates a standard deviation that scales with distance.
      *
-     * @param scalingFactor the baseline trust scalar (e.g. DRIVE_TRUST_SCALAR)
-     * @param distance      the distance to the target in meters
+     * @param scalingFactor the baseline trust scalar
+     * @param distance      the distance from the robot to the target in meters
      * @return The standard deviation to pass to the pose estimator
      */
     public static double calculateStandardDeviation(double scalingFactor, double distance) {

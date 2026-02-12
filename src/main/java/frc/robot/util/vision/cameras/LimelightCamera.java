@@ -22,8 +22,8 @@ public class LimelightCamera implements AprilTagCamera {
     private double lastHeartbeatTime = 0;
 
     /**
-     * @param name             the name of the limelight (e.g. "limelight-front")
-     * @param rotationSupplier a supplier that returns the robot's current Gyro rotation (e.g. driveSubsystem::getRotation2d)
+     * @param name             the name of the limelight
+     * @param rotationSupplier a supplier that returns the robot's current Gyro rotation
      */
     public LimelightCamera(String name, Supplier<Rotation2d> rotationSupplier) {
         this.limelightName = name;
