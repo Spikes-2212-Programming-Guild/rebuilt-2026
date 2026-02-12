@@ -8,6 +8,8 @@ public class RobotMap {
         int SHOOTER_MIDDLE_TALON_FX_ID = -1;
         int SHOOTER_LOWER_TALON_FX_ID = -1;
 
+        int HOOD_SPARK_MAX = -1;
+      
         int COLLECTION_SPARK_MAX_ID = -1;
       
         int COLLECTION_MOVEMENT_TALON_FX_ID = -1;
@@ -19,6 +21,8 @@ public class RobotMap {
 
     public interface DIO {
 
+        int HOOD_ABSOLUTE_ENCODER = -1;
+      
         int COLLECTION_MOVEMENT_THROUGH_BORE_ID = -1;
     }
 
