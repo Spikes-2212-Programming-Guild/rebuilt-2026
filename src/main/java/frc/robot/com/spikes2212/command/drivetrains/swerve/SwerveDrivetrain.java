@@ -234,7 +234,7 @@ public abstract class SwerveDrivetrain extends DashboardedSubsystem {
     /**
      * @return the robot's swerve kinematics
      */
-    protected SwerveDriveKinematics getKinematics() {
+    public SwerveDriveKinematics getKinematics() {
         return kinematics;
     }
 
