@@ -38,7 +38,7 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
 
     private final RobotPoseEstimator poseEstimator;
 
-    private SwerveModulePosition [] swerveModulePositions;
+    private final SwerveModulePosition [] swerveModulePositions;
 
     private static DrivetrainRebuilt instance;
 
@@ -114,10 +114,9 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
     }
 
     private SwerveModulePosition[] getModulePositions(){
-         swerveModulePositions = new SwerveModulePosition[]{frontLeftModule.getModulePosition(),
+         return new SwerveModulePosition[]{frontLeftModule.getModulePosition(),
                  frontRightModule.getModulePosition(), backLeftModule.getModulePosition(),
                  backRightModule.getModulePosition()};
-        return swerveModulePositions;
     }
 
     public Pose2d getEstimatedPose(){
