@@ -62,7 +62,7 @@ public class AutonomousContainer {
                 this::driveCorrection,
                 new PPHolonomicDriveController(
                         new PIDConstants(0, 0, 0),
-                        new PIDConstants(0,0,0)),
+                        new PIDConstants(0, 0, 0)),
                 CONFIG,
                 this::shouldMirror,
                 drivetrain);
@@ -93,14 +93,16 @@ public class AutonomousContainer {
         drivetrain.driveSelfRelative(output, TIME_STEP, true);
     }
 
-    private Command PIDtoTargetPose(Pose2d targetPose){
-        return new FunctionalCommand(() -> {},
+    private Command PIDtoTargetPose(Pose2d targetPose) {
+        return new FunctionalCommand(() -> {
+        },
                 () -> PIDtoPose(targetPose),
-                (interrupted) -> {},
+                (interrupted) -> {
+                },
                 () -> drivetrain.atPose(targetPose)).withTimeout(PID_TO_POSE_TIMEOUT);
     }
 
-    private void PIDtoPose(Pose2d targetPose){
+    private void PIDtoPose(Pose2d targetPose) {
         drivetrain.driveSelfRelative(pathRelativeSpeedsByPID(targetPose), TIME_STEP, true);
     }
 
@@ -111,11 +113,11 @@ public class AutonomousContainer {
         );
     }
 
-    private void updatePathplannerPose(){
+    private void updatePathplannerPose() {
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> pathplannerTargetPose = pose);
     }
 
-    public boolean shouldMirror(){
+    public boolean shouldMirror() {
         return DriverStation.getAlliance().map(a -> a == DriverStation.Alliance.Blue).orElse(false);
     }
 
