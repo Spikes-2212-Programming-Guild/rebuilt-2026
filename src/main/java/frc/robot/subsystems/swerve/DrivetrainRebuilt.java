@@ -11,11 +11,11 @@ import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveModule;
 
 public class DrivetrainRebuilt extends SwerveDrivetrain {
 
-    private final static String NAMESPACE_NAME = "swerve drivetrain";
+    private static final String NAMESPACE_NAME = "swerve drivetrain";
 
-    public final static double MAX_POSSIBLE_VELOCITY = -1;
-    private final static double TRACK_WIDTH = 0.545;
-    private final static double TRACK_LENGTH = 0.545;
+    public static final double MAX_POSSIBLE_VELOCITY = -1;
+    private static final double TRACK_WIDTH = 0.545;
+    private static final double TRACK_LENGTH = 0.545;
 
     private final StructArrayPublisher<SwerveModuleState> currentStates = NetworkTableInstance.getDefault()
             .getStructArrayTopic("current states", SwerveModuleState.struct).publish();
