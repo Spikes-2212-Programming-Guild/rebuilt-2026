@@ -38,7 +38,7 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
 
     private final RobotPoseEstimator poseEstimator;
 
-    private final SwerveModulePosition [] swerveModulePositions;
+    private final SwerveModulePosition[] swerveModulePositions;
 
     private static DrivetrainRebuilt instance;
 
@@ -113,56 +113,56 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
         states.set(desiredStatesToSet);
     }
 
-    private SwerveModulePosition[] getModulePositions(){
-         return new SwerveModulePosition[]{frontLeftModule.getModulePosition(),
-                 frontRightModule.getModulePosition(), backLeftModule.getModulePosition(),
-                 backRightModule.getModulePosition()};
+    private SwerveModulePosition[] getModulePositions() {
+        return new SwerveModulePosition[]{frontLeftModule.getModulePosition(),
+                frontRightModule.getModulePosition(), backLeftModule.getModulePosition(),
+                backRightModule.getModulePosition()};
     }
 
-    public Pose2d getEstimatedPose(){
+    public Pose2d getEstimatedPose() {
         return poseEstimator.getEstimatedPose();
     }
 
-    public void resetPose(Pose2d newPose){
+    public void resetPose(Pose2d newPose) {
         poseEstimator.resetPose(newPose);
     }
 
-    public ChassisSpeeds getSelfRelativeSpeeds(){
+    public ChassisSpeeds getSelfRelativeSpeeds() {
         return kinematics.toChassisSpeeds(frontLeftModule.getModuleState(),
                 frontRightModule.getModuleState(),
                 backLeftModule.getModuleState(),
                 backRightModule.getModuleState());
     }
 
-    public Pose2d getFixedPoseByLatency(double latency){
+    public Pose2d getFixedPoseByLatency(double latency) {
         return poseEstimator.getEstimatedPoseByLatency(getSelfRelativeSpeeds(), latency);
     }
 
-    public void driveSelfRelative(ChassisSpeeds speeds, double deltaTime, boolean useVelocityPID){
+    public void driveSelfRelative(ChassisSpeeds speeds, double deltaTime, boolean useVelocityPID) {
         ChassisSpeeds deltaSpeeds = ChassisSpeeds.discretize(speeds, deltaTime);
         SwerveModuleState[] swerveModuleState = kinematics.toSwerveModuleStates(deltaSpeeds);
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleState, MAX_POSSIBLE_VELOCITY);
         setTargetModuleStates(swerveModuleState, useVelocityPID);
     }
 
-    private ChassisSpeeds getFieldRelativeSpeeds(){
+    private ChassisSpeeds getFieldRelativeSpeeds() {
         return ChassisSpeeds.fromFieldRelativeSpeeds(getSelfRelativeSpeeds(), getAngle());
     }
 
-    private boolean atAxis(double currentAxisPose, double targetAxisPose, double currentVelocity){
+    private boolean atAxis(double currentAxisPose, double targetAxisPose, double currentVelocity) {
         boolean isAtPose = Math.abs(currentAxisPose - targetAxisPose) <= POSITION_TOLERANCE;
         boolean isRobotStill = Math.abs(currentVelocity) <= POSITION_VELOCITY_TOLERANCE;
         return isAtPose && isRobotStill;
     }
 
-    private boolean atRotation(Rotation2d rotation2d){
+    private boolean atRotation(Rotation2d rotation2d) {
         boolean isAtRotation = rotation2d.minus(getAngle()).getDegrees() <= ROTATION_TOLERANCE_IN_DEGREES;
         boolean isRotationStill = Math.abs(getSelfRelativeSpeeds().omegaRadiansPerSecond)
                 <= ROTATION_VELOCITY_TOLERANCE;
         return isAtRotation && isRotationStill;
     }
 
-    public boolean atPose(Pose2d pose2d){
+    public boolean atPose(Pose2d pose2d) {
         boolean atXAxis = atAxis(getEstimatedPose().getX(), pose2d.getX(),
                 getFieldRelativeSpeeds().vxMetersPerSecond);
         boolean atYAxis = atAxis(getEstimatedPose().getY(), pose2d.getY(),
