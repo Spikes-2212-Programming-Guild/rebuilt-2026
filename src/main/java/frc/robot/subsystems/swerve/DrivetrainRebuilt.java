@@ -136,7 +136,7 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
     }
 
     public Pose2d getFixedPoseByLatency(double latency) {
-        return poseEstimator.getEstimatedPoseByLatency(getSelfRelativeSpeeds(), latency);
+        return poseEstimator.getEstimatedPoseByLatency(getSpeeds(), latency);
     }
 
     public void driveSelfRelative(ChassisSpeeds speeds, double deltaTime, boolean useVelocityPID) {
