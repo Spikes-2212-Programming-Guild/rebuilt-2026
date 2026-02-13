@@ -129,7 +129,8 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
     }
 
     public ChassisSpeeds getSelfRelativeSpeeds() {
-        return kinematics.toChassisSpeeds(frontLeftModule.getModuleState(),
+        return kinematics.toChassisSpeeds(
+                frontLeftModule.getModuleState(),
                 frontRightModule.getModuleState(),
                 backLeftModule.getModuleState(),
                 backRightModule.getModuleState());
