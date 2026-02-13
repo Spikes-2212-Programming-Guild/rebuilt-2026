@@ -140,10 +140,6 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
         return poseEstimator.getEstimatedPoseByLatency(getSpeeds(), latency);
     }
 
-    private ChassisSpeeds getFieldRelativeSpeeds() {
-        return ChassisSpeeds.fromFieldRelativeSpeeds(getSelfRelativeSpeeds(), getAngle());
-    }
-
     private boolean atAxis(double currentAxisPose, double targetAxisPose, double currentVelocity) {
         boolean isAtPose = Math.abs(currentAxisPose - targetAxisPose) <= TRANSLATION_POSE_TOLERANCE;
         boolean isRobotStill = Math.abs(currentVelocity) <= TRANSLATION_VELOCITY_TOLERANCE;
@@ -153,16 +149,16 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
     private boolean atRotation(Rotation2d rotation2d) {
         double error = rotation2d.minus(getAngle()).getDegrees();
         boolean isAtRotation = Math.abs(error) <= ROTATION_TOLERANCE_IN_DEGREES;
-        boolean isRotationStill = Math.abs(getSelfRelativeSpeeds().omegaRadiansPerSecond)
+        boolean isRotationStill = Math.abs(getSpeeds().omegaRadiansPerSecond)
                 <= ROTATION_VELOCITY_TOLERANCE;
         return isAtRotation && isRotationStill;
     }
 
     public boolean atPose(Pose2d pose2d) {
         boolean atXAxis = atAxis(getEstimatedPose().getX(), pose2d.getX(),
-                getFieldRelativeSpeeds().vxMetersPerSecond);
+                getSpeeds().vxMetersPerSecond);
         boolean atYAxis = atAxis(getEstimatedPose().getY(), pose2d.getY(),
-                getFieldRelativeSpeeds().vyMetersPerSecond);
+                getSpeeds().vyMetersPerSecond);
         return atXAxis && atYAxis && atRotation(pose2d.getRotation());
     }
 
