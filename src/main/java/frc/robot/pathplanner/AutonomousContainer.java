@@ -96,10 +96,14 @@ public class AutonomousContainer {
         ChassisSpeeds pidCorrection = pathRelativeSpeedsByPID(pathplannerTargetPose);
         ChassisSpeeds scaledFeedForward = getScaledFFSpeeds(feedForwardSpeeds);
         ChassisSpeeds output = pidCorrection.plus(scaledFeedForward);
-        drivetrain.drive(output.vxMetersPerSecond,
+        drivetrain.drive(
+                output.vxMetersPerSecond,
                 output.vyMetersPerSecond,
                 output.omegaRadiansPerSecond,
-                false, TIME_STEP, true);
+                false,
+                TIME_STEP,
+                true
+        );
     }
 
     private Command PIDtoTargetPose(Pose2d targetPose) {
