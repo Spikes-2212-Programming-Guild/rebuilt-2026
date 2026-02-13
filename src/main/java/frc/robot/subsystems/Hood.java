@@ -11,7 +11,8 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
     public enum HoodPose {
 
-        MAX_ANGLE(-1), MIN_ANGLE(0);
+        MAX_ANGLE(-1), MIN_ANGLE(0),
+        POSE1(-1), POSE2(-1), POSE3(-1);
 
         public final double neededAngle;
 
