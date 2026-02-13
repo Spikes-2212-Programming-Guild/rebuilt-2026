@@ -144,9 +144,9 @@ public class AutonomousContainer {
     }
 
     private static SendableChooser<Command> getAutoPath() {
-        SendableChooser<Command> chooser = AutoBuilder.buildAutoChooser();
-        namespace.putData("auto chooser", chooser);
-        return chooser;
+        SendableChooser<Command> autoPathChooser = AutoBuilder.buildAutoChooser();
+        namespace.putData("auto chooser", autoPathChooser);
+        return autoPathChooser;
     }
 
     //should be in Robot - autonomousInit()
