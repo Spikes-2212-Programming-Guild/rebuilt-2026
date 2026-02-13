@@ -1,6 +1,5 @@
 package frc.robot.commands.advancedcommands;
 
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.difficultcommands.CollectionToPosition;
@@ -9,46 +8,66 @@ import frc.robot.commands.simplecommands.SimpleIntake;
 import frc.robot.subsystems.Collection;
 import frc.robot.subsystems.CollectionMovement;
 import frc.robot.subsystems.SwerveDrivetrain;
+import frc.robot.utils.vision.RobotRelativeLimelightCamera;
+import frc.robot.utils.vision.RobotRelativePhotonCamera;
+import frc.robot.utils.vision.RobotRelativeVisionSource;
+import frc.robot.utils.BumperColorSelector;
+import frc.robot.utils.RobotRelativeCollisionGuard;
+
+import static edu.wpi.first.wpilibj2.command.Commands.runOnce;
 
 public class FullyAutoCollect extends SequentialCommandGroup {
 
     private static final double COLLECTION_SPEED = -1.0;
 
+    private final RobotRelativeVisionSource safetyCam;
+    private final RobotRelativeVisionSource intakeCam;
+    private final RobotRelativeCollisionGuard collisionGuard;
+    private final BumperColorSelector pipelineSelector;
+
     public FullyAutoCollect(Collection collection, CollectionMovement movement,
                             SwerveDrivetrain swerve) {
+
+        this.safetyCam = new RobotRelativeLimelightCamera("limelight");
+        this.intakeCam = new RobotRelativePhotonCamera("photoncamera");
+        this.collisionGuard = new RobotRelativeCollisionGuard(safetyCam);
+        this.pipelineSelector = new BumperColorSelector(safetyCam);
+
         addCommands(
+                runOnce(pipelineSelector::setPipelineToOpponent),
+
                 new CollectionToPosition(
                         movement,
                         () -> CollectionMovement.CollectionMovementPose.MAX_POSE.neededPose
                 ),
+
                 new SimpleIntake(collection).alongWith(
                         new VisionDriveAlignCommand(
                                 swerve,
-                                this::calculateForwardSpeed,
+                                intakeCam,
+                                this::calculateSafeSpeed,
                                 () -> 0.0
                         )
                 ).finallyDo(
                         () -> CommandScheduler.getInstance().schedule(
                                 new CollectionToPosition(
                                         movement,
-                                        () -> CollectionMovement.CollectionMovementPose.MIN_POSE.neededPose)
+                                        () -> CollectionMovement.CollectionMovementPose.MIN_POSE.neededPose
+                                )
                         )
                 )
         );
     }
 
-    /**
-     * Determines the forward speed. Driving continues as long as targets are visible.
-     *
-     * @return the collection speed if a target is found, otherwise 0.
-     */
-    private double calculateForwardSpeed() {
-        double tv = NetworkTableInstance.getDefault().getTable("limelight")
-                .getEntry("tv").getDouble(0);
+    private double calculateSafeSpeed() {
+        if (collisionGuard.isPathBlocked()) {
+            return 0.0;
+        }
 
-        if (tv == 1.0) {
+        if (intakeCam.hasValidTarget()) {
             return COLLECTION_SPEED;
         }
+
         return 0.0;
     }
 }
