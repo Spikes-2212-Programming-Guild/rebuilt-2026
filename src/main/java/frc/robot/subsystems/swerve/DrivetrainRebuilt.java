@@ -151,7 +151,8 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
     }
 
     private boolean atRotation(Rotation2d rotation2d) {
-        boolean isAtRotation = rotation2d.minus(getAngle()).getDegrees() <= ROTATION_TOLERANCE_IN_DEGREES;
+        double error = rotation2d.minus(getAngle()).getDegrees();
+        boolean isAtRotation = Math.abs(error) <= ROTATION_TOLERANCE_IN_DEGREES;
         boolean isRotationStill = Math.abs(getSelfRelativeSpeeds().omegaRadiansPerSecond)
                 <= ROTATION_VELOCITY_TOLERANCE;
         return isAtRotation && isRotationStill;
