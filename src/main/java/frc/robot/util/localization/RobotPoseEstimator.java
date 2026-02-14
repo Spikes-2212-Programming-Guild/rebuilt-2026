@@ -19,7 +19,7 @@ public class RobotPoseEstimator {
 
     private static final RootNamespace namespace = new RootNamespace("robot pose estimator");
 
-    private static final StandardDeviations ODOMETRY_STD_DEVS =
+    private static final StandardDeviations ODOMETRY_STANDARD_DEVIATIONS =
             new StandardDeviations(
                 namespace.addConstantInt("translation x", 0).get(),
                 namespace.addConstantInt("translation y", 0).get(),
@@ -36,7 +36,8 @@ public class RobotPoseEstimator {
 
         this.poseEstimator = new SwerveDrivePoseEstimator(
                 kinematics, gyroYaw, modulePositions, initRobotPose,
-                ODOMETRY_STD_DEVS.toMatrix(), StandardDeviations.EMPTY_STD_DEVS.toMatrix()
+                ODOMETRY_STANDARD_DEVIATIONS.toMatrix(),
+                StandardDeviations.EMPTY_STANDARD_DEVIATIONS.toMatrix()
         );
 
         this.odometryManager = new OdometryManager(
