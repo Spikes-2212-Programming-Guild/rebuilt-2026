@@ -44,6 +44,7 @@ public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
     public void resetRelativeEncoder() {
         talonFX.setPosition(getAbsDegrees());
     }
+
     @Override
     public boolean canMove(double speed) {
         return ( getAbsDegrees() > OPEN_POSE && speed < 0) ||
