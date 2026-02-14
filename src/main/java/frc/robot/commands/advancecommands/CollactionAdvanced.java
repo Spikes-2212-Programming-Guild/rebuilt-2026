@@ -8,7 +8,9 @@ import frc.robot.subsystems.CollectionMovement;
 public class CollactionAdvanced extends SequentialCommandGroup {
 
     public CollactionAdvanced(CollectionMovement collectionMovement, MoveCollection moveCollection) {
-        addCommands(new SequentialCommandGroup(
-                new CollectionToPosition(collectionMovement, moveCollection)));
+
+        addCommands(
+                new CollectionToPosition(collectionMovement, () -> -1.0),
+                moveCollection);
     }
 }
