@@ -9,15 +9,15 @@ import frc.robot.commands.simplecommands.SimpleSpin;
 import frc.robot.commands.simplecommands.SimpleTransport;
 import frc.robot.subsystems.*;
 import frc.robot.utils.ShooterAlgo;
-import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
 
 public class ShootingWithRegression extends SequentialCommandGroup {
 
     public ShootingWithRegression(Hood hood, Shooter shooter, SpinningMagazine spinningMagazine,
-                                  Transport transport, DoubleSupplier distanceSupplier) {
+                                  Transport transport, Supplier<Double> distanceSupplier) {
         addCommands(
                 Commands.deferredProxy(() -> {
-                    double distance = distanceSupplier.getAsDouble();
+                    double distance = distanceSupplier.get();
                     var targetPose = ShooterAlgo.getOptimalPose(distance);
                     double targetRPM = ShooterAlgo.calculateRPM(distance, targetPose);
                     Hood.HoodPose hoodPose = null;
