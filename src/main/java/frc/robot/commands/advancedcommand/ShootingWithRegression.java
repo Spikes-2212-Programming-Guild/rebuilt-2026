@@ -14,12 +14,11 @@ import java.util.function.Supplier;
 public class ShootingWithRegression extends SequentialCommandGroup {
 
     public ShootingWithRegression(Hood hood, Shooter shooter, SpinningMagazine spinningMagazine,
-                                  Transport transport, Supplier<Double> distanceSupplier) {
+                                  Transport transport, Supplier<Double> distance) {
         addCommands(
                 Commands.deferredProxy(() -> {
-                    double distance = distanceSupplier.get();
-                    var targetPose = ShooterAlgo.getOptimalPose(distance);
-                    double targetRPM = ShooterAlgo.calculateRPM(distance, targetPose);
+                    var targetPose = ShooterAlgo.getOptimalPose(distance.get());
+                    double targetRPM = ShooterAlgo.calculateRPM(distance.get(), targetPose);
                     Hood.HoodPose hoodPose = null;
                     switch (targetPose) {
                         case SHOOT_POSE1:
@@ -30,11 +29,10 @@ public class ShootingWithRegression extends SequentialCommandGroup {
                             hoodPose = Hood.HoodPose.POSE3;
                     }
 
-                    Hood.HoodPose finalHoodPose = hoodPose;
 
                     return Commands.sequence(
                             new ParallelCommandGroup(
-                                    new RotateHood(hood, finalHoodPose),
+                                    new RotateHood(hood, hoodPose),
                                     new ShootWithPID(shooter, () -> targetRPM)
                             ),
                             new ParallelCommandGroup(
