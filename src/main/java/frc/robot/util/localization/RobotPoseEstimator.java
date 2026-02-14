@@ -59,7 +59,8 @@ public class RobotPoseEstimator {
         double predictedYSpeed = relativeSpeeds.vyMetersPerSecond * latencySeconds;
         Rotation2d predictedRotationSpeed =
                 Rotation2d.fromRadians(relativeSpeeds.omegaRadiansPerSecond * latencySeconds);
-        return getEstimatedPose().transformBy(new Transform2d(predictedXSpeed, predictedYSpeed, predictedRotationSpeed));
+        return getEstimatedPose().
+                transformBy(new Transform2d(predictedXSpeed, predictedYSpeed, predictedRotationSpeed));
     }
 
     public SwerveDrivePoseEstimator getEstimator() {
