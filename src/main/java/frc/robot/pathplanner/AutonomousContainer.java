@@ -143,7 +143,8 @@ public class AutonomousContainer {
     }
 
     public boolean shouldMirror() {
-        return DriverStation.getAlliance().map(alliance -> alliance == DriverStation.Alliance.Blue).orElse(false);
+        return DriverStation.getAlliance().map(alliance -> alliance == DriverStation.Alliance.Blue).
+                orElse(false);
     }
 
     private void getAutoPath() {
