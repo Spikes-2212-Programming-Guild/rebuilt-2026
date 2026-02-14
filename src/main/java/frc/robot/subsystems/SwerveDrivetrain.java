@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class SwerveDrivetrain extends SubsystemBase {
 
-    private static SwerveDrivetrain instance;
-
     private SwerveDrivetrain() {
         configureDashboard();
     }
+
+    private static SwerveDrivetrain instance;
 
     public static SwerveDrivetrain getInstance() {
         if (instance == null) {
@@ -23,13 +23,13 @@ public class SwerveDrivetrain extends SubsystemBase {
     /**
      * Drives the robot using translation and rotation speeds.
      *
-     * @param vX the speed in the x direction
-     * @param vY the speed in the y direction
+     * @param forwardVelocity the speed in the x direction
+     * @param strafeVelocity the speed in the y direction
      * @param rotation the rotation speed
      * @param isFieldRelative whether the movement is relative to the field
      * @param useVelocityPID whether to use velocity PID for the motors
      */
-    public void drive(double vX, double vY, double rotation, boolean isFieldRelative, boolean useVelocityPID) {
+    public void drive(double forwardVelocity, double strafeVelocity, double rotation, boolean isFieldRelative, boolean useVelocityPID) {
     }
 
     public void configureDashboard() {

@@ -11,9 +11,9 @@ public class VisionDriveAlignCommand extends Command {
     private final VisionDriveAlign visionUtil;
     private final PIDController controller;
 
-    public VisionDriveAlignCommand(SwerveDrivetrain swerve, Supplier<Double> vX,
-                                   Supplier<Double> vY) {
-        this.visionUtil = new VisionDriveAlign(swerve, vX, vY);
+    public VisionDriveAlignCommand(SwerveDrivetrain swerve, Supplier<Double> forwardVelocity,
+                                   Supplier<Double> strafeVelocity) {
+        this.visionUtil = new VisionDriveAlign(swerve, forwardVelocity, strafeVelocity);
         this.controller = visionUtil.getController();
     }
 

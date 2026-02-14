@@ -12,13 +12,13 @@ import java.util.function.Supplier;
 public class CollectionAutoAlign extends SequentialCommandGroup {
 
     public CollectionAutoAlign(Collection collection, CollectionMovement collectionMovement,
-                               SwerveDrivetrain swerve, Supplier<Double> vX,
-                               Supplier<Double> vY) {
+                               SwerveDrivetrain swerve, Supplier<Double> forwardVelocity,
+                               Supplier<Double> strafeVelocity) {
         addCommands(
                 new CollectionToPosition(
                         collectionMovement, () -> CollectionMovement.CollectionMovementPose.MAX_POSE.neededPose
                 ),
-                new SimpleIntake(collection).alongWith(new VisionDriveAlignCommand(swerve, vX, vY))
+                new SimpleIntake(collection).alongWith(new VisionDriveAlignCommand(swerve, forwardVelocity, strafeVelocity))
         );
     }
 }
