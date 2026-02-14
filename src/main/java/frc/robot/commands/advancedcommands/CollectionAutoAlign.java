@@ -18,7 +18,13 @@ public class CollectionAutoAlign extends SequentialCommandGroup {
                 new CollectionToPosition(
                         collectionMovement, () -> CollectionMovement.CollectionMovementPose.MAX_POSE.neededPose
                 ),
-                new SimpleIntake(collection).alongWith(new VisionDriveAlignCommand(swerve, forwardVelocity, strafeVelocity))
+                new SimpleIntake(collection).alongWith(
+                        new VisionDriveAlignCommand(
+                                swerve,
+                                forwardVelocity,
+                                strafeVelocity
+                        )
+                )
         );
     }
 }
