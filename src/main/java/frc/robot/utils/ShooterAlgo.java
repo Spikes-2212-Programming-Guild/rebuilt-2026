@@ -1,4 +1,4 @@
-package frc.robot.util;
+package frc.robot.utils;
 
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.ShooterConstants.FlywheelQuadratic;
