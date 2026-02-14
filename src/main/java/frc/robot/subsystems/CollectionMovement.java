@@ -8,6 +8,17 @@ import frc.robot.RobotMap;
 
 public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
 
+    public enum CollectionMovementPose {
+
+        MAX_POSE(-1), MIN_POSE(0);
+
+        public final double neededPose;
+
+        CollectionMovementPose(double neededPose) {
+            this.neededPose = neededPose;
+        }
+    }
+
     private static final String NAMESPACE_NAME = "collection movement";
     private static final double DEGREES_IN_ROTATION = 360;
     private static final double CURRENT_LIMIT_AMP = 40;
