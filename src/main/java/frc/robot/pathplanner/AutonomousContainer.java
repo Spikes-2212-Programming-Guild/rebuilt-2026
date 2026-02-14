@@ -150,8 +150,6 @@ public class AutonomousContainer {
         namespace.putData("auto chooser", autoChooser);
     }
 
-    //should be in Robot - autonomousInit()
-
     public Command getSelectedAutoCommand() {
         return autoChooser.getSelected();
     }
