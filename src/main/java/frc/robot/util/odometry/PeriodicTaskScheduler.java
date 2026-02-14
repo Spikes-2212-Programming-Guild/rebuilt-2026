@@ -10,11 +10,11 @@ public class PeriodicTaskScheduler {
         this.timedRobot = timedRobot;
     }
 
-    public void schedule(Runnable task, double frequencyHz, double delaySeconds) {
+    public void schedule(Runnable task, double frequencyHz, double offsetSeconds) {
         if (frequencyHz <= 0) {
             return;
         }
-        timedRobot.addPeriodic(task, 1.0 / frequencyHz, delaySeconds);
+        timedRobot.addPeriodic(task, 1.0 / frequencyHz, offsetSeconds);
     }
 }
 
