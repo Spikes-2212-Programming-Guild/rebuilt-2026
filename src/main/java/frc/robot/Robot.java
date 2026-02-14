@@ -14,7 +14,7 @@ public class Robot extends TimedRobot {
 
     private final DrivetrainRebuilt drivetrain = DrivetrainRebuilt.getInstance();
     private final AutonomousContainer autonomousContainer = new AutonomousContainer(drivetrain);
-    private Command autoCommand;
+    Command autoCommand;
     @Override
     public void robotInit() {
 
