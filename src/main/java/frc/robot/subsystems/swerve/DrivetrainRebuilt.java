@@ -163,11 +163,6 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
     }
 
     @Override
-    public ChassisSpeeds getSpeeds() {
-        return super.getSpeeds();
-    }
-
-    @Override
     public void configureDashboard() {
         namespace.putNumber("gyro", getAngle()::getDegrees);
     }
