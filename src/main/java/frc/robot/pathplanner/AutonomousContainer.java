@@ -30,7 +30,7 @@ public class AutonomousContainer {
     private static final RobotConfig CONFIG = getRobotConfig();
 
     private static final RootNamespace namespace = new RootNamespace("autonomous");
-    private static final SendableChooser<Command> autoChooser = getAutoPath();
+    private final SendableChooser<Command> autoChooser;
 
     private static final TrapezoidProfile.Constraints pathConstraints =
             new TrapezoidProfile.Constraints(CONFIG.moduleConfig.maxDriveVelocityMPS, -1);
@@ -53,9 +53,11 @@ public class AutonomousContainer {
 
     public AutonomousContainer(DrivetrainRebuilt drivetrain) {
         this.drivetrain = drivetrain;
+        autoChooser = AutoBuilder.buildAutoChooser();
         PathfindingCommand.warmupCommand().schedule();
         configureAutoBuilder();
         updatePathplannerPose();
+        getAutoPath();
     }
 
     private void configureAutoBuilder() {
@@ -106,9 +108,11 @@ public class AutonomousContainer {
 
     private Command PIDtoTargetPose(Pose2d targetPose) {
         return new FunctionalCommand(
-                () -> {},
+                () -> {
+                },
                 () -> PIDtoPose(targetPose),
-                (interrupted) -> {},
+                (interrupted) -> {
+                },
                 () -> drivetrain.atPose(targetPose)).withTimeout(PID_TO_POSE_TIMEOUT);
     }
 
@@ -142,15 +146,13 @@ public class AutonomousContainer {
         return DriverStation.getAlliance().map(alliance -> alliance == DriverStation.Alliance.Blue).orElse(false);
     }
 
-    private static SendableChooser<Command> getAutoPath() {
-        SendableChooser<Command> autoPathChooser = AutoBuilder.buildAutoChooser();
-        namespace.putData("auto chooser", autoPathChooser);
-        return autoPathChooser;
+    private void getAutoPath() {
+        namespace.putData("auto chooser", autoChooser);
     }
 
     //should be in Robot - autonomousInit()
 
-    public static Command getSelectedAutoCommand() {
+    public Command getSelectedAutoCommand() {
         return autoChooser.getSelected();
     }
 

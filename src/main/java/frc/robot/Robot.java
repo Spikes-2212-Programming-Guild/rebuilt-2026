@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.pathplanner.AutonomousContainer;
 import frc.robot.subsystems.swerve.DrivetrainRebuilt;
@@ -13,7 +14,7 @@ public class Robot extends TimedRobot {
 
     private final DrivetrainRebuilt drivetrain = DrivetrainRebuilt.getInstance();
     private final AutonomousContainer autonomousContainer = new AutonomousContainer(drivetrain);
-
+    private Command autoCommand;
     @Override
     public void robotInit() {
 
@@ -36,7 +37,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        AutonomousContainer.getSelectedAutoCommand();
+        autoCommand = autonomousContainer.getSelectedAutoCommand();
     }
 
     @Override
