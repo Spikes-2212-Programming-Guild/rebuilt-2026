@@ -93,9 +93,9 @@ public class AutonomousContainer {
     }
 
     public void updatePathFollowingOutput(ChassisSpeeds feedForwardSpeeds) {
-        ChassisSpeeds calculateNewPID = pathRelativeSpeedsByPID(pathplannerTargetPose);
+        ChassisSpeeds calculatePID = pathRelativeSpeedsByPID(pathplannerTargetPose);
         ChassisSpeeds scaledFeedForward = getScaledFFSpeeds(feedForwardSpeeds);
-        ChassisSpeeds output = calculateNewPID.plus(scaledFeedForward);
+        ChassisSpeeds output = calculatePID.plus(scaledFeedForward);
         drivetrain.drive(
                 output.vxMetersPerSecond,
                 output.vyMetersPerSecond,
