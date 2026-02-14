@@ -37,10 +37,8 @@ public class AutonomousContainer {
 
     private static final PIDController X_PID_CONTROLLER =
             setPIDSettingsIntoController(SwerveModuleHolder.getFrontLeft().getDriveMotorPIDSettings());
-    private static final PIDController Y_PID_CONTROLLER =
-            setPIDSettingsIntoController(SwerveModuleHolder.getFrontLeft().getTurnMotorPIDSettings());
     private static final ProfiledPIDController ROTATIONAL_PID_CONTROLLER =
-            new ProfiledPIDController(-1, -1, -1, pathConstraints);
+            new ProfiledPIDController(setPIDSettingsIntoController(SwerveModuleHolder.getFrontLeft().getTurnMotorPIDSettings()), -1, -1, pathConstraints);
 
     private static final double ROBOT_POSE_LATENCY = -1;
     private static final double FF_SCALER = -1;
@@ -65,10 +63,8 @@ public class AutonomousContainer {
                 drivetrain::getSpeeds,
                 this::updatePathFollowingOutput,
                 new PPHolonomicDriveController(
-                        new PIDConstants(X_PID_CONTROLLER.getP(), X_PID_CONTROLLER.getI(),
-                                X_PID_CONTROLLER.getD()),
-                        new PIDConstants(Y_PID_CONTROLLER.getP(), Y_PID_CONTROLLER.getI(),
-                                Y_PID_CONTROLLER.getD())),
+                        new PIDConstants(0, 0, 0),
+                        new PIDConstants(0, 0, 0)),
                 CONFIG,
                 this::shouldMirror,
                 drivetrain);
