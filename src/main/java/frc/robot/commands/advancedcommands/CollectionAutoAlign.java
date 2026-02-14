@@ -7,13 +7,14 @@ import frc.robot.subsystems.Collection;
 import frc.robot.subsystems.CollectionMovement;
 import frc.robot.commands.difficultcommands.VisionDriveAlignCommand;
 import frc.robot.subsystems.SwerveDrivetrain;
+
 import java.util.function.Supplier;
 
 public class CollectionAutoAlign extends SequentialCommandGroup {
 
     public CollectionAutoAlign(Collection collection, CollectionMovement collectionMovement,
-                               SwerveDrivetrain swerve, Supplier<Double> forwardVelocity,
-                               Supplier<Double> strafeVelocity) {
+                               SwerveDrivetrain swerve, Supplier<Double> xSpeed,
+                               Supplier<Double> ySpeed) {
         addCommands(
                 new CollectionToPosition(
                         collectionMovement, () -> CollectionMovement.CollectionMovementPose.MAX_POSE.neededPose
@@ -21,8 +22,8 @@ public class CollectionAutoAlign extends SequentialCommandGroup {
                 new SimpleIntake(collection).alongWith(
                         new VisionDriveAlignCommand(
                                 swerve,
-                                forwardVelocity,
-                                strafeVelocity
+                                xSpeed,
+                                ySpeed
                         )
                 )
         );

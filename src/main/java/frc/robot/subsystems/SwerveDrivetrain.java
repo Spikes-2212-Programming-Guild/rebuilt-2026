@@ -23,13 +23,13 @@ public class SwerveDrivetrain extends SubsystemBase {
     /**
      * Drives the robot using translation and rotation speeds.
      *
-     * @param forwardVelocity the speed in the x direction
-     * @param strafeVelocity the speed in the y direction
-     * @param rotation the rotation speed
+     * @param xSpeed          the speed in the x direction
+     * @param ySpeed          the speed in the y direction
+     * @param rotation        the rotation speed
      * @param isFieldRelative whether the movement is relative to the field
-     * @param useVelocityPID whether to use velocity PID for the motors
+     * @param useVelocityPID  whether to use velocity PID for the motors
      */
-    public void drive(double forwardVelocity, double strafeVelocity, double rotation, boolean isFieldRelative, boolean useVelocityPID) {
+    public void drive(double xSpeed, double ySpeed, double rotation, boolean isFieldRelative, boolean useVelocityPID) {
     }
 
     public void configureDashboard() {

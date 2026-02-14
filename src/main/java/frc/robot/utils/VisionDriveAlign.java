@@ -4,15 +4,15 @@ import com.spikes2212.control.PIDSettings;
 import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.robot.pathplanner.AutonomousContainer;
 import frc.robot.subsystems.SwerveDrivetrain;
 
 import java.util.function.Supplier;
 
-public record VisionDriveAlign(SwerveDrivetrain swerve, Supplier<Double> forwardVelocity,
-                               Supplier<Double> strafeVelocity) {
+import static frc.robot.pathplanner.AutonomousContainer.ROTATIONAL_PID_CONTROLLER;
 
-    private static final RootNamespace namespace = new RootNamespace("vision drive align");
-    private static final PIDSettings pidSettings = namespace.addPIDNamespace("pid settings");
+public record VisionDriveAlign(SwerveDrivetrain swerve, Supplier<Double> xSpeed,
+                               Supplier<Double> ySpeed) {
 
     /**
      * Calculates the rotation speed based on Limelight data and executes the drive logic.
@@ -31,10 +31,14 @@ public record VisionDriveAlign(SwerveDrivetrain swerve, Supplier<Double> forward
             rotation = controller.calculate(tx, 0);
         }
 
-        swerve.drive(forwardVelocity.get(), strafeVelocity.get(), rotation, isFieldRelative, useVelocityPID);
+        swerve.drive(xSpeed.get(), ySpeed.get(), rotation, isFieldRelative, useVelocityPID);
     }
 
     public PIDController getController() {
-        return new PIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
+        return new PIDController(
+                AutonomousContainer.ROTATIONAL_PID_CONTROLLER.getP(),
+                AutonomousContainer.ROTATIONAL_PID_CONTROLLER.getI(),
+                AutonomousContainer.ROTATIONAL_PID_CONTROLLER.getD()
+        );
     }
 }
