@@ -128,14 +128,6 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
         poseEstimator.resetPose(newPose);
     }
 
-    public ChassisSpeeds getSelfRelativeSpeeds() {
-        return kinematics.toChassisSpeeds(
-                frontLeftModule.getModuleState(),
-                frontRightModule.getModuleState(),
-                backLeftModule.getModuleState(),
-                backRightModule.getModuleState());
-    }
-
     public Pose2d getFixedPoseByLatency(double latency) {
         return poseEstimator.getEstimatedPoseByLatency(getSpeeds(), latency);
     }
