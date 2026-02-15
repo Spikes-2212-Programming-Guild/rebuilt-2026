@@ -142,7 +142,7 @@ public class AutonomousContainer {
         return new PIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
     }
 
-    public boolean shouldMirror() {
+    private boolean shouldMirror() {
         return DriverStation.getAlliance().map(alliance -> alliance == DriverStation.Alliance.Blue).
                 orElse(false);
     }
