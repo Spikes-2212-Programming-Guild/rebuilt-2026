@@ -56,7 +56,7 @@ public class AutonomousContainer {
         autoChooser = AutoBuilder.buildAutoChooser();
         PathfindingCommand.warmupCommand().schedule();
         configureAutoBuilder();
-        updatePathplannerPose();
+        updateTargetPose();
         configureDashboard();
     }
 
@@ -135,7 +135,7 @@ public class AutonomousContainer {
         );
     }
 
-    private void updatePathplannerPose() {
+    private void updateTargetPose() {
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> pathplannerTargetPose = pose);
     }
 
