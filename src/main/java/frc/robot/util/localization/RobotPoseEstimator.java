@@ -8,10 +8,10 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
-import frc.robot.util.odometry.OdometryManager;
+import frc.robot.util.odometry.OdometryBuffer;
 import frc.robot.util.odometry.OdometryMeasurement;
-import frc.robot.util.odometry.PeriodicTaskScheduler;
 import frc.robot.util.odometry.StandardDeviations;
+import frc.robot.util.odometry.TaskScheduler;
 
 import java.util.function.Supplier;
 
@@ -26,13 +26,14 @@ public class RobotPoseEstimator {
                 namespace.addConstantInt("rotation", 0).get()
             );
 
+    private static final Supplier<Integer> ODOMETRY_UPDATE_RATE =
+            namespace.addConstantInt("odometry update rate", 50);
+
     private final SwerveDrivePoseEstimator poseEstimator;
-    private final OdometryManager odometryManager;
+    private final OdometryBuffer odometryBuffer;
 
     public RobotPoseEstimator(SwerveDriveKinematics kinematics, Rotation2d gyroYaw,
-                              SwerveModulePosition[] modulePositions, Pose2d initRobotPose,
-                              Supplier<OdometryMeasurement> odometryMeasurement,
-                              PeriodicTaskScheduler taskScheduler) {
+                              SwerveModulePosition[] modulePositions, Pose2d initRobotPose) {
 
         this.poseEstimator = new SwerveDrivePoseEstimator(
                 kinematics, gyroYaw, modulePositions, initRobotPose,
@@ -40,14 +41,22 @@ public class RobotPoseEstimator {
                 StandardDeviations.EMPTY_STANDARD_DEVIATIONS.toMatrix()
         );
 
-        this.odometryManager = new OdometryManager(
-                this::addOdometryMeasurement, odometryMeasurement, taskScheduler
+        this.odometryBuffer = new OdometryBuffer();
+    }
+
+    public void setupOdometryUpdateLoop(TaskScheduler scheduler,
+                                        Supplier<OdometryMeasurement> odometryMeasurement) {
+        scheduler.schedule(
+                () -> this.odometryBuffer.addMeasurement(odometryMeasurement.get()),
+                ODOMETRY_UPDATE_RATE.get(), 0
         );
     }
 
     public void periodic() {
         namespace.update();
-        odometryManager.applyMeasurements();
+        for (OdometryMeasurement measurement : odometryBuffer.getMeasurements()) {
+            addOdometryMeasurement(measurement);
+        }
         // @TODO add the vision part once it's complete
     }
 
@@ -55,7 +64,7 @@ public class RobotPoseEstimator {
         return poseEstimator.getEstimatedPosition();
     }
 
-    public Pose2d getEstimatedPoseByLatency(ChassisSpeeds relativeSpeeds, double latencySeconds) {
+    public Pose2d getEstimatePoseWithLatency(ChassisSpeeds relativeSpeeds, double latencySeconds) {
         double predictedX = relativeSpeeds.vxMetersPerSecond * latencySeconds;
         double predictedY = relativeSpeeds.vyMetersPerSecond * latencySeconds;
         Rotation2d predictedRotation =
