@@ -57,7 +57,7 @@ public class AutonomousContainer {
         PathfindingCommand.warmupCommand().schedule();
         configureAutoBuilder();
         updatePathplannerPose();
-        getAutoPath();
+        configureDashboard();
     }
 
     private void configureAutoBuilder() {
@@ -148,7 +148,7 @@ public class AutonomousContainer {
                 orElse(false);
     }
 
-    private void getAutoPath() {
+    private void configureDashboard() {
         NAMESPACE.putData("auto chooser", autoChooser);
     }
 
