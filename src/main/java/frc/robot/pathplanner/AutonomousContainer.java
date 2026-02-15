@@ -71,7 +71,8 @@ public class AutonomousContainer {
                         new PIDConstants(0, 0, 0)),
                 CONFIG,
                 this::shouldMirror,
-                drivetrain);
+                drivetrain
+        );
     }
 
     private ChassisSpeeds pathRelativeSpeedsByPID(Pose2d targetPose) {
