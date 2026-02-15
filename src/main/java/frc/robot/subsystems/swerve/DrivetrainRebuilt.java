@@ -63,7 +63,8 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
         this.poseEstimator = new RobotPoseEstimator(
                 getKinematics(), getAngle(), swerveModulePositions, new Pose2d(),
                 () -> new OdometryMeasurement(Timer.getFPGATimestamp(), getAngle(), swerveModulePositions),
-                PeriodicTaskScheduler.getInstance());
+                PeriodicTaskScheduler.getInstance()
+            );
 
         setStates(currentStates,
                 new SwerveModuleState[]{
