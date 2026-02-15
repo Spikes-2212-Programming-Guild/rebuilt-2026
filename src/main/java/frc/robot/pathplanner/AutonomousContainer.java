@@ -75,7 +75,7 @@ public class AutonomousContainer {
         );
     }
 
-    private ChassisSpeeds pathRelativeSpeedsByPID(Pose2d targetPose) {
+    private ChassisSpeeds getPIDChassisSpeedsToPose(Pose2d targetPose) {
         Pose2d currentPose = drivetrain.getFixedPoseByLatency(ROBOT_POSE_LATENCY);
         double xSpeed = X_PID_CONTROLLER.calculate(currentPose.getX(), targetPose.getX());
         double ySpeed = Y_PID_CONTROLLER.calculate(currentPose.getY(), targetPose.getY());
@@ -94,7 +94,7 @@ public class AutonomousContainer {
     }
 
     public void updatePathFollowingOutput(ChassisSpeeds feedForwardSpeeds) {
-        ChassisSpeeds calculatePID = pathRelativeSpeedsByPID(pathplannerTargetPose);
+        ChassisSpeeds calculatePID = getPIDChassisSpeedsToPose(pathplannerTargetPose);
         ChassisSpeeds scaledFeedForward = getScaledFFSpeeds(feedForwardSpeeds);
         ChassisSpeeds output = calculatePID.plus(scaledFeedForward);
         drivetrain.drive(
@@ -119,9 +119,9 @@ public class AutonomousContainer {
 
     private void PIDtoPose(Pose2d targetPose) {
         drivetrain.drive(
-                pathRelativeSpeedsByPID(targetPose).vxMetersPerSecond,
-                pathRelativeSpeedsByPID(targetPose).vyMetersPerSecond,
-                pathRelativeSpeedsByPID(targetPose).omegaRadiansPerSecond,
+                getPIDChassisSpeedsToPose(targetPose).vxMetersPerSecond,
+                getPIDChassisSpeedsToPose(targetPose).vyMetersPerSecond,
+                getPIDChassisSpeedsToPose(targetPose).omegaRadiansPerSecond,
                 false,
                 TIME_STEP,
                 true
