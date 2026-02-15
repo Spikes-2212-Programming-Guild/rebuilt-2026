@@ -37,8 +37,10 @@ public class AutonomousContainer {
 
     private static final PIDController X_PID_CONTROLLER =
             setPIDSettings(SwerveModuleHolder.getFrontLeft().getDriveMotorPIDSettings());
+
     private static final PIDController Y_PID_CONTROLLER =
             setPIDSettings(SwerveModuleHolder.getFrontLeft().getTurnMotorPIDSettings());
+
     private static final ProfiledPIDController ROTATIONAL_PID_CONTROLLER =
             new ProfiledPIDController(-1, -1, -1, pathConstraints);
 
