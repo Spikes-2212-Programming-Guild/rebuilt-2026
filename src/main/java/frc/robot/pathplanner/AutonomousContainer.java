@@ -114,7 +114,8 @@ public class AutonomousContainer {
                 () -> pidToPose(targetPose),
                 (interrupted) -> {
                 },
-                () -> drivetrain.atPose(targetPose)).withTimeout(PID_TO_POSE_TIMEOUT);
+                () -> drivetrain.atPose(targetPose)
+        ).withTimeout(PID_TO_POSE_TIMEOUT);
     }
 
     private void pidToPose(Pose2d targetPose) {
