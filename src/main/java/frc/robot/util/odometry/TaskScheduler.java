@@ -2,11 +2,11 @@ package frc.robot.util.odometry;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 
-public class PeriodicTaskScheduler {
+public class TaskScheduler {
 
     private final TimedRobot timedRobot;
 
-    public PeriodicTaskScheduler(TimedRobot timedRobot) {
+    public TaskScheduler(TimedRobot timedRobot) {
         this.timedRobot = timedRobot;
     }
 
