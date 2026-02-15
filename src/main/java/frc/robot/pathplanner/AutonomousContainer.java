@@ -29,7 +29,7 @@ public class AutonomousContainer {
 
     private static final RobotConfig CONFIG = getRobotConfig();
 
-    private static final RootNamespace namespace = new RootNamespace("autonomous");
+    private static final RootNamespace NAMESPACE = new RootNamespace("autonomous");
     private final SendableChooser<Command> autoChooser;
 
     private static final TrapezoidProfile.Constraints pathConstraints =
@@ -148,7 +148,7 @@ public class AutonomousContainer {
     }
 
     private void getAutoPath() {
-        namespace.putData("auto chooser", autoChooser);
+        NAMESPACE.putData("auto chooser", autoChooser);
     }
 
     public Command getSelectedAutoCommand() {
