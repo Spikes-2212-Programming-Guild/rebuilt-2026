@@ -6,7 +6,7 @@ public class PeriodicTaskScheduler {
 
     private final TimedRobot timedRobot;
 
-    public static PeriodicTaskScheduler instance;
+    private static PeriodicTaskScheduler instance;
 
     //should be in robot init
 
