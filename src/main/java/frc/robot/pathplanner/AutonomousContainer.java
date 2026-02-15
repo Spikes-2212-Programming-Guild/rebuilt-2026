@@ -65,7 +65,7 @@ public class AutonomousContainer {
                 drivetrain::getEstimatedPose,
                 drivetrain::resetPose,
                 drivetrain::getSpeeds,
-                this::updatePathFollowingOutput,
+                this::updatePathDriveSpeeds,
                 new PPHolonomicDriveController(
                         new PIDConstants(0, 0, 0),
                         new PIDConstants(0, 0, 0)),
@@ -93,7 +93,7 @@ public class AutonomousContainer {
         return feedForwardSpeeds.times(FF_SCALER);
     }
 
-    public void updatePathFollowingOutput(ChassisSpeeds feedForwardSpeeds) {
+    public void updatePathDriveSpeeds(ChassisSpeeds feedForwardSpeeds) {
         ChassisSpeeds calculatePID = getPIDChassisSpeedsToPose(pathplannerTargetPose);
         ChassisSpeeds scaledFeedForward = getScaledFFSpeeds(feedForwardSpeeds);
         ChassisSpeeds output = calculatePID.plus(scaledFeedForward);
