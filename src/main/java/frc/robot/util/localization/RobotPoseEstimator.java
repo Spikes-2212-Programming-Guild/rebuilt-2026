@@ -31,9 +31,11 @@ public class RobotPoseEstimator {
 
     private final SwerveDrivePoseEstimator poseEstimator;
     private final OdometryBuffer odometryBuffer;
+    private final Supplier<OdometryMeasurement> odometryMeasurement;
 
     public RobotPoseEstimator(SwerveDriveKinematics kinematics, Rotation2d gyroYaw,
-                              SwerveModulePosition[] modulePositions, Pose2d initRobotPose) {
+                              SwerveModulePosition[] modulePositions, Pose2d initRobotPose,
+                              Supplier<OdometryMeasurement> odometryMeasurement) {
 
         this.poseEstimator = new SwerveDrivePoseEstimator(
                 kinematics, gyroYaw, modulePositions, initRobotPose,
@@ -42,10 +44,10 @@ public class RobotPoseEstimator {
         );
 
         this.odometryBuffer = new OdometryBuffer();
+        this.odometryMeasurement = odometryMeasurement;
     }
 
-    public void setupOdometryUpdateLoop(TaskScheduler scheduler,
-                                        Supplier<OdometryMeasurement> odometryMeasurement) {
+    public void setupOdometryUpdateLoop(TaskScheduler scheduler) {
         scheduler.schedule(
                 () -> this.odometryBuffer.addMeasurement(odometryMeasurement.get()),
                 ODOMETRY_UPDATE_RATE.get(), 0

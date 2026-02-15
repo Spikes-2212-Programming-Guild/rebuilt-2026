@@ -12,9 +12,13 @@ public class Robot extends TimedRobot {
 
     private final TaskScheduler taskScheduler = new TaskScheduler(this);
 
+    private void registerTasks() {
+        //@TODO call drivetrain.getInstance().getPoseEstimator().setupOdometryUpdateLoop(taskScheduler)
+    }
+
     @Override
     public void robotInit() {
-
+        registerTasks();
     }
 
     @Override
