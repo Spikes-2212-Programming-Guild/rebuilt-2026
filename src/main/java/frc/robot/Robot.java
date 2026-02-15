@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.pathplanner.AutonomousContainer;
 import frc.robot.subsystems.swerve.DrivetrainRebuilt;
+import frc.robot.util.odometry.PeriodicTaskScheduler;
 
 public class Robot extends TimedRobot {
 
@@ -17,7 +18,7 @@ public class Robot extends TimedRobot {
     Command autoCommand;
     @Override
     public void robotInit() {
-
+        PeriodicTaskScheduler.init(Robot.this);
     }
 
     @Override
