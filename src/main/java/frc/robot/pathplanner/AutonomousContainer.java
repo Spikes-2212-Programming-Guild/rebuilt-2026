@@ -131,7 +131,7 @@ public class AutonomousContainer {
         );
     }
 
-    public Command correctPathToPose(Pose2d targetPose, PathConstraints constraints) {
+    public Command driveRobotByPathToPose(Pose2d targetPose, PathConstraints constraints) {
         return new SequentialCommandGroup(
                 AutoBuilder.pathfindToPose(targetPose, constraints),
                 getPIDtoPoseCommand(targetPose)
