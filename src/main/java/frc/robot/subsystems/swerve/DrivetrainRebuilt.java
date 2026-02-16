@@ -3,8 +3,6 @@ package frc.robot.subsystems.swerve;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -64,7 +62,7 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
                 getKinematics(), getAngle(), swerveModulePositions, new Pose2d(),
                 () -> new OdometryMeasurement(Timer.getFPGATimestamp(), getAngle(), swerveModulePositions),
                 PeriodicTaskScheduler.getInstance()
-            );
+        );
 
         setStates(currentStates,
                 new SwerveModuleState[]{

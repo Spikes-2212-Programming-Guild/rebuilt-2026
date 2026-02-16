@@ -109,7 +109,7 @@ public class AutonomousContainer {
         );
     }
 
-    private Command PIDtoTargetPose(Pose2d targetPose) {
+    private Command getPIDtoPoseCommand(Pose2d targetPose) {
         return new FunctionalCommand(
                 () -> {
                 },
@@ -134,7 +134,7 @@ public class AutonomousContainer {
     public Command correctPathToPose(Pose2d targetPose, PathConstraints constraints) {
         return new SequentialCommandGroup(
                 AutoBuilder.pathfindToPose(targetPose, constraints),
-                PIDtoTargetPose(targetPose)
+                getPIDtoPoseCommand(targetPose)
         );
     }
 
