@@ -59,7 +59,7 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
         this.gyro = gyro;
         this.swerveModulePositions = getModulePositions();
         this.poseEstimator = new RobotPoseEstimator(
-                getKinematics(), getAngle(), swerveModulePositions, new Pose2d(),
+                getKinematics(), getAngle(), getModulePositions(), new Pose2d(),
                 () -> new OdometryMeasurement(Timer.getFPGATimestamp(), getAngle(), swerveModulePositions),
                 PeriodicTaskScheduler.getInstance()
         );
