@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.com.spikes2212.control.PIDSettings;
+import frc.robot.com.spikes2212.dashboard.AutoChooser;
 import frc.robot.com.spikes2212.dashboard.RootNamespace;
 import frc.robot.subsystems.swerve.DrivetrainRebuilt;
 import frc.robot.subsystems.swerve.SwerveModuleHolder;
@@ -30,7 +31,9 @@ public class AutonomousContainer {
     private static final RobotConfig CONFIG = getRobotConfig();
 
     private static final RootNamespace NAMESPACE = new RootNamespace("autonomous");
-    private final SendableChooser<Command> autoChooser;
+
+    //@TODO add the named commands and the paths to the branch
+    //@TODO add autoChooser
 
     private static final TrapezoidProfile.Constraints pathConstraints =
             new TrapezoidProfile.Constraints(CONFIG.moduleConfig.maxDriveVelocityMPS, -1);
@@ -55,11 +58,9 @@ public class AutonomousContainer {
 
     public AutonomousContainer(DrivetrainRebuilt drivetrain) {
         this.drivetrain = drivetrain;
-        autoChooser = AutoBuilder.buildAutoChooser();
         PathfindingCommand.warmupCommand().schedule();
         configureAutoBuilder();
         updateTargetPose();
-        configureDashboard();
     }
 
     private void configureAutoBuilder() {
@@ -149,14 +150,6 @@ public class AutonomousContainer {
     private boolean shouldMirror() {
         return DriverStation.getAlliance().map(alliance -> alliance == DriverStation.Alliance.Blue).
                 orElse(false);
-    }
-
-    private void configureDashboard() {
-        NAMESPACE.putData("auto chooser", autoChooser);
-    }
-
-    public Command getSelectedAutoCommand() {
-        return autoChooser.getSelected();
     }
 
     private static RobotConfig getRobotConfig() {
