@@ -6,6 +6,7 @@ import frc.robot.subsystems.*;
 import java.util.function.Supplier;
 
 public class CollectAndPass extends ParallelCommandGroup {
+
     public CollectAndPass(Collection collection, CollectionMovement collectionMovement,
                           Hood hood, Shooter shooter, Supplier<Double> shootingSpeed,
                           SpinningMagazine spinningMagazine, Transport transport) {
