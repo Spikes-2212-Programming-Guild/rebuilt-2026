@@ -1,4 +1,4 @@
-package frc.robot.commands.advancecommands;
+package frc.robot.commands.advancedcommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.difficultcommands.CollectionToPosition;
