@@ -11,7 +11,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
 
     public enum HoodPose {
 
-        MAX_ANGLE(-1), MIN_ANGLE(0);
+        MAX_ANGLE(-1), MIN_ANGLE(0), PASS_ANGLE(40);
 
         public final double neededAngle;
 
@@ -90,9 +90,7 @@ public class Hood extends SmartMotorControllerGenericSubsystem {
             lastMoveTime = currentTime;
             lastPositionDegrees = currentPos;
             isStalled = false;
-        }
-
-        else {
+        } else {
             if (currentTime - lastMoveTime > STALL_TIME_LIMIT) {
                 isStalled = true;
             }
