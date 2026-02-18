@@ -83,7 +83,6 @@ public class SwerveModuleRebuilt extends SwerveModule {
                 withSupplyCurrentLimit(DRIVE_CURRENT_LIMIT_AMP));
         turnMotor.applyConfiguration(turnMotor.getSparkConfiguration().
                 secondaryCurrentLimit(TURN_CURRENT_LIMIT_AMP));
-
     }
 
     @Override
