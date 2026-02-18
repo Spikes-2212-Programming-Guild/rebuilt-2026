@@ -13,7 +13,6 @@ import frc.robot.subsystems.Transport;
 
 import java.util.function.Supplier;
 
-
 public class Pass extends SequentialCommandGroup {
 
     public Pass(SpinningMagazine spinningMagazine, Hood hood, Transport transport, Shooter shooter, Hood.HoodPose pose, Supplier<Double> shootingSpeed) {
