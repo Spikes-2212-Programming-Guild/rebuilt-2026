@@ -11,9 +11,8 @@ public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
     private static final String NAMESPACE_NAME = "collection movement";
     private static final double DEGREES_IN_ROTATION = 360;
     private static final double CURRENT_LIMIT_AMP = 40;
+    private static final double OPEN_POSE = -1;
     private static final double CLOSE_POSE = -1;
-    public static final double OPEN_POSE = -1;
-
     private final DutyCycleEncoder absoluteEncoder;
     private final TalonFXWrapper talonFX;
 
@@ -45,10 +44,9 @@ public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
     public void resetRelativeEncoder() {
         talonFX.setPosition(getAbsDegrees());
     }
-
     @Override
     public boolean canMove(double speed) {
-        return (getAbsDegrees() > OPEN_POSE && speed < 0) ||
+        return ( getAbsDegrees() > OPEN_POSE && speed < 0) ||
                 (getAbsDegrees() < CLOSE_POSE && speed > 0);
     }
 
