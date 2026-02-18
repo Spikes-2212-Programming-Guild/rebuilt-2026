@@ -5,6 +5,7 @@ import frc.robot.subsystems.*;
 
 import java.util.function.Supplier;
 
+// @TODO update AdvanceIntake when its approved
 public class CollectAndPass extends ParallelCommandGroup {
 
     public CollectAndPass(Collection collection, CollectionMovement collectionMovement,
