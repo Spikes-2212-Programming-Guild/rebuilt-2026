@@ -11,9 +11,10 @@ import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveModule;
 
 public class Drivetrain extends SwerveDrivetrain {
 
+    public static final double MAX_POSSIBLE_VELOCITY = -1;
+
     private static final String NAMESPACE_NAME = "swerve drivetrain";
 
-    public static final double MAX_POSSIBLE_VELOCITY = -1;
     private static final double TRACK_WIDTH = 0.545;
     private static final double TRACK_LENGTH = 0.545;
 
