@@ -30,7 +30,7 @@ public class AutonomousContainer {
     private static final RobotConfig CONFIG = getRobotConfig();
 
     //@TODO add the named commands and the paths to the branch
-    //@TODO fill the getPath method with an actual pathName
+    //@TODO get the path constraints values after calibration
     //@TODO add the paths once added in to the autoChooser
 
     public static final AutoChooser autoChooser = null;
@@ -59,9 +59,7 @@ public class AutonomousContainer {
 
     public AutonomousContainer(DrivetrainRebuilt drivetrain) {
         this.drivetrain = drivetrain;
-        PathPlannerPath dummyPath = getPath("");
-        pathConstraints = dummyPath.getGlobalConstraints();
-
+        this.pathConstraints = new PathConstraints(0,0,0,0);
         PathfindingCommand.warmupCommand().schedule();
         configureAutoBuilder();
         setupTargetPoseUpdateLoop();
