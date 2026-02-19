@@ -6,6 +6,7 @@ import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -34,8 +35,6 @@ public class AutonomousContainer {
 
     public static final AutoChooser autoChooser = null;
 
-    private static final PathConstraints pathConstraints = null;
-
     private static final TrapezoidProfile.Constraints constraints =
             new TrapezoidProfile.Constraints(CONFIG.moduleConfig.maxDriveVelocityMPS, -1);
 
@@ -53,12 +52,16 @@ public class AutonomousContainer {
     private static final double TIME_STEP = 0.02;
     private static final double PID_TO_POSE_TIMEOUT = -1;
 
+    private final PathConstraints pathConstraints;
     private final DrivetrainRebuilt drivetrain;
 
     private Pose2d pathplannerTargetPose;
 
     public AutonomousContainer(DrivetrainRebuilt drivetrain) {
         this.drivetrain = drivetrain;
+        PathPlannerPath dummyPath = getPath("");
+        pathConstraints = dummyPath.getGlobalConstraints();
+
         PathfindingCommand.warmupCommand().schedule();
         configureAutoBuilder();
         setupTargetPoseUpdateLoop();
@@ -150,13 +153,21 @@ public class AutonomousContainer {
         return new PIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
     }
 
-    public static Command getSelectedCommand(){
+    public static Command getSelectedCommand() {
         return autoChooser.getSelected();
     }
 
     private boolean shouldMirror() {
         return DriverStation.getAlliance().map(alliance -> alliance == DriverStation.Alliance.Blue).
                 orElse(false);
+    }
+
+    private static PathPlannerPath getPath(String pathName) {
+        try{
+            return PathPlannerPath.fromPathFile(pathName);
+        } catch(IOException | ParseException e){
+            throw new RuntimeException(e);
+        }
     }
 
     private static RobotConfig getRobotConfig() {
