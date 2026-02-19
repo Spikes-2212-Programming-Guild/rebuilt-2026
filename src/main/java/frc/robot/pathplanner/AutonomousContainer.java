@@ -120,10 +120,11 @@ public class AutonomousContainer {
     }
 
     private void driveWithPIDtoPose(Pose2d targetPose) {
+        ChassisSpeeds speeds = getPIDChassisSpeedsToPose(targetPose);
         drivetrain.drive(
-                getPIDChassisSpeedsToPose(targetPose).vxMetersPerSecond,
-                getPIDChassisSpeedsToPose(targetPose).vyMetersPerSecond,
-                getPIDChassisSpeedsToPose(targetPose).omegaRadiansPerSecond,
+                speeds.vxMetersPerSecond,
+                speeds.vyMetersPerSecond,
+                speeds.omegaRadiansPerSecond,
                 false,
                 TIME_STEP,
                 true
