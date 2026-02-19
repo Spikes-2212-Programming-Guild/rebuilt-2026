@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.com.spikes2212.control.PIDSettings;
 import frc.robot.com.spikes2212.dashboard.AutoChooser;
-import frc.robot.com.spikes2212.dashboard.RootNamespace;
 import frc.robot.subsystems.swerve.DrivetrainRebuilt;
 import frc.robot.subsystems.swerve.SwerveModuleHolder;
 import org.json.simple.parser.ParseException;
@@ -60,7 +59,7 @@ public class AutonomousContainer {
         this.drivetrain = drivetrain;
         PathfindingCommand.warmupCommand().schedule();
         configureAutoBuilder();
-        updateTargetPose();
+        setUpdatedTargetPose();
     }
 
     private void configureAutoBuilder() {
@@ -140,7 +139,7 @@ public class AutonomousContainer {
         );
     }
 
-    private void updateTargetPose() {
+    private void setUpdatedTargetPose() {
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> pathplannerTargetPose = pose);
     }
 
