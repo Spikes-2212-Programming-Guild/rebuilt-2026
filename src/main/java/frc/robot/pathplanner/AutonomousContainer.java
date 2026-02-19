@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.com.spikes2212.control.PIDSettings;
+import frc.robot.com.spikes2212.dashboard.AutoChooser;
 import frc.robot.com.spikes2212.dashboard.RootNamespace;
 import frc.robot.subsystems.swerve.DrivetrainRebuilt;
 import frc.robot.subsystems.swerve.SwerveModuleHolder;
@@ -28,12 +29,13 @@ public class AutonomousContainer {
 
     private static final RobotConfig CONFIG = getRobotConfig();
 
-    private static final RootNamespace NAMESPACE = new RootNamespace("autonomous");
-
     //@TODO add the named commands and the paths to the branch
-    //@TODO add autoChooser
 
-    private static final TrapezoidProfile.Constraints pathConstraints =
+    public static final AutoChooser autoChooser = null;
+
+    private static final PathConstraints pathConstraints = null;
+
+    private static final TrapezoidProfile.Constraints constraints =
             new TrapezoidProfile.Constraints(CONFIG.moduleConfig.maxDriveVelocityMPS, -1);
 
     private static final PIDController X_PID_CONTROLLER =
@@ -43,7 +45,7 @@ public class AutonomousContainer {
             setPIDControllerBySettings(SwerveModuleHolder.getFrontLeft().getTurnMotorPIDSettings());
 
     private static final ProfiledPIDController ROTATIONAL_PID_CONTROLLER =
-            new ProfiledPIDController(-1, -1, -1, pathConstraints);
+            new ProfiledPIDController(-1, -1, -1, constraints);
 
     private static final double ROBOT_POSE_LATENCY = -1;
     private static final double FF_SCALER = -1;
@@ -131,9 +133,9 @@ public class AutonomousContainer {
         );
     }
 
-    public Command driveRobotByPathToPose(Pose2d targetPose, PathConstraints constraints) {
+    public Command driveRobotByPathToPose(Pose2d targetPose) {
         return new SequentialCommandGroup(
-                AutoBuilder.pathfindToPose(targetPose, constraints),
+                AutoBuilder.pathfindToPose(targetPose, pathConstraints),
                 getPIDtoPoseCommand(targetPose)
         );
     }
