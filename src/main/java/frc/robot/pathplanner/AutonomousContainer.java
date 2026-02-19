@@ -95,7 +95,7 @@ public class AutonomousContainer {
         return feedForwardSpeeds.times(FF_SCALER);
     }
 
-    public void updatePathDriveSpeeds(ChassisSpeeds feedForwardSpeeds) {
+    private void updatePathDriveSpeeds(ChassisSpeeds feedForwardSpeeds) {
         ChassisSpeeds calculatePID = getPIDChassisSpeedsToPose(pathplannerTargetPose);
         ChassisSpeeds scaledFeedForward = getScaledFFSpeeds(feedForwardSpeeds);
         ChassisSpeeds output = calculatePID.plus(scaledFeedForward);
