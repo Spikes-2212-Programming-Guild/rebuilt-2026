@@ -37,8 +37,6 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
 
     private final RobotPoseEstimator poseEstimator;
 
-    private final SwerveModulePosition[] swerveModulePositions;
-
     private static DrivetrainRebuilt instance;
 
     public static DrivetrainRebuilt getInstance() {
@@ -57,10 +55,9 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
         super(namespaceName, frontLeftModule, frontRightModule, backLeftModule, backRightModule, drivetrainTrackWidth,
                 drivetrainTrackLength, maxPossibleVelocity);
         this.gyro = gyro;
-        this.swerveModulePositions = getModulePositions();
         this.poseEstimator = new RobotPoseEstimator(
                 getKinematics(), getAngle(), getModulePositions(), new Pose2d(),
-                () -> new OdometryMeasurement(Timer.getFPGATimestamp(), getAngle(), swerveModulePositions),
+                () -> new OdometryMeasurement(Timer.getFPGATimestamp(), getAngle(), getModulePositions()),
                 PeriodicTaskScheduler.getInstance()
         );
 
