@@ -59,7 +59,8 @@ public class AutonomousContainer {
         this.drivetrain = drivetrain;
         PathfindingCommand.warmupCommand().schedule();
         configureAutoBuilder();
-        setUpdatedTargetPose();
+        setupTargetPoseUpdateLoop();
+        getSelectedCommand();
     }
 
     private void configureAutoBuilder() {
@@ -139,7 +140,7 @@ public class AutonomousContainer {
         );
     }
 
-    private void setUpdatedTargetPose() {
+    private void setupTargetPoseUpdateLoop() {
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> pathplannerTargetPose = pose);
     }
 
