@@ -30,7 +30,7 @@ public class AutonomousContainer {
     private static final RobotConfig CONFIG = getRobotConfig();
 
     //@TODO add the named commands and the paths to the branch
-    //@TODO find a way to get the path constraints for the thing
+    //@TODO fill the getPath method with an actual pathName
     //@TODO add the paths once added in to the autoChooser
 
     public static final AutoChooser autoChooser = null;
