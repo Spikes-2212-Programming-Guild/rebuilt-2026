@@ -163,9 +163,9 @@ public class AutonomousContainer {
     }
 
     private static PathPlannerPath getPath(String pathName) {
-        try{
+        try {
             return PathPlannerPath.fromPathFile(pathName);
-        } catch(IOException | ParseException e){
+        } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
     }
