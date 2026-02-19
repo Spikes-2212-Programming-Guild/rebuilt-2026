@@ -112,14 +112,14 @@ public class AutonomousContainer {
         return new FunctionalCommand(
                 () -> {
                 },
-                () -> pidToPose(targetPose),
+                () -> driveWithPIDtoPose(targetPose),
                 (interrupted) -> {
                 },
                 () -> drivetrain.atPose(targetPose)
         ).withTimeout(PID_TO_POSE_TIMEOUT);
     }
 
-    private void pidToPose(Pose2d targetPose) {
+    private void driveWithPIDtoPose(Pose2d targetPose) {
         drivetrain.drive(
                 getPIDChassisSpeedsToPose(targetPose).vxMetersPerSecond,
                 getPIDChassisSpeedsToPose(targetPose).vyMetersPerSecond,
