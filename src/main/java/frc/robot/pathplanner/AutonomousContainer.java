@@ -37,10 +37,10 @@ public class AutonomousContainer {
             new TrapezoidProfile.Constraints(CONFIG.moduleConfig.maxDriveVelocityMPS, -1);
 
     private static final PIDController X_PID_CONTROLLER =
-            setPIDSettings(SwerveModuleHolder.getFrontLeft().getDriveMotorPIDSettings());
+            setPIDControllerBySettings(SwerveModuleHolder.getFrontLeft().getDriveMotorPIDSettings());
 
     private static final PIDController Y_PID_CONTROLLER =
-            setPIDSettings(SwerveModuleHolder.getFrontLeft().getTurnMotorPIDSettings());
+            setPIDControllerBySettings(SwerveModuleHolder.getFrontLeft().getTurnMotorPIDSettings());
 
     private static final ProfiledPIDController ROTATIONAL_PID_CONTROLLER =
             new ProfiledPIDController(-1, -1, -1, pathConstraints);
@@ -142,7 +142,7 @@ public class AutonomousContainer {
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> pathplannerTargetPose = pose);
     }
 
-    private static PIDController setPIDSettings(PIDSettings pidSettings) {
+    private static PIDController setPIDControllerBySettings(PIDSettings pidSettings) {
         return new PIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
     }
 
