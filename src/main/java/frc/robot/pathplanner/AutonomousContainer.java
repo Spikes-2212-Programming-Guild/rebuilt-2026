@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.com.spikes2212.control.PIDSettings;
 import frc.robot.com.spikes2212.dashboard.AutoChooser;
+import frc.robot.com.spikes2212.dashboard.RootNamespace;
 import frc.robot.subsystems.swerve.DrivetrainRebuilt;
 import frc.robot.subsystems.swerve.SwerveModuleHolder;
 import org.json.simple.parser.ParseException;
@@ -29,6 +30,8 @@ public class AutonomousContainer {
 
     private static final RobotConfig CONFIG = getRobotConfig();
 
+    private static final RootNamespace namespace = new RootNamespace("autonomous");
+
     //@TODO add the named commands and the paths to the branch
     //@TODO get the path constraints values after calibration
     //@TODO add the paths once added in to the autoChooser
@@ -38,29 +41,32 @@ public class AutonomousContainer {
     private static final TrapezoidProfile.Constraints constraints =
             new TrapezoidProfile.Constraints(CONFIG.moduleConfig.maxDriveVelocityMPS, -1);
 
-    private static final PIDController X_PID_CONTROLLER =
-            buildPIDControllerFromSettings(SwerveModuleHolder.getFrontLeft().getDriveMotorPIDSettings());
-
-    private static final PIDController Y_PID_CONTROLLER =
-            buildPIDControllerFromSettings(SwerveModuleHolder.getFrontLeft().getTurnMotorPIDSettings());
-
-    private static final ProfiledPIDController ROTATIONAL_PID_CONTROLLER =
-            new ProfiledPIDController(-1, -1, -1, constraints);
-
     private static final double ROBOT_POSE_LATENCY = -1;
     private static final double FF_SCALER = -1;
     private static final double TIME_STEP = 0.02;
     private static final double PID_TO_POSE_TIMEOUT = -1;
 
+    private final PIDController X_PID_CONTROLLER;
+    private final PIDController Y_PID_CONTROLLER;
+    private final ProfiledPIDController ROTATIONAL_PID_CONTROLLER;
+
     private final PathConstraints pathConstraints;
     private final DrivetrainRebuilt drivetrain;
+
+    private PIDSettings X_CONTROLLER_PID_SETTINGS;
+    private PIDSettings Y_CONTROLLER_PID_SETTINGS;
+    private PIDSettings ROTATIONAL_CONTROLLER_PID_SETTINGS;
 
     private Pose2d pathplannerTargetPose;
 
     public AutonomousContainer(DrivetrainRebuilt drivetrain) {
         this.drivetrain = drivetrain;
         this.pathConstraints = new PathConstraints(0,0,0,0);
+        X_PID_CONTROLLER = buildPIDControllerFromSettings(X_CONTROLLER_PID_SETTINGS);
+        Y_PID_CONTROLLER = buildPIDControllerFromSettings(Y_CONTROLLER_PID_SETTINGS);
+        ROTATIONAL_PID_CONTROLLER = buildProfiledPIDControllerFromSettings(ROTATIONAL_CONTROLLER_PID_SETTINGS);
         PathfindingCommand.warmupCommand().schedule();
+        configureDashboard();
         configureAutoBuilder();
         setupTargetPoseUpdateLoop();
         getSelectedCommand();
@@ -148,10 +154,13 @@ public class AutonomousContainer {
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> pathplannerTargetPose = pose);
     }
 
-    private static PIDController buildPIDControllerFromSettings(PIDSettings pidSettings) {
+    private PIDController buildPIDControllerFromSettings(PIDSettings pidSettings) {
         return new PIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
     }
 
+    private ProfiledPIDController buildProfiledPIDControllerFromSettings(PIDSettings pidSettings){
+        return new ProfiledPIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD(), constraints);
+    }
     public static Command getSelectedCommand() {
         return autoChooser.getSelected();
     }
@@ -167,6 +176,14 @@ public class AutonomousContainer {
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void configureDashboard(){
+        namespace.putData("auto chooser", autoChooser);
+        X_CONTROLLER_PID_SETTINGS = namespace.addPIDNamespace("x pid settings", PIDSettings.EMPTY_PID_SETTINGS);
+        Y_CONTROLLER_PID_SETTINGS = namespace.addPIDNamespace("y pid settings", PIDSettings.EMPTY_PID_SETTINGS);
+        ROTATIONAL_CONTROLLER_PID_SETTINGS =
+                namespace.addPIDNamespace("rotational pid settings", PIDSettings.EMPTY_PID_SETTINGS);
     }
 
     private static RobotConfig getRobotConfig() {
