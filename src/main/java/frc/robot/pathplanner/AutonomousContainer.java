@@ -120,7 +120,8 @@ public class AutonomousContainer {
                 () -> driveWithPIDtoPose(targetPose),
                 (interrupted) -> {
                 },
-                () -> drivetrain.atPose(targetPose)
+                () -> drivetrain.atPose(targetPose),
+                drivetrain
         ).withTimeout(PID_TO_POSE_TIMEOUT);
     }
 
