@@ -13,9 +13,10 @@ import frc.robot.util.odometry.PeriodicTaskScheduler;
 
 public class Robot extends TimedRobot {
 
-    private final DrivetrainRebuilt drivetrain = DrivetrainRebuilt.getInstance();
+    public final DrivetrainRebuilt drivetrain = DrivetrainRebuilt.getInstance();
     private final AutonomousContainer autonomousContainer = new AutonomousContainer(drivetrain);
     Command autoCommand;
+
     @Override
     public void robotInit() {
         PeriodicTaskScheduler.init(Robot.this);
