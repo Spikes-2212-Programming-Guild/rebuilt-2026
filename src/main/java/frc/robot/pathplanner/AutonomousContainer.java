@@ -165,6 +165,14 @@ public class AutonomousContainer {
         return autoChooser.getSelected();
     }
 
+    private void configureDashboard(){
+        namespace.putData("auto chooser", autoChooser);
+        X_CONTROLLER_PID_SETTINGS = namespace.addPIDNamespace("x pid settings", PIDSettings.EMPTY_PID_SETTINGS);
+        Y_CONTROLLER_PID_SETTINGS = namespace.addPIDNamespace("y pid settings", PIDSettings.EMPTY_PID_SETTINGS);
+        ROTATIONAL_CONTROLLER_PID_SETTINGS =
+                namespace.addPIDNamespace("rotational pid settings", PIDSettings.EMPTY_PID_SETTINGS);
+    }
+
     private boolean shouldMirror() {
         return DriverStation.getAlliance().map(alliance -> alliance == DriverStation.Alliance.Blue).
                 orElse(false);
@@ -176,14 +184,6 @@ public class AutonomousContainer {
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void configureDashboard(){
-        namespace.putData("auto chooser", autoChooser);
-        X_CONTROLLER_PID_SETTINGS = namespace.addPIDNamespace("x pid settings", PIDSettings.EMPTY_PID_SETTINGS);
-        Y_CONTROLLER_PID_SETTINGS = namespace.addPIDNamespace("y pid settings", PIDSettings.EMPTY_PID_SETTINGS);
-        ROTATIONAL_CONTROLLER_PID_SETTINGS =
-                namespace.addPIDNamespace("rotational pid settings", PIDSettings.EMPTY_PID_SETTINGS);
     }
 
     private static RobotConfig getRobotConfig() {
