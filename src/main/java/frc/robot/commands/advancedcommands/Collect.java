@@ -6,9 +6,9 @@ import frc.robot.commands.simplecommands.SimpleIntake;
 import frc.robot.subsystems.Collection;
 import frc.robot.subsystems.CollectionMovement;
 
-public class AdvanceIntake extends SequentialCommandGroup {
+public class Collect extends SequentialCommandGroup {
 
-    public AdvanceIntake(Collection collection, CollectionMovement collectionMovement) {
+    public Collect(Collection collection, CollectionMovement collectionMovement) {
         addCommands(
                 new CollectionToPosition(collectionMovement, () -> CollectionMovement.OPEN_POSE),
                 new SimpleIntake(collection)
