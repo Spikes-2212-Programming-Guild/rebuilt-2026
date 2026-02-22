@@ -8,10 +8,11 @@ import frc.robot.RobotMap;
 
 public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
 
+    public static final double OPEN_POSE = -1;
+
     private static final String NAMESPACE_NAME = "collection movement";
     private static final double DEGREES_IN_ROTATION = 360;
     private static final double CURRENT_LIMIT_AMP = 40;
-    private static final double OPEN_POSE = -1;
     private static final double CLOSE_POSE = -1;
     private final DutyCycleEncoder absoluteEncoder;
     private final TalonFXWrapper talonFX;
