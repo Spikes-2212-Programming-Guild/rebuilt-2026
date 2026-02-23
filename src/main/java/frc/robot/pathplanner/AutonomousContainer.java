@@ -21,7 +21,6 @@ import frc.robot.com.spikes2212.control.PIDSettings;
 import frc.robot.com.spikes2212.dashboard.AutoChooser;
 import frc.robot.com.spikes2212.dashboard.RootNamespace;
 import frc.robot.subsystems.swerve.DrivetrainRebuilt;
-import frc.robot.subsystems.swerve.SwerveModuleHolder;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -46,25 +45,25 @@ public class AutonomousContainer {
     private static final double TIME_STEP = 0.02;
     private static final double PID_TO_POSE_TIMEOUT = -1;
 
-    private final PIDController X_PID_CONTROLLER;
-    private final PIDController Y_PID_CONTROLLER;
-    private final ProfiledPIDController ROTATIONAL_PID_CONTROLLER;
+    private final PIDController xPidController;
+    private final PIDController yPidController;
+    private final ProfiledPIDController rotationalPidController;
 
     private final PathConstraints pathConstraints;
     private final DrivetrainRebuilt drivetrain;
 
-    private PIDSettings X_CONTROLLER_PID_SETTINGS;
-    private PIDSettings Y_CONTROLLER_PID_SETTINGS;
-    private PIDSettings ROTATIONAL_CONTROLLER_PID_SETTINGS;
+    private PIDSettings xControllerPidSettings;
+    private PIDSettings yControllerPidSettings;
+    private PIDSettings rotationalControllerPidSettings;
 
     private Pose2d pathplannerTargetPose;
 
     public AutonomousContainer(DrivetrainRebuilt drivetrain) {
         this.drivetrain = drivetrain;
         this.pathConstraints = new PathConstraints(0,0,0,0);
-        X_PID_CONTROLLER = buildPIDControllerFromSettings(X_CONTROLLER_PID_SETTINGS);
-        Y_PID_CONTROLLER = buildPIDControllerFromSettings(Y_CONTROLLER_PID_SETTINGS);
-        ROTATIONAL_PID_CONTROLLER = buildProfiledPIDControllerFromSettings(ROTATIONAL_CONTROLLER_PID_SETTINGS);
+        xPidController = buildPIDControllerFromSettings(xControllerPidSettings);
+        yPidController = buildPIDControllerFromSettings(yControllerPidSettings);
+        rotationalPidController = buildProfiledPIDControllerFromSettings(rotationalControllerPidSettings);
         PathfindingCommand.warmupCommand().schedule();
         configureDashboard();
         configureAutoBuilder();
@@ -89,14 +88,14 @@ public class AutonomousContainer {
 
     private ChassisSpeeds getPIDChassisSpeedsToPose(Pose2d targetPose) {
         Pose2d currentPose = drivetrain.getFixedPoseByLatency(ROBOT_POSE_LATENCY);
-        double xSpeed = X_PID_CONTROLLER.calculate(currentPose.getX(), targetPose.getX());
-        double ySpeed = Y_PID_CONTROLLER.calculate(currentPose.getY(), targetPose.getY());
-        double rotationalSpeed = ROTATIONAL_PID_CONTROLLER.calculate(drivetrain.getAngle().getRadians(),
+        double xSpeed = xPidController.calculate(currentPose.getX(), targetPose.getX());
+        double ySpeed = yPidController.calculate(currentPose.getY(), targetPose.getY());
+        double rotationalSpeed = rotationalPidController.calculate(drivetrain.getAngle().getRadians(),
                 targetPose.getRotation().getRadians());
 
-        xSpeed = X_PID_CONTROLLER.atSetpoint() ? 0 : xSpeed;
-        ySpeed = Y_PID_CONTROLLER.atSetpoint() ? 0 : ySpeed;
-        rotationalSpeed = ROTATIONAL_PID_CONTROLLER.atSetpoint() ? 0 : rotationalSpeed;
+        xSpeed = xPidController.atSetpoint() ? 0 : xSpeed;
+        ySpeed = yPidController.atSetpoint() ? 0 : ySpeed;
+        rotationalSpeed = rotationalPidController.atSetpoint() ? 0 : rotationalSpeed;
 
         return new ChassisSpeeds(xSpeed, ySpeed, rotationalSpeed);
     }
@@ -167,9 +166,9 @@ public class AutonomousContainer {
 
     private void configureDashboard(){
         namespace.putData("auto chooser", autoChooser);
-        X_CONTROLLER_PID_SETTINGS = namespace.addPIDNamespace("x pid settings", PIDSettings.EMPTY_PID_SETTINGS);
-        Y_CONTROLLER_PID_SETTINGS = namespace.addPIDNamespace("y pid settings", PIDSettings.EMPTY_PID_SETTINGS);
-        ROTATIONAL_CONTROLLER_PID_SETTINGS =
+        xControllerPidSettings = namespace.addPIDNamespace("x pid settings", PIDSettings.EMPTY_PID_SETTINGS);
+        yControllerPidSettings = namespace.addPIDNamespace("y pid settings", PIDSettings.EMPTY_PID_SETTINGS);
+        rotationalControllerPidSettings =
                 namespace.addPIDNamespace("rotational pid settings", PIDSettings.EMPTY_PID_SETTINGS);
     }
 
