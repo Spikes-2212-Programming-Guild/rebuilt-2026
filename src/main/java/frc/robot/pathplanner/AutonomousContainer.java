@@ -52,9 +52,12 @@ public class AutonomousContainer {
     private final PathConstraints pathConstraints;
     private final DrivetrainRebuilt drivetrain;
 
-    private PIDSettings xControllerPidSettings;
-    private PIDSettings yControllerPidSettings;
-    private PIDSettings rotationalControllerPidSettings;
+    private PIDSettings xControllerPidSettings =
+            namespace.addPIDNamespace("x controller settings", PIDSettings.EMPTY_PID_SETTINGS);
+    private PIDSettings yControllerPidSettings =
+            namespace.addPIDNamespace("y controller settings", PIDSettings.EMPTY_PID_SETTINGS);
+    private PIDSettings rotationalControllerPidSettings =
+            namespace.addPIDNamespace("rotational controller settings", PIDSettings.EMPTY_PID_SETTINGS);
 
     private Pose2d pathplannerTargetPose;
 
@@ -166,10 +169,6 @@ public class AutonomousContainer {
 
     private void configureDashboard(){
         namespace.putData("auto chooser", autoChooser);
-        xControllerPidSettings = namespace.addPIDNamespace("x pid settings", PIDSettings.EMPTY_PID_SETTINGS);
-        yControllerPidSettings = namespace.addPIDNamespace("y pid settings", PIDSettings.EMPTY_PID_SETTINGS);
-        rotationalControllerPidSettings =
-                namespace.addPIDNamespace("rotational pid settings", PIDSettings.EMPTY_PID_SETTINGS);
     }
 
     public boolean shouldMirror() {
