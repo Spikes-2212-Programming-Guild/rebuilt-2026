@@ -173,8 +173,8 @@ public class AutonomousContainer {
                 namespace.addPIDNamespace("rotational pid settings", PIDSettings.EMPTY_PID_SETTINGS);
     }
 
-    private boolean shouldMirror() {
-        return DriverStation.getAlliance().map(alliance -> alliance == DriverStation.Alliance.Blue).
+    public boolean shouldMirror() {
+        return DriverStation.getAlliance().map(alliance -> alliance == DriverStation.Alliance.Red).
                 orElse(false);
     }
 
