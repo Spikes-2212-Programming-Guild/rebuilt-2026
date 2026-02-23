@@ -33,9 +33,9 @@ public class AutonomousContainer {
 
     //@TODO add the named commands and the paths to the branch
     //@TODO get the path constraints values after calibration
-    //@TODO add the paths once added in to the autoChooser
+    //@TODO add the paths from pathplanner
 
-    public static final AutoChooser autoChooser = null;
+    public static AutoChooser autoChooser = null;
 
     private static final TrapezoidProfile.Constraints constraints =
             new TrapezoidProfile.Constraints(CONFIG.moduleConfig.maxDriveVelocityMPS, -1);
@@ -58,6 +58,7 @@ public class AutonomousContainer {
 
     private final PathConstraints pathConstraints;
     private final DrivetrainRebuilt drivetrain;
+    private final AutonomousPaths autoPaths;
 
     private Pose2d pathplannerTargetPose;
 
@@ -67,6 +68,7 @@ public class AutonomousContainer {
         xPidController = buildPIDControllerFromSettings(X_CONTROLLER_SETTINGS);
         yPidController = buildPIDControllerFromSettings(Y_CONTROLLER_SETTINGS);
         rotationalPidController = buildProfiledPIDControllerFromSettings(ROTATIONAL_CONTROLLER_SETTINGS);
+        autoPaths = AutonomousPaths.getInstance(this);
         PathfindingCommand.warmupCommand().schedule();
         configureDashboard();
         configureAutoBuilder();
@@ -165,6 +167,19 @@ public class AutonomousContainer {
     }
     public static Command getSelectedCommand() {
         return autoChooser.getSelected();
+    }
+
+    private void configureAutoChooser(){
+        autoChooser = new AutoChooser(
+                namespace,
+                autoPaths.getShootAndToss(),
+                autoPaths.getIntakeFromDepot(),
+                autoPaths.getIntakeFromFeeder(),
+                autoPaths.getIntakeAndShoot(),
+                autoPaths.getJustToss(),
+                autoPaths.getJustShoot(),
+                autoPaths.getGoAndWait()
+        );
     }
 
     private void configureDashboard(){
