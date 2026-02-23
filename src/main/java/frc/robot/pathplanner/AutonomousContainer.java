@@ -176,14 +176,6 @@ public class AutonomousContainer {
                 orElse(false);
     }
 
-    private static PathPlannerPath loadPathFromFile(String pathName) {
-        try {
-            return PathPlannerPath.fromPathFile(pathName);
-        } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private static RobotConfig getRobotConfig() {
         try {
             return RobotConfig.fromGUISettings();
