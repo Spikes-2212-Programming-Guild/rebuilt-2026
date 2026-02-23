@@ -74,6 +74,7 @@ public class AutonomousContainer {
         configureAutoBuilder();
         setupTargetPoseUpdateLoop();
         getSelectedCommand();
+        configureAutoChooser();
     }
 
     private void configureAutoBuilder() {
