@@ -45,6 +45,13 @@ public class AutonomousContainer {
     private static final double TIME_STEP = 0.02;
     private static final double PID_TO_POSE_TIMEOUT = -1;
 
+    private static final PIDSettings X_CONTROLLER_SETTINGS =
+            namespace.addPIDNamespace("x controller settings", PIDSettings.EMPTY_PID_SETTINGS);
+    private static final PIDSettings Y_CONTROLLER_SETTINGS =
+            namespace.addPIDNamespace("y controller settings", PIDSettings.EMPTY_PID_SETTINGS);
+    private static final PIDSettings ROTATIONAL_CONTROLLER_SETTINGS =
+            namespace.addPIDNamespace("rotational controller settings", PIDSettings.EMPTY_PID_SETTINGS);
+
     private final PIDController xPidController;
     private final PIDController yPidController;
     private final ProfiledPIDController rotationalPidController;
@@ -52,21 +59,14 @@ public class AutonomousContainer {
     private final PathConstraints pathConstraints;
     private final DrivetrainRebuilt drivetrain;
 
-    private PIDSettings xControllerPidSettings =
-            namespace.addPIDNamespace("x controller settings", PIDSettings.EMPTY_PID_SETTINGS);
-    private PIDSettings yControllerPidSettings =
-            namespace.addPIDNamespace("y controller settings", PIDSettings.EMPTY_PID_SETTINGS);
-    private PIDSettings rotationalControllerPidSettings =
-            namespace.addPIDNamespace("rotational controller settings", PIDSettings.EMPTY_PID_SETTINGS);
-
     private Pose2d pathplannerTargetPose;
 
     public AutonomousContainer(DrivetrainRebuilt drivetrain) {
         this.drivetrain = drivetrain;
         this.pathConstraints = new PathConstraints(0,0,0,0);
-        xPidController = buildPIDControllerFromSettings(xControllerPidSettings);
-        yPidController = buildPIDControllerFromSettings(yControllerPidSettings);
-        rotationalPidController = buildProfiledPIDControllerFromSettings(rotationalControllerPidSettings);
+        xPidController = buildPIDControllerFromSettings(X_CONTROLLER_SETTINGS);
+        yPidController = buildPIDControllerFromSettings(Y_CONTROLLER_SETTINGS);
+        rotationalPidController = buildProfiledPIDControllerFromSettings(ROTATIONAL_CONTROLLER_SETTINGS);
         PathfindingCommand.warmupCommand().schedule();
         configureDashboard();
         configureAutoBuilder();
