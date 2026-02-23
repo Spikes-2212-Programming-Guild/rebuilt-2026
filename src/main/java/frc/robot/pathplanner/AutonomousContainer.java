@@ -35,8 +35,6 @@ public class AutonomousContainer {
     //@TODO get the path constraints values after calibration
     //@TODO add the paths from pathplanner
 
-    public static AutoChooser autoChooser = null;
-
     private static final TrapezoidProfile.Constraints constraints =
             new TrapezoidProfile.Constraints(CONFIG.moduleConfig.maxDriveVelocityMPS, -1);
 
@@ -51,6 +49,8 @@ public class AutonomousContainer {
             namespace.addPIDNamespace("y controller settings", PIDSettings.EMPTY_PID_SETTINGS);
     private static final PIDSettings ROTATIONAL_CONTROLLER_SETTINGS =
             namespace.addPIDNamespace("rotational controller settings", PIDSettings.EMPTY_PID_SETTINGS);
+
+    private static AutoChooser autoChooser;
 
     private final PIDController xPidController;
     private final PIDController yPidController;
