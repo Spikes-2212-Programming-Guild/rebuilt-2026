@@ -162,11 +162,11 @@ public class AutonomousContainer {
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> pathplannerTargetPose = pose);
     }
 
-    private PIDController buildPIDControllerFromSettings(PIDSettings pidSettings) {
+    private static PIDController buildPIDControllerFromSettings(PIDSettings pidSettings) {
         return new PIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
     }
 
-    private ProfiledPIDController buildProfiledPIDControllerFromSettings(PIDSettings pidSettings){
+    private static ProfiledPIDController buildProfiledPIDControllerFromSettings(PIDSettings pidSettings){
         return new ProfiledPIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD(), constraints);
     }
 
