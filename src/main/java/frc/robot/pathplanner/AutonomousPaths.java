@@ -24,7 +24,6 @@ public class AutonomousPaths {
     }
 
     private AutonomousPaths(AutonomousContainer container) {
-
         shootAndToss = new PathPlannerAuto("Shoot and Toss", container.shouldMirror());
         intakeFromDepot = new PathPlannerAuto("Intake from depot", container.shouldMirror());
         intakeFromFeeder = new PathPlannerAuto("Intake from feeder", container.shouldMirror());
