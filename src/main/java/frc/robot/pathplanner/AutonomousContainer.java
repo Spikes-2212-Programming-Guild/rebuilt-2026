@@ -30,7 +30,7 @@ public class AutonomousContainer {
 
     private static final RootNamespace NAMESPACE = new RootNamespace("autonomous");
 
-    //@TODO add the named commands and the paths to the branch
+    //@TODO register the named commands
     //@TODO get the path constraints values after calibration
     //@TODO add the paths from pathplanner
 
