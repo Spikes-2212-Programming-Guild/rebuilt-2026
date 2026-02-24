@@ -70,11 +70,9 @@ public class AutonomousContainer {
         rotationalPidController = buildProfiledPIDControllerFromSettings(ROTATIONAL_CONTROLLER_SETTINGS);
 
         PathfindingCommand.warmupCommand().schedule();
-        configureDashboard();
         configureAutoBuilder();
         setupTargetPoseUpdateLoop();
-        getSelectedCommand();
-        configureAutoChooser();
+        configureDashboard();
     }
 
     private void configureAutoBuilder() {
