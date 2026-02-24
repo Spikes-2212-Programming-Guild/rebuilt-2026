@@ -15,21 +15,23 @@ public class AutonomousPaths {
     private final Command justShoot;
     private final Command goAndWait;
 
-    public static AutonomousPaths getInstance(AutonomousContainer container) {
+    private static final boolean shouldMirror = AutonomousContainer.shouldMirror();
+
+    public static AutonomousPaths getInstance() {
         if (instance == null) {
-            instance = new AutonomousPaths(container);
+            instance = new AutonomousPaths();
         }
         return instance;
     }
 
-    private AutonomousPaths(AutonomousContainer container) {
-        shootAndToss = new PathPlannerAuto("Shoot and Toss", container.shouldMirror());
-        intakeFromDepot = new PathPlannerAuto("Intake from depot", container.shouldMirror());
-        intakeFromFeeder = new PathPlannerAuto("Intake from feeder", container.shouldMirror());
-        intakeAndShoot = new PathPlannerAuto("Intake and Shoot", container.shouldMirror());
-        justToss = new PathPlannerAuto("Just toss", container.shouldMirror());
-        justShoot = new PathPlannerAuto("Just shoot", container.shouldMirror());
-        goAndWait = new PathPlannerAuto("Go and wait", container.shouldMirror());
+    private AutonomousPaths() {
+        shootAndToss = new PathPlannerAuto("Shoot and Toss", shouldMirror);
+        intakeFromDepot = new PathPlannerAuto("Intake from depot", shouldMirror);
+        intakeFromFeeder = new PathPlannerAuto("Intake from feeder", shouldMirror);
+        intakeAndShoot = new PathPlannerAuto("Intake and Shoot", shouldMirror);
+        justToss = new PathPlannerAuto("Just toss", shouldMirror);
+        justShoot = new PathPlannerAuto("Just shoot", shouldMirror);
+        goAndWait = new PathPlannerAuto("Go and wait", shouldMirror);
     }
 
     public Command getShootAndToss() {

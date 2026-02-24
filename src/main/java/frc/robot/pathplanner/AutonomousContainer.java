@@ -49,7 +49,7 @@ public class AutonomousContainer {
     private static final PIDSettings ROTATIONAL_CONTROLLER_SETTINGS =
             NAMESPACE.addPIDNamespace("rotational controller settings", PIDSettings.EMPTY_PID_SETTINGS);
 
-    private static AutoChooser autoChooser;
+    private static final AutoChooser autoChooser = AutonomousContainer.configureAutoChooser();
 
     private final PIDController xPidController;
     private final PIDController yPidController;
@@ -57,7 +57,7 @@ public class AutonomousContainer {
 
     private final PathConstraints pathConstraints;
     private final DrivetrainRebuilt drivetrain;
-    private final AutonomousPaths autoPaths;
+    private static final AutonomousPaths autoPaths = AutonomousPaths.getInstance();
 
     private Pose2d pathplannerTargetPose;
 
@@ -68,8 +68,6 @@ public class AutonomousContainer {
         xPidController = buildPIDControllerFromSettings(X_CONTROLLER_SETTINGS);
         yPidController = buildPIDControllerFromSettings(Y_CONTROLLER_SETTINGS);
         rotationalPidController = buildProfiledPIDControllerFromSettings(ROTATIONAL_CONTROLLER_SETTINGS);
-
-        autoPaths = AutonomousPaths.getInstance(this);
 
         PathfindingCommand.warmupCommand().schedule();
         configureDashboard();
@@ -169,8 +167,8 @@ public class AutonomousContainer {
         return new ProfiledPIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD(), constraints);
     }
 
-    private void configureAutoChooser(){
-        autoChooser = new AutoChooser(
+    private static AutoChooser configureAutoChooser(){
+        return new AutoChooser(
                 NAMESPACE,
                 autoPaths.getShootAndToss(),
                 autoPaths.getIntakeFromDepot(),
