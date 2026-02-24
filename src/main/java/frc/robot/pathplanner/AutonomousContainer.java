@@ -63,7 +63,7 @@ public class AutonomousContainer {
 
     public AutonomousContainer(DrivetrainRebuilt drivetrain) {
         this.drivetrain = drivetrain;
-        this.pathConstraints = new PathConstraints(0,0,0,0);
+        this.pathConstraints = new PathConstraints(-1,-1,-1,-1);
 
         xPidController = buildPIDControllerFromSettings(X_CONTROLLER_SETTINGS);
         yPidController = buildPIDControllerFromSettings(Y_CONTROLLER_SETTINGS);
