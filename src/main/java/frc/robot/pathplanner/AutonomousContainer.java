@@ -65,10 +65,13 @@ public class AutonomousContainer {
     public AutonomousContainer(DrivetrainRebuilt drivetrain) {
         this.drivetrain = drivetrain;
         this.pathConstraints = new PathConstraints(0,0,0,0);
+
         xPidController = buildPIDControllerFromSettings(X_CONTROLLER_SETTINGS);
         yPidController = buildPIDControllerFromSettings(Y_CONTROLLER_SETTINGS);
         rotationalPidController = buildProfiledPIDControllerFromSettings(ROTATIONAL_CONTROLLER_SETTINGS);
+
         autoPaths = AutonomousPaths.getInstance(this);
+
         PathfindingCommand.warmupCommand().schedule();
         configureDashboard();
         configureAutoBuilder();
@@ -166,10 +169,6 @@ public class AutonomousContainer {
     private ProfiledPIDController buildProfiledPIDControllerFromSettings(PIDSettings pidSettings){
         return new ProfiledPIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD(), constraints);
     }
-    public static Command getSelectedCommand() {
-        return autoChooser.getSelected();
-    }
-
     private void configureAutoChooser(){
         autoChooser = new AutoChooser(
                 namespace,
@@ -181,6 +180,10 @@ public class AutonomousContainer {
                 autoPaths.getJustShoot(),
                 autoPaths.getGoAndWait()
         );
+    }
+
+    public static Command getSelectedCommand() {
+        return autoChooser.getSelected();
     }
 
     private void configureDashboard(){
