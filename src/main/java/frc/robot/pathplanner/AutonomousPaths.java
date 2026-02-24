@@ -34,11 +34,31 @@ public class AutonomousPaths {
         goAndWait = new PathPlannerAuto("Go and wait", container.shouldMirror());
     }
 
-    public Command getShootAndToss() { return shootAndToss; }
-    public Command getIntakeFromDepot() { return intakeFromDepot; }
-    public Command getIntakeFromFeeder() { return intakeFromFeeder; }
-    public Command getIntakeAndShoot() { return intakeAndShoot; }
-    public Command getJustToss() { return justToss; }
-    public Command getJustShoot() { return justShoot; }
-    public Command getGoAndWait() { return goAndWait; }
+    public Command getShootAndToss() {
+        return shootAndToss;
+    }
+
+    public Command getIntakeFromDepot() {
+        return intakeFromDepot;
+    }
+
+    public Command getIntakeFromFeeder() {
+        return intakeFromFeeder;
+    }
+
+    public Command getIntakeAndShoot() {
+        return intakeAndShoot;
+    }
+
+    public Command getJustToss() {
+        return justToss;
+    }
+
+    public Command getJustShoot() {
+        return justShoot;
+    }
+
+    public Command getGoAndWait() {
+        return goAndWait;
+    }
 }
