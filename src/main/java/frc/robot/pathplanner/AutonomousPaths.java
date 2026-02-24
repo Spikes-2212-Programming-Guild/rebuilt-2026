@@ -8,8 +8,6 @@ public class AutonomousPaths {
 
     private static AutonomousPaths instance;
 
-    private final AutonomousContainer autonomousContainer;
-
     private final Command shootAndToss;
     private final Command intakeFromDepot;
     private final Command intakeFromFeeder;
@@ -26,7 +24,6 @@ public class AutonomousPaths {
     }
 
     private AutonomousPaths(AutonomousContainer container) {
-        this.autonomousContainer = container;
 
         shootAndToss = new PathPlannerAuto("Shoot and Toss", container.shouldMirror());
         intakeFromDepot = new PathPlannerAuto("Intake from depot", container.shouldMirror());
