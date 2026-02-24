@@ -169,6 +169,7 @@ public class AutonomousContainer {
     private ProfiledPIDController buildProfiledPIDControllerFromSettings(PIDSettings pidSettings){
         return new ProfiledPIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD(), constraints);
     }
+    
     private void configureAutoChooser(){
         autoChooser = new AutoChooser(
                 namespace,
@@ -182,12 +183,12 @@ public class AutonomousContainer {
         );
     }
 
-    public static Command getSelectedCommand() {
-        return autoChooser.getSelected();
-    }
-
     private void configureDashboard(){
         namespace.putData("auto chooser", autoChooser);
+    }
+
+    public static Command getSelectedCommand() {
+        return autoChooser.getSelected();
     }
 
     public boolean shouldMirror() {
