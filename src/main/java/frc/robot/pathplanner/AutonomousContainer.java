@@ -90,7 +90,7 @@ public class AutonomousContainer {
                         new PIDConstants(0, 0, 0),
                         new PIDConstants(0, 0, 0)),
                 CONFIG,
-                this::shouldMirror,
+                AutonomousContainer::shouldMirror,
                 drivetrain
         );
     }
@@ -191,7 +191,7 @@ public class AutonomousContainer {
         return autoChooser.getSelected();
     }
 
-    public boolean shouldMirror() {
+    public static boolean shouldMirror() {
         return DriverStation.getAlliance().map(alliance -> alliance == DriverStation.Alliance.Red).
                 orElse(false);
     }
