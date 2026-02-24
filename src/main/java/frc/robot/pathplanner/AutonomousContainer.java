@@ -6,7 +6,6 @@ import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -29,7 +28,7 @@ public class AutonomousContainer {
 
     private static final RobotConfig CONFIG = getRobotConfig();
 
-    private static final RootNamespace namespace = new RootNamespace("autonomous");
+    private static final RootNamespace NAMESPACE = new RootNamespace("autonomous");
 
     //@TODO add the named commands and the paths to the branch
     //@TODO get the path constraints values after calibration
@@ -44,11 +43,11 @@ public class AutonomousContainer {
     private static final double PID_TO_POSE_TIMEOUT = -1;
 
     private static final PIDSettings X_CONTROLLER_SETTINGS =
-            namespace.addPIDNamespace("x controller settings", PIDSettings.EMPTY_PID_SETTINGS);
+            NAMESPACE.addPIDNamespace("x controller settings", PIDSettings.EMPTY_PID_SETTINGS);
     private static final PIDSettings Y_CONTROLLER_SETTINGS =
-            namespace.addPIDNamespace("y controller settings", PIDSettings.EMPTY_PID_SETTINGS);
+            NAMESPACE.addPIDNamespace("y controller settings", PIDSettings.EMPTY_PID_SETTINGS);
     private static final PIDSettings ROTATIONAL_CONTROLLER_SETTINGS =
-            namespace.addPIDNamespace("rotational controller settings", PIDSettings.EMPTY_PID_SETTINGS);
+            NAMESPACE.addPIDNamespace("rotational controller settings", PIDSettings.EMPTY_PID_SETTINGS);
 
     private static AutoChooser autoChooser;
 
@@ -172,7 +171,7 @@ public class AutonomousContainer {
 
     private void configureAutoChooser(){
         autoChooser = new AutoChooser(
-                namespace,
+                NAMESPACE,
                 autoPaths.getShootAndToss(),
                 autoPaths.getIntakeFromDepot(),
                 autoPaths.getIntakeFromFeeder(),
@@ -184,7 +183,7 @@ public class AutonomousContainer {
     }
 
     private void configureDashboard(){
-        namespace.putData("auto chooser", autoChooser);
+        NAMESPACE.putData("auto chooser", autoChooser);
     }
 
     public static Command getSelectedCommand() {
