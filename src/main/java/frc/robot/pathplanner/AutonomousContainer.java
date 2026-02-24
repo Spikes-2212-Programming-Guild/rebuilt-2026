@@ -169,7 +169,7 @@ public class AutonomousContainer {
     private ProfiledPIDController buildProfiledPIDControllerFromSettings(PIDSettings pidSettings){
         return new ProfiledPIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD(), constraints);
     }
-    
+
     private void configureAutoChooser(){
         autoChooser = new AutoChooser(
                 namespace,
