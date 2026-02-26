@@ -1,4 +1,4 @@
-package frc.robot.commands.difficultcommands;
+package frc.robot.commands.difficultcommands.swerve;
 
 import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveDrivetrain;
 import frc.robot.com.spikes2212.command.drivetrains.swerve.commands.DriveSwerve;
