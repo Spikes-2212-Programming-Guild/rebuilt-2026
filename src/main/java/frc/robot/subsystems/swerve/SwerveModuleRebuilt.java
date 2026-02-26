@@ -83,7 +83,6 @@ public class SwerveModuleRebuilt extends SwerveModule {
                 withSupplyCurrentLimit(DRIVE_CURRENT_LIMIT_AMP));
         turnMotor.applyConfiguration(turnMotor.getSparkConfiguration().
                 secondaryCurrentLimit(TURN_CURRENT_LIMIT_AMP));
-
     }
 
     @Override
@@ -97,7 +96,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
         },
                 () -> setTargetState(
                         new SwerveModuleState(0, Rotation2d.fromDegrees(0)),
-                        DrivetrainRebuilt.MAX_POSSIBLE_VELOCITY, false
+                        Drivetrain.MAX_POSSIBLE_VELOCITY, false
                 ), b -> stop(), () -> false));
 
         namespace.putCommand("drive at 0.2", new RunCommand(() -> driveMotor.set(0.2)) {

@@ -7,11 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.difficultcommands.Drive;
-import frc.robot.subsystems.swerve.DrivetrainRebuilt;
+import frc.robot.subsystems.swerve.Drivetrain;
 
 public class Robot extends TimedRobot {
 
-    DrivetrainRebuilt drivetrain = DrivetrainRebuilt.getInstance();
+    Drivetrain drivetrain = Drivetrain.getInstance();
     @Override
     public void robotInit() {
 

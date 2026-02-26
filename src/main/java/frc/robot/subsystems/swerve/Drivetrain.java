@@ -9,11 +9,12 @@ import frc.robot.RobotMap;
 import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveDrivetrain;
 import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveModule;
 
-public class DrivetrainRebuilt extends SwerveDrivetrain {
+public class Drivetrain extends SwerveDrivetrain {
+
+    public static final double MAX_POSSIBLE_VELOCITY = -1;
 
     private static final String NAMESPACE_NAME = "swerve drivetrain";
 
-    public static final double MAX_POSSIBLE_VELOCITY = -1;
     private static final double TRACK_WIDTH = 0.545;
     private static final double TRACK_LENGTH = 0.545;
 
@@ -24,11 +25,11 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
 
     private final Pigeon2 gyro;
 
-    private static DrivetrainRebuilt instance;
+    private static Drivetrain instance;
 
-    public static DrivetrainRebuilt getInstance() {
+    public static Drivetrain getInstance() {
         if (instance == null) {
-            instance = new DrivetrainRebuilt(NAMESPACE_NAME, SwerveModuleHolder.getFrontLeft(),
+            instance = new Drivetrain(NAMESPACE_NAME, SwerveModuleHolder.getFrontLeft(),
                     SwerveModuleHolder.getFrontRight(), SwerveModuleHolder.getBackLeft(),
                     SwerveModuleHolder.getBackRight(), TRACK_WIDTH, TRACK_LENGTH, MAX_POSSIBLE_VELOCITY,
                     new Pigeon2(RobotMap.CAN.SWERVE_GYRO_PIGEON_2_ID));
@@ -36,10 +37,10 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
         return instance;
     }
 
-    private DrivetrainRebuilt(String namespaceName, SwerveModule frontLeftModule, SwerveModule frontRightModule,
-                              SwerveModule backLeftModule, SwerveModule backRightModule,
-                              double drivetrainTrackWidth, double drivetrainTrackLength,
-                              double maxPossibleVelocity, Pigeon2 gyro) {
+    private Drivetrain(String namespaceName, SwerveModule frontLeftModule, SwerveModule frontRightModule,
+                       SwerveModule backLeftModule, SwerveModule backRightModule,
+                       double drivetrainTrackWidth, double drivetrainTrackLength,
+                       double maxPossibleVelocity, Pigeon2 gyro) {
         super(namespaceName, frontLeftModule, frontRightModule, backLeftModule, backRightModule,
                 drivetrainTrackWidth, drivetrainTrackLength, maxPossibleVelocity);
         this.gyro = gyro;
@@ -96,6 +97,6 @@ public class DrivetrainRebuilt extends SwerveDrivetrain {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("gyro", getAngle()::getDegrees);
+        namespace.putNumber("gyro", () -> this.getAngle().getDegrees());
     }
 }
