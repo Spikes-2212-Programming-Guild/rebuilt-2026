@@ -20,7 +20,7 @@ public class Collection extends MotoredGenericSubsystem {
     public static Collection getInstance() {
         if (instance == null) {
             instance = new Collection(NAMESPACE_NAME,
-                    SparkWrapper.createSparkMax(RobotMap.CAN.COLLECTION_SPARK_MAX_ID,
+                    SparkWrapper.createSparkMax(RobotMap.CAN.COLLECTION_TALON_FX_ID,
                             SparkLowLevel.MotorType.kBrushless));
         }
         return instance;

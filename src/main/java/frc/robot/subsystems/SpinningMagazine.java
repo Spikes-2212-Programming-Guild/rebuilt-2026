@@ -1,9 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
-import com.revrobotics.spark.SparkLowLevel;
 import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
-import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import frc.robot.RobotMap;
 
@@ -22,7 +20,7 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
     public static SpinningMagazine getInstance() {
         if (instance == null) {
             instance = new SpinningMagazine(NAMESPACE_NAME,
-                    new TalonFXWrapper(RobotMap.CAN.SPINNING_MAGAZINE_SPARK_MAX_ID));
+                    new TalonFXWrapper(RobotMap.CAN.SPINNING_MAGAZINE_TALON_FX_ID));
         }
         return instance;
     }
