@@ -14,7 +14,7 @@ import frc.robot.com.spikes2212.util.UnifiedControlMode;
  * @author Gil Ein-Gar
  * @see SwerveDrivetrain
  */
-public class TurnModules extends Command {
+public class RotateModulesWithPID extends Command {
 
     private final SwerveDrivetrain drivetrain;
 
@@ -31,7 +31,7 @@ public class TurnModules extends Command {
     private double lastTimeNotOnTarget;
 
     /**
-     * Constructs a new {@link TurnModules} command that moves the given {@link SwerveDrivetrain}
+     * Constructs a new {@link RotateModulesWithPID} command that moves the given {@link SwerveDrivetrain}
      * {@link SwerveModule}s to a certain angle.
      *
      * @param drivetrain             the swerve drivetrain this command operates on
@@ -40,9 +40,9 @@ public class TurnModules extends Command {
      * @param backLeftDesiredAngle   the desired back left angle
      * @param backRightDesiredAngle  the desired back right angle
      */
-    public TurnModules(SwerveDrivetrain drivetrain, Rotation2d frontLeftDesiredAngle,
-                       Rotation2d frontRightDesiredAngle, Rotation2d backLeftDesiredAngle,
-                       Rotation2d backRightDesiredAngle) {
+    public RotateModulesWithPID(SwerveDrivetrain drivetrain, Rotation2d frontLeftDesiredAngle,
+                                Rotation2d frontRightDesiredAngle, Rotation2d backLeftDesiredAngle,
+                                Rotation2d backRightDesiredAngle) {
         addRequirements(drivetrain);
         this.drivetrain = drivetrain;
         this.frontLeftDesiredAngle = frontLeftDesiredAngle;
@@ -58,7 +58,7 @@ public class TurnModules extends Command {
     }
 
     /**
-     * Constructs a new {@link TurnModules} command that moves the given {@link SwerveDrivetrain}
+     * Constructs a new {@link RotateModulesWithPID} command that moves the given {@link SwerveDrivetrain}
      * {@link SwerveModule}s to a certain degree.
      *
      * @param drivetrain             the swerve drivetrain this command operates on
@@ -67,8 +67,8 @@ public class TurnModules extends Command {
      * @param backLeftDesiredAngle   the desired back left degree
      * @param backRightDesiredAngle  the desired back right degree
      */
-    public TurnModules(SwerveDrivetrain drivetrain, double frontLeftDesiredAngle, double frontRightDesiredAngle,
-                       double backLeftDesiredAngle, double backRightDesiredAngle) {
+    public RotateModulesWithPID(SwerveDrivetrain drivetrain, double frontLeftDesiredAngle, double frontRightDesiredAngle,
+                                double backLeftDesiredAngle, double backRightDesiredAngle) {
         this(drivetrain, Rotation2d.fromDegrees(frontLeftDesiredAngle), Rotation2d.fromDegrees(frontRightDesiredAngle),
                 Rotation2d.fromDegrees(backLeftDesiredAngle), Rotation2d.fromDegrees(backRightDesiredAngle));
     }
