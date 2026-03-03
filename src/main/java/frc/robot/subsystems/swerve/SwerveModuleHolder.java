@@ -32,10 +32,10 @@ public class SwerveModuleHolder {
     private static final String BACK_LEFT_NAMESPACE_NAME = "back left";
     private static final String BACK_RIGHT_NAMESPACE_NAME = "back right";
 
-    private static final double FRONT_LEFT_OFFSET = -1;
-    private static final double FRONT_RIGHT_OFFSET = -1;
-    private static final double BACK_LEFT_OFFSET = -1;
-    private static final double BACK_RIGHT_OFFSET = -1;
+    private static final double FRONT_LEFT_OFFSET = -0.332;
+    private static final double FRONT_RIGHT_OFFSET = -0.423;
+    private static final double BACK_LEFT_OFFSET = -0.562;
+    private static final double BACK_RIGHT_OFFSET = -0.542;
 
     private static final PIDSettings drivePIDSettings = namespace.addPIDNamespace("drive",
             PIDSettings.EMPTY_PID_SETTINGS);
