@@ -22,8 +22,8 @@ public abstract class SwerveModule extends DashboardedSubsystem {
     private static final double DEGREES_TO_FLIP = 180;
     private static final double MAX_DISTANCE_TO_ROTATE = 90;
 
-    protected final SmartMotorController driveMotor;
-    protected final SmartMotorController turnMotor;
+    private final SmartMotorController driveMotor;
+    private final SmartMotorController turnMotor;
 
     protected final boolean driveMotorInverted;
     protected final boolean turnMotorInverted;
