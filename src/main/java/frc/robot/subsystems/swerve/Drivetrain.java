@@ -15,6 +15,8 @@ public class Drivetrain extends SwerveDrivetrain {
 
     private static final String NAMESPACE_NAME = "swerve drivetrain";
 
+    private static final CANBus CANIVORE = new CANBus("canivore");
+
     private static final double TRACK_WIDTH = 0.545;
     private static final double TRACK_LENGTH = 0.545;
 
@@ -32,7 +34,7 @@ public class Drivetrain extends SwerveDrivetrain {
             instance = new Drivetrain(NAMESPACE_NAME, SwerveModuleHolder.getFrontLeft(),
                     SwerveModuleHolder.getFrontRight(), SwerveModuleHolder.getBackLeft(),
                     SwerveModuleHolder.getBackRight(), TRACK_WIDTH, TRACK_LENGTH, MAX_POSSIBLE_VELOCITY,
-                    new Pigeon2(RobotMap.CAN.SWERVE_GYRO_PIGEON_2_ID));
+                    new Pigeon2(RobotMap.CAN.SWERVE_GYRO_PIGEON_2_ID, CANIVORE));
         }
         return instance;
     }
