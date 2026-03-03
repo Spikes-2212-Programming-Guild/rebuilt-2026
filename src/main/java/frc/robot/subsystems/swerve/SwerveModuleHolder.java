@@ -1,5 +1,6 @@
 package frc.robot.subsystems.swerve;
 
+import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.spark.SparkLowLevel;
 import frc.robot.RobotMap;
@@ -13,6 +14,8 @@ import frc.robot.com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 public class SwerveModuleHolder {
 
     private static final RootNamespace namespace = new RootNamespace("swerve module holder");
+
+    private final static CANBus CANIVORE = new CANBus("canivore");
 
     private static final boolean FRONT_LEFT_DRIVE_INVERTED = false;
     private static final boolean FRONT_RIGHT_DRIVE_INVERTED = false;
@@ -51,12 +54,12 @@ public class SwerveModuleHolder {
     public static SwerveModuleRebuilt getFrontLeft() {
         if (frontLeft == null) {
             frontLeft = new SwerveModuleRebuilt(FRONT_LEFT_NAMESPACE_NAME,
-                    new TalonFXWrapper(RobotMap.CAN.SWERVE_FRONT_LEFT_DRIVE_TALON_FX_ID),
+                    new TalonFXWrapper(RobotMap.CAN.SWERVE_FRONT_LEFT_DRIVE_TALON_FX_ID, CANIVORE),
                     SparkWrapper.createSparkMax(RobotMap.CAN.SWERVE_FRONT_LEFT_TURN_SPARK_MAX_ID,
                             SparkLowLevel.MotorType.kBrushless), FRONT_LEFT_DRIVE_INVERTED,
                     FRONT_LEFT_CANCODER_INVERTED, FRONT_LEFT_OFFSET, drivePIDSettings, turnPIDSettings,
                     driveFeedForwardSettings, turnFeedForwardSettings,
-                    new CANcoder(RobotMap.CAN.SWERVE_FRONT_LEFT_ABSOLUTE_ENCODER_ID));
+                    new CANcoder(RobotMap.CAN.SWERVE_FRONT_LEFT_ABSOLUTE_ENCODER_ID, CANIVORE));
         }
         return frontLeft;
     }
@@ -64,12 +67,12 @@ public class SwerveModuleHolder {
     public static SwerveModuleRebuilt getFrontRight() {
         if (frontRight == null) {
             frontRight = new SwerveModuleRebuilt(FRONT_RIGHT_NAMESPACE_NAME,
-                    new TalonFXWrapper(RobotMap.CAN.SWERVE_FRONT_RIGHT_DRIVE_TALON_FX_ID),
+                    new TalonFXWrapper(RobotMap.CAN.SWERVE_FRONT_RIGHT_DRIVE_TALON_FX_ID, CANIVORE),
                     SparkWrapper.createSparkMax(RobotMap.CAN.SWERVE_FRONT_RIGHT_TURN_SPARK_MAX_ID,
                             SparkLowLevel.MotorType.kBrushless), FRONT_RIGHT_DRIVE_INVERTED,
                     FRONT_RIGHT_CANCODER_INVERTED, FRONT_RIGHT_OFFSET, drivePIDSettings, turnPIDSettings,
                     driveFeedForwardSettings, turnFeedForwardSettings,
-                    new CANcoder(RobotMap.CAN.SWERVE_FRONT_RIGHT_ABSOLUTE_ENCODER_ID));
+                    new CANcoder(RobotMap.CAN.SWERVE_FRONT_RIGHT_ABSOLUTE_ENCODER_ID, CANIVORE));
         }
         return frontRight;
     }
@@ -77,12 +80,12 @@ public class SwerveModuleHolder {
     public static SwerveModuleRebuilt getBackLeft() {
         if (backLeft == null) {
             backLeft = new SwerveModuleRebuilt(BACK_LEFT_NAMESPACE_NAME,
-                    new TalonFXWrapper(RobotMap.CAN.SWERVE_BACK_LEFT_DRIVE_TALON_FX_ID),
+                    new TalonFXWrapper(RobotMap.CAN.SWERVE_BACK_LEFT_DRIVE_TALON_FX_ID, CANIVORE),
                     SparkWrapper.createSparkMax(RobotMap.CAN.SWERVE_BACK_LEFT_TURN_SPARK_MAX_ID,
                             SparkLowLevel.MotorType.kBrushless), BACK_LEFT_DRIVE_INVERTED,
                     BACK_LEFT_CANCODER_INVERTED, BACK_LEFT_OFFSET, drivePIDSettings, turnPIDSettings,
                     driveFeedForwardSettings, turnFeedForwardSettings,
-                    new CANcoder(RobotMap.CAN.SWERVE_BACK_LEFT_ABSOLUTE_ENCODER_ID));
+                    new CANcoder(RobotMap.CAN.SWERVE_BACK_LEFT_ABSOLUTE_ENCODER_ID, CANIVORE));
         }
         return backLeft;
     }
@@ -90,12 +93,12 @@ public class SwerveModuleHolder {
     public static SwerveModuleRebuilt getBackRight() {
         if (backRight == null) {
             backRight = new SwerveModuleRebuilt(BACK_RIGHT_NAMESPACE_NAME,
-                    new TalonFXWrapper(RobotMap.CAN.SWERVE_BACK_RIGHT_DRIVE_TALON_FX_ID),
+                    new TalonFXWrapper(RobotMap.CAN.SWERVE_BACK_RIGHT_DRIVE_TALON_FX_ID, CANIVORE),
                     SparkWrapper.createSparkMax(RobotMap.CAN.SWERVE_BACK_RIGHT_TURN_SPARK_MAX_ID,
                             SparkLowLevel.MotorType.kBrushless), BACK_RIGHT_DRIVE_INVERTED,
                     BACK_RIGHT_CANCODER_INVERTED, BACK_RIGHT_OFFSET, drivePIDSettings, turnPIDSettings,
                     driveFeedForwardSettings, turnFeedForwardSettings,
-                    new CANcoder(RobotMap.CAN.SWERVE_BACK_RIGHT_ABSOLUTE_ENCODER_ID));
+                    new CANcoder(RobotMap.CAN.SWERVE_BACK_RIGHT_ABSOLUTE_ENCODER_ID, CANIVORE));
         }
         return backRight;
     }
