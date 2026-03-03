@@ -50,6 +50,11 @@ public class SwerveModuleRebuilt extends SwerveModule {
         this.driveMotor = driveMotor;
         this.turnMotor = turnMotor;
         this.cancoder = cancoder;
+        driveMotor.setInverted(driveMotorInverted);
+        turnMotor.setInverted(!turnMotorInverted);
+        configureTurnController();
+        configureDriveController();
+        configureAbsoluteEncoder();
         setCurrents();
     }
 
