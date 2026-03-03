@@ -62,6 +62,7 @@ public class Drivetrain extends SwerveDrivetrain {
                         new SwerveModuleState(),
                         new SwerveModuleState()
                 });
+        configureDashboard();
     }
 
     @Override
