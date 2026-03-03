@@ -1,5 +1,6 @@
 package frc.robot.subsystems.swerve;
 
+import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
