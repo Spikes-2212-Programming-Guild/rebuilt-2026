@@ -42,7 +42,7 @@ public class TalonFXWrapper implements SmartMotorController {
      * @param deviceId the talon's id
      * @param canbus   the name of the canbus which the talon runs on
      */
-    public TalonFXWrapper(int deviceId, String canbus) {
+    public TalonFXWrapper(int deviceId, CANBus canbus) {
         talonFX = new TalonFX(deviceId, canbus);
         closedLoopConfig = new Slot0Configs();
         motorOutputConfigs = new MotorOutputConfigs();
@@ -54,9 +54,9 @@ public class TalonFXWrapper implements SmartMotorController {
      * @param deviceId the talon's id
      * @param canbus   the canbus which the talon runs on
      */
-    public TalonFXWrapper(int deviceId, CANBus canbus) {
-        this(deviceId, canbus.getName());
-    }
+//    public TalonFXWrapper(int deviceId, CANBus canbus) {
+//        this(deviceId, canbus.getName());
+//    }
 
     /**
      * Constructs a new instance of {@link TalonFXWrapper}.
@@ -64,7 +64,7 @@ public class TalonFXWrapper implements SmartMotorController {
      * @param deviceId the talon's id
      */
     public TalonFXWrapper(int deviceId) {
-        this(deviceId, "");
+        this(deviceId, new CANBus(""));
     }
 
     public void restoreFactoryDefaults() {
@@ -164,7 +164,7 @@ public class TalonFXWrapper implements SmartMotorController {
     }
 
     public void follow(TalonFX master, boolean invert) {
-        talonFX.setControl(new Follower(master.getDeviceID(), invert));
+//        talonFX.setControl(new Follower(master.getDeviceID(), invert));
     }
 
     public void follow(TalonFXWrapper master, boolean invert) {
