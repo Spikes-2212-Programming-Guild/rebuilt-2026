@@ -179,8 +179,8 @@ public class TalonFXTankDrivetrain extends TankDrivetrain implements SmartMotorC
         };
         leftMaster.setControl(leftRequest);
         rightMaster.setControl(rightRequest);
-        leftSlaves.forEach(s -> s.setControl(new Follower(leftMaster.getDeviceID(), false)));
-        rightSlaves.forEach(s -> s.setControl(new Follower(rightMaster.getDeviceID(), false)));
+//        leftSlaves.forEach(s -> s.setControl(new Follower(leftMaster.getDeviceID(), false)));
+//        rightSlaves.forEach(s -> s.setControl(new Follower(rightMaster.getDeviceID(), false)));
     }
 
     /**
