@@ -12,6 +12,7 @@ import frc.robot.subsystems.swerve.Drivetrain;
 public class Robot extends TimedRobot {
 
     Drivetrain drivetrain = Drivetrain.getInstance();
+
     @Override
     public void robotInit() {
 
@@ -49,7 +50,7 @@ public class Robot extends TimedRobot {
         drivetrain.resetRelativeEncoders();
 
         OI oi = new OI();
-        drivetrain.setDefaultCommand(new Drive(drivetrain, oi::getLeftX, oi::getLeftX, oi::getRightX, true,
+        drivetrain.setDefaultCommand(new Drive(drivetrain, oi::getLeftY, oi::getLeftX, oi::getRightX, true,
                 false));
     }
 
