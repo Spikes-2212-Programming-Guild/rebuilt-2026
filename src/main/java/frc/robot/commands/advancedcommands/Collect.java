@@ -10,7 +10,8 @@ public class Collect extends SequentialCommandGroup {
 
     public Collect(Collection collection, CollectionMovement collectionMovement) {
         addCommands(
-                new CollectionToPosition(collectionMovement, () -> CollectionMovement.OPEN_POSE),
+                new CollectionToPosition(collectionMovement,
+                        () -> CollectionMovement.CollectionMovementPose.OPEN_POSE.neededPose),
                 new SimpleIntake(collection)
         );
     }
