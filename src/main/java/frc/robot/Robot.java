@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.difficultcommands.Drive;
 import frc.robot.subsystems.swerve.Drivetrain;
+import frc.robot.subsystems.swerve.SwerveModuleHolder;
 
 public class Robot extends TimedRobot {
 
@@ -20,6 +21,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
+        SwerveModuleHolder.updateNamespace();
         CommandScheduler.getInstance().run();
     }
 
@@ -50,8 +52,7 @@ public class Robot extends TimedRobot {
         drivetrain.resetRelativeEncoders();
 
         OI oi = new OI();
-        drivetrain.setDefaultCommand(new Drive(drivetrain, oi::getLeftY, oi::getLeftX, oi::getRightX, true,
-                false));
+        drivetrain.setDefaultCommand(new Drive(drivetrain, oi::getLeftY, oi::getLeftX, oi::getRightX, true, false));
     }
 
     @Override

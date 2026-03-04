@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveModule;
 import frc.robot.com.spikes2212.control.FeedForwardSettings;
 import frc.robot.com.spikes2212.control.PIDSettings;
+import frc.robot.com.spikes2212.control.TrapezoidProfileSettings;
 import frc.robot.com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import frc.robot.com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 
@@ -62,12 +63,16 @@ public class SwerveModuleRebuilt extends SwerveModule {
     @Override
     protected void configureDriveController() {
         driveMotor.setEncoderConversionFactor(DRIVE_MOTOR_ROTATION_TO_WHEEL_ROTATIONS);
+        driveMotor.configureLoop(driveMotorPIDSettings, driveMotorFeedForwardSettings,
+                TrapezoidProfileSettings.EMPTY_TRAPEZOID_PROFILE_SETTINGS);
     }
 
     @Override
     protected void configureTurnController() {
         turnMotor.setPositionConversionFactor(TURN_POSITION_IN_ROTATION);
         turnMotor.setVelocityConversionFactor(TURN_VELOCITY_IN_ROTATION);
+        turnMotor.configureLoop(turnMotorPIDSettings, turnMotorFeedForwardSettings,
+                TrapezoidProfileSettings.EMPTY_TRAPEZOID_PROFILE_SETTINGS);
     }
 
     @Override

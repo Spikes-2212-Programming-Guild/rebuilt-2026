@@ -150,7 +150,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
      */
     public void setTargetAngle(Rotation2d targetAngle) {
         turnMotor.pidSet(UnifiedControlMode.POSITION, targetAngle.getDegrees(), turnMotorPIDSettings,
-                turnMotorFeedForwardSettings, false);
+                turnMotorFeedForwardSettings, true);
     }
 
     /**

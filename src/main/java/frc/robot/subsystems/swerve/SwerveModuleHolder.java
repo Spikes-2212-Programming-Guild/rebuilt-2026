@@ -40,7 +40,8 @@ public class SwerveModuleHolder {
     private static final PIDSettings drivePIDSettings = namespace.addPIDNamespace("drive",
             PIDSettings.EMPTY_PID_SETTINGS);
     private static final PIDSettings turnPIDSettings = namespace.addPIDNamespace("turn",
-            PIDSettings.EMPTY_PID_SETTINGS);
+            new PIDSettings(0.037, 0, 0));
+//    private static final PIDSettings turnPIDSettings = new PIDSettings(0.037, 0, 0);
     private static final FeedForwardSettings driveFeedForwardSettings = namespace.addFeedForwardNamespace(
             "drive", new FeedForwardSettings(FeedForwardController.ControlMode.LINEAR_VELOCITY));
     private static final FeedForwardSettings turnFeedForwardSettings = namespace.addFeedForwardNamespace(
@@ -101,5 +102,9 @@ public class SwerveModuleHolder {
                     new CANcoder(RobotMap.CAN.SWERVE_BACK_RIGHT_ABSOLUTE_ENCODER_ID, CANIVORE));
         }
         return backRight;
+    }
+
+    public static void updateNamespace() {
+        namespace.update();
     }
 }
