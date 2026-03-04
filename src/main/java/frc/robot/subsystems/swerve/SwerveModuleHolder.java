@@ -17,10 +17,10 @@ public class SwerveModuleHolder {
 
     private final static CANBus CANIVORE = new CANBus("canivore");
 
-    private static final boolean FRONT_LEFT_DRIVE_INVERTED = false;
+    private static final boolean FRONT_LEFT_DRIVE_INVERTED = true;
     private static final boolean FRONT_RIGHT_DRIVE_INVERTED = false;
     private static final boolean BACK_LEFT_DRIVE_INVERTED = false;
-    private static final boolean BACK_RIGHT_DRIVE_INVERTED = false;
+    private static final boolean BACK_RIGHT_DRIVE_INVERTED = true;
 
     private static final boolean FRONT_LEFT_CANCODER_INVERTED = false;
     private static final boolean FRONT_RIGHT_CANCODER_INVERTED = false;
