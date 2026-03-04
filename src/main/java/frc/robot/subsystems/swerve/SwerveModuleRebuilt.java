@@ -56,6 +56,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
         configureDriveController();
         configureAbsoluteEncoder();
         setCurrents();
+        configureDashboard();
     }
 
     @Override
@@ -92,7 +93,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("absolute encoder", getAbsoluteModuleAngle()::getDegrees);
+        namespace.putNumber("absolute encoder", () -> this.getAbsoluteModuleAngle().getDegrees());
         namespace.putNumber("relative angle", this::getRelativeModuleAngle);
         namespace.putNumber("current drive velocity", driveMotor::getVelocity);
         namespace.putNumber("current turn velocity", turnMotor::getVelocity);
