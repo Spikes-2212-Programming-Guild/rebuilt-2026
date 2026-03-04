@@ -22,8 +22,7 @@ public class RobotMap {
     public interface DIO {
 
         int HOOD_ABSOLUTE_ENCODER = -1;
-      
-        int COLLECTION_MOVEMENT_THROUGH_BORE_ID = -1;
+
     }
 
     public interface PWM {
