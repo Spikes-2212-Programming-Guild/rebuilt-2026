@@ -10,7 +10,7 @@ public class RobotMap {
 
         int HOOD_SPARK_MAX = -1;
       
-        int COLLECTION_SPARK_MAX_ID = -1;
+        int COLLECTION_TALON_FX_ID = -1;
       
         int COLLECTION_MOVEMENT_TALON_FX_ID = -1;
 
