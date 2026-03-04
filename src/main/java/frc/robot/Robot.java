@@ -6,17 +6,12 @@ package frc.robot;
 
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import com.spikes2212.dashboard.RootNamespace;
-import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.advancedcommands.Collect;
 import frc.robot.commands.simplecommands.MoveCollection;
-import frc.robot.commands.simplecommands.SimpleIntake;
 import frc.robot.commands.simplecommands.SimpleSpin;
-import frc.robot.commands.simplecommands.SimpleTransport;
 import frc.robot.subsystems.Collection;
-import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.CollectionMovement;
 import frc.robot.subsystems.SpinningMagazine;
 
@@ -43,6 +38,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        collectionMovement.calibrateEncoderPosition(collectionMovement.getSpeed());
         namespace.update();
     }
 
