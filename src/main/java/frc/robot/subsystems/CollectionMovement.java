@@ -25,6 +25,9 @@ public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
     private static final double CURRENT_LIMIT_AMP = 40;
     private static final double MOTION_EPSILON = -1.0;     // Minimum degrees change to be considered "moving"
     private static final double STALL_TIME_LIMIT = -1.0;   // Seconds to wait before triggering stall protection
+    private static final double GEAR_RATIO = 0.2;
+    private static final double DEGREES_IN_ROTATIONS = 360;
+    private static final double DISTANCE_PER_PULSE = GEAR_RATIO * DEGREES_IN_ROTATIONS;
 
     private final TalonFXWrapper talonFX;
 
@@ -46,6 +49,7 @@ public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
         super(namespaceName, talonFX);
         this.talonFX = talonFX;
 
+        talonFX.setEncoderConversionFactor(DISTANCE_PER_PULSE);
         talonFX.getConfigurator().apply(new CurrentLimitsConfigs()
                 .withSupplyCurrentLimit(CURRENT_LIMIT_AMP));
         configureDashboard();
@@ -84,8 +88,7 @@ public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
     public void calibrateEncoderPosition(double speed) {
         if(isStalled && speed < 0) {
             talonFX.setPosition(CollectionMovementPose.MIN_POSE.neededPose);
-        }
-        if(isStalled && speed > 0) {
+        } else if(isStalled && speed > 0) {
             talonFX.setPosition(CollectionMovementPose.MAX_POSE.neededPose);
         }
     }
