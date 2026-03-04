@@ -4,20 +4,46 @@
 
 package frc.robot;
 
+import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
+import com.spikes2212.dashboard.RootNamespace;
+import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.commands.advancedcommands.Collect;
+import frc.robot.commands.simplecommands.MoveCollection;
+import frc.robot.commands.simplecommands.SimpleIntake;
+import frc.robot.commands.simplecommands.SimpleSpin;
+import frc.robot.commands.simplecommands.SimpleTransport;
+import frc.robot.subsystems.Collection;
+import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.CollectionMovement;
+import frc.robot.subsystems.SpinningMagazine;
+
+import javax.swing.*;
 
 public class Robot extends TimedRobot {
 
+    private final RootNamespace namespace = new RootNamespace("robot");
+    //private final Hood hood = Hood.getInstance();
+    private final CollectionMovement collectionMovement = CollectionMovement.getInstance();
+    private final Collection collection = Collection.getInstance();
+    private final SpinningMagazine spinningMagazine = SpinningMagazine.getInstance();
 
     @Override
     public void robotInit() {
 
+        namespace.putCommand("move collection down", new MoveCollection(collectionMovement, ()-> 0.1));
+        namespace.putCommand("move collection up", new MoveCollection(collectionMovement, ()-> -0.2));
+        namespace.putCommand("collect", new Collect(collection, collectionMovement));
+        namespace.putCommand("slow intake", new MoveGenericSubsystem(collection, ()-> 0.3));
+        namespace.putCommand("spindexer", new SimpleSpin(spinningMagazine));
     }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        namespace.update();
     }
 
     @Override

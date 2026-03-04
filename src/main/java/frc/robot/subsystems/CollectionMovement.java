@@ -8,6 +8,16 @@ import frc.robot.RobotMap;
 
 public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
 
+    public enum CollectionMovementPose {
+
+        MAX_POSE(-1), MIN_POSE(-1), OPEN_POSE(-1), CLOSE_POSE(-1);
+
+        public final double neededPose;
+
+        CollectionMovementPose(double neededPose) {
+            this.neededPose = neededPose;
+        }
+    }
     public static final double OPEN_POSE = -1;
     public static final double CLOSE_POSE = -1;
 
