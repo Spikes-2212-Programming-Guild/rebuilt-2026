@@ -39,13 +39,15 @@ public class SwerveModuleHolder {
 
     private static final PIDSettings drivePIDSettings = namespace.addPIDNamespace("drive",
             PIDSettings.EMPTY_PID_SETTINGS);
-    private static final PIDSettings turnPIDSettings = namespace.addPIDNamespace("turn",
-            new PIDSettings(0.037, 0, 0));
-//    private static final PIDSettings turnPIDSettings = new PIDSettings(0.037, 0, 0);
+//    private static final PIDSettings turnPIDSettings = namespace.addPIDNamespace("turn",
+//            PIDSettings.EMPTY_PID_SETTINGS);
+    private static final PIDSettings turnPIDSettings = new PIDSettings(0.023, 0.0003, 0.0033, 10, 0, 0);
     private static final FeedForwardSettings driveFeedForwardSettings = namespace.addFeedForwardNamespace(
-            "drive", new FeedForwardSettings(FeedForwardController.ControlMode.LINEAR_VELOCITY));
-    private static final FeedForwardSettings turnFeedForwardSettings = namespace.addFeedForwardNamespace(
-            "turn", new FeedForwardSettings(FeedForwardController.ControlMode.LINEAR_POSITION));
+            "drive", FeedForwardSettings.EMPTY_FF_SETTINGS);
+//    private static final FeedForwardSettings turnFeedForwardSettings = namespace.addFeedForwardNamespace(
+//            "turn", FeedForwardSettings.EMPTY_FF_SETTINGS);
+    private static final FeedForwardSettings turnFeedForwardSettings = new FeedForwardSettings(0.133, 0, 0,
+        FeedForwardController.ControlMode.ANGULAR_POSITION);
 
     private static SwerveModuleRebuilt frontLeft;
     private static SwerveModuleRebuilt frontRight;
