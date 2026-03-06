@@ -13,6 +13,7 @@ import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveModule;
 import frc.robot.com.spikes2212.control.FeedForwardSettings;
 import frc.robot.com.spikes2212.control.PIDSettings;
 import frc.robot.com.spikes2212.control.TrapezoidProfileSettings;
+import frc.robot.com.spikes2212.util.UnifiedControlMode;
 import frc.robot.com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import frc.robot.com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 
@@ -103,10 +104,10 @@ public class SwerveModuleRebuilt extends SwerveModule {
         namespace.putNumber("current drive velocity", driveMotor::getVelocity);
         namespace.putNumber("current turn velocity", turnMotor::getVelocity);
 
-        namespace.putCommand("set angle to 0", new FunctionalCommand(() -> {
+        namespace.putCommand("set angle to a angle", new FunctionalCommand(() -> {
         },
                 () -> setTargetState(
-                        new SwerveModuleState(0, Rotation2d.fromDegrees(0)),
+                        new SwerveModuleState(0, Rotation2d.fromDegrees(namespace.addConstantDouble("angle", 0).get())),
                         Drivetrain.MAX_POSSIBLE_VELOCITY, false
                 ), b -> stop(), () -> false));
 
