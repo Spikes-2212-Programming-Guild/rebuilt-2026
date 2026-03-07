@@ -107,7 +107,8 @@ public class SwerveModuleRebuilt extends SwerveModule {
         namespace.putCommand("set angle to an angle", new FunctionalCommand(() -> {
         },
                 () -> setTargetState(
-                        new SwerveModuleState(0, Rotation2d.fromDegrees(namespace.addConstantDouble("angle to pid", 0).get())),
+                        new SwerveModuleState(0, Rotation2d.fromDegrees(
+                                namespace.addConstantDouble("angle to pid", 0).get())),
                         Drivetrain.MAX_POSSIBLE_VELOCITY, false
                 ), b -> stop(), () -> false));
 
