@@ -112,6 +112,13 @@ public class SwerveModuleRebuilt extends SwerveModule {
                         Drivetrain.MAX_POSSIBLE_VELOCITY, false
                 ), b -> stop(), () -> false));
 
+        namespace.putCommand("set velocity to a velocity", new FunctionalCommand(() -> {
+        },
+                () -> setTargetState(
+                        new SwerveModuleState(namespace.addConstantDouble("velocity to pid", 1).get(),
+                                Rotation2d.fromDegrees(0)), Drivetrain.MAX_POSSIBLE_VELOCITY, true),
+                b -> stop(), () -> false));
+
         namespace.putCommand("drive at 0.2", new RunCommand(() -> driveMotor.set(0.2)) {
             @Override
             public void end(boolean interrupted) {
