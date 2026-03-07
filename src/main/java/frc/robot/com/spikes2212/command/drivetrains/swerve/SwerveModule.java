@@ -163,7 +163,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
     public void setTargetVelocity(double targetVelocity, double maxPossibleVelocity, boolean useVelocityPID) {
         if (useVelocityPID) {
             driveMotor.pidSet(UnifiedControlMode.VELOCITY, targetVelocity, driveMotorPIDSettings,
-                    driveMotorFeedForwardSettings, false);
+                    driveMotorFeedForwardSettings, true);
         } else {
             driveMotor.set(targetVelocity / maxPossibleVelocity);
         }
