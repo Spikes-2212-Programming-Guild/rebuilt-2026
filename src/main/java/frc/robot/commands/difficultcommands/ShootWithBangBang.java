@@ -31,8 +31,8 @@ public class ShootWithBangBang extends MoveGenericSubsystem {
         ffController = new FeedForwardController(ffSettings);
     }
 
-    public ShootWithBangBang(Shooter shooter, Supplier<Double> speed) {
-        this(shooter, speed, () -> DEFAULT_TOLERANCE);
+    public ShootWithBangBang(Shooter shooter, double speed) {
+        this(shooter, ()-> speed, () -> DEFAULT_TOLERANCE);
     }
 
     @Override
