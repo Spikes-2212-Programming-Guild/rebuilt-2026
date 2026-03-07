@@ -20,6 +20,7 @@ public class Drivetrain extends SwerveDrivetrain {
 
     private static final double TRACK_WIDTH = 0.545;
     private static final double TRACK_LENGTH = 0.545;
+    private static final int GYRO_OFFSET = 180;
 
     private final StructArrayPublisher<SwerveModuleState> currentStates = NetworkTableInstance.getDefault()
             .getStructArrayTopic("current states", SwerveModuleState.struct).publish();
@@ -72,7 +73,7 @@ public class Drivetrain extends SwerveDrivetrain {
 
     @Override
     public void resetAngleSensor() {
-        gyro.setYaw(180);
+        gyro.setYaw(GYRO_OFFSET);
     }
 
     @Override
