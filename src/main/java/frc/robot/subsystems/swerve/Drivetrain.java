@@ -72,8 +72,7 @@ public class Drivetrain extends SwerveDrivetrain {
 
     @Override
     public void resetAngleSensor() {
-        //@TODO check at what angle the gyro resets
-        gyro.reset();
+        gyro.setYaw(180);
     }
 
     @Override

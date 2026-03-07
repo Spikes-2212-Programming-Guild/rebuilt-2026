@@ -46,7 +46,7 @@ public class SwerveModuleHolder {
             "drive", FeedForwardSettings.EMPTY_FF_SETTINGS);
 //    private static final FeedForwardSettings turnFeedForwardSettings = namespace.addFeedForwardNamespace(
 //            "turn", FeedForwardSettings.EMPTY_FF_SETTINGS);
-    private static final FeedForwardSettings turnFeedForwardSettings = new FeedForwardSettings(0.133, 0, 0,
+    private static final FeedForwardSettings turnFeedForwardSettings = new FeedForwardSettings(0.2, 0, 0,
         FeedForwardController.ControlMode.ANGULAR_POSITION);
 
     private static SwerveModuleRebuilt frontLeft;
