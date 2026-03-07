@@ -12,7 +12,7 @@ import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveModule;
 
 public class Drivetrain extends SwerveDrivetrain {
 
-    public static final double MAX_POSSIBLE_VELOCITY = 5;
+    public static final double MAX_POSSIBLE_VELOCITY = 5.1;
 
     private static final String NAMESPACE_NAME = "swerve drivetrain";
 
