@@ -14,15 +14,10 @@ import java.util.function.Supplier;
 
 public class Pass extends SequentialCommandGroup {
 
-    public Pass(Hood hood, Shooter shooter, Supplier<Double> shootingSpeed,
-                SpinningMagazine spinningMagazine,
-                Transport transport
-                ) {
+    public Pass(Shooter shooter, Supplier<Double> shootingSpeed, SpinningMagazine spinningMagazine,
+                Transport transport) {
         addCommands(
-                new ParallelDeadlineGroup(
-                        new RotateHood(hood, Hood.HoodPose.PASS_ANGLE),
-                        new SimpleShoot(shooter, shootingSpeed)
-                ),
+                new SimpleShoot(shooter, shootingSpeed),
                 new ParallelCommandGroup(
                         new SimpleSpin(spinningMagazine),
                         new SimpleTransport(transport),

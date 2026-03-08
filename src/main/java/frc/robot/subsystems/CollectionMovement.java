@@ -36,7 +36,8 @@ public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
 
     @Override
     public boolean canMove(double speed) {
-        return (talonFX.getPosition() > OPEN_POSE && speed < 0) || (talonFX.getPosition() < CLOSE_POSE && speed > 0);
+//        return (talonFX.getPosition() > OPEN_POSE && speed < 0) || (talonFX.getPosition() < CLOSE_POSE && speed > 0);
+        return true;
     }
 
     @Override
