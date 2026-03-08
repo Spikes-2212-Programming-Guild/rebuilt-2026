@@ -52,7 +52,8 @@ public class Robot extends TimedRobot {
         drivetrain.resetRelativeEncoders();
 
         OI oi = new OI();
-//        drivetrain.setDefaultCommand(new Drive(drivetrain, oi::getLeftY, oi::getLeftX, oi::getRightX, true, false));
+        drivetrain.setDefaultCommand(new Drive(drivetrain, () -> oi.getLeftY() * 2, () -> oi.getLeftX() * 2,
+                () -> oi.getRightX() * -0.6, true, false));
     }
 
     @Override
