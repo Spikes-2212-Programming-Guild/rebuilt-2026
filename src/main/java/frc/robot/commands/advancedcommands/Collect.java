@@ -9,14 +9,17 @@ import frc.robot.commands.simplecommands.SimpleIntake;
 import frc.robot.subsystems.Collection;
 import frc.robot.subsystems.CollectionMovement;
 
-public class Collect extends SequentialCommandGroup {
+import java.util.function.Supplier;
+
+public class Collect extends ParallelCommandGroup {
+
+    private static final Supplier<Double> DOWN_SPEED = ()-> -0.07;
+    private static final int TIME_TO_MOVE_COLLECTION = 1;
 
     public Collect(Collection collection, CollectionMovement collectionMovement) {
         addCommands(
-                new ParallelCommandGroup(
-                    new MoveCollection(collectionMovement, () -> -0.05).withTimeout(1),
-                    new SimpleIntake(collection)
-                )
+                new MoveCollection(collectionMovement, DOWN_SPEED).withTimeout(TIME_TO_MOVE_COLLECTION),
+                new SimpleIntake(collection)
         );
     }
 }
