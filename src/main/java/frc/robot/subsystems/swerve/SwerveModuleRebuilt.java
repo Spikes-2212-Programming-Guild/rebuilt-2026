@@ -100,46 +100,46 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("absolute encoder", () -> this.getAbsoluteModuleAngle().getDegrees());
-        namespace.putNumber("relative angle", this::getRelativeModuleAngle);
-        namespace.putNumber("current drive velocity", driveMotor::getVelocity);
-        namespace.putNumber("current turn velocity", turnMotor::getVelocity);
-        namespace.putNumber("voltage drive", driveMotor::getVoltage);
-
-        namespace.putCommand("set angle to an angle", new FunctionalCommand(() -> {
-        },
-                () -> setTargetState(
-                        new SwerveModuleState(0, Rotation2d.fromDegrees(
-                                namespace.addConstantDouble("angle to pid", 0).get())),
-                        Drivetrain.MAX_POSSIBLE_VELOCITY, false
-                ), b -> stop(), () -> false));
-
-        namespace.putCommand("set velocity to a velocity", new FunctionalCommand(() -> {
-        },
-                () -> setTargetState(
-                        new SwerveModuleState(namespace.addConstantDouble("velocity to pid", 1).get(),
-                                Rotation2d.fromDegrees(0)), Drivetrain.MAX_POSSIBLE_VELOCITY, true),
-                b -> stop(), () -> false));
-
-        namespace.putCommand("pid drive", new FunctionalCommand(() -> {
-        },
-                () -> driveMotor.pidSet(UnifiedControlMode.VELOCITY,
-                        namespace.addConstantDouble("pid drive set point", 1).get(), driveMotorPIDSettings,
-                        driveMotorFeedForwardSettings, true),
-                b -> stop(), () -> false));
-
-        namespace.putCommand("drive at 0.2", new RunCommand(() -> driveMotor.set(0.2)) {
-            @Override
-            public void end(boolean interrupted) {
-                driveMotor.stopMotor();
-            }
-        });
-
-        namespace.putCommand("turn at 0.2", new RunCommand(() -> turnMotor.set(0.2)) {
-            @Override
-            public void end(boolean interrupted) {
-                turnMotor.stopMotor();
-            }
-        });
+//        namespace.putNumber("absolute encoder", () -> this.getAbsoluteModuleAngle().getDegrees());
+//        namespace.putNumber("relative angle", this::getRelativeModuleAngle);
+//        namespace.putNumber("current drive velocity", driveMotor::getVelocity);
+//        namespace.putNumber("current turn velocity", turnMotor::getVelocity);
+//        namespace.putNumber("voltage drive", driveMotor::getVoltage);
+//
+//        namespace.putCommand("set angle to an angle", new FunctionalCommand(() -> {
+//        },
+//                () -> setTargetState(
+//                        new SwerveModuleState(0, Rotation2d.fromDegrees(
+//                                namespace.addConstantDouble("angle to pid", 0).get())),
+//                        Drivetrain.MAX_POSSIBLE_VELOCITY, false
+//                ), b -> stop(), () -> false));
+//
+//        namespace.putCommand("set velocity to a velocity", new FunctionalCommand(() -> {
+//        },
+//                () -> setTargetState(
+//                        new SwerveModuleState(namespace.addConstantDouble("velocity to pid", 1).get(),
+//                                Rotation2d.fromDegrees(0)), Drivetrain.MAX_POSSIBLE_VELOCITY, true),
+//                b -> stop(), () -> false));
+//
+//        namespace.putCommand("pid drive", new FunctionalCommand(() -> {
+//        },
+//                () -> driveMotor.pidSet(UnifiedControlMode.VELOCITY,
+//                        namespace.addConstantDouble("pid drive set point", 1).get(), driveMotorPIDSettings,
+//                        driveMotorFeedForwardSettings, true),
+//                b -> stop(), () -> false));
+//
+//        namespace.putCommand("drive at 0.2", new RunCommand(() -> driveMotor.set(0.2)) {
+//            @Override
+//            public void end(boolean interrupted) {
+//                driveMotor.stopMotor();
+//            }
+//        });
+//
+//        namespace.putCommand("turn at 0.2", new RunCommand(() -> turnMotor.set(0.2)) {
+//            @Override
+//            public void end(boolean interrupted) {
+//                turnMotor.stopMotor();
+//            }
+//        });
     }
 }
