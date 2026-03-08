@@ -12,8 +12,6 @@ import frc.robot.subsystems.swerve.Drivetrain;
 import frc.robot.utils.ShooterAlgorithm;
 import frc.robot.utils.VisionService;
 
-import javax.swing.*;
-
 public class Shoot extends WrapperCommand {
 
     private final Shooter shooter;
@@ -24,8 +22,6 @@ public class Shoot extends WrapperCommand {
                  Drivetrain drivetrain, VisionService visionService) {
         super(
                 new SequentialCommandGroup(
-                        new SwerveRotateWithPID(drivetrain,
-                                ()-> visionService.getTargetRelativePose().getRotation().getDegrees()),
                         new ShootWithPID(shooter,
                                 () -> ShooterAlgorithm.calculateRPM(visionService.getTargetRelativePose().getX())) {
 
