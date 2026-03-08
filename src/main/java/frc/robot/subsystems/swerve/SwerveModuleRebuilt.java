@@ -4,6 +4,8 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.spikes2212.dashboard.Namespace;
+import com.spikes2212.util.UnifiedControlMode;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.units.Units;
@@ -102,6 +104,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
         namespace.putNumber("relative angle", this::getRelativeModuleAngle);
         namespace.putNumber("current drive velocity", driveMotor::getVelocity);
         namespace.putNumber("current turn velocity", turnMotor::getVelocity);
+        namespace.putNumber("voltage drive", driveMotor::getVoltage);
 
         namespace.putCommand("set angle to an angle", new FunctionalCommand(() -> {
         },
@@ -116,6 +119,13 @@ public class SwerveModuleRebuilt extends SwerveModule {
                 () -> setTargetState(
                         new SwerveModuleState(namespace.addConstantDouble("velocity to pid", 1).get(),
                                 Rotation2d.fromDegrees(0)), Drivetrain.MAX_POSSIBLE_VELOCITY, true),
+                b -> stop(), () -> false));
+
+        namespace.putCommand("pid drive", new FunctionalCommand(() -> {
+        },
+                () -> driveMotor.pidSet(UnifiedControlMode.VELOCITY,
+                        namespace.addConstantDouble("pid drive set point", 1).get(), driveMotorPIDSettings,
+                        driveMotorFeedForwardSettings, true),
                 b -> stop(), () -> false));
 
         namespace.putCommand("drive at 0.2", new RunCommand(() -> driveMotor.set(0.2)) {

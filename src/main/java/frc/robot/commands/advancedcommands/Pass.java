@@ -7,6 +7,7 @@ import frc.robot.commands.shoot.JustShoot;
 import frc.robot.commands.storage.Spin;
 import frc.robot.commands.storage.Transport;
 import frc.robot.subsystems.shoot.Shooter;
+import frc.robot.subsystems.spindexer.Kicker;
 import frc.robot.subsystems.spindexer.SpinningMagazine;
 
 import java.util.function.Supplier;
@@ -15,7 +16,7 @@ public class Pass extends SequentialCommandGroup {
 
     public Pass(Shooter shooter, Supplier<Double> shootingSpeed,
                 SpinningMagazine spinningMagazine,
-                frc.robot.subsystems.spindexer.Transport transport
+                Kicker transport
                 ) {
         addCommands(
                 new ParallelDeadlineGroup(

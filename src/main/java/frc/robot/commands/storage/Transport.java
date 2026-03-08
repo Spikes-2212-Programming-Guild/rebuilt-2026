@@ -1,10 +1,11 @@
 package frc.robot.commands.storage;
 
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
+import frc.robot.subsystems.spindexer.Kicker;
 
 public class Transport extends MoveGenericSubsystem {
 
-    public Transport(frc.robot.subsystems.spindexer.Transport transport) {
-        super(transport, frc.robot.subsystems.spindexer.Transport.SPEED);
+    public Transport(Kicker transport) {
+        super(transport, Kicker.SPEED);
     }
 }

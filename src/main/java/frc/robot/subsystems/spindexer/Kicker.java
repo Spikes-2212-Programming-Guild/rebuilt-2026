@@ -5,7 +5,7 @@ import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import frc.robot.RobotMap;
 
-public class Transport extends MotoredGenericSubsystem {
+public class Kicker extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "transport";
 
@@ -13,18 +13,18 @@ public class Transport extends MotoredGenericSubsystem {
 
     private final SparkWrapper sparkMax;
 
-    private static Transport instance;
+    private static Kicker instance;
 
-    public static Transport getInstance() {
+    public static Kicker getInstance() {
         if (instance == null) {
-            instance = new Transport(NAMESPACE_NAME,
+            instance = new Kicker(NAMESPACE_NAME,
                     SparkWrapper.createSparkMax(RobotMap.CAN.TRANSPORT_SPARK_MAX_ID,
                             SparkLowLevel.MotorType.kBrushless));
         }
         return instance;
     }
 
-    private Transport(String namespaceName, SparkWrapper sparkMax) {
+    public Kicker(String namespaceName, SparkWrapper sparkMax) {
         super(namespaceName, sparkMax);
         this.sparkMax = sparkMax;
         configureDashboard();

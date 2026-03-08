@@ -3,13 +3,13 @@ package frc.robot.subsystems.swerve;
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.spark.SparkLowLevel;
-import frc.robot.RobotMap;
 import com.spikes2212.control.FeedForwardController;
 import com.spikes2212.control.FeedForwardSettings;
 import com.spikes2212.control.PIDSettings;
-import frc.robot.com.spikes2212.dashboard.RootNamespace;
+import com.spikes2212.dashboard.RootNamespace;
 import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
+import frc.robot.RobotMap;
 
 public class SwerveModuleHolder {
 
@@ -37,16 +37,11 @@ public class SwerveModuleHolder {
     private static final double BACK_LEFT_OFFSET = -0.562;
     private static final double BACK_RIGHT_OFFSET = -0.542;
 
-    private static final PIDSettings drivePIDSettings = namespace.addPIDNamespace("drive",
-            PIDSettings.EMPTY_PID_SETTINGS);
-//    private static final PIDSettings turnPIDSettings = namespace.addPIDNamespace("turn",
-//            PIDSettings.EMPTY_PID_SETTINGS);
+    private static final PIDSettings drivePIDSettings = new PIDSettings(0.65, 0.0045, -0.0037, 0, 0, 0);
     private static final PIDSettings turnPIDSettings = new PIDSettings(0.023, 0.0003, 0.0033, 10, 0, 0);
-    private static final FeedForwardSettings driveFeedForwardSettings = namespace.addFeedForwardNamespace(
-            "drive", FeedForwardSettings.EMPTY_FF_SETTINGS);
-//    private static final FeedForwardSettings turnFeedForwardSettings = namespace.addFeedForwardNamespace(
-//            "turn", FeedForwardSettings.EMPTY_FF_SETTINGS);
-    private static final FeedForwardSettings turnFeedForwardSettings = new FeedForwardSettings(0.2, 0, 0,
+    private static final FeedForwardSettings driveFeedForwardSettings = new FeedForwardSettings(0.04, 0.17,
+            FeedForwardController.ControlMode.LINEAR_VELOCITY);
+    private static final FeedForwardSettings turnFeedForwardSettings = new FeedForwardSettings(0.19, 0, 0,
         FeedForwardController.ControlMode.ANGULAR_POSITION);
 
     private static SwerveModuleRebuilt frontLeft;
