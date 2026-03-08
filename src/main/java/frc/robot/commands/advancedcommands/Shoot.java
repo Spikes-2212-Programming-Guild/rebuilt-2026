@@ -1,7 +1,6 @@
 package frc.robot.commands.advancedcommands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.commands.difficultcommands.ShootWithPID;
 import frc.robot.commands.simplecommands.SimpleSpin;
 import frc.robot.commands.simplecommands.SimpleTransport;
@@ -11,29 +10,40 @@ import frc.robot.subsystems.Transport;
 import frc.robot.utils.ShooterAlgo;
 import frc.robot.utils.VisionService;
 
-import java.util.function.Supplier;
+public class Shoot extends WrapperCommand {
 
-public class Shoot extends ParallelCommandGroup {
+    private final Shooter shooter;
+    private final Transport transport;
+    private final SpinningMagazine spinningMagazine;
 
     public Shoot(Shooter shooter, Transport transport, SpinningMagazine spinningMagazine,
                  VisionService visionService) {
-
-        Supplier<Double> shooterSpeed = ()-> ShooterAlgo.calculateRPM(visionService.getTargetRelativePose().getX());
-
-        addCommands(
+        super(
                 new SequentialCommandGroup(
-                        new ShootWithPID(shooter, shooterSpeed)
-                ),
-                new ParallelCommandGroup(
-                        new SimpleSpin(spinningMagazine),
-                        new SimpleTransport(transport),
-                        new ShootWithPID(shooter, shooterSpeed)
-                ).finallyDo((interrupted) -> {
-                    shooter.stop();
-                    transport.stop();
-                    spinningMagazine.stop();
-                })
+                        new ShootWithPID(shooter,
+                                () -> ShooterAlgo.calculateRPM(visionService.getTargetRelativePose().getX())) {
 
+                            @Override
+                            public void end(boolean i) {}
+                        },
+                        new ParallelCommandGroup(
+                                new SimpleSpin(spinningMagazine),
+                                new SimpleTransport(transport),
+                                new ShootWithPID(shooter,
+                                        () -> ShooterAlgo.calculateRPM(visionService.getTargetRelativePose().getX()))
+                        )
+                )
         );
+
+        this.shooter = shooter;
+        this.transport = transport;
+        this.spinningMagazine = spinningMagazine;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        shooter.stop();
+        transport.stop();
+        spinningMagazine.stop();
     }
 }
