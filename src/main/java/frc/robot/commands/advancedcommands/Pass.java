@@ -3,12 +3,11 @@ package frc.robot.commands.advancedcommands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.simplecommands.SimpleShoot;
-import frc.robot.commands.simplecommands.SimpleSpin;
-import frc.robot.commands.simplecommands.SimpleTransport;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.SpinningMagazine;
-import frc.robot.subsystems.Transport;
+import frc.robot.commands.shoot.JustShoot;
+import frc.robot.commands.storage.Spin;
+import frc.robot.commands.storage.Transport;
+import frc.robot.subsystems.shoot.Shooter;
+import frc.robot.subsystems.spindexer.SpinningMagazine;
 
 import java.util.function.Supplier;
 
@@ -16,16 +15,16 @@ public class Pass extends SequentialCommandGroup {
 
     public Pass(Shooter shooter, Supplier<Double> shootingSpeed,
                 SpinningMagazine spinningMagazine,
-                Transport transport
+                frc.robot.subsystems.spindexer.Transport transport
                 ) {
         addCommands(
                 new ParallelDeadlineGroup(
-                        new SimpleShoot(shooter, shootingSpeed)
+                        new JustShoot(shooter, shootingSpeed)
                 ),
                 new ParallelCommandGroup(
-                        new SimpleSpin(spinningMagazine),
-                        new SimpleTransport(transport),
-                        new SimpleShoot(shooter, shootingSpeed)
+                        new Spin(spinningMagazine),
+                        new Transport(transport),
+                        new JustShoot(shooter, shootingSpeed)
                 )
         );
     }

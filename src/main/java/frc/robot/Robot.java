@@ -4,42 +4,42 @@
 
 package frc.robot;
 
-import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
-import frc.robot.commands.difficultcommands.Drive;
+import frc.robot.commands.swerve.Drive;
+import frc.robot.subsystems.forbar.Collection;
+import frc.robot.subsystems.forbar.CollectionMovement;
+import frc.robot.subsystems.shoot.Shooter;
+import frc.robot.subsystems.spindexer.SpinningMagazine;
+import frc.robot.subsystems.spindexer.Transport;
 import frc.robot.subsystems.swerve.Drivetrain;
 import frc.robot.subsystems.swerve.SwerveModuleHolder;
-import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.commands.advancedcommands.Collect;
-import frc.robot.commands.advancedcommands.UpSlowly;
-import frc.robot.commands.simplecommands.MoveCollection;
-import frc.robot.commands.simplecommands.SimpleIntake;
-import frc.robot.commands.simplecommands.SimpleShoot;
-import frc.robot.subsystems.Collection;
-import frc.robot.subsystems.CollectionMovement;
-import frc.robot.subsystems.Shooter;
+import frc.robot.utils.VisionService;
 
 public class Robot extends TimedRobot {
 
-    Drivetrain drivetrain = Drivetrain.getInstance();
-
     private static final RootNamespace namespace = new RootNamespace("robot");
-    private final Shooter shooter = Shooter.getInstance();
-    private final CollectionMovement collectionMovement = CollectionMovement.getInstance();
-    private final Collection collection = Collection.getInstance();
+
+    private Drivetrain drivetrain;
+    private Collection collection;
+    private CollectionMovement collectionMovement;
+    private SpinningMagazine spinningMagazine;
+    private Transport transport;
+    private Shooter shooter;
+
+    VisionService visionService;
+
 
     @Override
     public void robotInit() {
-
+        getInstances();
     }
 
     @Override
     public void robotPeriodic() {
-        SwerveModuleHolder.updateNamespace();
         CommandScheduler.getInstance().run();
+        SwerveModuleHolder.updateNamespace();
         namespace.update();
     }
 
@@ -96,5 +96,16 @@ public class Robot extends TimedRobot {
     @Override
     public void simulationPeriodic() {
 
+    }
+
+    public void getInstances() {
+        drivetrain = Drivetrain.getInstance();
+        collection = Collection.getInstance();
+        collectionMovement = CollectionMovement.getInstance();
+        spinningMagazine = SpinningMagazine.getInstance();
+        transport = Transport.getInstance();
+        shooter = Shooter.getInstance();
+
+        visionService = VisionService.getInstance();
     }
 }

@@ -4,12 +4,12 @@ import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.spark.SparkLowLevel;
 import frc.robot.RobotMap;
-import frc.robot.com.spikes2212.control.FeedForwardController;
-import frc.robot.com.spikes2212.control.FeedForwardSettings;
-import frc.robot.com.spikes2212.control.PIDSettings;
+import com.spikes2212.control.FeedForwardController;
+import com.spikes2212.control.FeedForwardSettings;
+import com.spikes2212.control.PIDSettings;
 import frc.robot.com.spikes2212.dashboard.RootNamespace;
-import frc.robot.com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
-import frc.robot.com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
+import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
+import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 
 public class SwerveModuleHolder {
 

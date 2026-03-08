@@ -9,13 +9,12 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveModule;
-import frc.robot.com.spikes2212.control.FeedForwardSettings;
-import frc.robot.com.spikes2212.control.PIDSettings;
-import frc.robot.com.spikes2212.control.TrapezoidProfileSettings;
-import frc.robot.com.spikes2212.util.UnifiedControlMode;
-import frc.robot.com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
-import frc.robot.com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
+import com.spikes2212.command.drivetrains.swerve.SwerveModule;
+import com.spikes2212.control.FeedForwardSettings;
+import com.spikes2212.control.PIDSettings;
+import com.spikes2212.control.TrapezoidProfileSettings;
+import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
+import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 
 public class SwerveModuleRebuilt extends SwerveModule {
 

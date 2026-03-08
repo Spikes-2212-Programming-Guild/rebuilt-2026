@@ -7,8 +7,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import frc.robot.RobotMap;
-import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveDrivetrain;
-import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveModule;
+import com.spikes2212.command.drivetrains.swerve.SwerveDrivetrain;
+import com.spikes2212.command.drivetrains.swerve.SwerveModule;
 
 public class Drivetrain extends SwerveDrivetrain {
 

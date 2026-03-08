@@ -4,7 +4,10 @@ import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.*;
 import com.ctre.phoenix6.controls.*;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.*;
+import com.ctre.phoenix6.signals.GravityTypeValue;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 import com.spikes2212.control.FeedForwardSettings;
 import com.spikes2212.control.PIDSettings;
 import com.spikes2212.control.TrapezoidProfileSettings;
@@ -39,7 +42,7 @@ public class TalonFXWrapper implements SmartMotorController {
      * @param deviceId the talon's id
      * @param canbus   the name of the canbus which the talon runs on
      */
-    public TalonFXWrapper(int deviceId, String canbus) {
+    public TalonFXWrapper(int deviceId, CANBus canbus) {
         talonFX = new TalonFX(deviceId, canbus);
         closedLoopConfig = new Slot0Configs();
         motorOutputConfigs = new MotorOutputConfigs();
@@ -51,9 +54,9 @@ public class TalonFXWrapper implements SmartMotorController {
      * @param deviceId the talon's id
      * @param canbus   the canbus which the talon runs on
      */
-    public TalonFXWrapper(int deviceId, CANBus canbus) {
-        this(deviceId, canbus.getName());
-    }
+//    public TalonFXWrapper(int deviceId, CANBus canbus) {
+//        this(deviceId, canbus.getName());
+//    }
 
     /**
      * Constructs a new instance of {@link TalonFXWrapper}.
@@ -61,7 +64,7 @@ public class TalonFXWrapper implements SmartMotorController {
      * @param deviceId the talon's id
      */
     public TalonFXWrapper(int deviceId) {
-        this(deviceId, "");
+        this(deviceId, new CANBus(""));
     }
 
     public void restoreFactoryDefaults() {
@@ -151,8 +154,7 @@ public class TalonFXWrapper implements SmartMotorController {
     @Override
     public void pidSet(UnifiedControlMode controlMode, double setpoint, double acceleration, PIDSettings pidSettings,
                        FeedForwardSettings feedForwardSettings, boolean updatePeriodically) {
-        pidSet(controlMode, setpoint, pidSettings, feedForwardSettings,
-                TrapezoidProfileSettings.EMPTY_TRAPEZOID_PROFILE_SETTINGS, updatePeriodically);
+        pidSet(controlMode, setpoint, pidSettings, feedForwardSettings, new TrapezoidProfileSettings(0, 0), updatePeriodically);
     }
 
     @Override
@@ -162,7 +164,7 @@ public class TalonFXWrapper implements SmartMotorController {
     }
 
     public void follow(TalonFX master, boolean invert) {
-        talonFX.setControl(new Follower(master.getDeviceID(), MotorAlignmentValue.valueOf(invert ? 1 : 0)));
+//        talonFX.setControl(new Follower(master.getDeviceID(), invert));
     }
 
     public void follow(TalonFXWrapper master, boolean invert) {
@@ -239,10 +241,6 @@ public class TalonFXWrapper implements SmartMotorController {
 
     public double getVoltage() {
         return talonFX.getMotorVoltage().getValueAsDouble();
-    }
-
-    public TalonFX getDevice() {
-        return talonFX;
     }
 
     @Override

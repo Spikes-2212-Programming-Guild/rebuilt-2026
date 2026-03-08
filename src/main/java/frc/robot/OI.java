@@ -3,8 +3,8 @@ package frc.robot;
 import com.spikes2212.util.PlaystationControllerWrapper;
 import frc.robot.commands.advancedcommands.Collect;
 import frc.robot.commands.advancedcommands.MoveCollectionUp;
-import frc.robot.subsystems.Collection;
-import frc.robot.subsystems.CollectionMovement;
+import frc.robot.subsystems.forbar.Collection;
+import frc.robot.subsystems.forbar.CollectionMovement;
 
 public class OI /*GEVALD*/{
 
