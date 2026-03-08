@@ -9,6 +9,12 @@ import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
+import frc.robot.commands.difficultcommands.Drive;
+import frc.robot.subsystems.swerve.Drivetrain;
+import frc.robot.subsystems.swerve.SwerveModuleHolder;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.commands.advancedcommands.Collect;
+import frc.robot.commands.advancedcommands.UpSlowly;
 import frc.robot.commands.simplecommands.MoveCollection;
 import frc.robot.commands.simplecommands.SimpleIntake;
 import frc.robot.commands.simplecommands.SimpleShoot;
@@ -18,6 +24,8 @@ import frc.robot.subsystems.Shooter;
 
 public class Robot extends TimedRobot {
 
+    Drivetrain drivetrain = Drivetrain.getInstance();
+
     private static final RootNamespace namespace = new RootNamespace("robot");
     private final Shooter shooter = Shooter.getInstance();
     private final CollectionMovement collectionMovement = CollectionMovement.getInstance();
@@ -25,16 +33,12 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        namespace.putCommand("move collection up", new MoveCollectionUpSlowly(collectionMovement));
-        namespace.putCommand("move collection down", new MoveCollection(collectionMovement, ()-> -0.05).withTimeout(1));
-        namespace.putCommand("move up slow", new MoveCollection(collectionMovement, ()-> 0.1));
-        namespace.putCommand("shoot", new SimpleShoot(shooter, ()-> -0.3));
-        namespace.putCommand("collect", new SimpleIntake(collection));
-        namespace.putCommand("re lease", new MoveGenericSubsystem(collection, -0.2));
+
     }
 
     @Override
     public void robotPeriodic() {
+        SwerveModuleHolder.updateNamespace();
         CommandScheduler.getInstance().run();
         namespace.update();
     }
@@ -51,7 +55,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-
+        drivetrain.resetFieldRelativity();
+        drivetrain.resetRelativeEncoders();
     }
 
     @Override
@@ -60,7 +65,12 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        drivetrain.resetFieldRelativity();
+        drivetrain.resetRelativeEncoders();
+
         OI oi = new OI();
+        drivetrain.setDefaultCommand(new Drive(drivetrain, () -> oi.getLeftY() * 2, () -> oi.getLeftX() * 2,
+                () -> oi.getRightX() * -0.6, true, false));
     }
 
     @Override
