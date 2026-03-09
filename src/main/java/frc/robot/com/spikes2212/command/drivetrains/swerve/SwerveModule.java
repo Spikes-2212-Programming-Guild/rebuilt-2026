@@ -22,8 +22,8 @@ public abstract class SwerveModule extends DashboardedSubsystem {
     private static final double DEGREES_TO_FLIP = 180;
     private static final double MAX_DISTANCE_TO_ROTATE = 90;
 
-    protected final SmartMotorController driveMotor;
-    protected final SmartMotorController turnMotor;
+    private final SmartMotorController driveMotor;
+    private final SmartMotorController turnMotor;
 
     protected final boolean driveMotorInverted;
     protected final boolean turnMotorInverted;
@@ -67,11 +67,11 @@ public abstract class SwerveModule extends DashboardedSubsystem {
         this.driveMotorFeedForwardSettings = driveMotorFeedForwardSettings;
         this.turnMotorFeedForwardSettings = turnMotorFeedForwardSettings;
         this.minSpeedLimit = minSpeedLimit;
-        driveMotor.setInverted(driveMotorInverted);
-        turnMotor.setInverted(!turnMotorInverted);
-        configureTurnController();
-        configureDriveController();
-        configureAbsoluteEncoder();
+//        driveMotor.setInverted(driveMotorInverted);
+//        turnMotor.setInverted(!turnMotorInverted);
+//        configureTurnController();
+//        configureDriveController();
+//        configureAbsoluteEncoder();
     }
 
     /**
@@ -150,7 +150,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
      */
     public void setTargetAngle(Rotation2d targetAngle) {
         turnMotor.pidSet(UnifiedControlMode.POSITION, targetAngle.getDegrees(), turnMotorPIDSettings,
-                turnMotorFeedForwardSettings, false);
+                turnMotorFeedForwardSettings, true);
     }
 
     /**
@@ -163,7 +163,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
     public void setTargetVelocity(double targetVelocity, double maxPossibleVelocity, boolean useVelocityPID) {
         if (useVelocityPID) {
             driveMotor.pidSet(UnifiedControlMode.VELOCITY, targetVelocity, driveMotorPIDSettings,
-                    driveMotorFeedForwardSettings, false);
+                    driveMotorFeedForwardSettings, true);
         } else {
             driveMotor.set(targetVelocity / maxPossibleVelocity);
         }

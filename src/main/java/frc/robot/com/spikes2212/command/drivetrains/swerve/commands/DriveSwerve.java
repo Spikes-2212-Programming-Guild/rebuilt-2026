@@ -42,6 +42,7 @@ public class DriveSwerve extends Command {
      */
     public DriveSwerve(SwerveDrivetrain drivetrain, Supplier<Double> xSpeed, Supplier<Double> ySpeed,
                        Supplier<Double> rotationSpeed, boolean isFieldRelative, boolean useVelocityPID) {
+        addRequirements(drivetrain);
         this.drivetrain = drivetrain;
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;

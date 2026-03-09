@@ -55,7 +55,6 @@ public abstract class SwerveDrivetrain extends DashboardedSubsystem {
         kinematics = calculateKinematics();
 
         resetRelativeEncoders();
-        configureDashboard();
     }
 
     /**

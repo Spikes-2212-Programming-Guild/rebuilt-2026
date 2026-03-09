@@ -1,5 +1,7 @@
 package frc.robot.com.spikes2212.util.smartmotorcontrollers;
 
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.*;
 import com.revrobotics.spark.config.*;
 import frc.robot.com.spikes2212.control.FeedForwardController;
@@ -112,8 +114,8 @@ public class SparkWrapper implements SmartMotorController {
 
     public void applyConfiguration(SparkBaseConfig newConfig) {
         sparkConfig.apply(newConfig);
-        sparkBase.configure(sparkConfig, SparkBase.ResetMode.kNoResetSafeParameters,
-                SparkBase.PersistMode.kNoPersistParameters);
+        sparkBase.configure(sparkConfig, ResetMode.kNoResetSafeParameters,
+                PersistMode.kNoPersistParameters);
     }
 
     public ClosedLoopConfig getClosedLoopConfiguration() {
@@ -122,8 +124,8 @@ public class SparkWrapper implements SmartMotorController {
 
     public void applyClosedLoopConfig(ClosedLoopConfig newConfig) {
         closedLoopConfig.apply(newConfig);
-        sparkBase.configure(sparkConfig.apply(closedLoopConfig), SparkBase.ResetMode.kNoResetSafeParameters,
-                SparkBase.PersistMode.kNoPersistParameters);
+        sparkBase.configure(sparkConfig.apply(closedLoopConfig), ResetMode.kNoResetSafeParameters,
+                PersistMode.kNoPersistParameters);
     }
 
     public void restoreFactoryDefaults() {
@@ -131,8 +133,8 @@ public class SparkWrapper implements SmartMotorController {
         else if (sparkBase instanceof SparkFlex) sparkConfig = new SparkFlexConfig();
         closedLoopConfig = new ClosedLoopConfig();
         encoderConfig = new EncoderConfig();
-        sparkBase.configure(sparkConfig, SparkBase.ResetMode.kResetSafeParameters,
-                SparkBase.PersistMode.kPersistParameters);
+        sparkBase.configure(sparkConfig, ResetMode.kResetSafeParameters,
+                PersistMode.kPersistParameters);
     }
 
     @Override
@@ -156,8 +158,8 @@ public class SparkWrapper implements SmartMotorController {
         if (leaderID != 0) {
             sparkConfig.follow(leaderID, inverted);
         } else sparkConfig.inverted(inverted);
-        sparkBase.configure(sparkConfig, SparkBase.ResetMode.kNoResetSafeParameters,
-                SparkBase.PersistMode.kNoPersistParameters);
+        sparkBase.configure(sparkConfig, ResetMode.kNoResetSafeParameters,
+                PersistMode.kNoPersistParameters);
     }
 
     @Override
@@ -178,27 +180,27 @@ public class SparkWrapper implements SmartMotorController {
     public void follow(SparkWrapper master) {
         setIdleMode(master.configAccessor.getIdleMode());
         sparkBase.configure(sparkConfig.follow(master.sparkBase, getInverted()),
-                SparkBase.ResetMode.kNoResetSafeParameters, SparkBase.PersistMode.kNoPersistParameters);
+                ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
     public void unfollow() {
         sparkConfig.disableFollowerMode();
-        sparkBase.configure(sparkConfig, SparkBase.ResetMode.kNoResetSafeParameters,
-                SparkBase.PersistMode.kNoPersistParameters);
+        sparkBase.configure(sparkConfig, ResetMode.kNoResetSafeParameters,
+                PersistMode.kNoPersistParameters);
     }
 
     public void setIdleMode(SparkBaseConfig.IdleMode idleMode) {
         sparkConfig.idleMode(idleMode);
-        sparkBase.configure(sparkConfig, SparkBase.ResetMode.kNoResetSafeParameters,
-                SparkBase.PersistMode.kNoPersistParameters);
+        sparkBase.configure(sparkConfig, ResetMode.kNoResetSafeParameters,
+                PersistMode.kNoPersistParameters);
     }
 
     @Override
     public void configurePID(PIDSettings pidSettings) {
         closedLoopConfig.pid(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
         closedLoopConfig.iZone(pidSettings.getIZone());
-        sparkBase.configure(sparkConfig.apply(closedLoopConfig), SparkBase.ResetMode.kNoResetSafeParameters,
-                SparkBase.PersistMode.kNoPersistParameters);
+        sparkBase.configure(sparkConfig.apply(closedLoopConfig), ResetMode.kNoResetSafeParameters,
+                PersistMode.kNoPersistParameters);
     }
 
     @Override
@@ -209,12 +211,12 @@ public class SparkWrapper implements SmartMotorController {
     @Override
     public void configureTrapezoid(TrapezoidProfileSettings trapezoidProfileSettings) {
         MAXMotionConfig maxMotionConfig = new MAXMotionConfig();
-        maxMotionConfig.maxVelocity(trapezoidProfileSettings.getMaxVelocity()).
+        maxMotionConfig.cruiseVelocity(trapezoidProfileSettings.getMaxVelocity()).
                 maxAcceleration(trapezoidProfileSettings.getMaxAcceleration());
         closedLoopConfig.apply(maxMotionConfig);
         // @TODO add s-curve when REV implements it
-        sparkBase.configure(sparkConfig.apply(closedLoopConfig), SparkBase.ResetMode.kNoResetSafeParameters,
-                SparkBase.PersistMode.kNoPersistParameters);
+        sparkBase.configure(sparkConfig.apply(closedLoopConfig), ResetMode.kNoResetSafeParameters,
+                PersistMode.kNoPersistParameters);
     }
 
     @Override
@@ -228,8 +230,8 @@ public class SparkWrapper implements SmartMotorController {
                        boolean updatePeriodically) {
         if (updatePeriodically) configureLoop(pidSettings, feedForwardSettings, trapezoidProfileSettings);
         double source;
-        if (feedForwardSettings.getControlMode() == FeedForwardController.ControlMode.LINEAR_POSITION ||
-                feedForwardSettings.getControlMode() == FeedForwardController.ControlMode.ANGULAR_POSITION) {
+        if (feedForwardController.getControlMode() == FeedForwardController.ControlMode.LINEAR_POSITION ||
+                feedForwardController.getControlMode() == FeedForwardController.ControlMode.ANGULAR_POSITION) {
             source = sparkBase.getEncoder().getPosition();
         } else {
             source = sparkBase.getEncoder().getVelocity();
@@ -250,7 +252,7 @@ public class SparkWrapper implements SmartMotorController {
         } else {
             source = sparkBase.getEncoder().getVelocity();
         }
-        sparkBase.getClosedLoopController().setReference(setpoint, controlMode.getSparkControlType(),
+            sparkBase.getClosedLoopController().setReference(setpoint, controlMode.getSparkControlType(),
                 ClosedLoopSlot.kSlot0, feedForwardController.calculate(source, setpoint, acceleration));
     }
 
@@ -274,14 +276,14 @@ public class SparkWrapper implements SmartMotorController {
 
     public void setPositionConversionFactor(double factor) {
         encoderConfig.positionConversionFactor(factor);
-        sparkBase.configure(sparkConfig.apply(encoderConfig), SparkBase.ResetMode.kNoResetSafeParameters,
-                SparkBase.PersistMode.kNoPersistParameters);
+        sparkBase.configure(sparkConfig.apply(encoderConfig), ResetMode.kNoResetSafeParameters,
+                PersistMode.kNoPersistParameters);
     }
 
     public void setVelocityConversionFactor(double factor) {
         encoderConfig.velocityConversionFactor(factor);
-        sparkBase.configure(sparkConfig.apply(encoderConfig), SparkBase.ResetMode.kNoResetSafeParameters,
-                SparkBase.PersistMode.kNoPersistParameters);
+        sparkBase.configure(sparkConfig.apply(encoderConfig), ResetMode.kNoResetSafeParameters,
+                PersistMode.kNoPersistParameters);
     }
 
     @Override
@@ -300,5 +302,9 @@ public class SparkWrapper implements SmartMotorController {
 
     public double getCurrent() {
         return sparkBase.getOutputCurrent();
+    }
+
+    public SparkBase getDevice() {
+        return sparkBase;
     }
 }

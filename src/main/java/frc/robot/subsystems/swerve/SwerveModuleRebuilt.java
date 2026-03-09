@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.com.spikes2212.command.drivetrains.swerve.SwerveModule;
 import frc.robot.com.spikes2212.control.FeedForwardSettings;
 import frc.robot.com.spikes2212.control.PIDSettings;
+import frc.robot.com.spikes2212.control.TrapezoidProfileSettings;
+import frc.robot.com.spikes2212.util.UnifiedControlMode;
 import frc.robot.com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import frc.robot.com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 
@@ -50,18 +52,28 @@ public class SwerveModuleRebuilt extends SwerveModule {
         this.driveMotor = driveMotor;
         this.turnMotor = turnMotor;
         this.cancoder = cancoder;
+        driveMotor.setInverted(driveMotorInverted);
+        turnMotor.setInverted(!turnMotorInverted);
+        configureTurnController();
+        configureDriveController();
+        configureAbsoluteEncoder();
         setCurrents();
+        configureDashboard();
     }
 
     @Override
     protected void configureDriveController() {
         driveMotor.setEncoderConversionFactor(DRIVE_MOTOR_ROTATION_TO_WHEEL_ROTATIONS);
+        driveMotor.configureLoop(driveMotorPIDSettings, driveMotorFeedForwardSettings,
+                TrapezoidProfileSettings.EMPTY_TRAPEZOID_PROFILE_SETTINGS);
     }
 
     @Override
     protected void configureTurnController() {
         turnMotor.setPositionConversionFactor(TURN_POSITION_IN_ROTATION);
         turnMotor.setVelocityConversionFactor(TURN_VELOCITY_IN_ROTATION);
+        turnMotor.configureLoop(turnMotorPIDSettings, turnMotorFeedForwardSettings,
+                TrapezoidProfileSettings.EMPTY_TRAPEZOID_PROFILE_SETTINGS);
     }
 
     @Override
@@ -87,17 +99,25 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("absolute encoder", getAbsoluteModuleAngle()::getDegrees);
+        namespace.putNumber("absolute encoder", () -> this.getAbsoluteModuleAngle().getDegrees());
         namespace.putNumber("relative angle", this::getRelativeModuleAngle);
         namespace.putNumber("current drive velocity", driveMotor::getVelocity);
         namespace.putNumber("current turn velocity", turnMotor::getVelocity);
 
-        namespace.putCommand("set angle to 0", new FunctionalCommand(() -> {
+        namespace.putCommand("set angle to an angle", new FunctionalCommand(() -> {
         },
                 () -> setTargetState(
-                        new SwerveModuleState(0, Rotation2d.fromDegrees(0)),
+                        new SwerveModuleState(0, Rotation2d.fromDegrees(
+                                namespace.addConstantDouble("angle to pid", 0).get())),
                         Drivetrain.MAX_POSSIBLE_VELOCITY, false
                 ), b -> stop(), () -> false));
+
+        namespace.putCommand("set velocity to a velocity", new FunctionalCommand(() -> {
+        },
+                () -> setTargetState(
+                        new SwerveModuleState(namespace.addConstantDouble("velocity to pid", 1).get(),
+                                Rotation2d.fromDegrees(0)), Drivetrain.MAX_POSSIBLE_VELOCITY, true),
+                b -> stop(), () -> false));
 
         namespace.putCommand("drive at 0.2", new RunCommand(() -> driveMotor.set(0.2)) {
             @Override
