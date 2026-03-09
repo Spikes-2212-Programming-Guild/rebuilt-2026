@@ -4,19 +4,14 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
-import com.spikes2212.dashboard.Namespace;
-import com.spikes2212.util.UnifiedControlMode;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.units.Units;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import com.spikes2212.command.drivetrains.swerve.SwerveModule;
 import com.spikes2212.control.FeedForwardSettings;
 import com.spikes2212.control.PIDSettings;
 import com.spikes2212.control.TrapezoidProfileSettings;
 import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.units.Units;
 
 public class SwerveModuleRebuilt extends SwerveModule {
 
@@ -102,7 +97,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
     public void configureDashboard() {
 //        namespace.putNumber("absolute encoder", () -> this.getAbsoluteModuleAngle().getDegrees());
 //        namespace.putNumber("relative angle", this::getRelativeModuleAngle);
-//        namespace.putNumber("current drive velocity", driveMotor::getVelocity);
+        namespace.putNumber("current drive velocity", driveMotor::getVelocity);
 //        namespace.putNumber("current turn velocity", turnMotor::getVelocity);
 //        namespace.putNumber("voltage drive", driveMotor::getVoltage);
 //

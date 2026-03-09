@@ -35,7 +35,7 @@ public class RotateSwerveWithPID extends Command {
     protected double lastTimeNotOnTarget;
 
     /**
-     * Constructs a new {@link TurnModules} command that moves the given
+     * Constructs a new {@link RotateModulesWithPID} command that moves the given
      * {@link SwerveDrivetrain} to a certain angle as well as on the x-axis or y-axis.
      *
      * @param drivetrain          the swerve drivetrain this command operates on
@@ -65,7 +65,7 @@ public class RotateSwerveWithPID extends Command {
     }
 
     /**
-     * Constructs a new {@link TurnModules} command that moves the given
+     * Constructs a new {@link RotateModulesWithPID} command that moves the given
      * {@link SwerveDrivetrain} to a certain angle.
      *
      * @param drivetrain          the swerve drivetrain this command operates on

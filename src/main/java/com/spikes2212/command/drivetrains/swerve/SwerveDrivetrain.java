@@ -1,5 +1,6 @@
 package com.spikes2212.command.drivetrains.swerve;
 
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import com.spikes2212.command.DashboardedSubsystem;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -235,6 +236,15 @@ public abstract class SwerveDrivetrain extends DashboardedSubsystem {
      */
     public SwerveDriveKinematics getKinematics() {
         return kinematics;
+    }
+
+    /**
+     * @return an array of the robot's {@link SwerveModulePosition}s
+     */
+    public SwerveModulePosition[] getSwerveModulePositions() {
+        return new SwerveModulePosition[]{
+                frontLeftModule.getModulePosition(), frontRightModule.getModulePosition(),
+                backLeftModule.getModulePosition(), backRightModule.getModulePosition()};
     }
 
     /**

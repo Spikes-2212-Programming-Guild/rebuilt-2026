@@ -16,7 +16,7 @@ public class SwerveRotateWithPID extends RotateSwerveWithPID {
     private static final PIDSettings rotatePIDSettings = namespace.addPIDNamespace("rotate",
             PIDSettings.EMPTY_PID_SETTINGS);
     private static final FeedForwardSettings rotateFeedForwardSettings = namespace.addFeedForwardNamespace(
-            "rotate", new FeedForwardSettings(FeedForwardController.ControlMode.LINEAR_POSITION));
+            "rotate", new FeedForwardSettings(FeedForwardController.ControlMode.LINEAR_VELOCITY));
 
     public SwerveRotateWithPID(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, Supplier<Double> xSpeed,
                                Supplier<Double> ySpeed) {
