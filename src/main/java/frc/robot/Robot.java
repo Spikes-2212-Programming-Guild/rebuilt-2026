@@ -15,6 +15,7 @@ import frc.robot.commands.shoot.JustShoot;
 import frc.robot.commands.storage.Spin;
 import frc.robot.commands.storage.Transport;
 import frc.robot.commands.swerve.Drive;
+import frc.robot.commands.swerve.SwerveRotateWithPID;
 import frc.robot.subsystems.forbar.Collection;
 import frc.robot.subsystems.forbar.CollectionMovement;
 import frc.robot.subsystems.shoot.Shooter;
@@ -42,11 +43,14 @@ public class Robot extends TimedRobot {
         getInstances();
         namespace.putCommand("move collection up", new MoveCollectionUpSlowly(collectionMovement));
         namespace.putCommand("move collection down", new MoveCollection(collectionMovement, () -> -0.05));
-        namespace.putCommand("shoot", new JustShoot(shooter, namespace.addConstantDouble("shoot speed", -0.2)));
+        namespace.putCommand("shoot", new JustShoot(shooter, namespace.addConstantDouble("shoot speed",
+                -0.2)));
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
         namespace.putCommand("transport", new Transport(kicker));
         namespace.putCommand("collection", new Intake(collection));
         namespace.putCommand("jumpies", new Jumpies(collectionMovement));
+        namespace.putCommand("turn with swerve", new SwerveRotateWithPID(drivetrain,
+                namespace.addConstantDouble("setpoint", -1.0)));
     }
 
     @Override
