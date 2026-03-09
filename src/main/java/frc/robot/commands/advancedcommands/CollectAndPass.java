@@ -7,12 +7,11 @@ import java.util.function.Supplier;
 
 public class CollectAndPass extends ParallelCommandGroup {
 
-    public CollectAndPass(Collection collection, CollectionMovement collectionMovement,
-                          Hood hood, Shooter shooter, Supplier<Double> shootingSpeed,
-                          SpinningMagazine spinningMagazine, Transport transport) {
+    public CollectAndPass(Collection collection, CollectionMovement collectionMovement, Shooter shooter,
+                          Supplier<Double> shootingSpeed, SpinningMagazine spinningMagazine, Transport transport) {
         addCommands(
                 new Collect(collection, collectionMovement),
-                new Pass(hood, shooter, shootingSpeed, spinningMagazine, transport)
+                new Pass(shooter, shootingSpeed, spinningMagazine, transport)
         );
     }
 }

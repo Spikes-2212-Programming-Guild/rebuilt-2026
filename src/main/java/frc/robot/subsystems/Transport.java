@@ -9,7 +9,7 @@ public class Transport extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "transport";
 
-    public static final double SPEED  = -1.0;
+    public static final double SPEED  = -1;
 
     private final SparkWrapper sparkMax;
 
