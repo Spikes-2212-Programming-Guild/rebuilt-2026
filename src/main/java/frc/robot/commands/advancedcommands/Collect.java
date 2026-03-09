@@ -20,12 +20,11 @@ public class Collect extends ParallelCommandGroup {
                 new SequentialCommandGroup(
                         new MoveCollection(collectionMovement, DOWN_SPEED).withTimeout(TIME_TO_MOVE_COLLECTION),
                         new SequentialCommandGroup(
-                                new Jumpies(collectionMovement),
-                                new WaitCommand(4)
+                                new WaitCommand(4),
+                                new Jumpies(collectionMovement)
                         ).repeatedly()
                 ),
                 new Intake(collection)
-
         );
     }
 }
