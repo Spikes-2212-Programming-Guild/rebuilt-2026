@@ -2,15 +2,12 @@ package frc.robot.subsystems.forbar;
 
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
-import com.spikes2212.command.genericsubsystem.smartmotorcontrollersubsystem.SmartMotorControllerGenericSubsystem;
+import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 
 import frc.robot.RobotMap;
 
-public class CollectionMovement extends SmartMotorControllerGenericSubsystem {
-
-    public static final double OPEN_POSE = -1;
-    public static final double CLOSE_POSE = -1;
+public class CollectionMovement extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "collection movement";
     private static final double CURRENT_LIMIT_AMP = 40;
