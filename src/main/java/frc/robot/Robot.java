@@ -7,6 +7,7 @@ package frc.robot;
 import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.advancedcommands.Jumpies;
 import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
 import frc.robot.commands.intake.Intake;
 import frc.robot.commands.intake.MoveCollection;
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
         namespace.putCommand("transport", new Transport(kicker));
         namespace.putCommand("collection", new Intake(collection));
+        namespace.putCommand("jumpies", new Jumpies(collectionMovement));
     }
 
     @Override
