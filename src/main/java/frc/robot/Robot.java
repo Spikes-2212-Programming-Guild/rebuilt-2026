@@ -12,6 +12,7 @@ import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
 import frc.robot.commands.intake.Intake;
 import frc.robot.commands.intake.MoveCollection;
 import frc.robot.commands.shoot.JustShoot;
+import frc.robot.commands.shoot.ShootWithPID;
 import frc.robot.commands.storage.Spin;
 import frc.robot.commands.storage.Transport;
 import frc.robot.commands.swerve.Drive;
@@ -43,20 +44,21 @@ public class Robot extends TimedRobot {
         getInstances();
         namespace.putCommand("move collection up", new MoveCollectionUpSlowly(collectionMovement));
         namespace.putCommand("move collection down", new MoveCollection(collectionMovement, () -> -0.05));
-        namespace.putCommand("shoot", new JustShoot(shooter, namespace.addConstantDouble("shoot speed",
+        namespace.putCommand("shoot", new ShootWithPID(shooter, namespace.addConstantDouble("shoot speed",
                 -0.2)));
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
         namespace.putCommand("transport", new Transport(kicker));
         namespace.putCommand("collection", new Intake(collection));
         namespace.putCommand("jumpies", new Jumpies(collectionMovement));
-//        namespace.putCommand("turn with swerve", new SwerveRotateWithPID(drivetrain,
-//                namespace.addConstantDouble("setpoint", -1.0)));
+        namespace.putCommand("turn with swerve", new SwerveRotateWithPID(drivetrain,
+                namespace.addConstantDouble("setpoint", -1.0), true));
     }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         namespace.update();
+        SwerveRotateWithPID.updateNamespace();
     }
 
     @Override
@@ -86,7 +88,7 @@ public class Robot extends TimedRobot {
 
         OI oi = new OI();
         drivetrain.setDefaultCommand(new Drive(drivetrain, () -> oi.getLeftY() * 1.5, () -> oi.getLeftX() * 1.5,
-                () -> oi.getRightX() * -3, true, false));
+                () -> oi.getRightX() * -3, true, true));
     }
 
     @Override

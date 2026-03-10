@@ -16,14 +16,21 @@ public class SwerveRotateWithPID extends RotateSwerveWithPID {
     private static final PIDSettings rotatePIDSettings = namespace.addPIDNamespace("rotate",
             PIDSettings.EMPTY_PID_SETTINGS);
     private static final FeedForwardSettings rotateFeedForwardSettings = namespace.addFeedForwardNamespace(
-            "rotate", new FeedForwardSettings(FeedForwardController.ControlMode.LINEAR_VELOCITY));
+            "rotate", new FeedForwardSettings(FeedForwardController.ControlMode.LINEAR_POSITION));
 
     public SwerveRotateWithPID(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, Supplier<Double> xSpeed,
-                               Supplier<Double> ySpeed) {
-        super(drivetrain, setpoint, xSpeed, ySpeed, rotatePIDSettings, rotateFeedForwardSettings);
+                               Supplier<Double> ySpeed, boolean useVelocityPID) {
+        super(drivetrain, setpoint, xSpeed, ySpeed, rotatePIDSettings, rotateFeedForwardSettings, useVelocityPID);
     }
 
-    public SwerveRotateWithPID(SwerveDrivetrain drivetrain, Supplier<Double> setpoint){
-        super(drivetrain, setpoint, rotatePIDSettings, rotateFeedForwardSettings);
+    public SwerveRotateWithPID(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, boolean useVelocityPID){
+        super(drivetrain, setpoint, rotatePIDSettings, rotateFeedForwardSettings, useVelocityPID);
+        namespace.putNumber("setpoint in controller", pidController::getSetpoint);
+        namespace.putBoolean("at setpoint", pidController::atSetpoint);
     }
+
+    public static void updateNamespace() {
+        namespace.update();
+    }
+
 }
