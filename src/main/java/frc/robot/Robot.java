@@ -49,7 +49,6 @@ public class Robot extends TimedRobot {
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
         namespace.putCommand("transport", new Transport(kicker));
         namespace.putCommand("collection", new Intake(collection));
-        namespace.putCommand("jumpies", new Jumpies(collectionMovement));
         namespace.putCommand("turn with swerve", new SwerveRotateWithPID(drivetrain,
                 namespace.addConstantDouble("setpoint", -1.0), true));
     }
