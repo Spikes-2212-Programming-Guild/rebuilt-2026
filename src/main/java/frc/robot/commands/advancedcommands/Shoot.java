@@ -1,36 +1,42 @@
 package frc.robot.commands.advancedcommands;
 
 import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.commands.difficultcommands.ShootWithPID;
-import frc.robot.commands.simplecommands.SimpleSpin;
-import frc.robot.commands.simplecommands.SimpleTransport;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.SpinningMagazine;
-import frc.robot.subsystems.Transport;
-import frc.robot.utils.ShooterAlgo;
+import frc.robot.commands.shoot.ShootWithPID;
+import frc.robot.commands.storage.Spin;
+import frc.robot.commands.storage.Transport;
+import frc.robot.commands.swerve.SwerveRotateWithPID;
+import frc.robot.subsystems.shoot.Shooter;
+import frc.robot.subsystems.spindexer.Kicker;
+import frc.robot.subsystems.spindexer.SpinningMagazine;
+import frc.robot.subsystems.swerve.Drivetrain;
+import frc.robot.utils.ShooterAlgorithm;
 import frc.robot.utils.VisionService;
+
+import javax.swing.*;
 
 public class Shoot extends WrapperCommand {
 
     private final Shooter shooter;
-    private final Transport transport;
+    private final Kicker transport;
     private final SpinningMagazine spinningMagazine;
 
-    public Shoot(Shooter shooter, Transport transport, SpinningMagazine spinningMagazine,
-                 VisionService visionService) {
+    public Shoot(Shooter shooter, Kicker transport, SpinningMagazine spinningMagazine,
+                 Drivetrain drivetrain, VisionService visionService) {
         super(
                 new SequentialCommandGroup(
+                        new SwerveRotateWithPID(drivetrain,
+                                ()-> visionService.getTargetRelativePose().getRotation().getDegrees()),
                         new ShootWithPID(shooter,
-                                () -> ShooterAlgo.calculateRPM(visionService.getTargetRelativePose().getX())) {
+                                () -> ShooterAlgorithm.calculateRPM(visionService.getTargetRelativePose().getX())) {
 
                             @Override
                             public void end(boolean i) {}
                         },
                         new ParallelCommandGroup(
-                                new SimpleSpin(spinningMagazine),
-                                new SimpleTransport(transport),
+                                new Spin(spinningMagazine),
+                                new Transport(transport),
                                 new ShootWithPID(shooter,
-                                        () -> ShooterAlgo.calculateRPM(visionService.getTargetRelativePose().getX()))
+                                        () -> ShooterAlgorithm.calculateRPM(visionService.getTargetRelativePose().getX()))
                         )
                 )
         );
