@@ -51,6 +51,7 @@ public class RotateSwerveWithPID extends Command { //@TODO change the name
     public RotateSwerveWithPID(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, Supplier<Double> xSpeed,
                                Supplier<Double> ySpeed, PIDSettings pidSettings,
                                FeedForwardSettings feedForwardSettings, boolean useVelocityPID) {
+        addRequirements(drivetrain);
         this.drivetrain = drivetrain;
         this.setpoint = setpoint;
         this.pidSettings = pidSettings;

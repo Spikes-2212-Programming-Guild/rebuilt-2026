@@ -26,7 +26,6 @@ public class SwerveRotateWithPID extends RotateSwerveWithPID {
 
     public SwerveRotateWithPID(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, boolean useVelocityPID){
         super(drivetrain, setpoint, rotatePIDSettings, rotateFeedForwardSettings, useVelocityPID);
-        addRequirements(drivetrain);
         namespace.putNumber("setpoint in controller", pidController::getSetpoint);
         namespace.putBoolean("at setpoint", pidController::atSetpoint);
     }

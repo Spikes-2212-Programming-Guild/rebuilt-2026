@@ -37,7 +37,6 @@ public class RotateAccordingAprilTags extends Command {
 
     public RotateAccordingAprilTags(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, VisionService visionService,
                                     Supplier<Double> xSpeed, Supplier<Double> ySpeed) {
-        addRequirements(drivetrain);
         this.drivetrain = drivetrain;
         this.visionService = visionService;
         this.setpoint = setpoint;
