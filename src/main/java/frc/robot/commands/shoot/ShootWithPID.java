@@ -21,5 +21,5 @@ public class ShootWithPID extends MoveSmartMotorControllerGenericSubsystem {
 
     public ShootWithPID(Shooter shooter, Supplier<Double> speed) {
         super(shooter, PID_SETTINGS, FEED_FORWARD_SETTINGS, UnifiedControlMode.VELOCITY, speed, false);
-    }
+        }
 }

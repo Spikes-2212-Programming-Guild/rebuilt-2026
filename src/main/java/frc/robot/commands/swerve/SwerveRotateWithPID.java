@@ -21,10 +21,12 @@ public class SwerveRotateWithPID extends RotateSwerveWithPID {
     public SwerveRotateWithPID(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, Supplier<Double> xSpeed,
                                Supplier<Double> ySpeed, boolean useVelocityPID) {
         super(drivetrain, setpoint, xSpeed, ySpeed, rotatePIDSettings, rotateFeedForwardSettings, useVelocityPID);
+        addRequirements(drivetrain);
     }
 
     public SwerveRotateWithPID(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, boolean useVelocityPID){
         super(drivetrain, setpoint, rotatePIDSettings, rotateFeedForwardSettings, useVelocityPID);
+        addRequirements(drivetrain);
         namespace.putNumber("setpoint in controller", pidController::getSetpoint);
         namespace.putBoolean("at setpoint", pidController::atSetpoint);
     }

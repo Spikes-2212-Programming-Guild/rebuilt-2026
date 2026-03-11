@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -11,11 +12,11 @@ import frc.robot.commands.advancedcommands.Jumpies;
 import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
 import frc.robot.commands.intake.Intake;
 import frc.robot.commands.intake.MoveCollection;
-import frc.robot.commands.shoot.JustShoot;
 import frc.robot.commands.shoot.ShootWithPID;
 import frc.robot.commands.storage.Spin;
 import frc.robot.commands.storage.Transport;
 import frc.robot.commands.swerve.Drive;
+import frc.robot.commands.swerve.RotateAccordingAprilTags;
 import frc.robot.commands.swerve.SwerveRotateWithPID;
 import frc.robot.subsystems.forbar.Collection;
 import frc.robot.subsystems.forbar.CollectionMovement;
@@ -36,7 +37,7 @@ public class Robot extends TimedRobot {
     private Kicker kicker;
     private Shooter shooter;
 
-    VisionService visionService;
+    private VisionService visionService;
 
 
     @Override
@@ -49,8 +50,9 @@ public class Robot extends TimedRobot {
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
         namespace.putCommand("transport", new Transport(kicker));
         namespace.putCommand("collection", new Intake(collection));
-        namespace.putCommand("turn with swerve", new SwerveRotateWithPID(drivetrain,
-                namespace.addConstantDouble("setpoint", -1.0), true));
+        namespace.putCommand("collection 2.0", new MoveGenericSubsystem(collection, ()-> 0.3));
+        namespace.putCommand("jumpies", new Jumpies(collectionMovement));
+        namespace.putCommand("turn with swerve", new RotateAccordingAprilTags(drivetrain, ()-> 0.0, visionService));
     }
 
     @Override

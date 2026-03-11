@@ -56,16 +56,18 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
                 withSupplyCurrentLimit(CURRENT_LIMIT_AMP));
     }
 
-    @Override
-    public void configureDashboard() {
-        namespace.putNumber("motors speed", motorController::get);
-    }
-
     private void configureRelativeEncoder() {
         leftTalonFX.setEncoderConversionFactor(GEAR_RATIO * WHEEL_DIAMETER_IN_METERS);
     }
 
     public double getVelocity() {
         return leftTalonFX.getVelocity();
+    }
+
+    @Override
+    public void configureDashboard() {
+        namespace.putNumber("left motor velocity", leftTalonFX::getVelocity);
+        namespace.putNumber("middle motor velocity", middleTalonFX::getVelocity);
+        namespace.putNumber("right motor velocity", rightTalonFX::getVelocity);
     }
 }

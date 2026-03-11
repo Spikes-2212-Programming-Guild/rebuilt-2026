@@ -40,6 +40,10 @@ public class VisionService {
         }
         return limelight.getRobotPose().toPose2d();
     }
+    
+    public double getX() {
+        return limelight.getEntry("tx").getDouble(0);
+    }
 
     public boolean hasTarget() {
         return limelight.hasTarget();
