@@ -20,6 +20,7 @@ public class ShootMyGuy extends SequentialCommandGroup {
         addCommands(
                 new Drive(drivetrain, () -> SPEED_TO_DRIVE_X_AXIS, () -> 0.0,
                         () -> 0.0, true, true).withTimeout(TIME_TO_DRIVE),
+                // @TODO change these func to the new func that turns and shoots sequentially
                 new Drive(drivetrain, () -> 0.0, () -> 0.0, () -> SPEED_TO_DRIVE_ROTATIONAL_AXIS, true,
                         true).until(visionService::hasTarget),
                 new RotateAccordingAprilTags(drivetrain, () -> 0.0, visionService, true),
