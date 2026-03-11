@@ -1,6 +1,7 @@
 package frc.robot.commands.shoot;
 
 import com.spikes2212.command.genericsubsystem.commands.smartmotorcontrollergenericsubsystem.MoveSmartMotorControllerGenericSubsystem;
+import com.spikes2212.control.FeedForwardController;
 import com.spikes2212.control.FeedForwardSettings;
 import com.spikes2212.control.PIDSettings;
 import com.spikes2212.dashboard.RootNamespace;
@@ -14,10 +15,12 @@ public class ShootWithPID extends MoveSmartMotorControllerGenericSubsystem {
     private static final RootNamespace namespace = new RootNamespace("shoot with pid");
 
     private static final PIDSettings PID_SETTINGS = namespace.
-            addPIDNamespace("shoot", PIDSettings.EMPTY_PID_SETTINGS);
+            addPIDNamespace("shoot", new PIDSettings(0.16, 0.0005, 0.006,
+                    0, 0, 0));
 
     private static final FeedForwardSettings FEED_FORWARD_SETTINGS = namespace.
-            addFeedForwardNamespace("shoot", FeedForwardSettings.EMPTY_FF_SETTINGS);
+            addFeedForwardNamespace("shoot", new FeedForwardSettings(0.0395, 0.1, 0,
+                    FeedForwardController.ControlMode.LINEAR_VELOCITY));
 
     public ShootWithPID(Shooter shooter, Supplier<Double> speed) {
         super(shooter, PID_SETTINGS, FEED_FORWARD_SETTINGS, UnifiedControlMode.VELOCITY, speed, true);
