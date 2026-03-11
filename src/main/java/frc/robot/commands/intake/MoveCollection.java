@@ -1,0 +1,13 @@
+package frc.robot.commands.intake;
+
+import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
+import frc.robot.subsystems.forbar.CollectionMovement;
+
+import java.util.function.Supplier;
+
+public class MoveCollection extends MoveGenericSubsystem {
+
+    public MoveCollection(CollectionMovement collection, Supplier<Double> speed) {
+        super(collection, speed);
+    }
+}

@@ -4,23 +4,62 @@
 
 package frc.robot;
 
+import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
+import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.Hood;
-import frc.robot.subsystems.CollectionMovement;
+import frc.robot.commands.advancedcommands.Jumpies;
+import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
+import frc.robot.commands.intake.Intake;
+import frc.robot.commands.intake.MoveCollection;
+import frc.robot.commands.shoot.ShootWithPID;
+import frc.robot.commands.storage.Spin;
+import frc.robot.commands.storage.Transport;
+import frc.robot.commands.swerve.Drive;
+import frc.robot.commands.swerve.RotateAccordingAprilTags;
+import frc.robot.commands.swerve.SwerveRotateWithPID;
+import frc.robot.subsystems.forbar.Collection;
+import frc.robot.subsystems.forbar.CollectionMovement;
+import frc.robot.subsystems.shoot.Shooter;
+import frc.robot.subsystems.spindexer.Kicker;
+import frc.robot.subsystems.spindexer.SpinningMagazine;
+import frc.robot.subsystems.swerve.Drivetrain;
+import frc.robot.utils.VisionService;
 
 public class Robot extends TimedRobot {
 
-    private final Hood hood = Hood.getInstance();
+    private static final RootNamespace namespace = new RootNamespace("robot");
+
+    private Drivetrain drivetrain;
+    private Collection collection;
+    private CollectionMovement collectionMovement;
+    private SpinningMagazine spinningMagazine;
+    private Kicker kicker;
+    private Shooter shooter;
+
+    private VisionService visionService;
+
 
     @Override
     public void robotInit() {
-        CollectionMovement.getInstance().resetRelativeEncoder();
+        getInstances();
+        namespace.putCommand("move collection up", new MoveCollectionUpSlowly(collectionMovement));
+        namespace.putCommand("move collection down", new MoveCollection(collectionMovement, () -> -0.05));
+        namespace.putCommand("shoot", new ShootWithPID(shooter, namespace.addConstantDouble("shoot speed",
+                -0.2)));
+        namespace.putCommand("spindexer", new Spin(spinningMagazine));
+        namespace.putCommand("transport", new Transport(kicker));
+        namespace.putCommand("collection", new Intake(collection));
+        namespace.putCommand("collection 2.0", new MoveGenericSubsystem(collection, ()-> 0.3));
+        namespace.putCommand("jumpies", new Jumpies(collectionMovement));
+        namespace.putCommand("turn with swerve", new RotateAccordingAprilTags(drivetrain, ()-> 0.0, visionService));
     }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        namespace.update();
+        SwerveRotateWithPID.updateNamespace();
     }
 
     @Override
@@ -35,7 +74,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        hood.calibrateEncoderPosition();
+        drivetrain.resetFieldRelativity();
+        drivetrain.resetRelativeEncoders();
     }
 
     @Override
@@ -44,7 +84,12 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        hood.calibrateEncoderPosition();
+        drivetrain.resetFieldRelativity();
+        drivetrain.resetRelativeEncoders();
+
+        OI oi = new OI();
+        drivetrain.setDefaultCommand(new Drive(drivetrain, () -> oi.getLeftY() * 1.5, () -> oi.getLeftX() * 1.5,
+                () -> oi.getRightX() * -3, true, true));
     }
 
     @Override
@@ -70,5 +115,16 @@ public class Robot extends TimedRobot {
     @Override
     public void simulationPeriodic() {
 
+    }
+
+    public void getInstances() {
+        drivetrain = Drivetrain.getInstance();
+        collection = Collection.getInstance();
+        collectionMovement = CollectionMovement.getInstance();
+        spinningMagazine = SpinningMagazine.getInstance();
+        kicker = Kicker.getInstance();
+        shooter = Shooter.getInstance();
+
+        visionService = VisionService.getInstance();
     }
 }
