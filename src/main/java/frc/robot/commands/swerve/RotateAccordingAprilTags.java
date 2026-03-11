@@ -24,8 +24,9 @@ public class RotateAccordingAprilTags extends RotateSwerveWithPID {
             "april tag", new FeedForwardSettings(0.335, 0, 0,
                     FeedForwardController.ControlMode.LINEAR_POSITION));
 
-    public RotateAccordingAprilTags(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, VisionService visionService,
-                                    Supplier<Double> xSpeed, Supplier<Double> ySpeed, Boolean useVelocityPID) {
+    public RotateAccordingAprilTags(SwerveDrivetrain drivetrain, Supplier<Double> setpoint,
+                                    VisionService visionService, Supplier<Double> xSpeed, Supplier<Double> ySpeed,
+                                    Boolean useVelocityPID) {
         super(drivetrain, setpoint, visionService::getX, xSpeed, ySpeed, rotatePIDSettings,
                 rotateFeedForwardSettings, useVelocityPID);
     }
