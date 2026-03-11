@@ -18,7 +18,7 @@ import frc.robot.commands.storage.Spin;
 import frc.robot.commands.storage.Transport;
 import frc.robot.commands.swerve.Drive;
 import frc.robot.commands.swerve.RotateAccordingAprilTags;
-import frc.robot.commands.swerve.SwerveRotateWithPID;
+import frc.robot.commands.swerve.RotateAccordingToGyro;
 import frc.robot.subsystems.forbar.Collection;
 import frc.robot.subsystems.forbar.CollectionMovement;
 import frc.robot.subsystems.shoot.Shooter;
@@ -55,14 +55,15 @@ public class Robot extends TimedRobot {
         namespace.putCommand("collection", new Intake(collection));
         namespace.putCommand("collection 2.0", new MoveGenericSubsystem(collection, ()-> 0.3));
         namespace.putCommand("jumpies", new Jumpies(collectionMovement));
-        namespace.putCommand("turn with swerve", new RotateAccordingAprilTags(drivetrain, ()-> 0.0, visionService));
+        namespace.putCommand("turn with swerve", new RotateAccordingAprilTags(drivetrain, ()-> 0.0, visionService,
+                true));
     }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         namespace.update();
-        SwerveRotateWithPID.updateNamespace();
+        RotateAccordingToGyro.updateNamespace();
     }
 
     @Override
