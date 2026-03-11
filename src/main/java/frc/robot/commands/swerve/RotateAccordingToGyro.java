@@ -22,8 +22,8 @@ public class RotateAccordingToGyro extends RotateSwerveWithPID {
 
     public RotateAccordingToGyro(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, Supplier<Double> xSpeed,
                                  Supplier<Double> ySpeed, boolean useVelocityPID) {
-        super(drivetrain, setpoint, () -> drivetrain.getAngle().getDegrees(), xSpeed, ySpeed, rotatePIDSettings, rotateFeedForwardSettings, useVelocityPID);
-        addRequirements(drivetrain);
+        super(drivetrain, setpoint, () -> drivetrain.getAngle().getDegrees(), xSpeed, ySpeed, rotatePIDSettings,
+                rotateFeedForwardSettings, useVelocityPID);
     }
 
     public RotateAccordingToGyro(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, boolean useVelocityPID){
