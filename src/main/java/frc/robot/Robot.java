@@ -7,6 +7,7 @@ package frc.robot;
 import com.spikes2212.command.drivetrains.swerve.commands.RotateSwerveWithPID;
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import com.spikes2212.dashboard.RootNamespace;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.advancedcommands.Jumpies;
@@ -28,6 +29,8 @@ import frc.robot.subsystems.spindexer.Kicker;
 import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.subsystems.swerve.Drivetrain;
 import frc.robot.utils.VisionService;
+
+import static frc.robot.commands.advancedcommands.TuneAndShoot.DISTANCE_FROM_CAMERA_TO_SHOOTER;
 
 public class Robot extends TimedRobot {
 
@@ -55,14 +58,21 @@ public class Robot extends TimedRobot {
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
         namespace.putCommand("transport", new Transport(kicker));
         namespace.putCommand("collection", new Intake(collection));
-        namespace.putCommand("collection 2.0", new MoveGenericSubsystem(collection, ()-> 0.3));
+        namespace.putCommand("collection 2.0", new MoveGenericSubsystem(collection, () -> 0.3));
         namespace.putCommand("jumpies", new Jumpies(collectionMovement));
-        namespace.putCommand("turn with swerve", new RotateAccordingAprilTags(drivetrain, ()-> 0.0, visionService,
+        namespace.putCommand("turn with swerve", new RotateAccordingAprilTags(drivetrain, () -> 0.0, visionService,
                 true));
         namespace.putCommand("tune and shoot", new TuneAndShoot(shooter, kicker, spinningMagazine, drivetrain,
                 visionService));
         namespace.putCommand("rotate with PID", new Drive(drivetrain, () -> 0.0, () -> 0.0,
                 namespace.addConstantDouble("ks check", 0), true, true));
+        namespace.putNumber("limelight distance", () -> {
+            if (visionService.hasTarget()) {
+                return visionService.getZ() + DISTANCE_FROM_CAMERA_TO_SHOOTER;
+            }
+            return 0;
+        });
+        namespace.putNumber("tz", visionService::getZ);
     }
 
     @Override

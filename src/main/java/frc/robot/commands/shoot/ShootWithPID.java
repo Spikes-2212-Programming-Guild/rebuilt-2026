@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 public class ShootWithPID extends MoveSmartMotorControllerGenericSubsystem {
 
-    private static final RootNamespace namespace = new RootNamespace("shoot with pid");
+    private static final RootNamespace namespace = new RootNamespace("shoot with pid command");
 
     private static final PIDSettings PID_SETTINGS = namespace.
             addPIDNamespace("shoot", new PIDSettings(0.16, 0.0005, 0.006,
