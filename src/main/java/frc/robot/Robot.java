@@ -4,12 +4,14 @@
 
 package frc.robot;
 
+import com.spikes2212.command.drivetrains.swerve.commands.RotateSwerveWithPID;
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.advancedcommands.Jumpies;
 import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
+import frc.robot.commands.advancedcommands.TuneAndShoot;
 import frc.robot.commands.intake.Intake;
 import frc.robot.commands.intake.MoveCollection;
 import frc.robot.commands.shoot.JustShoot;
@@ -47,7 +49,7 @@ public class Robot extends TimedRobot {
         namespace.putCommand("move collection up", new MoveCollectionUpSlowly(collectionMovement));
         namespace.putCommand("move collection down", new MoveCollection(collectionMovement, () -> -0.05));
         namespace.putCommand("shoot", new ShootWithPID(shooter, namespace.addConstantDouble("shoot speed",
-                -0.2)));
+                -0.2), 100));
         namespace.putCommand("shoooot", new JustShoot(shooter, namespace.addConstantDouble("just shoot",
                 -0.5)));
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
@@ -57,17 +59,23 @@ public class Robot extends TimedRobot {
         namespace.putCommand("jumpies", new Jumpies(collectionMovement));
         namespace.putCommand("turn with swerve", new RotateAccordingAprilTags(drivetrain, ()-> 0.0, visionService,
                 true));
+        namespace.putCommand("tune and shoot", new TuneAndShoot(shooter, kicker, spinningMagazine, drivetrain,
+                visionService));
+        namespace.putCommand("rotate with PID", new Drive(drivetrain, () -> 0.0, () -> 0.0,
+                namespace.addConstantDouble("ks check", 0), true, true));
     }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         namespace.update();
+        ShootWithPID.updateNamespace();
     }
 
     @Override
     public void disabledInit() {
         CommandScheduler.getInstance().cancelAll();
+        shooter.stop();
     }
 
     @Override

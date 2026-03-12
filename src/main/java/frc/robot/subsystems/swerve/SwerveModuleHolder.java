@@ -41,7 +41,7 @@ public class SwerveModuleHolder {
             0, 0);
     private static final PIDSettings turnPIDSettings = new PIDSettings(0.023, 0.0003, 0.0033, 10,
             0, 0);
-    private static final FeedForwardSettings driveFeedForwardSettings = new FeedForwardSettings(0.04, 0.17,
+    private static final FeedForwardSettings driveFeedForwardSettings = new FeedForwardSettings(0.03, 0.17,
             0, FeedForwardController.ControlMode.LINEAR_VELOCITY);
     private static final FeedForwardSettings turnFeedForwardSettings = new FeedForwardSettings(0.19, 0, 0,
         FeedForwardController.ControlMode.LINEAR_POSITION);
