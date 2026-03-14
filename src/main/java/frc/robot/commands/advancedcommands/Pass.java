@@ -12,21 +12,17 @@ import frc.robot.subsystems.spindexer.SpinningMagazine;
 
 import java.util.function.Supplier;
 
-public class Pass extends SequentialCommandGroup {
+public class Pass extends ParallelCommandGroup {
 
     public Pass(Shooter shooter, Supplier<Double> shootingSpeed,
                 SpinningMagazine spinningMagazine,
                 Kicker transport
-                ) {
+    ) {
         addCommands(
-                new ParallelDeadlineGroup(
-                        new JustShoot(shooter, shootingSpeed)
-                ),
-                new ParallelCommandGroup(
-                        new Spin(spinningMagazine),
-                        new Transport(transport),
-                        new JustShoot(shooter, shootingSpeed)
-                )
+                new Spin(spinningMagazine),
+                new Transport(transport),
+                new JustShoot(shooter, shootingSpeed)
+
         );
     }
 }
