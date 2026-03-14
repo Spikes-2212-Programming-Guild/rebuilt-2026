@@ -4,13 +4,9 @@
 
 package frc.robot;
 
-import com.spikes2212.command.drivetrains.swerve.commands.RotateSwerveWithPID;
-import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import com.spikes2212.dashboard.RootNamespace;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.advancedcommands.Jumpies;
 import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
 import frc.robot.commands.advancedcommands.TuneAndShoot;
 import frc.robot.commands.intake.Intake;
@@ -49,7 +45,7 @@ public class Robot extends TimedRobot {
         namespace.putCommand("move collection down", new MoveCollection(collectionMovement, () -> -0.05));
         namespace.putCommand("shoot", new ShootWithPID(shooter, namespace.addConstantDouble("shoot speed",
                 -0.2), 100));
-        namespace.putCommand("shoooot", new JustShoot(shooter, ()-> 0.1));
+        namespace.putCommand("shoooot", new JustShoot(shooter, () -> 0.1));
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
         namespace.putCommand("transport", new Transport(kicker));
         namespace.putCommand("collection", new Intake(collection));
