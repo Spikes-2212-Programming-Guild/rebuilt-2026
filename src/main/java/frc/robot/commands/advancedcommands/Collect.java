@@ -3,8 +3,8 @@ package frc.robot.commands.advancedcommands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.intake.MoveCollection;
 import frc.robot.commands.intake.Intake;
+import frc.robot.commands.intake.MoveCollection;
 import frc.robot.subsystems.forbar.Collection;
 import frc.robot.subsystems.forbar.CollectionMovement;
 

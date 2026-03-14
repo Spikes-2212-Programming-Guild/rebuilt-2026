@@ -4,7 +4,6 @@ import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
-
 import frc.robot.RobotMap;
 
 public class CollectionMovement extends MotoredGenericSubsystem {

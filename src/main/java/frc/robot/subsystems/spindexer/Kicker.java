@@ -9,7 +9,7 @@ public class Kicker extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "transport";
 
-    public static final double SPEED  = -0.75;
+    public static final double SPEED = -0.75;
 
     private final SparkWrapper sparkMax;
 
@@ -32,6 +32,6 @@ public class Kicker extends MotoredGenericSubsystem {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("motor velocity",sparkMax::getVelocity);
+        namespace.putNumber("motor velocity", sparkMax::getVelocity);
     }
 }

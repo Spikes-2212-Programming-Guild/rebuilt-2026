@@ -6,9 +6,6 @@ import com.spikes2212.control.FeedForwardController;
 import com.spikes2212.control.FeedForwardSettings;
 import com.spikes2212.control.PIDSettings;
 import com.spikes2212.dashboard.RootNamespace;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.utils.VisionService;
 
 import java.util.function.Supplier;
@@ -35,4 +32,4 @@ public class RotateAccordingAprilTags extends RotateSwerveWithPID {
         super(drivetrain, setpoint, () -> visionService.getX() * -1, rotatePIDSettings,
                 rotateFeedForwardSettings, useVelocityPID);
     }
- }
+}

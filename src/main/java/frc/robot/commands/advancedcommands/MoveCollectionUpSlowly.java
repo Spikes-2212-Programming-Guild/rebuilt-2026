@@ -13,8 +13,8 @@ public class MoveCollectionUpSlowly extends SequentialCommandGroup {
 
     public MoveCollectionUpSlowly(CollectionMovement collectionMovement) {
         addCommands(
-                new MoveCollection(collectionMovement, ()-> MOVE_FAST_SPEED).withTimeout(TIME_TO_MOVE_FAST),
-                new MoveCollection(collectionMovement, ()-> MOVE_SLOW_SPEED).withTimeout(TIME_TO_MOVE_SLOW)
+                new MoveCollection(collectionMovement, () -> MOVE_FAST_SPEED).withTimeout(TIME_TO_MOVE_FAST),
+                new MoveCollection(collectionMovement, () -> MOVE_SLOW_SPEED).withTimeout(TIME_TO_MOVE_SLOW)
         );
     }
 }
