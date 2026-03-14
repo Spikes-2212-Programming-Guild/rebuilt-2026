@@ -19,9 +19,9 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
     private final TalonFXWrapper middleTalonFX;
     private final TalonFXWrapper rightTalonFX;
 
-    private static final boolean LEFT_MOTOR_INVERTED = false;
-    private static final boolean MIDDLE_MOTOR_INVERTED = false;
-    private static final boolean RIGHT_MOTOR_INVERTED = false;
+    private static final boolean LEFT_MOTOR_INVERTED = true;
+    private static final boolean MIDDLE_MOTOR_INVERTED = true;
+    private static final boolean RIGHT_MOTOR_INVERTED = true;
 
     private static Shooter instance;
 

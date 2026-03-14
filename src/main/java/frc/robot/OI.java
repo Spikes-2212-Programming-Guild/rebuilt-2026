@@ -9,6 +9,7 @@ import frc.robot.commands.advancedcommands.MoveCollectionUp;
 import frc.robot.commands.advancedcommands.Pass;
 import frc.robot.commands.advancedcommands.TuneAndShoot;
 import frc.robot.commands.intake.Intake;
+import frc.robot.commands.swerve.RotateAccordingToGyro;
 import frc.robot.subsystems.forbar.Collection;
 import frc.robot.subsystems.forbar.CollectionMovement;
 import frc.robot.subsystems.shoot.Shooter;
@@ -36,10 +37,15 @@ public class OI /*GEVALD*/{
         navigatorPlaystation.getR2Button().whileTrue(new Pass(shooter, ()-> -1.0, spinningMagazine, kicker));
         navigatorPlaystation.getR1Button().whileTrue(new TuneAndShoot(shooter, kicker, spinningMagazine,
                 visionService));
-        navigatorPlaystation.getCircleButton().onTrue(new MoveGenericSubsystem(collection, 0.3));
+        navigatorPlaystation.getCircleButton().onTrue(new MoveGenericSubsystem(collection, -0.3));
         navigatorPlaystation.getSquareButton().onTrue(new Intake(collection));
-        navigatorPlaystation.getLeftStickButton().onTrue(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
-        driverPlaystation.getR1Button().onTrue(new InstantCommand(drivetrain::resetFieldRelativity));
+        navigatorPlaystation.getLeftStickButton().onTrue(
+                new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
+
+        driverPlaystation.getTriangleButton().onTrue(new InstantCommand(drivetrain::resetFieldRelativity));
+        driverPlaystation.getR1Button().whileTrue(new TuneAndShoot(shooter, kicker, spinningMagazine, visionService));
+        driverPlaystation.getL1Button().whileTrue(new RotateAccordingToGyro(drivetrain, () -> 90.0, true));
+
         }
 
     public double getLeftX(){
