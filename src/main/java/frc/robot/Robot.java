@@ -53,8 +53,8 @@ public class Robot extends TimedRobot {
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
         namespace.putCommand("transport", new Transport(kicker));
         namespace.putCommand("collection", new Intake(collection));
-        namespace.putCommand("tune and shoot", new TuneAndShoot(shooter, kicker, spinningMagazine, drivetrain,
-                visionService, 1));
+        namespace.putCommand("tune and shoot", new TuneAndShoot(shooter, kicker, spinningMagazine,
+                visionService));
     }
 
     @Override

@@ -23,7 +23,7 @@ public class TuneAndShoot extends SequentialCommandGroup {
     private static final double SECOND_WAIT_TIME = 10;
 
     public TuneAndShoot(Shooter shooter, Kicker transport, SpinningMagazine spinningMagazine,
-                        Drivetrain drivetrain, VisionService visionService, double rotationSpeed) {
+                        VisionService visionService) {
         addCommands(
                 new ShootWithPID(shooter,
                         ()-> (LINEAR_EQUATION_M_FACTOR * (visionService.getZ() + DISTANCE_FROM_CAMERA_TO_SHOOTER) +
