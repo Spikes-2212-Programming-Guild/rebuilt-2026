@@ -14,7 +14,7 @@ public class JustShootAuto extends SequentialCommandGroup {
                          VisionService visionService) {
         addCommands(
                 new Drive(drivetrain, drivetrain::getXSpeed, drivetrain::getYSpeed, drivetrain::getRotationSpeed,
-                        false, true),
-                new TuneAndShoot(shooter, transport, spinningMagazine, visionService));
+                        false, true).withTimeout(1),
+                new TuneAndShoot(shooter, transport, spinningMagazine, visionService).withTimeout(4));
     }
 }
