@@ -20,8 +20,6 @@ import frc.robot.commands.shoot.ShootWithPID;
 import frc.robot.commands.storage.Spin;
 import frc.robot.commands.storage.Transport;
 import frc.robot.commands.swerve.Drive;
-import frc.robot.commands.swerve.RotateAccordingAprilTags;
-import frc.robot.commands.swerve.RotateAccordingToGyro;
 import frc.robot.subsystems.forbar.Collection;
 import frc.robot.subsystems.forbar.CollectionMovement;
 import frc.robot.subsystems.shoot.Shooter;
@@ -29,8 +27,6 @@ import frc.robot.subsystems.spindexer.Kicker;
 import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.subsystems.swerve.Drivetrain;
 import frc.robot.utils.VisionService;
-
-import static frc.robot.commands.advancedcommands.TuneAndShoot.DISTANCE_FROM_CAMERA_TO_SHOOTER;
 
 public class Robot extends TimedRobot {
 
@@ -53,26 +49,12 @@ public class Robot extends TimedRobot {
         namespace.putCommand("move collection down", new MoveCollection(collectionMovement, () -> -0.05));
         namespace.putCommand("shoot", new ShootWithPID(shooter, namespace.addConstantDouble("shoot speed",
                 -0.2), 100));
-        namespace.putCommand("shoooot", new JustShoot(shooter, namespace.addConstantDouble("just shoot",
-                -0.5)));
+        namespace.putCommand("shoooot", new JustShoot(shooter, ()-> 0.1));
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
         namespace.putCommand("transport", new Transport(kicker));
         namespace.putCommand("collection", new Intake(collection));
-        namespace.putCommand("collection 2.0", new MoveGenericSubsystem(collection, () -> 0.3));
-        namespace.putCommand("jumpies", new Jumpies(collectionMovement));
-        namespace.putCommand("turn with swerve", new RotateAccordingAprilTags(drivetrain, () -> 0.0, visionService,
-                true));
         namespace.putCommand("tune and shoot", new TuneAndShoot(shooter, kicker, spinningMagazine, drivetrain,
-                visionService));
-        namespace.putCommand("rotate with PID", new Drive(drivetrain, () -> 0.0, () -> 0.0,
-                namespace.addConstantDouble("ks check", 0), true, true));
-        namespace.putNumber("limelight distance", () -> {
-            if (visionService.hasTarget()) {
-                return visionService.getZ() + DISTANCE_FROM_CAMERA_TO_SHOOTER;
-            }
-            return 0;
-        });
-        namespace.putNumber("tz", visionService::getZ);
+                visionService, 1));
     }
 
     @Override

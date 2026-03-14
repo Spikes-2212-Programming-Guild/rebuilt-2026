@@ -1,9 +1,6 @@
 package frc.robot.utils;
 
 import com.spikes2212.util.Limelight;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 
 public class VisionService {
 
@@ -23,23 +20,6 @@ public class VisionService {
     private VisionService(String limelightName) {
         limelight = new Limelight(limelightName);
     }
-
-    public Pose2d getTargetRelativePose() {
-        double[] result =  limelight.getEntry("targetpose_cameraspace").getDoubleArray(new double[0]);
-        if (limelight.getID() >= 0) {
-            Translation2d translation2d = new Translation2d(result[0], result[1]);
-            Rotation2d rotation2d = new Rotation2d(result[2]);
-            return new Pose2d(translation2d, rotation2d);
-        }
-        return null;
-    }
-
-    public Pose2d getFieldRelativePose() {
-        if (limelight.getRobotPose() == null) {
-            return null;
-        }
-        return limelight.getRobotPose().toPose2d();
-    }
     
     public double getX() {
         return limelight.getEntry("tx").getDouble(0);
@@ -47,12 +27,10 @@ public class VisionService {
 
     public double getZ() {
         if (hasTarget()) return limelight.getEntry("targetpose_cameraspace").getDoubleArray(new double[0])[2];
-        return 0;
+        return 0.0; //@TODO find a better default speed
     }
 
     public boolean hasTarget() {
         return limelight.hasTarget();
     }
-
-
 }
