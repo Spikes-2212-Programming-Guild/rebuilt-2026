@@ -2,8 +2,8 @@ package frc.robot.autonomous;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.advancedcommands.GoAndWaitAuto;
-import frc.robot.commands.advancedcommands.JustShootAuto;
+import frc.robot.autonomous.autoincode.GoAndWaitAuto;
+import frc.robot.autonomous.autoincode.JustShootAuto;
 import frc.robot.subsystems.shoot.Shooter;
 import frc.robot.subsystems.spindexer.Kicker;
 import frc.robot.subsystems.spindexer.SpinningMagazine;

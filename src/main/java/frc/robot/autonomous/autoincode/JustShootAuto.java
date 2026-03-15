@@ -1,6 +1,7 @@
-package frc.robot.commands.advancedcommands;
+package frc.robot.autonomous.autoincode;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.advancedcommands.TuneAndShoot;
 import frc.robot.commands.swerve.Drive;
 import frc.robot.subsystems.shoot.Shooter;
 import frc.robot.subsystems.spindexer.Kicker;
