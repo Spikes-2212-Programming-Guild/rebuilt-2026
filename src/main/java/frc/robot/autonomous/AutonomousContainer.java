@@ -34,7 +34,6 @@ import frc.robot.utils.VisionService;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
-import java.util.function.Supplier;
 
 public class AutonomousContainer {
 
@@ -74,7 +73,7 @@ public class AutonomousContainer {
 
     public AutonomousContainer(Drivetrain drivetrain) {
         this.drivetrain = drivetrain;
-        this.pathConstraints = new PathConstraints(-1,-1,-1,-1);
+        this.pathConstraints = new PathConstraints(-1, -1, -1, -1);
 
         xPidController = buildPIDControllerFromSettings(X_CONTROLLER_SETTINGS);
         yPidController = buildPIDControllerFromSettings(Y_CONTROLLER_SETTINGS);
@@ -173,11 +172,11 @@ public class AutonomousContainer {
         return new PIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
     }
 
-    private static ProfiledPIDController buildProfiledPIDControllerFromSettings(PIDSettings pidSettings){
+    private static ProfiledPIDController buildProfiledPIDControllerFromSettings(PIDSettings pidSettings) {
         return new ProfiledPIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD(), constraints);
     }
 
-    private static AutoChooser configureAutoChooser(){
+    private static AutoChooser configureAutoChooser() {
         return new AutoChooser(
                 NAMESPACE,
                 pathContainer.getShootAndToss(),
@@ -190,7 +189,7 @@ public class AutonomousContainer {
         );
     }
 
-    private void configureDashboard(){
+    private void configureDashboard() {
         NAMESPACE.putData("auto chooser", autoChooser);
     }
 
@@ -198,7 +197,7 @@ public class AutonomousContainer {
         return autoChooser.getSelected();
     }
 
-    private void registerNamedCommands(){
+    private void registerNamedCommands() {
         NamedCommands.registerCommand("collect and pass", new CollectAndPass(
                 Collection.getInstance(), CollectionMovement.getInstance(), Shooter.getInstance(), () -> 0.5,
                 SpinningMagazine.getInstance(), Kicker.getInstance()));
