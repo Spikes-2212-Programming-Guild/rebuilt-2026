@@ -76,10 +76,9 @@ public class AutonomousContainer {
         this.drivetrain = drivetrain;
         this.pathConstraints = new PathConstraints(-1,-1,-1,-1);
 
-        xPidController = buildPIDControllerFromSettings(drivetrain.getFrontRightModule().getDriveMotorPIDSettings());
-        yPidController = buildPIDControllerFromSettings(drivetrain.getFrontRightModule().getDriveMotorPIDSettings());
-        rotationalPidController = buildProfiledPIDControllerFromSettings(drivetrain.getFrontRightModule().
-                getTurnMotorPIDSettings());
+        xPidController = buildPIDControllerFromSettings(X_CONTROLLER_SETTINGS);
+        yPidController = buildPIDControllerFromSettings(Y_CONTROLLER_SETTINGS);
+        rotationalPidController = buildProfiledPIDControllerFromSettings(ROTATIONAL_CONTROLLER_SETTINGS);
 
         PathfindingCommand.warmupCommand().execute();
         configureAutoBuilder();
