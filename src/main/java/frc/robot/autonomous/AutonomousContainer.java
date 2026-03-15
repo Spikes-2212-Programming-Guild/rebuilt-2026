@@ -135,11 +135,9 @@ public class AutonomousContainer {
 
     private Command getPIDtoPoseCommand(Pose2d targetPose) {
         return new FunctionalCommand(
-                () -> {
-                },
+                () -> {},
                 () -> driveWithPIDtoPose(targetPose),
-                (interrupted) -> {
-                },
+                (interrupted) -> {},
                 () -> drivetrain.atPose(targetPose),
                 drivetrain
         ).withTimeout(PID_TO_POSE_TIMEOUT);
