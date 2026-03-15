@@ -11,11 +11,13 @@ import frc.robot.utils.VisionService;
 
 public class JustShootAuto extends SequentialCommandGroup {
 
+    //@TODO change supplier values after calibration
+
     public JustShootAuto(Drivetrain drivetrain, Shooter shooter, Kicker transport, SpinningMagazine spinningMagazine,
                          VisionService visionService) {
         addCommands(
-                new Drive(drivetrain, drivetrain::getXSpeed, drivetrain::getYSpeed, drivetrain::getRotationSpeed,
-                        false, true).withTimeout(1),
+                new Drive(drivetrain, () -> 0.0, () -> 0.0, () -> 0.0, false, true).
+                        withTimeout(1),
                 new TuneAndShoot(shooter, transport, spinningMagazine, visionService).withTimeout(4));
     }
 }

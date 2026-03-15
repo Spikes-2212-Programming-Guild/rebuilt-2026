@@ -6,9 +6,10 @@ import frc.robot.subsystems.swerve.Drivetrain;
 
 public class GoAndWaitAuto extends SequentialCommandGroup {
 
+    //@TODO change supplier values after calibration
+
     public GoAndWaitAuto(Drivetrain drivetrain) {
-        addCommands(new Drive(drivetrain, drivetrain::getXSpeed, drivetrain::getYSpeed,drivetrain::getRotationSpeed,
-                false, true).
+        addCommands(new Drive(drivetrain, () -> 0.0, () -> 0.0,() -> 0.0, false, true).
                 withTimeout(3));
     }
 }

@@ -158,18 +158,6 @@ public class Drivetrain extends SwerveDrivetrain {
                 transformBy(new Transform2d(predictedXSpeed, predictedYSpeed, predictedRotationSpeed));
     }
 
-    public double getXSpeed(){
-        return getSpeeds().vxMetersPerSecond;
-    }
-
-    public double getYSpeed(){
-        return getSpeeds().vyMetersPerSecond;
-    }
-
-    public double getRotationSpeed(){
-        return getSpeeds().omegaRadiansPerSecond;
-    }
-
     @Override
     public void configureDashboard() {
         namespace.putNumber("gyro", () -> this.getAngle().getDegrees());
