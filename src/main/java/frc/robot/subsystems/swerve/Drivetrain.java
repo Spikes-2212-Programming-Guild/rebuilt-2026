@@ -123,6 +123,10 @@ public class Drivetrain extends SwerveDrivetrain {
         odometry.resetPose(newPose);
     }
 
+    public void updateOdometry() {
+        odometry.update(getAngle(),getSwerveModulePositions());
+    }
+
     private boolean atAxis(double currentAxisPose, double targetAxisPose, double currentVelocity) {
         boolean isAtPose = Math.abs(currentAxisPose - targetAxisPose) <= TRANSLATION_POSE_TOLERANCE;
         boolean isRobotStill = Math.abs(currentVelocity) <= TRANSLATION_VELOCITY_TOLERANCE;
