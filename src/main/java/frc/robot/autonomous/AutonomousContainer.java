@@ -177,11 +177,11 @@ public class AutonomousContainer {
     private static AutoChooser configureAutoChooser() {
         return new AutoChooser(
                 NAMESPACE,
-                pathContainer.getShootAndToss(),
+                pathContainer.getFilpedShootAndToss(),
                 pathContainer.getIntakeFromDepot(),
                 pathContainer.getIntakeFromFeeder(),
                 pathContainer.getIntakeAndShoot(),
-                pathContainer.getJustToss(),
+                pathContainer.getShootAndToss(),
                 pathContainer.getJustShoot(),
                 pathContainer.getGoAndWait()
         );
