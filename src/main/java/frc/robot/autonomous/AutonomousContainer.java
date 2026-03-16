@@ -45,7 +45,7 @@ public class AutonomousContainer {
 
     private static final TrapezoidProfile.Constraints constraints =
             new TrapezoidProfile.Constraints(CONFIG.moduleConfig.maxDriveVelocityMPS, -1);
-    private static final PathConstraints pathConstraints = new PathConstraints(-1,-1,-1,-1);
+    private static final PathConstraints pathConstraints = new PathConstraints(-1, -1, -1, -1);
 
     private static final double ROBOT_POSE_LATENCY = -1;
     private static final double FF_SCALER = -1;
@@ -133,9 +133,11 @@ public class AutonomousContainer {
 
     private Command getPIDtoPoseCommand(Pose2d targetPose) {
         return new FunctionalCommand(
-                () -> {},
+                () -> {
+                },
                 () -> driveWithPIDtoPose(targetPose),
-                (interrupted) -> {},
+                (interrupted) -> {
+                },
                 () -> drivetrain.atPose(targetPose),
                 drivetrain
         ).withTimeout(PID_TO_POSE_TIMEOUT);
@@ -162,14 +164,6 @@ public class AutonomousContainer {
 
     private void setupTargetPoseUpdateLoop() {
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> pathplannerTargetPose = pose);
-    }
-
-    private static PIDController buildPIDControllerFromSettings(PIDSettings pidSettings) {
-        return new PIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
-    }
-
-    private static ProfiledPIDController buildProfiledPIDControllerFromSettings(PIDSettings pidSettings) {
-        return new ProfiledPIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD(), constraints);
     }
 
     private static AutoChooser configureAutoChooser() {
@@ -203,6 +197,14 @@ public class AutonomousContainer {
                 SpinningMagazine.getInstance(), Kicker.getInstance()));
         NamedCommands.registerCommand("aligned shoot", new TuneAndShoot(Shooter.getInstance(),
                 Kicker.getInstance(), SpinningMagazine.getInstance(), VisionService.getInstance()));
+    }
+
+    private static PIDController buildPIDControllerFromSettings(PIDSettings pidSettings) {
+        return new PIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
+    }
+
+    private static ProfiledPIDController buildProfiledPIDControllerFromSettings(PIDSettings pidSettings) {
+        return new ProfiledPIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD(), constraints);
     }
 
     public static boolean shouldMirror() {
