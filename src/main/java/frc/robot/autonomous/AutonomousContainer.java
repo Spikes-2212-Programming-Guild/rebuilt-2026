@@ -42,7 +42,6 @@ public class AutonomousContainer {
     private static final RootNamespace NAMESPACE = new RootNamespace("autonomous");
 
     //@TODO get the path constraints values after calibration
-    //@TODO add the paths from pathplanner
 
     private static final TrapezoidProfile.Constraints constraints =
             new TrapezoidProfile.Constraints(CONFIG.moduleConfig.maxDriveVelocityMPS, -1);
@@ -181,7 +180,7 @@ public class AutonomousContainer {
                 pathContainer.getIntakeFromDepot(),
                 pathContainer.getIntakeFromFeeder(),
                 pathContainer.getIntakeAndShoot(),
-                pathContainer.getShootAndToss(),
+                pathContainer.getShootAndPass(),
                 pathContainer.getJustShoot(),
                 pathContainer.getGoAndWait()
         );

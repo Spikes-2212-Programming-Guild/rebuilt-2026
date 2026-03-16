@@ -18,7 +18,7 @@ public class PathContainer {
     private final Command intakeFromDepot;
     private final Command intakeFromFeeder;
     private final Command intakeAndShoot;
-    private final Command shootAndToss;
+    private final Command shootAndPass;
     private final Command justShoot;
     private final Command goAndWait;
 
@@ -36,7 +36,7 @@ public class PathContainer {
         intakeFromDepot = new PathPlannerAuto("Intake from depot", shouldMirror);
         intakeFromFeeder = new PathPlannerAuto("Intake from feeder", shouldMirror);
         intakeAndShoot = new PathPlannerAuto("Intake and Shoot", shouldMirror);
-        shootAndToss = new PathPlannerAuto("Shoot and toss", shouldMirror);
+        shootAndPass = new PathPlannerAuto("Shoot and pass", shouldMirror);
         justShoot = new PathPlannerAuto(new JustShootAuto(Drivetrain.getInstance(), Shooter.getInstance(),
                 Kicker.getInstance(), SpinningMagazine.getInstance(), VisionService.getInstance()));
         goAndWait = new PathPlannerAuto(new GoAndWaitAuto(Drivetrain.getInstance()));
@@ -58,8 +58,8 @@ public class PathContainer {
         return intakeAndShoot;
     }
 
-    public Command getShootAndToss() {
-        return shootAndToss;
+    public Command getShootAndPass() {
+        return shootAndPass;
     }
 
     public Command getJustShoot() {
