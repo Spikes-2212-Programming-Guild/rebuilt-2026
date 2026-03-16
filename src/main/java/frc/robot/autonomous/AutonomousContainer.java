@@ -58,7 +58,7 @@ public class AutonomousContainer {
     private static final PIDSettings ROTATIONAL_CONTROLLER_SETTINGS =
             NAMESPACE.addPIDNamespace("rotational controller settings", PIDSettings.EMPTY_PID_SETTINGS);
 
-    private static final AutoChooser autoChooser = AutonomousContainer.configureAutoChooser();
+    private static final AutoChooser autoChooser = configureAutoChooser();
 
     private final PIDController xPidController;
     private final PIDController yPidController;
