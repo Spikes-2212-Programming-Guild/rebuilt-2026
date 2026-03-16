@@ -45,6 +45,7 @@ public class AutonomousContainer {
 
     private static final TrapezoidProfile.Constraints constraints =
             new TrapezoidProfile.Constraints(CONFIG.moduleConfig.maxDriveVelocityMPS, -1);
+    private static final PathConstraints pathConstraints = new PathConstraints(-1,-1,-1,-1);
 
     private static final double ROBOT_POSE_LATENCY = -1;
     private static final double FF_SCALER = -1;
@@ -64,7 +65,6 @@ public class AutonomousContainer {
     private final PIDController yPidController;
     private final ProfiledPIDController rotationalPidController;
 
-    private final PathConstraints pathConstraints;
     private final Drivetrain drivetrain;
     private static final PathContainer pathContainer = PathContainer.getInstance();
 
@@ -72,7 +72,6 @@ public class AutonomousContainer {
 
     public AutonomousContainer(Drivetrain drivetrain) {
         this.drivetrain = drivetrain;
-        this.pathConstraints = new PathConstraints(-1, -1, -1, -1);
 
         xPidController = buildPIDControllerFromSettings(X_CONTROLLER_SETTINGS);
         yPidController = buildPIDControllerFromSettings(Y_CONTROLLER_SETTINGS);
