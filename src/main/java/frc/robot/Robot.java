@@ -8,7 +8,8 @@ import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
-import frc.robot.commands.advancedcommands.TuneAndShoot;
+import frc.robot.commands.advancedcommands.ShootToHub;
+import frc.robot.commands.advancedcommands.TuneToAprilTag;
 import frc.robot.commands.intake.Intake;
 import frc.robot.commands.intake.MoveCollection;
 import frc.robot.commands.shoot.JustShoot;
@@ -49,8 +50,9 @@ public class Robot extends TimedRobot {
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
         namespace.putCommand("transport", new Transport(kicker));
         namespace.putCommand("collection", new Intake(collection));
-        namespace.putCommand("tune and shoot", new TuneAndShoot(shooter, kicker, spinningMagazine,
+        namespace.putCommand("shoot to hub", new ShootToHub(shooter, kicker, spinningMagazine,
                 visionService));
+        namespace.putCommand("tune to april tag", new TuneToAprilTag(drivetrain, visionService, -1));
     }
 
     @Override
