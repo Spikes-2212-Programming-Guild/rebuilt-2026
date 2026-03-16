@@ -4,13 +4,11 @@
 
 package frc.robot;
 
-import com.spikes2212.command.drivetrains.swerve.commands.RotateSwerveWithPID;
-import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import com.spikes2212.dashboard.RootNamespace;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.advancedcommands.Jumpies;
+import frc.robot.autonomous.AutonomousContainer;
 import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
 import frc.robot.commands.advancedcommands.TuneAndShoot;
 import frc.robot.commands.intake.Intake;
@@ -40,7 +38,6 @@ public class Robot extends TimedRobot {
     private Shooter shooter;
 
     private VisionService visionService;
-
 
     @Override
     public void robotInit() {
@@ -79,10 +76,15 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
+        Command autoCommand = AutonomousContainer.getSelectedCommand();
+        if(!autoCommand.isScheduled()) {
+            autoCommand.execute();
+        }
     }
 
     @Override
     public void autonomousPeriodic() {
+        drivetrain.updateOdometry();
     }
 
     @Override

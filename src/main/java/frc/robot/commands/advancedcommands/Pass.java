@@ -20,7 +20,6 @@ public class Pass extends ParallelCommandGroup {
                 new Spin(spinningMagazine),
                 new Transport(transport),
                 new JustShoot(shooter, shootingSpeed)
-
         );
     }
 }
