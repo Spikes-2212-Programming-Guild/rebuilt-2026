@@ -42,7 +42,7 @@ public class PathContainer {
         goAndWait = new PathPlannerAuto(new GoAndWaitAuto(Drivetrain.getInstance()));
     }
 
-    public Command getFilppedShootAndToss() {
+    public Command getFlippedShootAndPass() {
         return FilppedShootAndToss;
     }
 
