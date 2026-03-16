@@ -9,6 +9,8 @@ import com.spikes2212.control.PIDSettings;
 import com.spikes2212.util.UnifiedControlMode;
 import com.spikes2212.util.smartmotorcontrollers.SmartMotorController;
 
+import static java.lang.Math.abs;
+
 /**
  * Represents a single swerve module, serving as the abstraction for one wheel’s steering and driving
  * mechanisms within a swerve drivetrain.
@@ -101,7 +103,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
      * @param useVelocityPID      whether the module will drive with P.I.D for the velocity
      */
     public void setTargetState(SwerveModuleState targetState, double maxPossibleVelocity, boolean useVelocityPID) {
-        if (targetState.speedMetersPerSecond < minSpeedLimit) {
+        if (abs(targetState.speedMetersPerSecond) <= abs(minSpeedLimit)) {
             stop();
         }
         targetState = optimize(targetState, getRelativeModuleAngle());
@@ -132,7 +134,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
      */
     private SwerveModuleState optimize(SwerveModuleState targetState, double currentAngle) {
         double desiredAngle = normalizeAngleRelativeToRelativeEncoder(currentAngle, targetState.angle.getDegrees());
-        while (Math.abs(desiredAngle - currentAngle) > MAX_DISTANCE_TO_ROTATE) {
+        while (abs(desiredAngle - currentAngle) > MAX_DISTANCE_TO_ROTATE) {
             if (desiredAngle - currentAngle > 0) {
                 desiredAngle -= DEGREES_TO_FLIP;
             } else {
