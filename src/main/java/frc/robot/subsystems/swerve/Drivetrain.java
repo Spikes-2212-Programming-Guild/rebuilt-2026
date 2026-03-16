@@ -2,6 +2,8 @@ package frc.robot.subsystems.swerve;
 
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.spikes2212.command.drivetrains.swerve.SwerveDrivetrain;
+import com.spikes2212.command.drivetrains.swerve.SwerveModule;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -11,10 +13,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import frc.robot.RobotMap;
-import com.spikes2212.command.drivetrains.swerve.SwerveDrivetrain;
-import com.spikes2212.command.drivetrains.swerve.SwerveModule;
-
-import java.util.function.Supplier;
 
 public class Drivetrain extends SwerveDrivetrain {
 
