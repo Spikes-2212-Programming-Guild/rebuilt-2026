@@ -34,8 +34,10 @@ public class OI /*GEVALD*/{
         navigatorPlaystation.getR2Button().whileTrue(new Pass(shooter, ()-> -1.0, spinningMagazine, kicker));
         navigatorPlaystation.getR1Button().whileTrue(new ShootToHub(shooter, kicker, spinningMagazine,
                 visionService));
-        navigatorPlaystation.getCircleButton().onTrue(new MoveGenericSubsystem(collection, -0.3));
-        navigatorPlaystation.getSquareButton().onTrue(new Intake(collection));
+        navigatorPlaystation.getCircleButton().whileTrue(new MoveGenericSubsystem(collection, -0.3)).
+                onFalse(new MoveGenericSubsystem(collection, ()-> 0.0));
+        navigatorPlaystation.getSquareButton().whileTrue(new Intake(collection)).onFalse(new MoveGenericSubsystem(
+                collection, ()-> 0.0));
         navigatorPlaystation.getLeftStickButton().onTrue(
                 new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
 
