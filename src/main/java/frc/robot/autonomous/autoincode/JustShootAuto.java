@@ -16,7 +16,7 @@ public class JustShootAuto extends SequentialCommandGroup {
     public JustShootAuto(Drivetrain drivetrain, Shooter shooter, Kicker transport, SpinningMagazine spinningMagazine,
                          VisionService visionService) {
         addCommands(
-                new Drive(drivetrain, () -> 0.0, () -> 0.0, () -> 0.0, false, true).
+                new Drive(drivetrain, () -> 0.0, () -> 0.0, () -> 0.0, false, false).
                         withTimeout(1),
                 new TuneAndShoot(shooter, transport, spinningMagazine, visionService).withTimeout(4));
     }

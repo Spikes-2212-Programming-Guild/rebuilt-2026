@@ -9,7 +9,7 @@ public class GoAndWaitAuto extends SequentialCommandGroup {
     //@TODO change supplier values after calibration
 
     public GoAndWaitAuto(Drivetrain drivetrain) {
-        addCommands(new Drive(drivetrain, () -> 0.0, () -> 0.0,() -> 0.0, false, true).
+        addCommands(new Drive(drivetrain, () -> 0.0, () -> 0.0,() -> 0.0, false, false).
                 withTimeout(3));
     }
 }
