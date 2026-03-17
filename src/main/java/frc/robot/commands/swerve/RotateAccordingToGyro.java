@@ -14,7 +14,7 @@ public class RotateAccordingToGyro extends RotateSwerveWithPID {
     private static final RootNamespace namespace = new RootNamespace("rotate swerve");
 
     private static final PIDSettings rotatePIDSettings = namespace.addPIDNamespace("gyro",
-            new PIDSettings(0.03, 0.0003, 0.0003, 0, 0, 0));
+            new PIDSettings(0.037, 0.0, 0.0001537, 0, 0.3, 0.5));
 
     private static final FeedForwardSettings rotateFeedForwardSettings = namespace.addFeedForwardNamespace(
             "gyro", new FeedForwardSettings(FeedForwardController.ControlMode.LINEAR_POSITION));

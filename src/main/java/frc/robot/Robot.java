@@ -17,6 +17,7 @@ import frc.robot.commands.shoot.ShootWithPID;
 import frc.robot.commands.storage.Spin;
 import frc.robot.commands.storage.Transport;
 import frc.robot.commands.swerve.Drive;
+import frc.robot.commands.swerve.RotateAccordingToGyro;
 import frc.robot.subsystems.forbar.Collection;
 import frc.robot.subsystems.forbar.CollectionMovement;
 import frc.robot.subsystems.shoot.Shooter;
@@ -53,6 +54,8 @@ public class Robot extends TimedRobot {
         namespace.putCommand("shoot to hub", new ShootToHub(shooter, kicker, spinningMagazine,
                 visionService));
         namespace.putCommand("tune to april tag", new TuneToAprilTag(drivetrain, visionService, -1));
+        namespace.putCommand("rotate gyro", new RotateAccordingToGyro(drivetrain,
+                namespace.addConstantDouble("gyro turn", 0.0), true));
     }
 
     @Override
