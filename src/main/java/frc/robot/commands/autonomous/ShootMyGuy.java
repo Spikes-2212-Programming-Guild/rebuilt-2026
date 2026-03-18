@@ -13,7 +13,7 @@ public class ShootMyGuy extends SequentialCommandGroup {
 
     private static final double SPEED_TO_DRIVE_X_AXIS = 1.0;
     private static final double TIME_TO_DRIVE = 1.0;
-    private static final double SPEED_TO_DRIVE_ROTATIONAL_AXIS = 1.0;
+    private static final double SPEED_TO_DRIVE_ROTATIONAL_AXIS = -1.0;
 
     public ShootMyGuy(Drivetrain drivetrain, Shooter shooter, Kicker kicker,
                       SpinningMagazine spinningMagazine, VisionService visionService) {
