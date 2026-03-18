@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
         namespace.putCommand("collection", new Intake(collection));
         namespace.putCommand("shoot to hub", new ShootToHub(shooter, kicker, spinningMagazine,
                 visionService));
-        namespace.putCommand("tune to april tag", new TuneToAprilTag(drivetrain, visionService, -1));
+//        namespace.putCommand("tune to april tag", new TuneToAprilTag(drivet?rain, visionService, -1));
         namespace.putCommand("rotate gyro", new RotateAccordingToGyro(drivetrain,
                 namespace.addConstantDouble("gyro turn", 0.0), true));
     }

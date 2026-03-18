@@ -42,11 +42,12 @@ public class OI /*GEVALD*/{
                 new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
 
         driverPlaystation.getTriangleButton().onTrue(new InstantCommand(drivetrain::resetFieldRelativity));
-        driverPlaystation.getR2Button().whileTrue(new TuneToAprilTag(drivetrain, visionService, 1).
+        driverPlaystation.getR2Button().whileTrue(new TuneToAprilTag(drivetrain, visionService,
+                shooter, kicker, spinningMagazine, 1).
                 andThen(new ShootToHub(shooter, kicker, spinningMagazine, visionService)));
-        driverPlaystation.getL2Button().whileTrue(new TuneToAprilTag(drivetrain, visionService, -1).
-                andThen(new ShootToHub(shooter, kicker, spinningMagazine, visionService)));
-        driverPlaystation.getR1Button().whileTrue(new RotateAccordingToGyro(drivetrain, () -> 90.0,
+        driverPlaystation.getL2Button().whileTrue(new TuneToAprilTag(drivetrain, visionService,
+                shooter, kicker, spinningMagazine, -1));
+        driverPlaystation.getR1Button().whileTrue(new RotateAccordingToGyro(drivetrain, () -> -90.0,
                 true));
         driverPlaystation.getL1Button().whileTrue(new RotateAccordingToGyro(drivetrain, () -> 270.0,
                 true));
