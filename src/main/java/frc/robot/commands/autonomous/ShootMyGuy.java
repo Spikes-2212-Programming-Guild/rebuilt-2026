@@ -1,10 +1,8 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.advancedcommands.TuneAndShoot;
-import frc.robot.commands.shoot.ShootWithPID;
+import frc.robot.commands.advancedcommands.TuneToAprilTag;
 import frc.robot.commands.swerve.Drive;
-import frc.robot.commands.swerve.RotateAccordingAprilTags;
 import frc.robot.subsystems.shoot.Shooter;
 import frc.robot.subsystems.spindexer.Kicker;
 import frc.robot.subsystems.spindexer.SpinningMagazine;
@@ -22,8 +20,7 @@ public class ShootMyGuy extends SequentialCommandGroup {
         addCommands(
                 new Drive(drivetrain, () -> SPEED_TO_DRIVE_X_AXIS, () -> 0.0,
                         () -> 0.0, true, true).withTimeout(TIME_TO_DRIVE),
-                new Drive(drivetrain, () -> 0.0, () -> 0.0, () -> SPEED_TO_DRIVE_ROTATIONAL_AXIS,
-                        true, true).until(visionService::hasTarget),
-                new TuneAndShoot(shooter, kicker, spinningMagazine, visionService));
+                new TuneToAprilTag(drivetrain, visionService, shooter, kicker, spinningMagazine,
+                        SPEED_TO_DRIVE_ROTATIONAL_AXIS));
     }
 }
