@@ -11,10 +11,6 @@ import frc.robot.utils.VisionService;
 
 public class TuneToAprilTag extends SequentialCommandGroup {
 
-    private static final double LINEAR_EQUATION_M_FACTOR = 0.4;
-    private static final double LINEAR_EQUATION_B_FACTOR = 2.63;
-    private static final double DISTANCE_FROM_CAMERA_TO_SHOOTER = 0.5;
-
     public TuneToAprilTag(Drivetrain drivetrain, VisionService visionService, Shooter shooter, Kicker kicker,
                           SpinningMagazine spinningMagazine, double rotationSpeed) {
         addCommands(
