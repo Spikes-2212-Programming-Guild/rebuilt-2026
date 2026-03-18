@@ -50,7 +50,7 @@ public class Robot extends TimedRobot {
         namespace.putCommand("transport", new Transport(kicker));
         namespace.putCommand("collection", new Intake(collection));
         namespace.putCommand("shoot my guy", new ShootMyGuy(drivetrain, shooter, kicker, spinningMagazine,
-                visionService));
+                visionService, collection));
     }
 
     @Override
