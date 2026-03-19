@@ -51,7 +51,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
      * @param turnMotorPIDSettings          the turn motor pid settings
      * @param driveMotorFeedForwardSettings the drive motor feed forward settings
      * @param turnMotorFeedForwardSettings  the turn motor feed forward settings
-     * @param minSpeedLimit                    a speed limit intended for dealing with stick drift
+     * @param minSpeedLimit                 a speed limit intended for dealing with stick drift
      */
     public SwerveModule(String namespaceName, SmartMotorController driveMotor, SmartMotorController turnMotor,
                         boolean driveMotorInverted, boolean turnMotorInverted, double absoluteEncoderOffset,
@@ -103,8 +103,9 @@ public abstract class SwerveModule extends DashboardedSubsystem {
      * @param useVelocityPID      whether the module will drive with P.I.D for the velocity
      */
     public void setTargetState(SwerveModuleState targetState, double maxPossibleVelocity, boolean useVelocityPID) {
-        if (abs(targetState.speedMetersPerSecond) <= abs(minSpeedLimit)) {
+        if (abs(targetState.speedMetersPerSecond) <= minSpeedLimit) {
             stop();
+            return;
         }
         targetState = optimize(targetState, getRelativeModuleAngle());
         setTargetAngle(targetState.angle);
