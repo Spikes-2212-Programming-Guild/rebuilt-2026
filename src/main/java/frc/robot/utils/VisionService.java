@@ -26,7 +26,12 @@ public class VisionService {
     }
 
     public double getZ() {
-        if (hasTarget()) return limelight.getEntry("targetpose_cameraspace").getDoubleArray(new double[0])[2];
+        if (hasTarget()) {
+            double[] pose = limelight.getEntry("targetpose_cameraspace").getDoubleArray(new double[0]);
+            if(pose.length > 2) {
+                return pose[2];
+            }
+        }
         return 0.0; //@TODO find a better default speed
     }
 

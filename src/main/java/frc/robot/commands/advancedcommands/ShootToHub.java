@@ -10,7 +10,7 @@ import frc.robot.subsystems.spindexer.Kicker;
 import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.utils.VisionService;
 
-public class TuneAndShoot extends SequentialCommandGroup {
+public class ShootToHub extends SequentialCommandGroup {
 
     private static final double LINEAR_EQUATION_M_FACTOR = 0.4;
     private static final double LINEAR_EQUATION_B_FACTOR = 2.63;
@@ -19,8 +19,8 @@ public class TuneAndShoot extends SequentialCommandGroup {
     private static final double FIRST_WAIT_TIME = 0.1;
     private static final double SECOND_WAIT_TIME = 10;
 
-    public TuneAndShoot(Shooter shooter, Kicker transport, SpinningMagazine spinningMagazine,
-                        VisionService visionService) {
+    public ShootToHub(Shooter shooter, Kicker kicker, SpinningMagazine spinningMagazine,
+                      VisionService visionService) {
         addCommands(
                 new ShootWithPID(shooter,
                         () -> (LINEAR_EQUATION_M_FACTOR * (visionService.getZ() + DISTANCE_FROM_CAMERA_TO_SHOOTER) +
@@ -33,7 +33,7 @@ public class TuneAndShoot extends SequentialCommandGroup {
                 },
                 new ParallelCommandGroup(
                         new Spin(spinningMagazine),
-                        new Transport(transport),
+                        new Transport(kicker),
                         new ShootWithPID(shooter,
                                 () -> (LINEAR_EQUATION_M_FACTOR *
                                         (visionService.getZ() + DISTANCE_FROM_CAMERA_TO_SHOOTER) +

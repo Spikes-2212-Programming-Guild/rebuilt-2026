@@ -4,15 +4,11 @@
 
 package frc.robot;
 
-import com.spikes2212.command.drivetrains.swerve.commands.RotateSwerveWithPID;
-import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import com.spikes2212.dashboard.RootNamespace;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.advancedcommands.Jumpies;
 import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
-import frc.robot.commands.advancedcommands.TuneAndShoot;
+import frc.robot.commands.advancedcommands.ShootToHub;
 import frc.robot.commands.intake.Intake;
 import frc.robot.commands.intake.MoveCollection;
 import frc.robot.commands.shoot.JustShoot;
@@ -20,6 +16,7 @@ import frc.robot.commands.shoot.ShootWithPID;
 import frc.robot.commands.storage.Spin;
 import frc.robot.commands.storage.Transport;
 import frc.robot.commands.swerve.Drive;
+import frc.robot.commands.swerve.RotateAccordingToGyro;
 import frc.robot.subsystems.forbar.Collection;
 import frc.robot.subsystems.forbar.CollectionMovement;
 import frc.robot.subsystems.shoot.Shooter;
@@ -49,12 +46,15 @@ public class Robot extends TimedRobot {
         namespace.putCommand("move collection down", new MoveCollection(collectionMovement, () -> -0.05));
         namespace.putCommand("shoot", new ShootWithPID(shooter, namespace.addConstantDouble("shoot speed",
                 -0.2), 100));
-        namespace.putCommand("shoooot", new JustShoot(shooter, ()-> 0.1));
+        namespace.putCommand("shoooot", new JustShoot(shooter, () -> 0.5));
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
         namespace.putCommand("transport", new Transport(kicker));
         namespace.putCommand("collection", new Intake(collection));
-        namespace.putCommand("tune and shoot", new TuneAndShoot(shooter, kicker, spinningMagazine,
+        namespace.putCommand("shoot to hub", new ShootToHub(shooter, kicker, spinningMagazine,
                 visionService));
+//        namespace.putCommand("tune to april tag", new TuneToAprilTag(drivet?rain, visionService, -1));
+        namespace.putCommand("rotate gyro", new RotateAccordingToGyro(drivetrain,
+                namespace.addConstantDouble("gyro turn", 0.0), true));
     }
 
     @Override

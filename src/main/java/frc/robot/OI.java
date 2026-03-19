@@ -4,10 +4,7 @@ import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import com.spikes2212.util.PlaystationControllerWrapper;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.commands.advancedcommands.Collect;
-import frc.robot.commands.advancedcommands.MoveCollectionUp;
-import frc.robot.commands.advancedcommands.Pass;
-import frc.robot.commands.advancedcommands.TuneAndShoot;
+import frc.robot.commands.advancedcommands.*;
 import frc.robot.commands.intake.Intake;
 import frc.robot.commands.swerve.RotateAccordingToGyro;
 import frc.robot.subsystems.forbar.Collection;
@@ -35,16 +32,25 @@ public class OI /*GEVALD*/{
         navigatorPlaystation.getL2Button().whileTrue(new Collect(collection, collectionMovement))
                 .onFalse(new MoveCollectionUp(collection, collectionMovement));
         navigatorPlaystation.getR2Button().whileTrue(new Pass(shooter, ()-> -1.0, spinningMagazine, kicker));
-        navigatorPlaystation.getR1Button().whileTrue(new TuneAndShoot(shooter, kicker, spinningMagazine,
+        navigatorPlaystation.getR1Button().whileTrue(new ShootToHub(shooter, kicker, spinningMagazine,
                 visionService));
-        navigatorPlaystation.getCircleButton().onTrue(new MoveGenericSubsystem(collection, -0.3));
-        navigatorPlaystation.getSquareButton().onTrue(new Intake(collection));
+        navigatorPlaystation.getCircleButton().whileTrue(new MoveGenericSubsystem(collection, -0.3)).
+                onFalse(new MoveGenericSubsystem(collection, ()-> 0.0));
+        navigatorPlaystation.getSquareButton().whileTrue(new Intake(collection)).onFalse(new MoveGenericSubsystem(
+                collection, ()-> 0.0));
         navigatorPlaystation.getLeftStickButton().onTrue(
                 new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
 
         driverPlaystation.getTriangleButton().onTrue(new InstantCommand(drivetrain::resetFieldRelativity));
-        driverPlaystation.getR1Button().whileTrue(new TuneAndShoot(shooter, kicker, spinningMagazine, visionService));
-        driverPlaystation.getL1Button().whileTrue(new RotateAccordingToGyro(drivetrain, () -> 90.0, true));
+        driverPlaystation.getR2Button().whileTrue(new TuneToAprilTag(drivetrain, visionService,
+                shooter, kicker, spinningMagazine, 1).
+                andThen(new ShootToHub(shooter, kicker, spinningMagazine, visionService)));
+        driverPlaystation.getL2Button().whileTrue(new TuneToAprilTag(drivetrain, visionService,
+                shooter, kicker, spinningMagazine, -1));
+        driverPlaystation.getR1Button().whileTrue(new RotateAccordingToGyro(drivetrain, () -> -90.0,
+                true));
+        driverPlaystation.getL1Button().whileTrue(new RotateAccordingToGyro(drivetrain, () -> 270.0,
+                true));
 
         }
 
