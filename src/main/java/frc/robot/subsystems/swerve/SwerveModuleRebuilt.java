@@ -15,7 +15,7 @@ import edu.wpi.first.units.Units;
 
 public class SwerveModuleRebuilt extends SwerveModule {
 
-    private static final double MIN_SPEED_LIMIT = 0;
+    private static final double MIN_SPEED_LIMIT = 0.1;
     private static final double DRIVE_GEAR_RATIO = 1 / 6.12;
     private static final double TURN_GEAR_RATIO = (double) 7 / 150;
     private static final double WHEEL_DIAMETER_METERS = 0.1016;
