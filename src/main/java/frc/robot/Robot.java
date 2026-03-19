@@ -8,6 +8,7 @@ import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
+import frc.robot.commands.autonomous.ShootMyGuy;
 import frc.robot.commands.advancedcommands.ShootToHub;
 import frc.robot.commands.intake.Intake;
 import frc.robot.commands.intake.MoveCollection;
@@ -55,6 +56,8 @@ public class Robot extends TimedRobot {
 //        namespace.putCommand("tune to april tag", new TuneToAprilTag(drivet?rain, visionService, -1));
         namespace.putCommand("rotate gyro", new RotateAccordingToGyro(drivetrain,
                 namespace.addConstantDouble("gyro turn", 0.0), true));
+        namespace.putCommand("shoot my guy", new ShootMyGuy(drivetrain, shooter, kicker, spinningMagazine,
+                visionService, collection));
     }
 
     @Override

@@ -23,13 +23,12 @@ public class ShootToHub extends SequentialCommandGroup {
                       VisionService visionService) {
         addCommands(
                 new ShootWithPID(shooter,
-                        () -> (LINEAR_EQUATION_M_FACTOR * (visionService.getZ() + DISTANCE_FROM_CAMERA_TO_SHOOTER) +
+                        ()-> (LINEAR_EQUATION_M_FACTOR * (visionService.getZ() + DISTANCE_FROM_CAMERA_TO_SHOOTER) +
                                 LINEAR_EQUATION_B_FACTOR),
                         FIRST_WAIT_TIME) {
 
                     @Override
-                    public void end(boolean i) {
-                    }
+                    public void end(boolean i) {}
                 },
                 new ParallelCommandGroup(
                         new Spin(spinningMagazine),
