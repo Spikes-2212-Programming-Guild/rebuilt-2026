@@ -15,7 +15,7 @@ import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.subsystems.swerve.Drivetrain;
 import frc.robot.utils.VisionService;
 
-public class OI /*GEVALD*/{
+public class OI /*GEVALD*/ {
 
     private final PlaystationControllerWrapper driverPlaystation = new PlaystationControllerWrapper(0);
     private final PlaystationControllerWrapper navigatorPlaystation = new PlaystationControllerWrapper(1);
@@ -31,13 +31,13 @@ public class OI /*GEVALD*/{
     public OI() {
         navigatorPlaystation.getL2Button().whileTrue(new Collect(collection, collectionMovement))
                 .onFalse(new MoveCollectionUp(collection, collectionMovement));
-        navigatorPlaystation.getR2Button().whileTrue(new Pass(shooter, ()-> -1.0, spinningMagazine, kicker));
+        navigatorPlaystation.getR2Button().whileTrue(new Pass(shooter, () -> -1.0, spinningMagazine, kicker));
         navigatorPlaystation.getR1Button().whileTrue(new ShootToHub(shooter, kicker, spinningMagazine,
                 visionService));
         navigatorPlaystation.getCircleButton().whileTrue(new MoveGenericSubsystem(collection, -0.3)).
-                onFalse(new MoveGenericSubsystem(collection, ()-> 0.0));
+                onFalse(new MoveGenericSubsystem(collection, () -> 0.0));
         navigatorPlaystation.getSquareButton().whileTrue(new Intake(collection)).onFalse(new MoveGenericSubsystem(
-                collection, ()-> 0.0));
+                collection, () -> 0.0));
         navigatorPlaystation.getLeftStickButton().onTrue(
                 new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
 
@@ -54,19 +54,19 @@ public class OI /*GEVALD*/{
 
     }
 
-    public double getLeftX(){
+    public double getLeftX() {
         return driverPlaystation.getLeftX();
     }
 
-    public double getLeftY(){
+    public double getLeftY() {
         return driverPlaystation.getLeftY();
     }
 
-    public double getRightX(){
+    public double getRightX() {
         return driverPlaystation.getRightX();
     }
 
-    public double getRightY(){
+    public double getRightY() {
         return driverPlaystation.getRightY();
     }
 }

@@ -44,7 +44,7 @@ public class SwerveModuleHolder {
     private static final FeedForwardSettings driveFeedForwardSettings = new FeedForwardSettings(0.03, 0.17,
             0, FeedForwardController.ControlMode.LINEAR_VELOCITY);
     private static final FeedForwardSettings turnFeedForwardSettings = new FeedForwardSettings(0.19, 0, 0,
-        FeedForwardController.ControlMode.LINEAR_POSITION);
+            FeedForwardController.ControlMode.LINEAR_POSITION);
 
     private static SwerveModuleRebuilt frontLeft;
     private static SwerveModuleRebuilt frontRight;

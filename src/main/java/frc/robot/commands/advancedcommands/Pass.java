@@ -12,13 +12,12 @@ import java.util.function.Supplier;
 
 public class Pass extends ParallelCommandGroup {
 
-    public Pass(Shooter shooter, Supplier<Double> shootingSpeed,
-                SpinningMagazine spinningMagazine,
-                Kicker transport
-    ) {
+    public Pass(Shooter shooter, Supplier<Double> shootingSpeed, SpinningMagazine spinningMagazine,
+                Kicker kicker) {
+
         addCommands(
                 new Spin(spinningMagazine),
-                new Transport(transport),
+                new Transport(kicker),
                 new JustShoot(shooter, shootingSpeed)
         );
     }
