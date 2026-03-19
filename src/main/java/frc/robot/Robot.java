@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
 import frc.robot.commands.advancedcommands.ShootToHub;
-import frc.robot.commands.advancedcommands.TuneToAprilTag;
 import frc.robot.commands.intake.Intake;
 import frc.robot.commands.intake.MoveCollection;
 import frc.robot.commands.shoot.JustShoot;
@@ -47,7 +46,7 @@ public class Robot extends TimedRobot {
         namespace.putCommand("move collection down", new MoveCollection(collectionMovement, () -> -0.05));
         namespace.putCommand("shoot", new ShootWithPID(shooter, namespace.addConstantDouble("shoot speed",
                 -0.2), 100));
-        namespace.putCommand("shoooot", new JustShoot(shooter, () -> 0.1));
+        namespace.putCommand("shoooot", new JustShoot(shooter, () -> 0.5));
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
         namespace.putCommand("transport", new Transport(kicker));
         namespace.putCommand("collection", new Intake(collection));
