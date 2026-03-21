@@ -6,10 +6,12 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.spikes2212.dashboard.RootNamespace;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.AutonomousContainer;
+import frc.robot.autonomous.PathContainer;
 import frc.robot.commands.advancedcommands.*;
 import frc.robot.commands.intake.Intake;
 import frc.robot.commands.intake.MoveCollection;
@@ -43,6 +45,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         getInstances();
+        registerNamedCommands();
         namespace.putCommand("move collection up", new MoveCollectionUpSlowly(collectionMovement));
         namespace.putCommand("move collection down", new MoveCollection(collectionMovement, () -> -0.05));
         namespace.putCommand("shoot", new ShootWithPID(shooter, namespace.addConstantDouble("shoot speed",
@@ -54,6 +57,8 @@ public class Robot extends TimedRobot {
         namespace.putCommand("tune and shoot", new TuneAndShoot(shooter, kicker, spinningMagazine,
                 visionService));
         autonomousContainer = new AutonomousContainer(drivetrain);
+        namespace.putCommand("temp", PathContainer.getTemp());
+        namespace.putRunnable("cancel all commands", () -> CommandScheduler.getInstance().cancelAll());
     }
 
     @Override
@@ -61,6 +66,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
         namespace.update();
         ShootWithPID.updateNamespace();
+        drivetrain.periodic();
     }
 
     @Override
@@ -76,13 +82,12 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        registerNamedCommands();
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
-        Command autoCommand = AutonomousContainer.getSelectedCommand();
-        if(!autoCommand.isScheduled()) {
-            autoCommand.execute();
-        }
+//        Command autoCommand = autonomousContainer.getSelectedCommand();
+//        if(!autoCommand.isScheduled()) {
+//            autoCommand.execute();
+//        }
     }
 
     @Override
@@ -94,7 +99,7 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
-
+        drivetrain.resetPose(new Pose2d());
         OI oi = new OI();
         drivetrain.setDefaultCommand(new Drive(drivetrain, () -> oi.getLeftY() * 1.5, () -> oi.getLeftX() * 1.5,
                 () -> oi.getRightX() * -3, true, true));

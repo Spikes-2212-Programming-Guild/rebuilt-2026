@@ -14,26 +14,19 @@ public class PathContainer {
 
     private static PathContainer instance;
 
-    private final Command FilppedShootAndToss;
-    private final Command intakeFromDepot;
-    private final Command intakeFromFeeder;
-    private final Command intakeAndShoot;
-    private final Command shootAndPass;
-    private final Command justShoot;
-    private final Command goAndWait;
-    private final Command temp;
+    private static Command FilppedShootAndToss;
+    private static Command intakeFromDepot;
+    private static Command intakeFromFeeder;
+    private static Command intakeAndShoot;
+    private static Command shootAndPass;
+    private static Command justShoot;
+    private static Command goAndWait;
+    private static Command temp;
 
     private static final boolean shouldMirror = AutonomousContainer.shouldMirror();
 
-    public static PathContainer getInstance() {
-        if (instance == null) {
-            instance = new PathContainer();
-        }
-        return instance;
-    }
-
-    private PathContainer() {
-        FilppedShootAndToss = new PathPlannerAuto("Flipped shoot and Toss", shouldMirror);
+    public static void createAutos() {
+        FilppedShootAndToss = new PathPlannerAuto("Flipped shoot and pass", shouldMirror);
         intakeFromDepot = new PathPlannerAuto("Intake from depot", shouldMirror);
         intakeFromFeeder = new PathPlannerAuto("Intake from feeder", shouldMirror);
         intakeAndShoot = new PathPlannerAuto("Intake and Shoot", shouldMirror);
@@ -44,31 +37,47 @@ public class PathContainer {
         temp = new PathPlannerAuto("temp", shouldMirror);
     }
 
-    public Command getFlippedShootAndPass() {
+
+    public static PathContainer getInstance() {
+        if (instance == null) {
+            instance = new PathContainer();
+        }
+        return instance;
+    }
+
+    private PathContainer() {
+
+    }
+
+    public static Command getFlippedShootAndPass() {
         return FilppedShootAndToss;
     }
 
-    public Command getIntakeFromDepot() {
+    public static Command getIntakeFromDepot() {
         return intakeFromDepot;
     }
 
-    public Command getIntakeFromFeeder() {
+    public static Command getIntakeFromFeeder() {
         return intakeFromFeeder;
     }
 
-    public Command getIntakeAndShoot() {
+    public static Command getIntakeAndShoot() {
         return intakeAndShoot;
     }
 
-    public Command getShootAndPass() {
+    public static Command getShootAndPass() {
         return shootAndPass;
     }
 
-    public Command getJustShoot() {
+    public static Command getJustShoot() {
         return justShoot;
     }
 
-    public Command getGoAndWait() {
+    public static Command getGoAndWait() {
         return goAndWait;
+    }
+
+    public static Command getTemp() {
+        return temp;
     }
 }

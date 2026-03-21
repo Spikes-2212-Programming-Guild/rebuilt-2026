@@ -122,7 +122,7 @@ public class Drivetrain extends SwerveDrivetrain {
     }
 
     public void updateOdometry() {
-        odometry.update(getAngle(),getSwerveModulePositions());
+        odometry.update(getAngle(), getSwerveModulePositions());
     }
 
     private boolean atAxis(double currentAxisPose, double targetAxisPose, double currentVelocity) {
@@ -159,5 +159,15 @@ public class Drivetrain extends SwerveDrivetrain {
     @Override
     public void configureDashboard() {
         namespace.putNumber("gyro", () -> this.getAngle().getDegrees());
+        namespace.putNumber("x", () -> odometry.getPoseMeters().getX());
+        namespace.putNumber("y", () -> odometry.getPoseMeters().getY());
+        namespace.putRunnable("reset odometry", () ->
+                odometry.resetPosition(getAngle(), getSwerveModulePositions(), new Pose2d()));
+    }
+
+    @Override
+    public void periodic() {
+        super.periodic();
+        updateOdometry();
     }
 }

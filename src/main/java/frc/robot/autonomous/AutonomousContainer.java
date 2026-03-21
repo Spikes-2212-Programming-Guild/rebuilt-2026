@@ -6,6 +6,7 @@
     import com.pathplanner.lib.config.RobotConfig;
     import com.pathplanner.lib.controllers.PPHolonomicDriveController;
     import com.pathplanner.lib.path.PathConstraints;
+    import com.pathplanner.lib.util.GeometryUtil;
     import com.pathplanner.lib.util.PathPlannerLogging;
     import com.spikes2212.control.PIDSettings;
     import com.spikes2212.dashboard.AutoChooser;
@@ -27,16 +28,14 @@
 
         private static final RobotConfig CONFIG = getRobotConfig();
 
-        private static final RootNamespace NAMESPACE = new RootNamespace("autonomous");
+        private static final RootNamespace NAMESPACE = new RootNamespace("autonomouss");
 
-        //@TODO get the path constraints values after calibration
+        private static final PathConstraints pathConstraints = new PathConstraints(5.1, 2,8, 2);
 
-        private static final PathConstraints pathConstraints = new PathConstraints(5.1, 2,-1, -1);
-
-        private static final double ROBOT_POSE_LATENCY = -1;
-        private static final double FF_SCALER = -1;
+        private static final double ROBOT_POSE_LATENCY = 0;
+        private static final double FF_SCALER = 1;
         private static final double TIME_STEP = 0.02;
-        private static final double PID_TO_POSE_TIMEOUT = -1;
+        private static final double PID_TO_POSE_TIMEOUT = 0.1;
 
         private static final PIDSettings X_CONTROLLER_SETTINGS =
                 NAMESPACE.addPIDNamespace("x controller settings", PIDSettings.EMPTY_PID_SETTINGS);
@@ -45,7 +44,7 @@
         private static final PIDSettings ROTATIONAL_CONTROLLER_SETTINGS =
                 NAMESPACE.addPIDNamespace("rotational controller settings", PIDSettings.EMPTY_PID_SETTINGS);
 
-        private static final AutoChooser autoChooser = configureAutoChooser();
+//        private final AutoChooser autoChooser = configureAutoChooser();
 
         private final PIDController xPidController;
         private final PIDController yPidController;
@@ -63,8 +62,9 @@
             yPidController = buildPIDControllerFromSettings(Y_CONTROLLER_SETTINGS);
             rotationalPidController = buildPIDControllerFromSettings(ROTATIONAL_CONTROLLER_SETTINGS);
 
-            PathfindingCommand.warmupCommand().execute();
+//          PathfindingCommand.warmupCommand().execute();
             configureAutoBuilder();
+            PathContainer.createAutos();
             setupTargetPoseUpdateLoop();
             configureDashboard();
         }
@@ -151,35 +151,36 @@
             PathPlannerLogging.setLogTargetPoseCallback((pose) -> pathplannerTargetPose = pose);
         }
 
-        private static AutoChooser configureAutoChooser() {
+        private AutoChooser configureAutoChooser() {
             return new AutoChooser(
                     NAMESPACE,
-                    pathContainer.getFlippedShootAndPass(),
-                    pathContainer.getIntakeFromDepot(),
-                    pathContainer.getIntakeFromFeeder(),
-                    pathContainer.getIntakeAndShoot(),
-                    pathContainer.getShootAndPass(),
-                    pathContainer.getJustShoot(),
-                    pathContainer.getGoAndWait()
+                    PathContainer.getFlippedShootAndPass(),
+                    PathContainer.getIntakeFromDepot(),
+                    PathContainer.getIntakeFromFeeder(),
+                    PathContainer.getIntakeAndShoot(),
+                    PathContainer.getShootAndPass(),
+                    PathContainer.getJustShoot(),
+                    PathContainer.getGoAndWait(),
+                    PathContainer.getTemp()
             );
         }
 
         private void configureDashboard() {
-            NAMESPACE.putData("auto chooser", autoChooser);
+//            NAMESPACE.putData("auto chooser", autoChooser);
             NAMESPACE.addConstantDouble("ff scaler", FF_SCALER);
         }
 
-        public static Command getSelectedCommand() {
-            return autoChooser.getSelected();
-        }
+//        public Command getSelectedCommand() {
+//            return autoChooser.getSelected();
+//        }
 
         private static PIDController buildPIDControllerFromSettings(PIDSettings pidSettings) {
             return new PIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
         }
 
         public static boolean shouldMirror() {
-            return DriverStation.getAlliance().map(alliance -> alliance == DriverStation.Alliance.Red).
-                    orElse(false);
+            var alliance = DriverStation.getAlliance();
+            return alliance.filter(value -> value == DriverStation.Alliance.Red).isPresent();
         }
 
         private static RobotConfig getRobotConfig() {
