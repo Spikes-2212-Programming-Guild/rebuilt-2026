@@ -11,7 +11,6 @@
     import com.spikes2212.dashboard.AutoChooser;
     import com.spikes2212.dashboard.RootNamespace;
     import edu.wpi.first.math.controller.PIDController;
-    import edu.wpi.first.math.controller.ProfiledPIDController;
     import edu.wpi.first.math.geometry.Pose2d;
     import edu.wpi.first.math.kinematics.ChassisSpeeds;
     import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -32,8 +31,6 @@
 
         //@TODO get the path constraints values after calibration
 
-        private static final TrapezoidProfile.Constraints constraints =
-                new TrapezoidProfile.Constraints(CONFIG.moduleConfig.maxDriveVelocityMPS, 4);
         private static final PathConstraints pathConstraints = new PathConstraints(5.1, 2,-1, -1);
 
         private static final double ROBOT_POSE_LATENCY = -1;
