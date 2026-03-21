@@ -1,12 +1,10 @@
     package frc.robot.autonomous;
 
     import com.pathplanner.lib.auto.AutoBuilder;
-    import com.pathplanner.lib.commands.PathfindingCommand;
     import com.pathplanner.lib.config.PIDConstants;
     import com.pathplanner.lib.config.RobotConfig;
     import com.pathplanner.lib.controllers.PPHolonomicDriveController;
     import com.pathplanner.lib.path.PathConstraints;
-    import com.pathplanner.lib.util.GeometryUtil;
     import com.pathplanner.lib.util.PathPlannerLogging;
     import com.spikes2212.control.PIDSettings;
     import com.spikes2212.dashboard.AutoChooser;
@@ -14,7 +12,6 @@
     import edu.wpi.first.math.controller.PIDController;
     import edu.wpi.first.math.geometry.Pose2d;
     import edu.wpi.first.math.kinematics.ChassisSpeeds;
-    import edu.wpi.first.math.trajectory.TrapezoidProfile;
     import edu.wpi.first.wpilibj.DriverStation;
     import edu.wpi.first.wpilibj2.command.Command;
     import edu.wpi.first.wpilibj2.command.FunctionalCommand;
