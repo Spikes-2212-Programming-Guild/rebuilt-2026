@@ -4,13 +4,13 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
 import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.AutonomousContainer;
-import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
-import frc.robot.commands.advancedcommands.TuneAndShoot;
+import frc.robot.commands.advancedcommands.*;
 import frc.robot.commands.intake.Intake;
 import frc.robot.commands.intake.MoveCollection;
 import frc.robot.commands.shoot.JustShoot;
@@ -74,6 +74,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
+        registerNamedCommands();
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
         Command autoCommand = AutonomousContainer.getSelectedCommand();
@@ -132,4 +133,18 @@ public class Robot extends TimedRobot {
 
         visionService = VisionService.getInstance();
     }
+
+    public void registerNamedCommands() {
+        NamedCommands.registerCommand("collect and pass", new CollectAndPass(
+                collection, collectionMovement, shooter, () -> 0.5,
+                SpinningMagazine.getInstance(), Kicker.getInstance()));
+        NamedCommands.registerCommand("collect", new Collect(collection,
+                collectionMovement));
+        NamedCommands.registerCommand("pass", new Pass(shooter, () -> 0.5,
+                spinningMagazine, kicker));
+        NamedCommands.registerCommand("aligned shoot", new TuneAndShoot(shooter,
+                kicker, spinningMagazine, visionService));
+        NamedCommands.registerCommand("shoot", new JustShoot(shooter, () -> 0.3));
+    }
+
 }

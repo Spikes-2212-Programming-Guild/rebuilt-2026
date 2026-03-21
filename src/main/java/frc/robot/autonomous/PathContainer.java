@@ -21,6 +21,7 @@ public class PathContainer {
     private final Command shootAndPass;
     private final Command justShoot;
     private final Command goAndWait;
+    private final Command temp;
 
     private static final boolean shouldMirror = AutonomousContainer.shouldMirror();
 
@@ -40,6 +41,7 @@ public class PathContainer {
         justShoot = new PathPlannerAuto(new JustShootAuto(Drivetrain.getInstance(), Shooter.getInstance(),
                 Kicker.getInstance(), SpinningMagazine.getInstance(), VisionService.getInstance()));
         goAndWait = new PathPlannerAuto(new GoAndWaitAuto(Drivetrain.getInstance()));
+        temp = new PathPlannerAuto("temp", shouldMirror);
     }
 
     public Command getFlippedShootAndPass() {

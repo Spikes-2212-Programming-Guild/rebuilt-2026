@@ -1,7 +1,6 @@
 package frc.robot.autonomous;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathfindingCommand;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -20,17 +19,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.advancedcommands.Collect;
-import frc.robot.commands.advancedcommands.CollectAndPass;
-import frc.robot.commands.advancedcommands.Pass;
-import frc.robot.commands.advancedcommands.TuneAndShoot;
-import frc.robot.subsystems.forbar.Collection;
-import frc.robot.subsystems.forbar.CollectionMovement;
-import frc.robot.subsystems.shoot.Shooter;
-import frc.robot.subsystems.spindexer.Kicker;
-import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.subsystems.swerve.Drivetrain;
-import frc.robot.utils.VisionService;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -81,7 +70,6 @@ public class AutonomousContainer {
         configureAutoBuilder();
         setupTargetPoseUpdateLoop();
         configureDashboard();
-        registerNamedCommands();
     }
 
     private void configureAutoBuilder() {
@@ -181,22 +169,11 @@ public class AutonomousContainer {
 
     private void configureDashboard() {
         NAMESPACE.putData("auto chooser", autoChooser);
+        NAMESPACE.addConstantDouble("ff scaler", FF_SCALER);
     }
 
     public static Command getSelectedCommand() {
         return autoChooser.getSelected();
-    }
-
-    private void registerNamedCommands() {
-        NamedCommands.registerCommand("collect and pass", new CollectAndPass(
-                Collection.getInstance(), CollectionMovement.getInstance(), Shooter.getInstance(), () -> 0.5,
-                SpinningMagazine.getInstance(), Kicker.getInstance()));
-        NamedCommands.registerCommand("collect", new Collect(Collection.getInstance(),
-                CollectionMovement.getInstance()));
-        NamedCommands.registerCommand("pass", new Pass(Shooter.getInstance(), () -> 0.5,
-                SpinningMagazine.getInstance(), Kicker.getInstance()));
-        NamedCommands.registerCommand("aligned shoot", new TuneAndShoot(Shooter.getInstance(),
-                Kicker.getInstance(), SpinningMagazine.getInstance(), VisionService.getInstance()));
     }
 
     private static PIDController buildPIDControllerFromSettings(PIDSettings pidSettings) {

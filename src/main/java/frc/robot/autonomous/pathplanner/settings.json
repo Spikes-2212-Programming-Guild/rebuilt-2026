@@ -7,8 +7,7 @@
     "Intake from depot",
     "Shoot and toss",
     "intake and shoot",
-    "intake from feeder",
-    "just toss"
+    "intake from feeder"
   ],
   "autoFolders": [],
   "defaultMaxVel": 3.0,
@@ -19,9 +18,9 @@
   "robotMass": 74.088,
   "robotMOI": 6.883,
   "robotTrackwidth": 0.546,
-  "driveWheelRadius": 0.048,
-  "driveGearing": 5.143,
-  "maxDriveSpeed": 5.45,
+  "driveWheelRadius": 0.0508,
+  "driveGearing": 6.12,
+  "maxDriveSpeed": 5.1,
   "driveMotorType": "krakenX60",
   "driveCurrentLimit": 60.0,
   "wheelCOF": 1.2,
