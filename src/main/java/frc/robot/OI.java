@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.advancedcommands.*;
 import frc.robot.commands.intake.Intake;
+import frc.robot.commands.intake.MoveCollection;
 import frc.robot.commands.swerve.RotateAccordingToGyro;
 import frc.robot.subsystems.forbar.Collection;
 import frc.robot.subsystems.forbar.CollectionMovement;
@@ -29,15 +30,17 @@ public class OI /*GEVALD*/ {
     private final VisionService visionService = VisionService.getInstance();
 
     public OI() {
-        navigatorPlaystation.getL2Button().whileTrue(new Collect(collection, collectionMovement))
-                .onFalse(new MoveCollectionUp(collection, collectionMovement));
+        navigatorPlaystation.getL2Button().whileTrue(new Collect(collection, collectionMovement));
+        navigatorPlaystation.getL1Button().whileTrue(new Intake(collection));
         navigatorPlaystation.getR2Button().whileTrue(new Pass(shooter, () -> -1.0, spinningMagazine, kicker));
         navigatorPlaystation.getR1Button().whileTrue(new ShootToHub(shooter, kicker, spinningMagazine,
                 visionService));
-        navigatorPlaystation.getCircleButton().whileTrue(new MoveGenericSubsystem(collection, -0.3)).
-                onFalse(new MoveGenericSubsystem(collection, () -> 0.0));
-        navigatorPlaystation.getSquareButton().whileTrue(new Intake(collection)).onFalse(new MoveGenericSubsystem(
-                collection, () -> 0.0));
+        navigatorPlaystation.getTriangleButton().onTrue(new Jumpies(collectionMovement));
+        navigatorPlaystation.getUpButton().onTrue(new MoveCollectionUpSlowly(collectionMovement));
+        navigatorPlaystation.getDownButton().onTrue(new MoveCollection(collectionMovement, ()-> -0.07).
+                withTimeout(1));
+        navigatorPlaystation.getCircleButton().whileTrue(new MoveGenericSubsystem(collection, -0.3));
+        navigatorPlaystation.getSquareButton().whileTrue(new Intake(collection));
         navigatorPlaystation.getLeftStickButton().onTrue(
                 new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
 

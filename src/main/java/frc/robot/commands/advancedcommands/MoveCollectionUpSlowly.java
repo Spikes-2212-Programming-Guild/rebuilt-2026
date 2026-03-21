@@ -6,8 +6,8 @@ import frc.robot.subsystems.forbar.CollectionMovement;
 
 public class MoveCollectionUpSlowly extends SequentialCommandGroup {
 
-    private static final double TIME_TO_MOVE_FAST = 0.25;
-    private static final double TIME_TO_MOVE_SLOW = 1.5;
+    private static final double TIME_TO_MOVE_FAST = 0.35;
+    private static final double TIME_TO_MOVE_SLOW = 1.2;
     private static final double MOVE_FAST_SPEED = 0.25;
     private static final double MOVE_SLOW_SPEED = 0.12;
 
