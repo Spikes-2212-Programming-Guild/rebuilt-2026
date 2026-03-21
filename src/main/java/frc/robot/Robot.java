@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
     private SpinningMagazine spinningMagazine;
     private Kicker kicker;
     private Shooter shooter;
+    private AutonomousContainer autonomousContainer;
 
     private VisionService visionService;
 
@@ -52,6 +53,7 @@ public class Robot extends TimedRobot {
         namespace.putCommand("collection", new Intake(collection));
         namespace.putCommand("tune and shoot", new TuneAndShoot(shooter, kicker, spinningMagazine,
                 visionService));
+        autonomousContainer = new AutonomousContainer(drivetrain);
     }
 
     @Override
