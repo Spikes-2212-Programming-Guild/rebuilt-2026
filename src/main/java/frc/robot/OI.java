@@ -49,11 +49,11 @@ public class OI /*GEVALD*/{
         }
 
     public double getLeftX(){
-        return driverPlaystation.getLeftX();
+        return driverPlaystation.getLeftX() * 0.3;
     }
 
     public double getLeftY(){
-        return driverPlaystation.getLeftY();
+        return driverPlaystation.getLeftY() * 0.3;
     }
 
     public double getRightX(){
