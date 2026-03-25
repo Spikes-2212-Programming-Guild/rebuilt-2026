@@ -163,6 +163,7 @@ public class Drivetrain extends SwerveDrivetrain {
         namespace.putNumber("y", () -> odometry.getPoseMeters().getY());
         namespace.putRunnable("reset odometry", () ->
                 odometry.resetPosition(getAngle(), getSwerveModulePositions(), new Pose2d()));
+        namespace.putRunnable("reset gyro to 0",() -> gyro.setYaw(0));
     }
 
     @Override
