@@ -47,7 +47,8 @@ public class Robot extends TimedRobot {
         getInstances();
         registerNamedCommands();
         namespace.putCommand("move collection up", new MoveCollectionUpSlowly(collectionMovement));
-        namespace.putCommand("move collection down", new MoveCollection(collectionMovement, () -> -0.05));
+        namespace.putCommand("move collection down", new MoveCollection(collectionMovement, () -> -0.15));
+        namespace.putCommand("move collection up2", new MoveCollection(collectionMovement, () -> 0.5));
         namespace.putCommand("shoot", new ShootWithPID(shooter, namespace.addConstantDouble("shoot speed",
                 -0.2), 100));
         namespace.putCommand("shoooot", new JustShoot(shooter, ()-> 0.1));
@@ -152,6 +153,7 @@ public class Robot extends TimedRobot {
         NamedCommands.registerCommand("aligned shoot", new TuneAndShoot(shooter,
                 kicker, spinningMagazine, visionService));
         NamedCommands.registerCommand("shoot", new JustShoot(shooter, () -> 0.3));
+        NamedCommands.registerCommand("spin", new Spin(spinningMagazine));
     }
 
 }
