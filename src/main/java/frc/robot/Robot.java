@@ -7,14 +7,9 @@ package frc.robot;
 import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
-import frc.robot.commands.advancedcommands.ShootToHub;
-import frc.robot.commands.autonomous.ShootMyGuy;
 import frc.robot.commands.intake.Intake;
 import frc.robot.commands.intake.MoveCollection;
 import frc.robot.commands.shoot.JustShoot;
-import frc.robot.commands.shoot.ShootWithPID;
-import frc.robot.commands.storage.Spin;
 import frc.robot.commands.storage.Transport;
 import frc.robot.commands.swerve.Drive;
 import frc.robot.commands.swerve.RotateAccordingToGyro;
@@ -22,55 +17,44 @@ import frc.robot.subsystems.forbar.Collection;
 import frc.robot.subsystems.forbar.CollectionMovement;
 import frc.robot.subsystems.shoot.Shooter;
 import frc.robot.subsystems.spindexer.Kicker;
-import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.subsystems.swerve.Drivetrain;
-import frc.robot.utils.VisionService;
 
 public class Robot extends TimedRobot {
 
     private static final RootNamespace namespace = new RootNamespace("robot");
 
-    private Drivetrain drivetrain;
-    private Collection collection;
-    private CollectionMovement collectionMovement;
-    private SpinningMagazine spinningMagazine;
-    private Kicker kicker;
-    private Shooter shooter;
-
-    private VisionService visionService;
-
+    private final Drivetrain drivetrain = Drivetrain.getInstance();
+    private final Shooter shooter = Shooter.getInstance();
+    private final Kicker kicker = Kicker.getInstance();
+    private final CollectionMovement forbar = CollectionMovement.getInstance();
+    private final Collection intake = Collection.getInstance();
 
     @Override
     public void robotInit() {
-        getInstances();
-        namespace.putCommand("move collection up", new MoveCollectionUpSlowly(collectionMovement));
-        namespace.putCommand("move collection down", new MoveCollection(collectionMovement, () -> -0.05));
-        namespace.putCommand("shoot", new ShootWithPID(shooter, namespace.addConstantDouble("shoot speed",
-                -0.2), 100));
-        namespace.putCommand("shoooot", new JustShoot(shooter, () -> 0.5));
-        namespace.putCommand("spindexer", new Spin(spinningMagazine));
-        namespace.putCommand("transport", new Transport(kicker));
-        namespace.putCommand("collection", new Intake(collection));
-        namespace.putCommand("shoot to hub", new ShootToHub(shooter, kicker, spinningMagazine,
-                visionService));
-//        namespace.putCommand("tune to april tag", new TuneToAprilTag(drivet?rain, visionService, -1));
         namespace.putCommand("rotate gyro", new RotateAccordingToGyro(drivetrain,
                 namespace.addConstantDouble("gyro turn", 0.0), true));
-        namespace.putCommand("shoot my guy", new ShootMyGuy(drivetrain, shooter, kicker, spinningMagazine,
-                visionService, collection));
+
+        namespace.putCommand("shoot",
+                new JustShoot(shooter, namespace.addConstantDouble("shoot speed", 0)));
+
+        namespace.putCommand("forbar",
+                new MoveCollection(forbar, namespace.addConstantDouble("forbar speed", 0)));
+
+        namespace.putCommand("intake", new Intake(intake));
+
+        namespace.putCommand("kicker", new Transport(kicker));
+
     }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         namespace.update();
-        ShootWithPID.updateNamespace();
     }
 
     @Override
     public void disabledInit() {
         CommandScheduler.getInstance().cancelAll();
-        shooter.stop();
     }
 
     @Override
@@ -80,8 +64,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        drivetrain.resetFieldRelativity();
-        drivetrain.resetRelativeEncoders();
+
     }
 
     @Override
@@ -94,8 +77,10 @@ public class Robot extends TimedRobot {
         drivetrain.resetRelativeEncoders();
 
         OI oi = new OI();
-        drivetrain.setDefaultCommand(new Drive(drivetrain, () -> oi.getLeftY() * 1.5, () -> oi.getLeftX() * 1.5,
-                () -> oi.getRightX() * -3, true, true));
+        drivetrain.setDefaultCommand(new Drive(drivetrain,
+                oi::getControllerLeftX, oi::getControllerLeftY, oi::getControllerRightX,
+                oi::isFieldRelative, true
+        ));
     }
 
     @Override
@@ -121,16 +106,5 @@ public class Robot extends TimedRobot {
     @Override
     public void simulationPeriodic() {
 
-    }
-
-    public void getInstances() {
-        drivetrain = Drivetrain.getInstance();
-        collection = Collection.getInstance();
-        collectionMovement = CollectionMovement.getInstance();
-        spinningMagazine = SpinningMagazine.getInstance();
-        kicker = Kicker.getInstance();
-        shooter = Shooter.getInstance();
-
-        visionService = VisionService.getInstance();
     }
 }
