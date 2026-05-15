@@ -14,7 +14,7 @@ public class SingleJoystick implements InputDevice {
     }
 
     @Override
-    public void initActions(Actions actions) {
+    public void bindActions(Actions actions) {
         new JoystickButton(joystick, 1).onTrue(new InstantCommand(actions.toggleSpeedScale()));
         new JoystickButton(joystick, 2).onTrue(new InstantCommand(actions.toggleFieldRelative()));
         new JoystickButton(joystick, 3).onTrue(new InstantCommand(actions.toggleSquareInputs()));

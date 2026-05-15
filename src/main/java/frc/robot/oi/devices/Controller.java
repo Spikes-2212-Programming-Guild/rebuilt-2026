@@ -13,7 +13,7 @@ public class Controller implements InputDevice {
     }
 
     @Override
-    public void initActions(Actions actions) {
+    public void bindActions(Actions actions) {
         controller.getTriangleButton().onTrue(new InstantCommand(actions.toggleSpeedScale()));
         controller.getCircleButton().onTrue(new InstantCommand(actions.toggleFieldRelative()));
         controller.getSquareButton().onTrue(new InstantCommand(actions.toggleSquareInputs()));

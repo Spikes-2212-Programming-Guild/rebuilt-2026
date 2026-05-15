@@ -16,7 +16,7 @@ public class DoubleJoystick implements InputDevice {
     }
 
     @Override
-    public void initActions(Actions actions) {
+    public void bindActions(Actions actions) {
         new JoystickButton(left, 1).onTrue(new InstantCommand(actions.toggleSpeedScale()));
         new JoystickButton(left, 2).onTrue(new InstantCommand(actions.toggleFieldRelative()));
         new JoystickButton(left, 3).onTrue(new InstantCommand(actions.toggleSquareInputs()));

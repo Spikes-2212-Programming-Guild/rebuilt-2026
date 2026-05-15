@@ -14,9 +14,17 @@ import java.util.function.Supplier;
 /*
 an overkill system that lets you switch between different
 input devices in runtime and toggle between different control modes
+
+to use:
+set the ports in the dashboard
+and run "Switch to" the device
+
+you can view the current device name and control mode on the dashboard
+and toggle between them
  */
 public class OI {
 
+    private final ChildNamespace namespace;
     private InputDevice device = null;
 
     private final Actions actions = new Actions(
@@ -27,10 +35,12 @@ public class OI {
             this::toggleSlewRateLimiter
     );
 
+    // TODO - tune these
     private final SlewRateLimiter xLimiter = new SlewRateLimiter(-1, -1, -1);
     private final SlewRateLimiter yLimiter = new SlewRateLimiter(-1, -1, -1);
     private final SlewRateLimiter zLimiter = new SlewRateLimiter(-1, -1, -1);
 
+    // TODO - maybe add these to the dashboard
     private static final double LOW_SPEED = 0.7;
     private static final double HIGH_SPEED = 1;
     private static final double DEADBAND = 0.05;
@@ -42,18 +52,31 @@ public class OI {
     private boolean useDeadband = false;
 
     public OI(RootNamespace rootNamespace) {
-        ChildNamespace namespace = rootNamespace.addChild("oi");
-        namespace.putString("current device", () -> {
-            if (device != null) return device.getName();
-            return "none";
-        });
+        this.namespace = rootNamespace.addChild("oi");
+        setupActions();
+        setupDevices();
+    }
 
+    private void setupActions() {
         namespace.putRunnable("toggle speed scale", this::toggleSpeedScale);
         namespace.putRunnable("toggle field relative", this::toggleFieldRelative);
         namespace.putRunnable("toggle square inputs", this::toggleSquareInputs);
         namespace.putRunnable("toggle deadband", this::toggleDeadband);
         namespace.putRunnable("toggle slew rate limiter", this::toggleSlewRateLimiter);
 
+        namespace.putNumber("speed scale", () -> speedScale);
+        namespace.putBoolean("is field relative", () -> useFieldRelative);
+        namespace.putBoolean("is square inputs", () -> useSquareInputs);
+        namespace.putBoolean("is slew rate limiter", () -> useSlewRateLimiter);
+        namespace.putBoolean("is deadband", () -> useDeadband);
+
+        namespace.putString("current device", () -> {
+            if (device != null) return device.getName();
+            return "none";
+        });
+    }
+
+    private void setupDevices() {
         Supplier<Integer> controllerPort = namespace.addConstantInt("controller port", 0);
         namespace.putRunnable("switch to controller", () -> setDevice(
                 new Controller(controllerPort.get())
@@ -92,7 +115,7 @@ public class OI {
 
     private void setDevice(InputDevice device) {
         this.device = device;
-        this.device.initActions(actions);
+        this.device.bindActions(actions);
     }
 
     private double calculateInput(double value, SlewRateLimiter limiter) {

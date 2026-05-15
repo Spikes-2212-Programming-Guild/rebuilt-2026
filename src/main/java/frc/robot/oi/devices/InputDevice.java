@@ -4,7 +4,7 @@ import frc.robot.oi.Actions;
 
 public interface InputDevice {
 
-    void initActions(Actions actions);
+    void bindActions(Actions actions);
 
     double getX();
 
