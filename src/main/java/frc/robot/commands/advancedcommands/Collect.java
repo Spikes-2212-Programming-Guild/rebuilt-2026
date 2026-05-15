@@ -1,17 +1,30 @@
 package frc.robot.commands.advancedcommands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.difficultcommands.CollectionToPosition;
-import frc.robot.commands.simplecommands.SimpleIntake;
-import frc.robot.subsystems.Collection;
-import frc.robot.subsystems.CollectionMovement;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.collection.MoveCollectionJoint;
+import frc.robot.commands.collection.SpinRoller;
+import frc.robot.subsystems.collection.CollectionJoint;
+import frc.robot.subsystems.collection.Roller;
 
-public class Collect extends SequentialCommandGroup {
+import java.util.function.Supplier;
 
-    public Collect(Collection collection, CollectionMovement collectionMovement) {
+public class Collect extends ParallelCommandGroup {
+
+    private static final Supplier<Double> DOWN_SPEED = () -> -0.07;
+    private static final int TIME_TO_MOVE_JOINT = 1;
+
+    public Collect(Roller roller, CollectionJoint collectionJoint) {
         addCommands(
-                new CollectionToPosition(collectionMovement, () -> CollectionMovement.OPEN_POSE),
-                new SimpleIntake(collection)
+                new SequentialCommandGroup(
+                        new MoveCollectionJoint(collectionJoint, DOWN_SPEED).withTimeout(TIME_TO_MOVE_JOINT),
+                        new SequentialCommandGroup(
+                                new WaitCommand(4),
+                                new Jumpies(collectionJoint)
+                        ).repeatedly()
+                ),
+                new SpinRoller(roller)
         );
     }
 }

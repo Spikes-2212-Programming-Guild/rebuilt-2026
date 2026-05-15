@@ -1,8 +1,8 @@
 package com.spikes2212.command.genericsubsystem;
 
-import com.spikes2212.dashboard.Namespace;
 import com.spikes2212.util.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import com.spikes2212.dashboard.Namespace;
 
 import java.util.function.Supplier;
 
@@ -32,8 +32,8 @@ public class MotoredGenericSubsystem extends GenericSubsystem {
     }
 
     /**
-     * Constructs a new instance of {@link MotoredGenericSubsystem} with the given {@link Namespace}'s name, the given
-     * minSpeed, maxSpeed and the given {@link MotorController}s.
+     * <p>Constructs a new instance of {@link MotoredGenericSubsystem} with the given {@link Namespace}'s name, the given
+     * minSpeed, maxSpeed and the given {@link MotorController}s.</p>
      *
      * @param namespaceName    the name of the subsystem's namespace
      * @param minSpeed         the minimum speed
@@ -46,8 +46,8 @@ public class MotoredGenericSubsystem extends GenericSubsystem {
     }
 
     /**
-     * Constructs a new instance of {@link MotoredGenericSubsystem} with the given {@link Namespace}'s name and
-     * the given {@link MotorController}s.
+     * <p>Constructs a new instance of {@link MotoredGenericSubsystem} with the given {@link Namespace}'s name and
+     * the given {@link MotorController}s.</p>
      *
      * @param namespaceName    the name of the subsystem's namespace
      * @param motorControllers the motor controllers in the subsystem

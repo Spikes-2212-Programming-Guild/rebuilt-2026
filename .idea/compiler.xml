@@ -8,7 +8,7 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/edu.wpi.first.epilogue/epilogue-processor-java/2026.2.1/e3220063a16c88fed75463db169024df7a0a449e/epilogue-processor-java-2026.2.1.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/edu.wpi.first.epilogue/epilogue-runtime-java/2026.2.1/a1c0143fae961fbf7ee737afe29747d869492b57/epilogue-runtime-java-2026.2.1.jar" />
         </processorPath>
-        <module name="rebuilt-2026.main" />
+        <module name="Rebuilt2026.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />

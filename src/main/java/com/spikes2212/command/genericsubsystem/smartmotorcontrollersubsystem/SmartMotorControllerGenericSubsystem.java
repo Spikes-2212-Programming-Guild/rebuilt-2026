@@ -4,9 +4,9 @@ import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.control.FeedForwardSettings;
 import com.spikes2212.control.PIDSettings;
 import com.spikes2212.control.TrapezoidProfileSettings;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import com.spikes2212.util.UnifiedControlMode;
 import com.spikes2212.util.smartmotorcontrollers.SmartMotorController;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 
 import java.util.List;
 
