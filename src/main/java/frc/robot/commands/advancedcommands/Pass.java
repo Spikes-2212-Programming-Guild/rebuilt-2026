@@ -1,10 +1,10 @@
 package frc.robot.commands.advancedcommands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.commands.shoot.JustShoot;
-import frc.robot.commands.storage.Spin;
-import frc.robot.commands.storage.Transport;
-import frc.robot.subsystems.shoot.Shooter;
+import frc.robot.commands.shooter.SimpleShoot;
+import frc.robot.commands.spindexer.SpinMagazine;
+import frc.robot.commands.spindexer.SpinKicker;
+import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.spindexer.Kicker;
 import frc.robot.subsystems.spindexer.SpinningMagazine;
 
@@ -16,9 +16,9 @@ public class Pass extends ParallelCommandGroup {
                 Kicker kicker) {
 
         addCommands(
-                new Spin(spinningMagazine),
-                new Transport(kicker),
-                new JustShoot(shooter, shootingSpeed)
+                new SpinMagazine(spinningMagazine),
+                new SpinKicker(kicker),
+                new SimpleShoot(shooter, shootingSpeed)
         );
     }
 }

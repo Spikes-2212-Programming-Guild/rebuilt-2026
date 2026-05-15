@@ -1,4 +1,4 @@
-package frc.robot.commands.shoot;
+package frc.robot.commands.shooter;
 
 import com.spikes2212.command.genericsubsystem.commands.smartmotorcontrollergenericsubsystem.MoveSmartMotorControllerGenericSubsystem;
 import com.spikes2212.control.FeedForwardController;
@@ -6,7 +6,7 @@ import com.spikes2212.control.FeedForwardSettings;
 import com.spikes2212.control.PIDSettings;
 import com.spikes2212.dashboard.RootNamespace;
 import com.spikes2212.util.UnifiedControlMode;
-import frc.robot.subsystems.shoot.Shooter;
+import frc.robot.subsystems.shooter.Shooter;
 
 import java.util.function.Supplier;
 

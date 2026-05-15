@@ -7,43 +7,48 @@ package frc.robot;
 import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.intake.Intake;
-import frc.robot.commands.intake.MoveCollection;
-import frc.robot.commands.shoot.JustShoot;
-import frc.robot.commands.storage.Transport;
+import frc.robot.commands.collection.MoveCollectionJoint;
+import frc.robot.commands.collection.SpinRoller;
+import frc.robot.commands.shooter.SimpleShoot;
+import frc.robot.commands.spindexer.SpinKicker;
+import frc.robot.commands.spindexer.SpinMagazine;
 import frc.robot.commands.swerve.Drive;
 import frc.robot.commands.swerve.RotateAccordingToGyro;
-import frc.robot.subsystems.forbar.Collection;
-import frc.robot.subsystems.forbar.CollectionMovement;
-import frc.robot.subsystems.shoot.Shooter;
+import frc.robot.oi.OI;
+import frc.robot.subsystems.collection.CollectionJoint;
+import frc.robot.subsystems.collection.Roller;
+import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.spindexer.Kicker;
+import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.subsystems.swerve.Drivetrain;
 
 public class Robot extends TimedRobot {
 
     private static final RootNamespace namespace = new RootNamespace("robot");
 
-    private final Drivetrain drivetrain = Drivetrain.getInstance();
+    private final Drivetrain drivetrain = Drivetrain.getInstance(); // why not just call it swerve?
     private final Shooter shooter = Shooter.getInstance();
     private final Kicker kicker = Kicker.getInstance();
-    private final CollectionMovement forbar = CollectionMovement.getInstance();
-    private final Collection intake = Collection.getInstance();
+    private final CollectionJoint collectionJoint = CollectionJoint.getInstance(); // not sure about the name
+    private final Roller roller = Roller.getInstance();
+    private final SpinningMagazine spinningMagazine = SpinningMagazine.getInstance();
 
     @Override
     public void robotInit() {
-        namespace.putCommand("rotate gyro", new RotateAccordingToGyro(drivetrain,
+        namespace.putCommand("rotate to gyro", new RotateAccordingToGyro(drivetrain,
                 namespace.addConstantDouble("gyro turn", 0.0), true));
 
         namespace.putCommand("shoot",
-                new JustShoot(shooter, namespace.addConstantDouble("shoot speed", 0)));
+                new SimpleShoot(shooter, namespace.addConstantDouble("shoot speed", 0)));
 
-        namespace.putCommand("forbar",
-                new MoveCollection(forbar, namespace.addConstantDouble("forbar speed", 0)));
+        namespace.putCommand("move collection joint",
+                new MoveCollectionJoint(collectionJoint, namespace.addConstantDouble("collection joint speed", 0)));
 
-        namespace.putCommand("intake", new Intake(intake));
+        namespace.putCommand("spin roller", new SpinRoller(roller));
 
-        namespace.putCommand("kicker", new Transport(kicker));
+        namespace.putCommand("spin kicker", new SpinKicker(kicker));
 
+        namespace.putCommand("spin magazine", new SpinMagazine(spinningMagazine));
     }
 
     @Override
@@ -76,10 +81,9 @@ public class Robot extends TimedRobot {
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
 
-        OI oi = new OI();
-        drivetrain.setDefaultCommand(new Drive(drivetrain,
-                oi::getControllerLeftX, oi::getControllerLeftY, oi::getControllerRightX,
-                oi::isFieldRelative, true
+        OI oi = new OI(namespace);
+        drivetrain.setDefaultCommand(new Drive(
+                drivetrain, oi::getX, oi::getY, oi::getZ, oi::useFieldRelative, true
         ));
     }
 

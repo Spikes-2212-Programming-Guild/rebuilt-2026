@@ -1,4 +1,4 @@
-package frc.robot.subsystems.forbar;
+package frc.robot.subsystems.collection;
 
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
@@ -6,24 +6,24 @@ import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import frc.robot.RobotMap;
 
-public class CollectionMovement extends MotoredGenericSubsystem {
+public class CollectionJoint extends MotoredGenericSubsystem {
 
-    private static final String NAMESPACE_NAME = "collection movement";
+    private static final String NAMESPACE_NAME = "collection joint";
     private static final double CURRENT_LIMIT_AMP = 40;
 
     private final TalonFXWrapper talonFX;
 
-    private static CollectionMovement instance;
+    private static CollectionJoint instance;
 
-    public static CollectionMovement getInstance() {
+    public static CollectionJoint getInstance() {
         if (instance == null) {
-            instance = new CollectionMovement(NAMESPACE_NAME,
+            instance = new CollectionJoint(NAMESPACE_NAME,
                     new TalonFXWrapper(RobotMap.CAN.COLLECTION_MOVEMENT_TALON_FX_ID, new CANBus("canivore")));
         }
         return instance;
     }
 
-    private CollectionMovement(String namespaceName, TalonFXWrapper talonFX) {
+    private CollectionJoint(String namespaceName, TalonFXWrapper talonFX) {
         super(namespaceName, talonFX);
         this.talonFX = talonFX;
         talonFX.getConfigurator().apply(new CurrentLimitsConfigs()

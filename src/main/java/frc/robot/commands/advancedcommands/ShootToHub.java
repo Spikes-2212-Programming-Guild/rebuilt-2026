@@ -2,10 +2,10 @@ package frc.robot.commands.advancedcommands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.shoot.ShootWithPID;
-import frc.robot.commands.storage.Spin;
-import frc.robot.commands.storage.Transport;
-import frc.robot.subsystems.shoot.Shooter;
+import frc.robot.commands.shooter.ShootWithPID;
+import frc.robot.commands.spindexer.SpinMagazine;
+import frc.robot.commands.spindexer.SpinKicker;
+import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.spindexer.Kicker;
 import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.utils.VisionService;
@@ -32,8 +32,8 @@ public class ShootToHub extends SequentialCommandGroup {
                     }
                 },
                 new ParallelCommandGroup(
-                        new Spin(spinningMagazine),
-                        new Transport(kicker),
+                        new SpinMagazine(spinningMagazine),
+                        new SpinKicker(kicker),
                         new ShootWithPID(shooter,
                                 () -> (LINEAR_EQUATION_M_FACTOR *
                                         (visionService.getZ() + DISTANCE_FROM_CAMERA_TO_SHOOTER) +

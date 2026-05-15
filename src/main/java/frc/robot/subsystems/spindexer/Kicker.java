@@ -7,7 +7,7 @@ import frc.robot.RobotMap;
 
 public class Kicker extends MotoredGenericSubsystem {
 
-    private static final String NAMESPACE_NAME = "transport";
+    private static final String NAMESPACE_NAME = "kicker";
 
     public static final double SPEED = -0.75;
 
