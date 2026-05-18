@@ -25,6 +25,7 @@ import frc.robot.subsystems.swerve.Drivetrain;
 public class Robot extends TimedRobot {
 
     private static final RootNamespace namespace = new RootNamespace("robot");
+    private static final OI oi = new OI(namespace);
 
     private final Drivetrain drivetrain = Drivetrain.getInstance(); // why not just call it swerve?
 //    private final Shooter shooter = Shooter.getInstance();
@@ -81,7 +82,6 @@ public class Robot extends TimedRobot {
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
 
-        OI oi = new OI(namespace);
         drivetrain.setDefaultCommand(new Drive(
                 drivetrain, oi::getX, oi::getY, oi::getZ, oi::useFieldRelative, true
         ));

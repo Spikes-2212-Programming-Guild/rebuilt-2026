@@ -36,9 +36,9 @@ public class OI {
     );
 
     // TODO - tune these
-    private final SlewRateLimiter xLimiter = new SlewRateLimiter(-1, -1, -1);
-    private final SlewRateLimiter yLimiter = new SlewRateLimiter(-1, -1, -1);
-    private final SlewRateLimiter zLimiter = new SlewRateLimiter(-1, -1, -1);
+    private final SlewRateLimiter xLimiter = new SlewRateLimiter(3);
+    private final SlewRateLimiter yLimiter = new SlewRateLimiter(3);
+    private final SlewRateLimiter zLimiter = new SlewRateLimiter(3);
 
     // TODO - maybe add these to the dashboard
     private static final double LOW_SPEED = 0.7;
