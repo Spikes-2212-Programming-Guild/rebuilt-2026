@@ -20,7 +20,7 @@ public class DriveSwerve extends Command {
     private final Supplier<Double> ySpeed;
     private final Supplier<Double> rotationSpeed;
 
-    private final boolean isFieldRelative;
+    private final Supplier<Boolean> isFieldRelative;
     private final boolean useVelocityPID;
 
     /**
@@ -41,7 +41,7 @@ public class DriveSwerve extends Command {
      * @param useVelocityPID  whether the robot velocity will be applied using P.I.D or not
      */
     public DriveSwerve(SwerveDrivetrain drivetrain, Supplier<Double> xSpeed, Supplier<Double> ySpeed,
-                       Supplier<Double> rotationSpeed, boolean isFieldRelative, boolean useVelocityPID) {
+                       Supplier<Double> rotationSpeed, Supplier<Boolean> isFieldRelative, boolean useVelocityPID) {
         addRequirements(drivetrain);
         this.drivetrain = drivetrain;
         this.xSpeed = xSpeed;
@@ -59,7 +59,7 @@ public class DriveSwerve extends Command {
     @Override
     public void execute() {
         now = Timer.getFPGATimestamp();
-        drivetrain.drive(xSpeed.get(), ySpeed.get(), rotationSpeed.get(), isFieldRelative,
+        drivetrain.drive(xSpeed.get(), ySpeed.get(), rotationSpeed.get(), isFieldRelative.get(),
                 now - lastGivenTime, useVelocityPID);
         lastGivenTime = now;
     }

@@ -19,7 +19,7 @@ public class TuneToAprilTag extends SequentialCommandGroup {
     public TuneToAprilTag(Drivetrain drivetrain, VisionService visionService, Shooter shooter, Kicker kicker,
                           SpinningMagazine spinningMagazine, Collection collection, double rotationSpeed) {
         addCommands(
-                new Drive(drivetrain, () -> 0.0, () -> 0.0, () -> rotationSpeed, true, true)
+                new Drive(drivetrain, () -> 0.0, () -> 0.0, () -> rotationSpeed, () ->true, true)
                         .until(visionService::hasTarget),
                 new RotateAccordingAprilTags(drivetrain, () -> 0.0, visionService, true),
                 new ParallelCommandGroup(

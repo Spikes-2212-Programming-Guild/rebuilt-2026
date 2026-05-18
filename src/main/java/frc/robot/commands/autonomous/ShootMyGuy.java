@@ -21,7 +21,7 @@ public class ShootMyGuy extends SequentialCommandGroup {
                       SpinningMagazine spinningMagazine, VisionService visionService, Collection collection) {
         addCommands(
                 new Drive(drivetrain, () -> SPEED_TO_DRIVE_X_AXIS, () -> 0.0,
-                        () -> 0.0, true, true).withTimeout(TIME_TO_DRIVE),
+                        () -> 0.0, () ->true, true).withTimeout(TIME_TO_DRIVE),
                 new TuneToAprilTag(drivetrain, visionService, shooter, kicker, spinningMagazine, collection,
                         SPEED_TO_DRIVE_ROTATIONAL_AXIS).withTimeout(TIME_TO_SHOOT));
     }
