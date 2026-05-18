@@ -11,7 +11,7 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
 
     private final TalonFXWrapper talonFX;
 
-    public static final double SPEED = 0.3;
+    public static final double SPEED = 0.5;
 
     private static SpinningMagazine instance;
 

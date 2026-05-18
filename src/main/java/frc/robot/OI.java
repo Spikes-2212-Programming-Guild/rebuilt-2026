@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.advancedcommands.*;
 import frc.robot.commands.intake.Intake;
+import frc.robot.commands.shoot.JustShoot;
+import frc.robot.commands.storage.Spin;
+import frc.robot.commands.storage.Transport;
 import frc.robot.commands.swerve.RotateAccordingToGyro;
 import frc.robot.subsystems.forbar.Collection;
 import frc.robot.subsystems.forbar.CollectionMovement;
@@ -34,7 +37,7 @@ public class OI /*GEVALD*/ {
         navigatorPlaystation.getR2Button().whileTrue(new Pass(shooter, () -> -1.0, spinningMagazine, kicker));
         navigatorPlaystation.getR1Button().whileTrue(new ShootToHub(shooter, kicker, spinningMagazine,
                 visionService));
-        navigatorPlaystation.getCircleButton().whileTrue(new MoveGenericSubsystem(collection, -0.3)).
+        navigatorPlaystation.getCircleButton().whileTrue(new MoveGenericSubsystem(collection, -0.05)).
                 onFalse(new MoveGenericSubsystem(collection, () -> 0.0));
         navigatorPlaystation.getSquareButton().whileTrue(new Intake(collection)).onFalse(new MoveGenericSubsystem(
                 collection, () -> 0.0));
@@ -47,10 +50,12 @@ public class OI /*GEVALD*/ {
                 andThen(new ShootToHub(shooter, kicker, spinningMagazine, visionService)));
         driverPlaystation.getL2Button().whileTrue(new TuneToAprilTag(drivetrain, visionService,
                 shooter, kicker, spinningMagazine, collection, -1));
-        driverPlaystation.getR1Button().whileTrue(new RotateAccordingToGyro(drivetrain, () -> -90.0,
-                true));
+        driverPlaystation.getR1Button().whileTrue(new JustShoot(shooter, () -> 0.6).withTimeout(1)
+                .andThen(new JustShoot(shooter, () -> 0.6).alongWith(new Transport(kicker),
+                new Spin(spinningMagazine))));
         driverPlaystation.getL1Button().whileTrue(new RotateAccordingToGyro(drivetrain, () -> 270.0,
                 true));
+
 
     }
 
