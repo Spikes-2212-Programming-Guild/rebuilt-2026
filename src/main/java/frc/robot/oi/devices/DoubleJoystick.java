@@ -31,7 +31,7 @@ public class DoubleJoystick implements InputDevice {
 
     @Override
     public double getY() {
-        return left.getY();
+        return -left.getY();
     }
 
     @Override

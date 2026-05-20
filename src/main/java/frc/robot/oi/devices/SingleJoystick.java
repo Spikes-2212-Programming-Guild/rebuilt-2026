@@ -29,7 +29,7 @@ public class SingleJoystick implements InputDevice {
 
     @Override
     public double getY() {
-        return joystick.getY();
+        return -joystick.getY();
     }
 
     @Override
