@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
         namespace.putCommand("move collection down", new MoveCollection(collectionMovement, () -> -0.05));
         namespace.putCommand("shoot", new ShootWithPID(shooter, namespace.addConstantDouble("shoot speed",
                 -0.2), 100));
-        namespace.putCommand("shoooot", new JustShoot(shooter, () -> 0.5));
+        namespace.putCommand("shoot", new JustShoot(shooter, () -> 0.5));
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
         namespace.putCommand("transport", new Transport(kicker));
         namespace.putCommand("collection", new Collect(collection));
