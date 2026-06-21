@@ -8,7 +8,7 @@ import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
-import frc.robot.commands.intake.Intake;
+import frc.robot.commands.intake.Collect;
 import frc.robot.commands.intake.MoveCollection;
 import frc.robot.commands.shoot.JustShoot;
 import frc.robot.commands.shoot.PIDAndBang;
@@ -16,9 +16,9 @@ import frc.robot.commands.shoot.ShootWithPID;
 import frc.robot.commands.storage.Spin;
 import frc.robot.commands.storage.Transport;
 import frc.robot.commands.swerve.Drive;
-import frc.robot.subsystems.forbar.Collection;
-import frc.robot.subsystems.forbar.CollectionMovement;
-import frc.robot.subsystems.shoot.Shooter;
+import frc.robot.subsystems.intake.Collection;
+import frc.robot.subsystems.intake.CollectionMovement;
+import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.spindexer.Kicker;
 import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.subsystems.swerve.Drivetrain;
@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
         namespace.putCommand("shoooot", new JustShoot(shooter, () -> 0.5));
         namespace.putCommand("spindexer", new Spin(spinningMagazine));
         namespace.putCommand("transport", new Transport(kicker));
-        namespace.putCommand("collection", new Intake(collection));
+        namespace.putCommand("collection", new Collect(collection));
         namespace.putCommand("b and p", new PIDAndBang(shooter, namespace.addConstantDouble("spe",
                 1), 100));
     }

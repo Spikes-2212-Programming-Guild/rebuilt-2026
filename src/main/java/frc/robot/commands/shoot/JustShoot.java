@@ -1,7 +1,7 @@
 package frc.robot.commands.shoot;
 
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
-import frc.robot.subsystems.shoot.Shooter;
+import frc.robot.subsystems.shooter.Shooter;
 
 import java.util.function.Supplier;
 

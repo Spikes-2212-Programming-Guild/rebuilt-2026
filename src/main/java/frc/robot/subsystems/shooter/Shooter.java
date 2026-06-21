@@ -1,4 +1,4 @@
-package frc.robot.subsystems.shoot;
+package frc.robot.subsystems.shooter;
 
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;

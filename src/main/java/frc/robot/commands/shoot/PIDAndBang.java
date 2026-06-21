@@ -7,7 +7,7 @@ import com.spikes2212.control.PIDSettings;
 import com.spikes2212.dashboard.RootNamespace;
 import com.spikes2212.util.UnifiedControlMode;
 import edu.wpi.first.math.controller.BangBangController;
-import frc.robot.subsystems.shoot.Shooter;
+import frc.robot.subsystems.shooter.Shooter;
 
 import java.util.function.Supplier;
 

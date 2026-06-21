@@ -1,7 +1,7 @@
 package frc.robot.commands.intake;
 
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
-import frc.robot.subsystems.forbar.CollectionMovement;
+import frc.robot.subsystems.intake.CollectionMovement;
 
 import java.util.function.Supplier;
 

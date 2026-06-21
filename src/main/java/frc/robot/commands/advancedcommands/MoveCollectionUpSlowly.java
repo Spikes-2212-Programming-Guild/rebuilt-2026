@@ -2,7 +2,7 @@ package frc.robot.commands.advancedcommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.intake.MoveCollection;
-import frc.robot.subsystems.forbar.CollectionMovement;
+import frc.robot.subsystems.intake.CollectionMovement;
 
 public class MoveCollectionUpSlowly extends SequentialCommandGroup {
 

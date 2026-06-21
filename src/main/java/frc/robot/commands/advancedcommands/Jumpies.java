@@ -2,7 +2,7 @@ package frc.robot.commands.advancedcommands;
 
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.subsystems.forbar.CollectionMovement;
+import frc.robot.subsystems.intake.CollectionMovement;
 
 public class Jumpies extends SequentialCommandGroup {
 

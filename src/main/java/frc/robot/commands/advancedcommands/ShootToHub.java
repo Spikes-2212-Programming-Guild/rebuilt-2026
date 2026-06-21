@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.shoot.ShootWithPID;
 import frc.robot.commands.storage.Spin;
 import frc.robot.commands.storage.Transport;
-import frc.robot.subsystems.shoot.Shooter;
+import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.spindexer.Kicker;
 import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.utils.VisionService;
