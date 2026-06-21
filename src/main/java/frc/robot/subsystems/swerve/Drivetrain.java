@@ -4,7 +4,11 @@ import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.spikes2212.command.drivetrains.swerve.SwerveDrivetrain;
 import com.spikes2212.command.drivetrains.swerve.SwerveModule;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
@@ -28,6 +32,13 @@ public class Drivetrain extends SwerveDrivetrain {
             .getStructArrayTopic("desired states", SwerveModuleState.struct).publish();
 
     private final Pigeon2 gyro;
+
+    private final static double TRANSLATION_POSE_TOLERANCE = -1;
+    private final static double TRANSLATION_VELOCITY_TOLERANCE = -1;
+    private final static double ROTATION_TOLERANCE_IN_DEGREES = -1;
+    private static final double ROTATION_VELOCITY_TOLERANCE = -1;
+
+    private final SwerveDriveOdometry odometry;
 
     private static Drivetrain instance;
 
@@ -63,6 +74,7 @@ public class Drivetrain extends SwerveDrivetrain {
                         new SwerveModuleState(),
                         new SwerveModuleState()
                 });
+        odometry = new SwerveDriveOdometry(getKinematics(), getAngle(), getSwerveModulePositions());
         configureDashboard();
     }
 
@@ -99,8 +111,62 @@ public class Drivetrain extends SwerveDrivetrain {
         states.set(desiredStatesToSet);
     }
 
+    public Pose2d getEstimatedPose() {
+        return odometry.getPoseMeters();
+    }
+
+    public void resetPose(Pose2d newPose) {
+        odometry.resetPose(newPose);
+    }
+
+    public void updateOdometry() {
+        odometry.update(getAngle(), getSwerveModulePositions());
+    }
+
+    private boolean atAxis(double currentAxisPose, double targetAxisPose, double currentVelocity) {
+        boolean isAtPose = Math.abs(currentAxisPose - targetAxisPose) <= TRANSLATION_POSE_TOLERANCE;
+        boolean isRobotStill = Math.abs(currentVelocity) <= TRANSLATION_VELOCITY_TOLERANCE;
+        return isAtPose && isRobotStill;
+    }
+
+    private boolean atRotation(Rotation2d rotation2d) {
+        double error = rotation2d.minus(getAngle()).getDegrees();
+        boolean isAtRotation = Math.abs(error) <= ROTATION_TOLERANCE_IN_DEGREES;
+        boolean isRotationStill = Math.abs(getSpeeds().omegaRadiansPerSecond)
+                <= ROTATION_VELOCITY_TOLERANCE;
+        return isAtRotation && isRotationStill;
+    }
+
+    public boolean atPose(Pose2d pose2d) {
+        boolean atXAxis = atAxis(getEstimatedPose().getX(), pose2d.getX(),
+                getSpeeds().vxMetersPerSecond);
+        boolean atYAxis = atAxis(getEstimatedPose().getY(), pose2d.getY(),
+                getSpeeds().vyMetersPerSecond);
+        return atXAxis && atYAxis && atRotation(pose2d.getRotation());
+    }
+
+    public Pose2d getEstimatedPoseByLatency(ChassisSpeeds relativeSpeeds, double latencySeconds) {
+        double predictedXSpeed = relativeSpeeds.vxMetersPerSecond * latencySeconds;
+        double predictedYSpeed = relativeSpeeds.vyMetersPerSecond * latencySeconds;
+        Rotation2d predictedRotationSpeed =
+                Rotation2d.fromRadians(relativeSpeeds.omegaRadiansPerSecond * latencySeconds);
+        return getEstimatedPose().
+                transformBy(new Transform2d(predictedXSpeed, predictedYSpeed, predictedRotationSpeed));
+    }
+
     @Override
     public void configureDashboard() {
         namespace.putNumber("gyro", () -> this.getAngle().getDegrees());
+        namespace.putNumber("x", () -> odometry.getPoseMeters().getX());
+        namespace.putNumber("y", () -> odometry.getPoseMeters().getY());
+        namespace.putRunnable("reset odometry", () ->
+                odometry.resetPosition(getAngle(), getSwerveModulePositions(), new Pose2d()));
+        namespace.putRunnable("reset gyro to 0",() -> gyro.setYaw(0));
+    }
+
+    @Override
+    public void periodic() {
+        super.periodic();
+        updateOdometry();
     }
 }
