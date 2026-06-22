@@ -15,7 +15,7 @@ public class PathContainer {
 
     private static PathContainer instance;
 
-    private static Command FilppedShootAndToss;
+    private static Command flippedShootAndToss;
     private static Command intakeFromDepot;
     private static Command intakeFromFeeder;
     private static Command intakeAndShoot;
@@ -27,7 +27,7 @@ public class PathContainer {
     private static final boolean shouldMirror = AutonomousContainer.shouldMirror();
 
     public static void createAutos() {
-        FilppedShootAndToss = new PathPlannerAuto("Flipped shoot and pass", shouldMirror);
+        flippedShootAndToss = new PathPlannerAuto("Flipped shoot and pass", shouldMirror);
         intakeFromDepot = new PathPlannerAuto("Intake from depot", shouldMirror);
         intakeFromFeeder = new PathPlannerAuto("Intake from feeder", shouldMirror);
         intakeAndShoot = new PathPlannerAuto("Intake and Shoot", shouldMirror);
@@ -52,7 +52,7 @@ public class PathContainer {
     }
 
     public static Command getFlippedShootAndPass() {
-        return FilppedShootAndToss;
+        return flippedShootAndToss;
     }
 
     public static Command getIntakeFromDepot() {

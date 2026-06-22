@@ -40,6 +40,6 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     @Override
     public void configureDashboard() {
         namespace.putNumber("velocity", talonFX::getVelocity);
-        namespace.putNumber("relative", talonFX::getPosition);
+        namespace.putNumber("relative pos", talonFX::getPosition);
     }
 }

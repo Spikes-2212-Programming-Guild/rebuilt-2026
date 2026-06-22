@@ -2,6 +2,7 @@ package frc.robot.subsystems.intake;
 
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import frc.robot.RobotMap;
@@ -14,7 +15,8 @@ public class Collection extends MotoredGenericSubsystem {
 
     public static final double SPEED = 1;
 
-    private static final double CURRENT_LIMIT_AMP = 40.0;
+    private static final double SUPPLY_CURRENT_LIMIT = 40;
+    private static final double STATOR_CURRENT_LIMIT = -1;
 
     private static Collection instance;
 
@@ -27,21 +29,25 @@ public class Collection extends MotoredGenericSubsystem {
         return instance;
     }
 
-    private Collection(String namespaceName, TalonFXWrapper sparkMax) {
-        super(namespaceName, sparkMax);
-        this.talonFX = sparkMax;
-        talonFX.restoreFactoryDefaults();
-        setCurrentLimit(CURRENT_LIMIT_AMP);
+    private Collection(String namespaceName, TalonFXWrapper talonFx) {
+        super(namespaceName, talonFx);
+        this.talonFX = talonFx;
+        configureMotor();
         configureDashboard();
     }
 
-    public void setCurrentLimit(double limit) {
+    private void configureMotor() {
+        talonFX.restoreFactoryDefaults();
+        talonFX.setIdleMode(NeutralModeValue.Coast);
+        talonFX.setInverted(false);
         talonFX.getConfigurator().apply(new CurrentLimitsConfigs()
-                .withSupplyCurrentLimit(limit));
+                        .withSupplyCurrentLimit(SUPPLY_CURRENT_LIMIT)
+//                .withStatorCurrentLimit(STATOR_CURRENT_LIMIT)
+        );
     }
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("motor velocity", talonFX::getVelocity);
+        namespace.putNumber("velocity", talonFX::getVelocity);
     }
 }

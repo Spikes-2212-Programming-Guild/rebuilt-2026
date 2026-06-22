@@ -2,7 +2,7 @@ package frc.robot.commands.advancedcommands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.intake.Collect;
+import frc.robot.commands.intake.SpinCollect;
 import frc.robot.subsystems.intake.Collection;
 import frc.robot.subsystems.intake.CollectionMovement;
 
@@ -14,7 +14,7 @@ public class MoveCollectionUp extends SequentialCommandGroup {
         addCommands(
                 new ParallelCommandGroup(
                         new MoveCollectionUpSlowly(collectionMovement),
-                        new Collect(collection).withTimeout(TIME_TO_COLLECT_WHEN_UP)
+                        new SpinCollect(collection).withTimeout(TIME_TO_COLLECT_WHEN_UP)
                 )
         );
     }

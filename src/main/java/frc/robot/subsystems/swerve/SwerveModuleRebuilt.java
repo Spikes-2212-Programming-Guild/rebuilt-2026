@@ -23,8 +23,11 @@ public class SwerveModuleRebuilt extends SwerveModule {
     private static final int SECONDS_IN_MINUTE = 60;
     private static final int ABSOLUTE_POSITION_DISCONTINUITY_POINT = 1;
 
-    private static final int DRIVE_CURRENT_LIMIT_AMP = 40;
-    private static final int TURN_CURRENT_LIMIT_AMP = 40;
+    private static final int DRIVE_SUPPLY_CURRENT_LIMIT = 40;
+    private static final int DRIVE_STATOR_CURRENT_LIMIT = -1;
+
+    private static final int TURN_SMART_CURRENT_LIMIT = 40;
+    private static final int TURN_SECONDARY_CURRENT_LIMIT = 40;
 
     private static final double DRIVE_MOTOR_ROTATION_TO_WHEEL_ROTATIONS =
             DRIVE_GEAR_RATIO * WHEEL_DIAMETER_METERS * Math.PI;
@@ -87,17 +90,21 @@ public class SwerveModuleRebuilt extends SwerveModule {
     }
 
     public void setCurrents() {
-        driveMotor.getConfigurator().apply(new CurrentLimitsConfigs().
-                withSupplyCurrentLimit(DRIVE_CURRENT_LIMIT_AMP));
-        turnMotor.applyConfiguration(turnMotor.getSparkConfiguration().
-                secondaryCurrentLimit(TURN_CURRENT_LIMIT_AMP));
+        driveMotor.getConfigurator().apply(new CurrentLimitsConfigs()
+                .withSupplyCurrentLimit(DRIVE_SUPPLY_CURRENT_LIMIT)
+//                .withStatorCurrentLimit(DRIVE_STATOR_CURRENT_LIMIT)
+        );
+        turnMotor.applyConfiguration(turnMotor.getSparkConfiguration()
+                .smartCurrentLimit(TURN_SMART_CURRENT_LIMIT)
+//                        .secondaryCurrentLimit(TURN_SECONDARY_CURRENT_LIMIT)
+        );
     }
 
     @Override
     public void configureDashboard() {
 //        namespace.putNumber("absolute encoder", () -> this.getAbsoluteModuleAngle().getDegrees());
 //        namespace.putNumber("relative angle", this::getRelativeModuleAngle);
-        namespace.putNumber("current drive velocity", driveMotor::getVelocity);
+//        namespace.putNumber("current drive velocity", driveMotor::getVelocity);
 //        namespace.putNumber("current turn velocity", turnMotor::getVelocity);
 //        namespace.putNumber("voltage drive", driveMotor::getVoltage);
 //

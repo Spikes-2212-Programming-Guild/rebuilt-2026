@@ -5,7 +5,7 @@ import com.spikes2212.util.PlaystationControllerWrapper;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.advancedcommands.*;
-import frc.robot.commands.intake.Collect;
+import frc.robot.commands.intake.SpinCollect;
 import frc.robot.commands.shoot.JustShoot;
 import frc.robot.commands.storage.Spin;
 import frc.robot.commands.storage.Transport;
@@ -20,8 +20,8 @@ import frc.robot.utils.VisionService;
 
 public class OI /*GEVALD*/ {
 
-    private final PlaystationControllerWrapper driverPlaystation = new PlaystationControllerWrapper(0);
-    private final PlaystationControllerWrapper navigatorPlaystation = new PlaystationControllerWrapper(1);
+    private final PlaystationControllerWrapper driver = new PlaystationControllerWrapper(0);
+    private final PlaystationControllerWrapper navigator = new PlaystationControllerWrapper(1);
 
     private final Collection collection = Collection.getInstance();
     private final Drivetrain drivetrain = Drivetrain.getInstance();
@@ -32,46 +32,51 @@ public class OI /*GEVALD*/ {
     private final VisionService visionService = VisionService.getInstance();
 
     public OI() {
-        navigatorPlaystation.getL2Button().whileTrue(new frc.robot.commands.advancedcommands.Collect(collection, collectionMovement))
-                .onFalse(new MoveCollectionUp(collection, collectionMovement));
-        navigatorPlaystation.getR2Button().whileTrue(new Pass(shooter, () -> -1.0, spinningMagazine, kicker));
-        navigatorPlaystation.getR1Button().whileTrue(new ShootToHub(shooter, kicker, spinningMagazine,
-                visionService));
-        navigatorPlaystation.getCircleButton().whileTrue(new MoveGenericSubsystem(collection, -0.05)).
-                onFalse(new MoveGenericSubsystem(collection, () -> 0.0));
-        navigatorPlaystation.getSquareButton().whileTrue(new Collect(collection)).onFalse(new MoveGenericSubsystem(
-                collection, () -> 0.0));
-        navigatorPlaystation.getLeftStickButton().onTrue(
-                new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
+        configureDriver();
+        configureNavigator();
+    }
 
-        driverPlaystation.getTriangleButton().onTrue(new InstantCommand(drivetrain::resetFieldRelativity));
-        driverPlaystation.getR2Button().whileTrue(new TuneToAprilTag(drivetrain, visionService,
+    private void configureDriver() {
+        driver.getTriangleButton().onTrue(new InstantCommand(drivetrain::resetFieldRelativity));
+        driver.getR2Button().whileTrue(new TuneToAprilTag(drivetrain, visionService,
                 shooter, kicker, spinningMagazine, collection, 1).
                 andThen(new ShootToHub(shooter, kicker, spinningMagazine, visionService)));
-        driverPlaystation.getL2Button().whileTrue(new TuneToAprilTag(drivetrain, visionService,
+        driver.getL2Button().whileTrue(new TuneToAprilTag(drivetrain, visionService,
                 shooter, kicker, spinningMagazine, collection, -1));
-        driverPlaystation.getR1Button().whileTrue(new JustShoot(shooter, () -> 0.6).withTimeout(1)
+        driver.getR1Button().whileTrue(new JustShoot(shooter, () -> 0.6).withTimeout(1)
                 .andThen(new JustShoot(shooter, () -> 0.6).alongWith(new Transport(kicker),
-                new Spin(spinningMagazine))));
-        driverPlaystation.getL1Button().whileTrue(new RotateAccordingToGyro(drivetrain, () -> 270.0,
+                        new Spin(spinningMagazine))));
+        driver.getL1Button().whileTrue(new RotateAccordingToGyro(drivetrain, () -> 270.0,
                 true));
+    }
 
-
+    private void configureNavigator() {
+        navigator.getL2Button().whileTrue(new Collect(collection, collectionMovement))
+                .onFalse(new MoveCollectionUp(collection, collectionMovement));
+        navigator.getR2Button().whileTrue(new Pass(shooter, () -> -1.0, spinningMagazine, kicker));
+        navigator.getR1Button().whileTrue(new ShootToHub(shooter, kicker, spinningMagazine,
+                visionService));
+        navigator.getCircleButton().whileTrue(new MoveGenericSubsystem(collection, -0.05)).
+                onFalse(new MoveGenericSubsystem(collection, () -> 0.0));
+        navigator.getSquareButton().whileTrue(new SpinCollect(collection)).onFalse(new MoveGenericSubsystem(
+                collection, () -> 0.0));
+        navigator.getLeftStickButton().onTrue(
+                new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
     }
 
     public double getLeftX() {
-        return driverPlaystation.getLeftX();
+        return driver.getLeftX();
     }
 
     public double getLeftY() {
-        return driverPlaystation.getLeftY();
+        return driver.getLeftY();
     }
 
     public double getRightX() {
-        return driverPlaystation.getRightX();
+        return driver.getRightX();
     }
 
     public double getRightY() {
-        return driverPlaystation.getRightY();
+        return driver.getRightY();
     }
 }

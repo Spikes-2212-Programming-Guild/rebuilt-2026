@@ -4,6 +4,7 @@ import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.spikes2212.command.drivetrains.swerve.SwerveDrivetrain;
 import com.spikes2212.command.drivetrains.swerve.SwerveModule;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -124,9 +125,9 @@ public class Drivetrain extends SwerveDrivetrain {
     }
 
     private boolean atAxis(double currentAxisPose, double targetAxisPose, double currentVelocity) {
-        boolean isAtPose = Math.abs(currentAxisPose - targetAxisPose) <= TRANSLATION_POSE_TOLERANCE;
-        boolean isRobotStill = Math.abs(currentVelocity) <= TRANSLATION_VELOCITY_TOLERANCE;
-        return isAtPose && isRobotStill;
+        boolean atPose = MathUtil.isNear(targetAxisPose, currentAxisPose, TRANSLATION_POSE_TOLERANCE);
+        boolean robotStill = Math.abs(currentVelocity) <= TRANSLATION_VELOCITY_TOLERANCE;
+        return atPose && robotStill;
     }
 
     private boolean atRotation(Rotation2d rotation2d) {
@@ -161,7 +162,7 @@ public class Drivetrain extends SwerveDrivetrain {
         namespace.putNumber("y", () -> odometry.getPoseMeters().getY());
         namespace.putRunnable("reset odometry", () ->
                 odometry.resetPosition(getAngle(), getSwerveModulePositions(), new Pose2d()));
-        namespace.putRunnable("reset gyro to 0",() -> gyro.setYaw(0));
+        namespace.putRunnable("reset gyro to 0", () -> gyro.setYaw(0));
     }
 
     @Override
