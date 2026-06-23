@@ -10,10 +10,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.AutonomousContainer;
-import frc.robot.commands.advancedcommands.CollectAndPass;
-import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
-import frc.robot.commands.advancedcommands.Pass;
-import frc.robot.commands.advancedcommands.TuneToAprilTag;
+import frc.robot.commands.advancedcommands.*;
 import frc.robot.commands.intake.MoveCollection;
 import frc.robot.commands.intake.SpinCollect;
 import frc.robot.commands.shoot.JustShoot;
@@ -145,6 +142,7 @@ public class Robot extends TimedRobot {
     }
 
     public void initialize() {
+        registerNamedCommands();
         drivetrain = Drivetrain.getInstance();
         collection = Collection.getInstance();
         collectionMovement = CollectionMovement.getInstance();
@@ -152,7 +150,6 @@ public class Robot extends TimedRobot {
         kicker = Kicker.getInstance();
         shooter = Shooter.getInstance();
         visionService = VisionService.getInstance();
-        registerNamedCommands();
         autonomousContainer = new AutonomousContainer(drivetrain);
     }
 
@@ -160,7 +157,7 @@ public class Robot extends TimedRobot {
         NamedCommands.registerCommand("collect and pass", new CollectAndPass(
                 collection, collectionMovement, shooter, () -> 0.5,
                 SpinningMagazine.getInstance(), Kicker.getInstance()));
-        NamedCommands.registerCommand("collect", new SpinCollect(collection));
+        NamedCommands.registerCommand("collect", new Collect(collection, collectionMovement));
         NamedCommands.registerCommand("pass", new Pass(shooter, () -> 0.5,
                 spinningMagazine, kicker));
         NamedCommands.registerCommand("aligned shoot", new TuneToAprilTag(drivetrain, visionService, shooter,
