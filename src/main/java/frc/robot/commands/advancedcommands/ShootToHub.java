@@ -3,7 +3,7 @@ package frc.robot.commands.advancedcommands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.shoot.ShootWithPID;
-import frc.robot.commands.storage.Spin;
+import frc.robot.commands.storage.SpinMagazine;
 import frc.robot.commands.storage.Transport;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.spindexer.Kicker;
@@ -32,7 +32,7 @@ public class ShootToHub extends SequentialCommandGroup {
                     }
                 },
                 new ParallelCommandGroup(
-                        new Spin(spinningMagazine),
+                        new SpinMagazine(spinningMagazine),
                         new Transport(kicker),
                         new ShootWithPID(shooter,
                                 () -> (LINEAR_EQUATION_M_FACTOR *

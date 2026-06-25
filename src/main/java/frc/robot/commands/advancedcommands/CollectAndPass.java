@@ -14,7 +14,7 @@ public class CollectAndPass extends ParallelCommandGroup {
     public CollectAndPass(Collection collection, CollectionMovement collectionMovement, Shooter shooter,
                           Supplier<Double> shootingSpeed, SpinningMagazine spinningMagazine, Kicker transport) {
         addCommands(
-                new Collect(collection, collectionMovement),
+//                new Collect(collection, collectionMovement),
                 new Pass(shooter, shootingSpeed, spinningMagazine, transport)
         );
     }

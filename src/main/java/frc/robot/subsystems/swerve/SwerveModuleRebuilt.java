@@ -12,6 +12,7 @@ import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 public class SwerveModuleRebuilt extends SwerveModule {
 
@@ -24,10 +25,9 @@ public class SwerveModuleRebuilt extends SwerveModule {
     private static final int ABSOLUTE_POSITION_DISCONTINUITY_POINT = 1;
 
     private static final int DRIVE_SUPPLY_CURRENT_LIMIT = 40;
-    private static final int DRIVE_STATOR_CURRENT_LIMIT = -1;
+    private static final int DRIVE_STATOR_CURRENT_LIMIT = 80;
 
     private static final int TURN_SMART_CURRENT_LIMIT = 40;
-    private static final int TURN_SECONDARY_CURRENT_LIMIT = 40;
 
     private static final double DRIVE_MOTOR_ROTATION_TO_WHEEL_ROTATIONS =
             DRIVE_GEAR_RATIO * WHEEL_DIAMETER_METERS * Math.PI;
@@ -92,11 +92,11 @@ public class SwerveModuleRebuilt extends SwerveModule {
     public void setCurrents() {
         driveMotor.getConfigurator().apply(new CurrentLimitsConfigs()
                 .withSupplyCurrentLimit(DRIVE_SUPPLY_CURRENT_LIMIT)
-//                .withStatorCurrentLimit(DRIVE_STATOR_CURRENT_LIMIT)
+                .withStatorCurrentLimit(DRIVE_STATOR_CURRENT_LIMIT)
         );
         turnMotor.applyConfiguration(turnMotor.getSparkConfiguration()
                 .smartCurrentLimit(TURN_SMART_CURRENT_LIMIT)
-//                        .secondaryCurrentLimit(TURN_SECONDARY_CURRENT_LIMIT)
+                .voltageCompensation(12)
         );
     }
 
@@ -104,7 +104,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
     public void configureDashboard() {
 //        namespace.putNumber("absolute encoder", () -> this.getAbsoluteModuleAngle().getDegrees());
 //        namespace.putNumber("relative angle", this::getRelativeModuleAngle);
-//        namespace.putNumber("current drive velocity", driveMotor::getVelocity);
+        namespace.putNumber("current drive velocity", driveMotor::getVelocity);
 //        namespace.putNumber("current turn velocity", turnMotor::getVelocity);
 //        namespace.putNumber("voltage drive", driveMotor::getVoltage);
 //
@@ -130,18 +130,18 @@ public class SwerveModuleRebuilt extends SwerveModule {
 //                        driveMotorFeedForwardSettings, true),
 //                b -> stop(), () -> false));
 //
-//        namespace.putCommand("drive at 0.2", new RunCommand(() -> driveMotor.set(0.2)) {
-//            @Override
-//            public void end(boolean interrupted) {
-//                driveMotor.stopMotor();
-//            }
-//        });
-//
-//        namespace.putCommand("turn at 0.2", new RunCommand(() -> turnMotor.set(0.2)) {
-//            @Override
-//            public void end(boolean interrupted) {
-//                turnMotor.stopMotor();
-//            }
-//        });
+        namespace.putCommand("drive at 0.2", new RunCommand(() -> driveMotor.set(0.2)) {
+            @Override
+            public void end(boolean interrupted) {
+                driveMotor.stopMotor();
+            }
+        });
+
+        namespace.putCommand("turn at 0.2", new RunCommand(() -> turnMotor.set(0.2)) {
+            @Override
+            public void end(boolean interrupted) {
+                turnMotor.stopMotor();
+            }
+        });
     }
 }

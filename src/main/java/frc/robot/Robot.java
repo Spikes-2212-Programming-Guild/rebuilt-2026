@@ -4,22 +4,17 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.auto.NamedCommands;
 import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.AutonomousContainer;
-import frc.robot.commands.advancedcommands.CollectAndPass;
-import frc.robot.commands.advancedcommands.MoveCollectionUpSlowly;
-import frc.robot.commands.advancedcommands.Pass;
-import frc.robot.commands.advancedcommands.TuneToAprilTag;
-import frc.robot.commands.intake.MoveCollection;
-import frc.robot.commands.intake.SpinCollect;
+import frc.robot.commands.advancedcommands.*;
+import frc.robot.commands.intake.SpinCollection;
 import frc.robot.commands.shoot.JustShoot;
 import frc.robot.commands.shoot.PIDAndBang;
 import frc.robot.commands.shoot.ShootWithPID;
-import frc.robot.commands.storage.Spin;
+import frc.robot.commands.storage.SpinMagazine;
 import frc.robot.commands.storage.Transport;
 import frc.robot.commands.swerve.Drive;
 import frc.robot.subsystems.intake.Collection;
@@ -49,7 +44,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
+        CommandScheduler.getInstance().cancelAll();
         initialize();
+        configureDashboard();
     }
 
     private void configureDashboard() {
@@ -60,22 +57,28 @@ public class Robot extends TimedRobot {
     }
 
     private void configureSpindexer() {
-        namespace.putCommand("magazine", new Spin(spinningMagazine));
-        namespace.putCommand("transport", new Transport(kicker));
+        Supplier<Double> magazineSpeed = namespace.addConstantDouble("magazine speed", 0);
+        Supplier<Double> transportSpeed = namespace.addConstantDouble("transport speed", 0);
+        namespace.putCommand("magazine", new SpinMagazine(magazineSpeed));
+        namespace.putCommand("transport", new Transport(kicker, transportSpeed));
     }
 
     private void configureShooter() {
         Supplier<Double> shooterSpeed = namespace.addConstantDouble("shoot speed", 0);
-        namespace.putCommand("shoot pid", new ShootWithPID(shooter, shooterSpeed, 100));
-        namespace.putCommand("just shoot", new JustShoot(shooter, () -> 0.5));
-        namespace.putCommand("shoot pid and bang", new PIDAndBang(shooter, shooterSpeed, 100));
+        namespace.putCommand("just shoot", new JustShoot(shooter, shooterSpeed));
+        namespace.putCommand("pid and bang", new PIDAndBang(shooter, shooterSpeed, 1));
+        namespace.putCommand("pid", new ShootWithPID(shooter, shooterSpeed, 1));
     }
 
     private void configureCollection() {
-        Supplier<Double> collectionMoveSpeed = namespace.addConstantDouble("collection move speed", 0);
-        namespace.putCommand("move collection", new MoveCollection(collectionMovement, collectionMoveSpeed));
-        namespace.putCommand("spin collection", new SpinCollect(collection));
-        namespace.putCommand("move collection up slowly", new MoveCollectionUpSlowly(collectionMovement));
+        Supplier<Double> collectionSpinSpeed = namespace.addConstantDouble("collection spin speed", 0);
+        namespace.putCommand("spin collection", new SpinCollection(collectionSpinSpeed));
+
+        namespace.putCommand("move up", new MoveUp());
+        namespace.putCommand("move down", new MoveDown());
+
+        namespace.putCommand("collect", new Collect());
+        namespace.putCommand("jumpies", new Jumpies(CollectionMovement.getInstance()));
     }
 
     @Override
@@ -90,6 +93,7 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
         CommandScheduler.getInstance().cancelAll();
         shooter.stop();
+        collectionMovement.setCoast();
     }
 
     @Override
@@ -115,8 +119,7 @@ public class Robot extends TimedRobot {
         drivetrain.resetPose(new Pose2d());
         OI oi = new OI();
         drivetrain.setDefaultCommand(new Drive(drivetrain, () -> oi.getLeftY() * 1.5, () -> oi.getLeftX() * 1.5,
-                () -> oi.getRightX() * -3, true, true));
-        // TODO: check the -3, 1.5, 1.5
+                () -> oi.getRightX() * 3, true, true));
     }
 
     @Override
@@ -152,20 +155,20 @@ public class Robot extends TimedRobot {
         kicker = Kicker.getInstance();
         shooter = Shooter.getInstance();
         visionService = VisionService.getInstance();
-        registerNamedCommands();
-        autonomousContainer = new AutonomousContainer(drivetrain);
+//        registerNamedCommands();
+//        autonomousContainer = new AutonomousContainer(drivetrain);
     }
 
     public void registerNamedCommands() {
-        NamedCommands.registerCommand("collect and pass", new CollectAndPass(
-                collection, collectionMovement, shooter, () -> 0.5,
-                SpinningMagazine.getInstance(), Kicker.getInstance()));
-        NamedCommands.registerCommand("collect", new SpinCollect(collection));
-        NamedCommands.registerCommand("pass", new Pass(shooter, () -> 0.5,
-                spinningMagazine, kicker));
-        NamedCommands.registerCommand("aligned shoot", new TuneToAprilTag(drivetrain, visionService, shooter,
-                kicker, spinningMagazine, collection, 0));
-        NamedCommands.registerCommand("shoot", new JustShoot(shooter, () -> 0.3));
-        NamedCommands.registerCommand("spin", new Spin(spinningMagazine));
+//        NamedCommands.registerCommand("collect and pass", new CollectAndPass(
+//                collection, collectionMovement, shooter, () -> 0.5,
+//                SpinningMagazine.getInstance(), Kicker.getInstance()));
+//        NamedCommands.registerCommand("collect", new SpinCollect(collection));
+//        NamedCommands.registerCommand("pass", new Pass(shooter, () -> 0.5,
+//                spinningMagazine, kicker));
+//        NamedCommands.registerCommand("aligned shoot", new TuneToAprilTag(drivetrain, visionService, shooter,
+//                kicker, spinningMagazine, collection, 0));
+//        NamedCommands.registerCommand("shoot", new JustShoot(shooter, () -> 0.3));
+//        NamedCommands.registerCommand("spin", new Spin(spinningMagazine));
     }
 }

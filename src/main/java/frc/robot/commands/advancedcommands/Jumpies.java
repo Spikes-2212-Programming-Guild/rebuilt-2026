@@ -6,13 +6,13 @@ import frc.robot.subsystems.intake.CollectionMovement;
 
 public class Jumpies extends SequentialCommandGroup {
 
-    private static final double UP_SPEED = 0.25;
-    private static final double DOWN_SPEED = -0.1;
+    private static final double UP_SPEED = 0.2;
+    private static final double DOWN_SPEED = -0.2;
 
     public Jumpies(CollectionMovement collectionMovement) {
         addCommands(
                 new MoveGenericSubsystem(collectionMovement, UP_SPEED).withTimeout(0.2),
-                new MoveGenericSubsystem(collectionMovement, DOWN_SPEED).withTimeout(0.3)
+                new MoveGenericSubsystem(collectionMovement, DOWN_SPEED).withTimeout(0.2)
         );
     }
 }
