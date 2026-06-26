@@ -9,7 +9,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.AutonomousContainer;
-import frc.robot.commands.advancedcommands.*;
+import frc.robot.commands.advancedcommands.Collect;
+import frc.robot.commands.advancedcommands.Jumpies;
+import frc.robot.commands.advancedcommands.MoveDown;
+import frc.robot.commands.advancedcommands.MoveUp;
 import frc.robot.commands.intake.SpinCollection;
 import frc.robot.commands.shoot.JustShoot;
 import frc.robot.commands.shoot.PIDAndBang;
@@ -47,6 +50,10 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().cancelAll();
         initialize();
         configureDashboard();
+        namespace.putCommand("shooot", new JustShoot(shooter, namespace.addConstantDouble("speed1", 0.5)));
+        namespace.putCommand("pid and bang", new PIDAndBang(shooter, namespace.addConstantDouble("speed2", 0.5), 1));
+        namespace.putCommand("pid", new ShootWithPID(shooter, namespace.addConstantDouble("speed3", 0.5), 1));
+
     }
 
     private void configureDashboard() {
@@ -64,10 +71,10 @@ public class Robot extends TimedRobot {
     }
 
     private void configureShooter() {
-        Supplier<Double> shooterSpeed = namespace.addConstantDouble("shoot speed", 0);
-        namespace.putCommand("just shoot", new JustShoot(shooter, shooterSpeed));
-        namespace.putCommand("pid and bang", new PIDAndBang(shooter, shooterSpeed, 1));
-        namespace.putCommand("pid", new ShootWithPID(shooter, shooterSpeed, 1));
+//        Supplier<Double> shooterSpeed = namespace.addConstantDouble("shoot speed", 0);
+//        namespace.putCommand("just shoot", new JustShoot(shooter, shooterSpeed));
+//        namespace.putCommand("pid and bang", new PIDAndBang(shooter, shooterSpeed, 1));
+//        namespace.putCommand("pid", new ShootWithPID(shooter, shooterSpeed, 1));
     }
 
     private void configureCollection() {
