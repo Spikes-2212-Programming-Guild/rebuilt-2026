@@ -9,10 +9,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.AutonomousContainer;
-import frc.robot.commands.advancedcommands.Collect;
-import frc.robot.commands.advancedcommands.Jumpies;
-import frc.robot.commands.advancedcommands.MoveDown;
-import frc.robot.commands.advancedcommands.MoveUp;
+import frc.robot.commands.advancedcommands.*;
 import frc.robot.commands.intake.SpinCollection;
 import frc.robot.commands.shoot.JustShoot;
 import frc.robot.commands.shoot.PIDAndBang;
@@ -50,9 +47,15 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().cancelAll();
         initialize();
         configureDashboard();
-        namespace.putCommand("shooot", new JustShoot(shooter, namespace.addConstantDouble("speed1", 0.5)));
-        namespace.putCommand("pid and bang", new PIDAndBang(shooter, namespace.addConstantDouble("speed2", 0.5), 1));
-        namespace.putCommand("pid", new ShootWithPID(shooter, namespace.addConstantDouble("speed3", 0.5), 1));
+        namespace.putCommand("shooot", new JustShoot(shooter, namespace.addConstantDouble("speed1", 0)));
+        namespace.putCommand("pid and bang", new PIDAndBang(shooter, namespace.addConstantDouble("speed2", 0), 1));
+        namespace.putCommand("pid", new ShootWithPID(shooter, namespace.addConstantDouble("speed3", 0), 10));
+        namespace.putCommand("shoot by distance", new ShootToHub(shooter, Kicker.getInstance(), SpinningMagazine.getInstance(),
+               VisionService.getInstance()));
+        Supplier<Double> magazineSpeed = namespace.addConstantDouble("magazine speed", 0);
+        Supplier<Double> transportSpeed = namespace.addConstantDouble("transport speed", 0);
+        namespace.putCommand("magazine", new SpinMagazine(magazineSpeed));
+        namespace.putCommand("transport", new Transport(kicker, transportSpeed));
 
     }
 
@@ -126,7 +129,9 @@ public class Robot extends TimedRobot {
         drivetrain.resetPose(new Pose2d());
         OI oi = new OI();
         drivetrain.setDefaultCommand(new Drive(drivetrain, () -> oi.getLeftY() * 1.5, () -> oi.getLeftX() * 1.5,
-                () -> oi.getRightX() * 3, true, true));
+                () -> oi.getRightX() * -3, true, true));
+//        drivetrain.setDefaultCommand(new Drive(drivetrain, () -> oi.getLeftYJ() * 1.5, () -> oi.getLeftXJ() * 1.5,
+//                () -> oi.getRightXJ() * -3, true, true));
     }
 
     @Override

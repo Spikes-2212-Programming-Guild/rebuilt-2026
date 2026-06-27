@@ -16,7 +16,7 @@ public class ShootWithPID extends MoveSmartMotorControllerGenericSubsystem {
 
     private static final PIDSettings PID_SETTINGS = namespace.
             addPIDNamespace("shoot", new PIDSettings(0.2, 0.001, 0.009,
-                    0, 0, 1));
+                    0, 0.5, 0));
 
     private static final FeedForwardSettings FEED_FORWARD_SETTINGS = namespace.
             addFeedForwardNamespace("shoot", new FeedForwardSettings(0.0395, 0.115, 0,

@@ -10,7 +10,7 @@ public class Kicker extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "transport";
 
-    public static final double SPEED = -1;
+    public static final double SPEED = 0.5;
     private static final int SMART_CURRENT_LIMIT = 40;
 
     private final SparkWrapper sparkMax;

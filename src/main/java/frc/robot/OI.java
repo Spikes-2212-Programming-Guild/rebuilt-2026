@@ -2,8 +2,10 @@ package frc.robot;
 
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import com.spikes2212.util.PlaystationControllerWrapper;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.advancedcommands.*;
 import frc.robot.commands.intake.SpinCollection;
 import frc.robot.commands.shoot.JustShoot;
@@ -22,6 +24,8 @@ public class OI /*GEVALD*/ {
 
     private final PlaystationControllerWrapper driver = new PlaystationControllerWrapper(0);
     private final PlaystationControllerWrapper navigator = new PlaystationControllerWrapper(1);
+    private final Joystick j1 = new Joystick(2);
+    private final Joystick j2 = new Joystick(3);
 
     private final Collection collection = Collection.getInstance();
     private final Drivetrain drivetrain = Drivetrain.getInstance();
@@ -38,6 +42,7 @@ public class OI /*GEVALD*/ {
 
     private void configureDriver() {
         driver.getTriangleButton().onTrue(new InstantCommand(drivetrain::resetFieldRelativity));
+        new JoystickButton(j2, 1).onTrue(new InstantCommand(drivetrain::resetFieldRelativity));
 //        driver.getR2Button().whileTrue(new TuneToAprilTag(drivetrain, visionService,
 //                shooter, kicker, spinningMagazine, collection, 1).
 //                andThen(new ShootToHub(shooter, kicker, spinningMagazine, visionService)));
@@ -79,4 +84,21 @@ public class OI /*GEVALD*/ {
     public double getRightY() {
         return driver.getRightY();
     }
+
+    public double getLeftXJ() {
+        return j1.getX();
+    }
+
+    public double getLeftYJ() {
+        return j1.getY();
+    }
+
+    public double getRightXJ() {
+        return j2.getX();
+    }
+
+    public double getRightYJ() {
+        return j2.getY();
+    }
+
 }
