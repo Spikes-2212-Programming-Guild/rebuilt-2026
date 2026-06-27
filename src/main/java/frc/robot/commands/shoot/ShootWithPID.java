@@ -15,11 +15,11 @@ public class ShootWithPID extends MoveSmartMotorControllerGenericSubsystem {
     private static final RootNamespace namespace = new RootNamespace("shoot with pid command");
 
     private static final PIDSettings PID_SETTINGS = namespace.
-            addPIDNamespace("shoot", new PIDSettings(0.16, 0.0005, 0.006,
-                    0, 0.1, 0));
+            addPIDNamespace("shoot", new PIDSettings(0.2, 0.001, 0.009,
+                    0, 0, 1));
 
     private static final FeedForwardSettings FEED_FORWARD_SETTINGS = namespace.
-            addFeedForwardNamespace("shoot", new FeedForwardSettings(0.0395, 0.1, 0,
+            addFeedForwardNamespace("shoot", new FeedForwardSettings(0.0395, 0.115, 0,
                     FeedForwardController.ControlMode.LINEAR_VELOCITY));
 
     public ShootWithPID(Shooter shooter, Supplier<Double> speed, double waitTime) {
