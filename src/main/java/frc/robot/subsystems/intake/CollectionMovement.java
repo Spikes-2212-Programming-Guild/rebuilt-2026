@@ -15,6 +15,9 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     private static final double SUPPLY_CURRENT_LIMIT = 40;
     private static final double STATOR_CURRENT_LIMIT = 30;
 
+    private static final double MOTION_EPSILON = -1.0;     // Minimum degrees change to be considered "moving"
+    private static final double STALL_TIME_LIMIT = -1.0;   // Seconds to wait before triggering stall protection
+
     private final TalonFXWrapper talonFX;
 
     private static CollectionMovement instance;
