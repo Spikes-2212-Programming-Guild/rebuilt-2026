@@ -54,7 +54,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
 
     public double getAbsDegrees() {
-        return absoluteEncoder.get();
+        return talonFX.getPosition();
     }
 
     private void checkForStall() {
@@ -77,7 +77,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     }
     @Override
     public boolean canMove(double speed) {
-        return true;
+        return !isStalled;
     }
 
     @Override
