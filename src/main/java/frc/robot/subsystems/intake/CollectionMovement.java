@@ -5,6 +5,7 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.RobotMap;
 
 public class CollectionMovement extends MotoredGenericSubsystem {
@@ -42,6 +43,11 @@ public class CollectionMovement extends MotoredGenericSubsystem {
                 .withStatorCurrentLimit(STATOR_CURRENT_LIMIT)
         );
         talonFX.resetPosition();
+    }
+
+
+    public double getAbsDegrees() {
+        return absoluteEncoder.get();
     }
 
     private void checkForStall() {
