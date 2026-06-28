@@ -14,4 +14,9 @@ public class Transport extends MoveGenericSubsystem {
     public Transport(Kicker kicker, Supplier<Double> speed) {
         super(kicker, speed);
     }
+
+
+    public Transport() {
+        super(Kicker.getInstance(), () -> 0.5);
+    }
 }

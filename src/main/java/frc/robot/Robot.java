@@ -46,51 +46,21 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         CommandScheduler.getInstance().cancelAll();
         initialize();
-        configureDashboard();
-        namespace.putCommand("shooot", new JustShoot(shooter, namespace.addConstantDouble("speed1", 0)));
-        namespace.putCommand("pid and bang", new PIDAndBang(shooter, namespace.addConstantDouble("speed2", 0), 1));
-        namespace.putCommand("pid", new ShootWithPID(shooter, namespace.addConstantDouble("speed3", 0), 10));
-        namespace.putCommand("shoot by distance", new ShootToHub(shooter, Kicker.getInstance(), SpinningMagazine.getInstance(),
+        namespace.putCommand("shoot pid", new ShootWithPID(shooter, namespace.addConstantDouble("pid speed", 0), 10));
+        namespace.putCommand("shoot with camera", new ShootToHub(shooter, Kicker.getInstance(), SpinningMagazine.getInstance(),
                VisionService.getInstance()));
+        namespace.putNumber("distance", visionService::getZ);
+
+
         Supplier<Double> magazineSpeed = namespace.addConstantDouble("magazine speed", 0);
         Supplier<Double> transportSpeed = namespace.addConstantDouble("transport speed", 0);
         namespace.putCommand("magazine", new SpinMagazine(magazineSpeed));
         namespace.putCommand("transport", new Transport(kicker, transportSpeed));
-
-    }
-
-    private void configureDashboard() {
-        configureShooter();
-        configureCollection();
-        configureSpindexer();
-        namespace.putRunnable("cancel all commands", () -> CommandScheduler.getInstance().cancelAll());
-    }
-
-    private void configureSpindexer() {
-        Supplier<Double> magazineSpeed = namespace.addConstantDouble("magazine speed", 0);
-        Supplier<Double> transportSpeed = namespace.addConstantDouble("transport speed", 0);
-        namespace.putCommand("magazine", new SpinMagazine(magazineSpeed));
-        namespace.putCommand("transport", new Transport(kicker, transportSpeed));
-    }
-
-    private void configureShooter() {
-//        Supplier<Double> shooterSpeed = namespace.addConstantDouble("shoot speed", 0);
-//        namespace.putCommand("just shoot", new JustShoot(shooter, shooterSpeed));
-//        namespace.putCommand("pid and bang", new PIDAndBang(shooter, shooterSpeed, 1));
-//        namespace.putCommand("pid", new ShootWithPID(shooter, shooterSpeed, 1));
-    }
-
-    private void configureCollection() {
-        Supplier<Double> collectionSpinSpeed = namespace.addConstantDouble("collection spin speed", 0);
-        namespace.putCommand("spin collection", new SpinCollection(collectionSpinSpeed));
-
-        namespace.putCommand("move up", new MoveUp());
         namespace.putCommand("move down", new MoveDown());
-
-        namespace.putCommand("collect", new Collect());
-        namespace.putCommand("jumpies", new Jumpies(CollectionMovement.getInstance()));
+        namespace.putCommand("move up", new MoveUp());
+        namespace.putCommand("spin collection",
+                new SpinCollection(namespace.addConstantDouble("collection speed", 0.0)));
     }
-
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
@@ -130,8 +100,6 @@ public class Robot extends TimedRobot {
         OI oi = new OI();
         drivetrain.setDefaultCommand(new Drive(drivetrain, () -> oi.getLeftY() * 1.5, () -> oi.getLeftX() * 1.5,
                 () -> oi.getRightX() * -3, true, true));
-//        drivetrain.setDefaultCommand(new Drive(drivetrain, () -> oi.getLeftYJ() * 1.5, () -> oi.getLeftXJ() * 1.5,
-//                () -> oi.getRightXJ() * -3, true, true));
     }
 
     @Override
