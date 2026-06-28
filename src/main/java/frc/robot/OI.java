@@ -22,10 +22,9 @@ import frc.robot.utils.VisionService;
 
 public class OI /*GEVALD*/ {
 
-    private final PlaystationControllerWrapper driver = new PlaystationControllerWrapper(0);
-    private final PlaystationControllerWrapper navigator = new PlaystationControllerWrapper(1);
-    private final Joystick j1 = new Joystick(2);
-    private final Joystick j2 = new Joystick(3);
+    private final Joystick driverRight = new Joystick(0);
+    private final Joystick driverLeft = new Joystick(1);
+    private final PlaystationControllerWrapper navigator = new PlaystationControllerWrapper(2);
 
     private final Collection collection = Collection.getInstance();
     private final Drivetrain drivetrain = Drivetrain.getInstance();
@@ -41,8 +40,7 @@ public class OI /*GEVALD*/ {
     }
 
     private void configureDriver() {
-        driver.getTriangleButton().onTrue(new InstantCommand(drivetrain::resetFieldRelativity));
-        new JoystickButton(j2, 1).onTrue(new InstantCommand(drivetrain::resetFieldRelativity));
+        new JoystickButton(driverRight, 1).onTrue(new InstantCommand(drivetrain::resetFieldRelativity));
 //        driver.getR2Button().whileTrue(new TuneToAprilTag(drivetrain, visionService,
 //                shooter, kicker, spinningMagazine, collection, 1).
 //                andThen(new ShootToHub(shooter, kicker, spinningMagazine, visionService)));
@@ -70,35 +68,19 @@ public class OI /*GEVALD*/ {
     }
 
     public double getLeftX() {
-        return driver.getLeftX();
+        return driverLeft.getX();
     }
 
     public double getLeftY() {
-        return driver.getLeftY();
+        return driverLeft.getY();
     }
 
     public double getRightX() {
-        return driver.getRightX();
+        return driverRight.getX();
     }
 
     public double getRightY() {
-        return driver.getRightY();
-    }
-
-    public double getLeftXJ() {
-        return j1.getX();
-    }
-
-    public double getLeftYJ() {
-        return j1.getY();
-    }
-
-    public double getRightXJ() {
-        return j2.getX();
-    }
-
-    public double getRightYJ() {
-        return j2.getY();
+        return driverRight.getY();
     }
 
 }
