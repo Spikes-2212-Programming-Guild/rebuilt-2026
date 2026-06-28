@@ -44,6 +44,24 @@ public class CollectionMovement extends MotoredGenericSubsystem {
         talonFX.resetPosition();
     }
 
+    private void checkForStall() {
+        double currentPos = getAbsDegrees();
+        double currentTime = Timer.getFPGATimestamp();
+
+        double deltaPos = Math.abs(currentPos - lastPositionDegrees);
+
+        if (deltaPos > MOTION_EPSILON) {
+            lastMoveTime = currentTime;
+            lastPositionDegrees = currentPos;
+            isStalled = false;
+        }
+
+        else {
+            if (currentTime - lastMoveTime > STALL_TIME_LIMIT) {
+                isStalled = true;
+            }
+        }
+    }
     @Override
     public boolean canMove(double speed) {
         return true;
