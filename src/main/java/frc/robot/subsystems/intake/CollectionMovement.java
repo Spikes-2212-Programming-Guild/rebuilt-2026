@@ -20,6 +20,10 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     private final TalonFXWrapper talonFX;
 
+    private double lastPositionDegrees = 0;
+    private double lastMoveTime = 0;
+    private boolean isStalled = false;
+
     private static CollectionMovement instance;
 
     public static CollectionMovement getInstance() {
