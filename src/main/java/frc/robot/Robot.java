@@ -13,17 +13,17 @@ import frc.robot.autonomous.AutonomousContainer;
 import frc.robot.commands.advancedcommands.*;
 import frc.robot.commands.intake.SpinCollection;
 import frc.robot.commands.shoot.JustShoot;
-import frc.robot.commands.shoot.PIDAndBang;
 import frc.robot.commands.shoot.ShootWithPID;
 import frc.robot.commands.storage.SpinMagazine;
 import frc.robot.commands.storage.Transport;
-import frc.robot.commands.swerve.Drive;
+import frc.robot.commands.swerve.RotateAccordingToGyro;
 import frc.robot.subsystems.intake.Collection;
 import frc.robot.subsystems.intake.CollectionMovement;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.spindexer.Kicker;
 import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.subsystems.swerve.Drivetrain;
+import frc.robot.subsystems.swerve.SwerveModuleHolder;
 import frc.robot.utils.VisionService;
 
 import java.util.function.Supplier;
@@ -67,6 +67,8 @@ public class Robot extends TimedRobot {
         namespace.putCommand("small up", new MoveGenericSubsystem(collectionMovement, -0.45)
                 .withTimeout(namespace.addConstantDouble("up time", 0.2).get()));
         namespace.putCommand("mini jumpies", new MiniJumpies(collectionMovement));
+        namespace.putCommand("gyro rotate", new RotateAccordingToGyro(drivetrain,
+                namespace.addConstantDouble("gyro target", 0), true));
     }
 
     @Override
@@ -75,6 +77,7 @@ public class Robot extends TimedRobot {
         namespace.update();
         ShootWithPID.updateNamespace();
         drivetrain.periodic();
+        SwerveModuleHolder.updateNamespace();
     }
 
     @Override
@@ -105,9 +108,9 @@ public class Robot extends TimedRobot {
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
         drivetrain.resetPose(new Pose2d());
-        OI oi = new OI();
-        drivetrain.setDefaultCommand(new Drive(drivetrain, () -> oi.getLeftY() * 1.5, () -> oi.getLeftX() * 1.5,
-                () -> oi.getRightX() * -3, true, true));
+//        OI oi = new OI();
+//        drivetrain.setDefaultCommand(new Drive(drivetrain, () -> oi.getLeftY() * 0.5, () -> oi.getLeftX() * 0.5,
+//                () -> oi.getRightX() * -3, true, true));
     }
 
     @Override

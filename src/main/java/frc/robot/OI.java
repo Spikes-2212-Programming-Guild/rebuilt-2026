@@ -5,6 +5,7 @@ import com.spikes2212.util.PlaystationControllerWrapper;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.advancedcommands.*;
 import frc.robot.commands.intake.SpinCollection;
@@ -20,11 +21,14 @@ import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.subsystems.swerve.Drivetrain;
 import frc.robot.utils.VisionService;
 
+import java.security.cert.PolicyQualifierInfo;
+
 public class OI /*GEVALD*/ {
 
     private final Joystick driverRight = new Joystick(0);
     private final Joystick driverLeft = new Joystick(1);
     private final PlaystationControllerWrapper navigator = new PlaystationControllerWrapper(2);
+    private final PlaystationControllerWrapper dr = new PlaystationControllerWrapper(3);
 
     private final Collection collection = Collection.getInstance();
     private final Drivetrain drivetrain = Drivetrain.getInstance();
@@ -40,6 +44,7 @@ public class OI /*GEVALD*/ {
     }
 
     private void configureDriver() {
+        dr.getR2Button().onTrue(new InstantCommand((drivetrain::resetFieldRelativity)));
         new JoystickButton(driverRight, 1).onTrue(new InstantCommand(drivetrain::resetFieldRelativity));
 //        driver.getR2Button().whileTrue(new TuneToAprilTag(drivetrain, visionService,
 //                shooter, kicker, spinningMagazine, collection, 1).
@@ -66,21 +71,38 @@ public class OI /*GEVALD*/ {
 //        navigator.getLeftStickButton().onTrue(
 //                new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
     }
+//
+//    public double getLeftX() {
+//        return driverLeft.getX();
+//    }
+//
+//    public double getLeftY() {
+//        return driverLeft.getY();
+//    }
+//
+//    public double getRightX() {
+//        return driverRight.getX();
+//    }
+//
+//    public double getRightY() {
+//        return driverRight.getY();
+//    }
+
 
     public double getLeftX() {
-        return driverLeft.getX();
+        return dr.getLeftX();
     }
 
     public double getLeftY() {
-        return driverLeft.getY();
+        return dr.getLeftY();
     }
 
     public double getRightX() {
-        return driverRight.getX();
+        return dr.getRightX();
     }
 
     public double getRightY() {
-        return driverRight.getY();
+        return dr.getRightY();
     }
 
 }
