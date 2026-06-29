@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.AutonomousContainer;
 import frc.robot.commands.advancedcommands.*;
+import frc.robot.commands.helpers.TestSubsystems;
 import frc.robot.commands.intake.SpinCollection;
 import frc.robot.commands.shoot.JustShoot;
 import frc.robot.commands.shoot.ShootWithPID;
@@ -71,6 +72,7 @@ public class Robot extends TimedRobot {
         namespace.putCommand("mini jumpies", new MiniJumpies(collectionMovement));
         namespace.putCommand("gyro rotate", new RotateAccordingToGyro(drivetrain,
                 namespace.addConstantDouble("gyro target", 0), true));
+        namespace.putCommand("test subsystems", new TestSubsystems());
     }
 
     @Override
