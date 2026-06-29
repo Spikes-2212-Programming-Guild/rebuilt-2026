@@ -63,7 +63,6 @@ public class Robot extends TimedRobot {
                 new SpinCollection(namespace.addConstantDouble("collection speed", 0.0)));
         namespace.putCommand("shoot", new JustShoot(shooter,
                 namespace.addConstantDouble("shooting speed", 0.0)));
-        namespace.putCommand("move up regular", new MoveUpRegular());
         namespace.putCommand("small up", new MoveGenericSubsystem(collectionMovement, -0.45)
                 .withTimeout(namespace.addConstantDouble("up time", 0.2).get()));
         namespace.putCommand("mini jumpies", new MiniJumpies(collectionMovement));

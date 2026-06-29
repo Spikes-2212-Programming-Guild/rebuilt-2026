@@ -15,14 +15,14 @@ public class CollectionMovement extends MotoredGenericSubsystem {
     private static final double SUPPLY_CURRENT_LIMIT = 40;
     private static final double STATOR_CURRENT_LIMIT = 30;
 
-    private static final double MOTION_EPSILON = -1.0;     // Minimum degrees change to be considered "moving"
-    private static final double STALL_TIME_LIMIT = -1.0;   // Seconds to wait before triggering stall protection
+//    private static final double MOTION_EPSILON = -1.0;     // Minimum degrees change to be considered "moving"
+//    private static final double STALL_TIME_LIMIT = -1.0;   // Seconds to wait before triggering stall protection
 
     private final TalonFXWrapper talonFX;
 
-    private double lastPositionDegrees = 0;
-    private double lastMoveTime = 0;
-    private boolean isStalled = false;
+//    private double lastPositionDegrees = 0;
+//    private double lastMoveTime = 0;
+//    private boolean isStalled = false;
 
     private static CollectionMovement instance;
 
@@ -57,27 +57,27 @@ public class CollectionMovement extends MotoredGenericSubsystem {
         return talonFX.getPosition();
     }
 
-    private void checkForStall() {
-        double currentPos = getAbsDegrees();
-        double currentTime = Timer.getFPGATimestamp();
-
-        double deltaPos = Math.abs(currentPos - lastPositionDegrees);
-
-        if (deltaPos > MOTION_EPSILON) {
-            lastMoveTime = currentTime;
-            lastPositionDegrees = currentPos;
-            isStalled = false;
-        }
-
-        else {
-            if (currentTime - lastMoveTime > STALL_TIME_LIMIT) {
-                isStalled = true;
-            }
-        }
-    }
+//    private void checkForStall() {
+//        double currentPos = getAbsDegrees();
+//        double currentTime = Timer.getFPGATimestamp();
+//
+//        double deltaPos = Math.abs(currentPos - lastPositionDegrees);
+//
+//        if (deltaPos > MOTION_EPSILON) {
+//            lastMoveTime = currentTime;
+//            lastPositionDegrees = currentPos;
+//            isStalled = false;
+//        }
+//
+//        else {
+//            if (currentTime - lastMoveTime > STALL_TIME_LIMIT) {
+//                isStalled = true;
+//            }
+//        }
+//    }
     @Override
     public boolean canMove(double speed) {
-        return !isStalled;
+        return true;
     }
 
     @Override
