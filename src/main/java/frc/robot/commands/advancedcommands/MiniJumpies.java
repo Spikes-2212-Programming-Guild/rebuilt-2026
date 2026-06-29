@@ -14,6 +14,6 @@ public class MiniJumpies extends SequentialCommandGroup {
                 new SequentialCommandGroup(
                 new MoveGenericSubsystem(collectionMovement, UP_SPEED).withTimeout(0.35),
                 new MoveGenericSubsystem(collectionMovement, DOWN_SPEED).withTimeout(0.35)
-        ).repeatedly());
+        ));
     }
 }

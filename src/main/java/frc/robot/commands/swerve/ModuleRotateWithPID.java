@@ -11,4 +11,10 @@ public class ModuleRotateWithPID extends RotateModulesWithPID {
                                Rotation2d backRightDesiredAngle) {
         super(drivetrain, frontLeftDesiredAngle, frontRightDesiredAngle, backLeftDesiredAngle, backRightDesiredAngle);
     }
+
+    public ModuleRotateWithPID(SwerveDrivetrain drivetrain, double frontLeftDesiredAngle,
+                               double frontRightDesiredAngle, double backLeftDesiredAngle,
+                               double backRightDesiredAngle) {
+        super(drivetrain, frontLeftDesiredAngle, frontRightDesiredAngle, backLeftDesiredAngle, backRightDesiredAngle);
+    }
 }
