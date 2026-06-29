@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.53658888889482,
-        "y": 6.052099999998647
+        "x": 2.735155555555556,
+        "y": 6.110566666666666
       },
       "isLocked": false,
       "linkedName": "intake from depot 1 end"
@@ -20,8 +20,8 @@
         "y": 5.340755555555555
       },
       "prevControl": {
-        "x": 1.6329319473846786,
-        "y": 5.577926380068183
+        "x": 1.8873888888888892,
+        "y": 4.970466666666666
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 51.91122711902468
+    "rotation": -131.51067509420363
   },
   "reversed": false,
   "folder": "Intake from depot",

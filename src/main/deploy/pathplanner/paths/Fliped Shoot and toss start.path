@@ -20,12 +20,12 @@
         "y": 7.3675999999999995
       },
       "prevControl": {
-        "x": 3.7814785819472054,
-        "y": 7.380084404235973
+        "x": 3.781903045291273,
+        "y": 7.386774124721183
       },
       "nextControl": {
-        "x": 4.280854751386132,
-        "y": 7.355115595764026
+        "x": 4.284522222222223,
+        "y": 7.348111111111112
       },
       "isLocked": false,
       "linkedName": null
@@ -63,11 +63,11 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": 0.0
+      "rotationDegrees": 180.0
     },
     {
       "waypointRelativePos": 2,
-      "rotationDegrees": 0.0
+      "rotationDegrees": 180.0
     }
   ],
   "constraintZones": [],
@@ -89,7 +89,7 @@
   "folder": "Fliped Shoot and toss",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 26.029592191513466
+    "rotation": -160.4268741695899
   },
   "useDefaultConstraints": true
 }

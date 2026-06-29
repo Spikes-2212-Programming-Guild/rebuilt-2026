@@ -53,16 +53,10 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "collect"
+                  "name": "collect and pass"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "pass"
           }
         }
       ]

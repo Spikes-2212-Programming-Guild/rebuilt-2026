@@ -23,53 +23,12 @@
         "x": 7.685780750015166,
         "y": 5.092992708522919
       },
-      "nextControl": {
-        "x": 7.632286049960348,
-        "y": 4.424308957837696
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 6.837566666666666,
-        "y": 4.658644444444445
-      },
-      "prevControl": {
-        "x": 7.063771342216914,
-        "y": 4.552195185361975
-      },
-      "nextControl": {
-        "x": 6.586631711831602,
-        "y": 4.776731482013886
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 6.701144444444444,
-        "y": 5.418711111111111
-      },
-      "prevControl": {
-        "x": 6.467277777777777,
-        "y": 4.970466666666666
-      },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "intake from depot 3"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.9975103734439947,
-      "rotationDegrees": 90.0
-    },
-    {
-      "waypointRelativePos": 2,
-      "rotationDegrees": 90.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -83,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": "Intake from depot",

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6242888888888891,
-        "y": 5.974144444444444
+        "x": 3.027488888888889,
+        "y": 6.100822222222222
       },
       "isLocked": false,
       "linkedName": "intake and shoot 4"
@@ -20,8 +20,8 @@
         "y": 5.789
       },
       "prevControl": {
-        "x": 2.1212555555555554,
-        "y": 5.847466666666667
+        "x": 2.3941000000000003,
+        "y": 5.539
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 41.72951207681648
+    "rotation": -141.080740932817
   },
   "reversed": false,
   "folder": "intake and shoot",

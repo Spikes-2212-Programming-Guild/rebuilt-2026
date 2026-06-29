@@ -48,7 +48,7 @@
   "folder": "intake and shoot",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 17.02052561151989
+    "rotation": -164.43541636139267
   },
   "useDefaultConstraints": true
 }

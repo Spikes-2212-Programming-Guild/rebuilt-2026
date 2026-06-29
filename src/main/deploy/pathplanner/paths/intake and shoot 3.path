@@ -63,7 +63,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 2,
-      "rotationDegrees": 1.0708244547869503
+      "rotationDegrees": 180.0
     }
   ],
   "constraintZones": [],
@@ -79,7 +79,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 17.02052561151989
+    "rotation": -164.43541636139267
   },
   "reversed": false,
   "folder": "intake and shoot",
