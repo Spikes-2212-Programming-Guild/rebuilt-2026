@@ -8,7 +8,7 @@ public class Collect extends SequentialCommandGroup {
     public Collect() {
         addCommands(
                 new MoveDown(),
-                new SpinCollection(0.75)
+                new SpinCollection(0.55)
         );
     }
 }

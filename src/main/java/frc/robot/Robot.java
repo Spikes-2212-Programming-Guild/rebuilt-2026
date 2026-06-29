@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
 import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -145,20 +146,17 @@ public class Robot extends TimedRobot {
         kicker = Kicker.getInstance();
         shooter = Shooter.getInstance();
         visionService = VisionService.getInstance();
-//        registerNamedCommands();
-//        autonomousContainer = new AutonomousContainer(drivetrain);
+        registerNamedCommands();
+        autonomousContainer = new AutonomousContainer(drivetrain);
     }
 
     public void registerNamedCommands() {
-//        NamedCommands.registerCommand("collect and pass", new CollectAndPass(
-//                collection, collectionMovement, shooter, () -> 0.5,
-//                SpinningMagazine.getInstance(), Kicker.getInstance()));
-//        NamedCommands.registerCommand("collect", new SpinCollect(collection));
-//        NamedCommands.registerCommand("pass", new Pass(shooter, () -> 0.5,
-//                spinningMagazine, kicker));
-//        NamedCommands.registerCommand("aligned shoot", new TuneToAprilTag(drivetrain, visionService, shooter,
-//                kicker, spinningMagazine, collection, 0));
+        NamedCommands.registerCommand("collect and pass", new CollectAndPass());
+        NamedCommands.registerCommand("collect", new Collect());
+        NamedCommands.registerCommand("pass", new Shoot());
+        NamedCommands.registerCommand("aligned shoot", new TuneToAprilTag(drivetrain, visionService, shooter,
+                kicker, spinningMagazine, collection, 1));
 //        NamedCommands.registerCommand("shoot", new JustShoot(shooter, () -> 0.3));
-//        NamedCommands.registerCommand("spin", new Spin(spinningMagazine));
+//        NamedCommands.registerCommand("spin", new SpinMagazine(spinningMagazine));
     }
 }
