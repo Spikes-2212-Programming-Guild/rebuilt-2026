@@ -9,6 +9,7 @@ import com.spikes2212.command.genericsubsystem.commands.MoveGenericSubsystem;
 import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.AutonomousContainer;
 import frc.robot.commands.advancedcommands.*;
@@ -32,6 +33,7 @@ import java.util.function.Supplier;
 public class Robot extends TimedRobot {
 
     private static final RootNamespace namespace = new RootNamespace("robot");
+
 
     private Drivetrain drivetrain;
     private Collection collection;
@@ -96,6 +98,10 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
+        Command auto = autonomousContainer.getSelectedCommand();
+        if(auto != null){
+            CommandScheduler.getInstance().schedule(auto);
+        }
     }
 
     @Override

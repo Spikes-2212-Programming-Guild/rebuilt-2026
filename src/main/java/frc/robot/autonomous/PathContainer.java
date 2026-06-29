@@ -3,7 +3,7 @@ package frc.robot.autonomous;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.autonomous.autoincode.GoAndWaitAuto;
-import frc.robot.autonomous.autoincode.JustShootAuto;
+import frc.robot.commands.autonomous.DriveAndShoot;
 import frc.robot.subsystems.intake.Collection;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.spindexer.Kicker;
@@ -32,9 +32,9 @@ public class PathContainer {
         intakeFromFeeder = new PathPlannerAuto("Intake from feeder", shouldMirror);
         intakeAndShoot = new PathPlannerAuto("Intake and Shoot", shouldMirror);
         shootAndPass = new PathPlannerAuto("Shoot and pass", shouldMirror);
-        justShoot = new PathPlannerAuto(new JustShootAuto(Drivetrain.getInstance(), Shooter.getInstance(),
+        justShoot = new PathPlannerAuto(new DriveAndShoot(Drivetrain.getInstance(), Shooter.getInstance(),
                 Kicker.getInstance(), SpinningMagazine.getInstance(), VisionService.getInstance(),
-                Collection.getInstance(), () -> 0.0));
+                Collection.getInstance()));
         goAndWait = new PathPlannerAuto(new GoAndWaitAuto(Drivetrain.getInstance()));
         temp = new PathPlannerAuto("temp", shouldMirror);
     }

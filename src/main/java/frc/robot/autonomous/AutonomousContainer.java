@@ -13,6 +13,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -42,7 +43,7 @@ public class AutonomousContainer {
     private static final PIDSettings ROTATIONAL_CONTROLLER_SETTINGS =
             namespace.addPIDNamespace("rotational controller settings", PIDSettings.EMPTY_PID_SETTINGS);
 
-//        private final AutoChooser autoChooser = configureAutoChooser();
+    private final SendableChooser<Command> autoChooser;
 
     private final PIDController xPidController;
     private final PIDController yPidController;
@@ -59,6 +60,7 @@ public class AutonomousContainer {
         xPidController = buildPIDControllerFromSettings(X_CONTROLLER_SETTINGS);
         yPidController = buildPIDControllerFromSettings(Y_CONTROLLER_SETTINGS);
         rotationalPidController = buildPIDControllerFromSettings(ROTATIONAL_CONTROLLER_SETTINGS);
+        autoChooser = AutoBuilder.buildAutoChooser();
 
 //          PathfindingCommand.warmupCommand().execute();
         configureAutoBuilder();
@@ -149,28 +151,14 @@ public class AutonomousContainer {
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> pathplannerTargetPose = pose);
     }
 
-    private AutoChooser configureAutoChooser() {
-        return new AutoChooser(
-                namespace,
-                PathContainer.getFlippedShootAndPass(),
-                PathContainer.getIntakeFromDepot(),
-                PathContainer.getIntakeFromFeeder(),
-                PathContainer.getIntakeAndShoot(),
-                PathContainer.getShootAndPass(),
-                PathContainer.getJustShoot(),
-                PathContainer.getGoAndWait(),
-                PathContainer.getTemp()
-        );
-    }
-
     private void configureDashboard() {
-//            NAMESPACE.putData("auto chooser", autoChooser);
+        namespace.putData("auto chooser", autoChooser);
         namespace.putBoolean("mirror", AutonomousContainer::shouldMirror);
     }
 
-//        public Command getSelectedCommand() {
-//            return autoChooser.getSelected();
-//        }
+    public Command getSelectedCommand() {
+        return autoChooser.getSelected();
+    }
 
     private static PIDController buildPIDControllerFromSettings(PIDSettings pidSettings) {
         return new PIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
