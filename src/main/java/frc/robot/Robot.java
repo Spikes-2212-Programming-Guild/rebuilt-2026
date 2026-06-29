@@ -98,6 +98,7 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
+        drivetrain.resetPose(new Pose2d());
         Command auto = autonomousContainer.getSelectedCommand();
         if(auto != null){
             CommandScheduler.getInstance().schedule(auto);
