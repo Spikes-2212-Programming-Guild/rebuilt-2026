@@ -2,7 +2,6 @@ package frc.robot.autonomous;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.autonomous.autoincode.GoAndWaitAuto;
 import frc.robot.commands.autonomous.DriveAndShoot;
 import frc.robot.subsystems.intake.Collection;
 import frc.robot.subsystems.shooter.Shooter;
@@ -20,8 +19,9 @@ public class PathContainer {
     private static Command intakeFromFeeder;
     private static Command intakeAndShoot;
     private static Command shootAndPass;
+    private static Command flippedCollectAndShoot;
+    private static Command collectAndShoot;
     private static Command justShoot;
-    private static Command goAndWait;
     private static Command temp;
 
     private static final boolean shouldMirror = AutonomousContainer.shouldMirror();
@@ -32,10 +32,11 @@ public class PathContainer {
         intakeFromFeeder = new PathPlannerAuto("Intake from feeder", shouldMirror);
         intakeAndShoot = new PathPlannerAuto("Intake and Shoot", shouldMirror);
         shootAndPass = new PathPlannerAuto("Shoot and pass", shouldMirror);
+        flippedCollectAndShoot = new PathPlannerAuto("flipped collect and shoot", shouldMirror);
+        collectAndShoot = new PathPlannerAuto("collect and shoot", shouldMirror);
         justShoot = new PathPlannerAuto(new DriveAndShoot(Drivetrain.getInstance(), Shooter.getInstance(),
                 Kicker.getInstance(), SpinningMagazine.getInstance(), VisionService.getInstance(),
                 Collection.getInstance()));
-        goAndWait = new PathPlannerAuto(new GoAndWaitAuto(Drivetrain.getInstance()));
         temp = new PathPlannerAuto("temp", shouldMirror);
     }
 
@@ -71,12 +72,16 @@ public class PathContainer {
         return shootAndPass;
     }
 
-    public static Command getJustShoot() {
-        return justShoot;
+    public static Command getFlippedCollectAndShoot() {
+        return flippedCollectAndShoot;
     }
 
-    public static Command getGoAndWait() {
-        return goAndWait;
+    public static Command getCollectAndShoot() {
+        return collectAndShoot;
+    }
+
+    public static Command getJustShoot() {
+        return justShoot;
     }
 
     public static Command getTemp() {
