@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.AutonomousContainer;
+import frc.robot.autonomous.PathContainer;
 import frc.robot.commands.advancedcommands.*;
 import frc.robot.commands.helpers.TestSubsystems;
 import frc.robot.commands.intake.SpinCollection;
@@ -20,6 +21,7 @@ import frc.robot.commands.shoot.ShootWithPID;
 import frc.robot.commands.storage.SpinMagazine;
 import frc.robot.commands.storage.Transport;
 import frc.robot.commands.swerve.RotateAccordingToGyro;
+import frc.robot.commands.temp;
 import frc.robot.subsystems.intake.Collection;
 import frc.robot.subsystems.intake.CollectionMovement;
 import frc.robot.subsystems.shooter.Shooter;
@@ -73,6 +75,7 @@ public class Robot extends TimedRobot {
         namespace.putCommand("gyro rotate", new RotateAccordingToGyro(drivetrain,
                 namespace.addConstantDouble("gyro target", 0), true));
         namespace.putCommand("test subsystems", new TestSubsystems());
+        namespace.putCommand("something", PathContainer.getSomething());
     }
 
     @Override
@@ -167,5 +170,6 @@ public class Robot extends TimedRobot {
                 kicker, spinningMagazine, collection, 1));
 //        NamedCommands.registerCommand("shoot", new JustShoot(shooter, () -> 0.3));
 //        NamedCommands.registerCommand("spin", new SpinMagazine(spinningMagazine));
+        NamedCommands.registerCommand("spin transport", new temp(() -> 0.1, () -> 0.1));
     }
 }

@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.swerve.RotateAccordingToGyro;
 import frc.robot.subsystems.swerve.Drivetrain;
 import org.json.simple.parser.ParseException;
 
@@ -57,14 +58,16 @@ public class AutonomousContainer {
     public AutonomousContainer(Drivetrain drivetrain) {
         this.drivetrain = drivetrain;
 
-        xPidController = buildPIDControllerFromSettings(X_CONTROLLER_SETTINGS);
-        yPidController = buildPIDControllerFromSettings(Y_CONTROLLER_SETTINGS);
-        rotationalPidController = buildPIDControllerFromSettings(ROTATIONAL_CONTROLLER_SETTINGS);
-        autoChooser = AutoBuilder.buildAutoChooser();
+        xPidController = buildPIDControllerFromSettings(drivetrain.getBackLeftModule().getDriveMotorPIDSettings());
+        yPidController = buildPIDControllerFromSettings(drivetrain.getBackRightModule().getTurnMotorPIDSettings());
+        rotationalPidController = buildPIDControllerFromSettings(RotateAccordingToGyro.rotatePIDSettings);
 
 //          PathfindingCommand.warmupCommand().execute();
+//        PathContainer.createAutos();
+
         configureAutoBuilder();
-        PathContainer.createAutos();
+        autoChooser = AutoBuilder.buildAutoChooser();
+
         setupTargetPoseUpdateLoop();
         configureDashboard();
     }
