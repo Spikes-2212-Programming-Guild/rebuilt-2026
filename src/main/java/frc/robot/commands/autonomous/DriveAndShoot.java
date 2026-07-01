@@ -13,7 +13,7 @@ import frc.robot.utils.VisionService;
 public class DriveAndShoot extends SequentialCommandGroup {
 
     private static final double SPEED_TO_DRIVE_X_AXIS = 1.0;
-    private static final double TIME_TO_DRIVE = 1.0;
+    private static final double TIME_TO_DRIVE = 2.5;
     private static final double SPEED_TO_DRIVE_ROTATIONAL_AXIS = -1.0;
     private static final double TIME_TO_SHOOT = 8;
 

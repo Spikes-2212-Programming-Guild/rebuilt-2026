@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 public class ShootToHub extends SequentialCommandGroup {
 
     private static final double LINEAR_EQUATION_M_FACTOR = 0.636;
-    private static final double LINEAR_EQUATION_B_FACTOR = 1.49;
+    private static final double LINEAR_EQUATION_B_FACTOR = 1.7;
     private static final double DISTANCE_FROM_CAMERA_TO_SHOOTER = -0.1;
 
     private static final double FIRST_WAIT_TIME = 0.1;
@@ -32,8 +32,7 @@ public class ShootToHub extends SequentialCommandGroup {
 
                     @Override
                     public void end(boolean i) {
-                        DriverStation.reportError("helllo", false);
-                        System.out.println("halo");
+
                     }
                 },
                 new ParallelCommandGroup(

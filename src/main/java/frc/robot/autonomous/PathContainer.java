@@ -22,8 +22,6 @@ public class PathContainer {
     private static Command flippedCollectAndShoot;
     private static Command collectAndShoot;
     private static Command justShoot;
-    private static Command temp;
-    private static Command something;
 
 
     private static final boolean shouldMirror = AutonomousContainer.shouldMirror();
@@ -39,8 +37,6 @@ public class PathContainer {
         justShoot = new PathPlannerAuto(new DriveAndShoot(Drivetrain.getInstance(), Shooter.getInstance(),
                 Kicker.getInstance(), SpinningMagazine.getInstance(), VisionService.getInstance(),
                 Collection.getInstance()));
-        temp = new PathPlannerAuto("temp", shouldMirror);
-        something = new PathPlannerAuto("something", shouldMirror);
     }
 
 
@@ -85,13 +81,5 @@ public class PathContainer {
 
     public static Command getJustShoot() {
         return justShoot;
-    }
-
-    public static Command getTemp() {
-        return temp;
-    }
-
-    public static Command getSomething() {
-        return something;
     }
 }

@@ -29,16 +29,12 @@ public class RobotMap {
 
         int TRANSPORT_SPARK_MAX_ID = 17;
 
-        int HOOD_SPARK_MAX = 18;
-
         int SHOOTER_LOWER_TALON_FX_ID = 19;
         int SHOOTER_MIDDLE_TALON_FX_ID = 20;
         int SHOOTER_UPPER_TALON_FX_ID = 21;
     }
 
     public interface DIO {
-
-        int HOOD_ABSOLUTE_ENCODER = -1;
 
     }
 

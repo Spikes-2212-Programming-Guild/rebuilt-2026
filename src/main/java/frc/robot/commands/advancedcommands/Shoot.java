@@ -10,7 +10,7 @@ import frc.robot.subsystems.spindexer.Kicker;
 
 public class Shoot extends SequentialCommandGroup {
 
-    private static final double SHOOT_SPEED = 0.3;
+    private static final double SHOOT_SPEED = 0.8;
     private static final double KICKER_SPEED = 0.5;
     private static final double MAGAZINE_SPEED = 0.25;
 

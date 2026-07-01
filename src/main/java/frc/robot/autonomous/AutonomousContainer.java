@@ -30,7 +30,8 @@ public class AutonomousContainer {
 
     private static final RootNamespace namespace = new RootNamespace("autonomouss");
 
-    private static final PathConstraints pathConstraints = new PathConstraints(5.1, 2, 8, 2);
+    private static final PathConstraints pathConstraints = new PathConstraints(5.1,
+            2, 8, 2);
 
     private static final double ROBOT_POSE_LATENCY = 0;
     private static final double TIME_STEP = 0.02;

@@ -6,8 +6,8 @@ import frc.robot.subsystems.intake.CollectionMovement;
 
 public class MiniJumpies extends SequentialCommandGroup {
 
-    private static final double UP_SPEED = 0.45;
-    private static final double DOWN_SPEED = -0.45;
+    private static final double UP_SPEED = -0.45;
+    private static final double DOWN_SPEED = 0.45;
 
     public MiniJumpies(CollectionMovement collectionMovement) {
         addCommands(

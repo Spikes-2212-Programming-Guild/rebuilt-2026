@@ -23,8 +23,8 @@ public class Drivetrain extends SwerveDrivetrain {
 
     private static final CANBus CANIVORE = new CANBus("canivore");
 
-    private static final double TRACK_WIDTH = 0.545;
-    private static final double TRACK_LENGTH = 0.545;
+    private static final double TRACK_WIDTH = 0.55;
+    private static final double TRACK_LENGTH = 0.55;
     private static final int GYRO_OFFSET = 180;
 
     private final StructArrayPublisher<SwerveModuleState> currentStates = NetworkTableInstance.getDefault()
