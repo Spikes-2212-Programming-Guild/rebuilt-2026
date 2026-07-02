@@ -29,22 +29,10 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "collect"
+                  "name": "collect and pass"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "fliped shoot and toss 3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "pass"
           }
         }
       ]

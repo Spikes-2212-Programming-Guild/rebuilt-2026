@@ -15,7 +15,7 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
 
     public static final double SPEED = 1;
     private static final double SUPPLY_CURRENT_LIMIT = 40;
-//    private static final double STATOR_CURRENT_LIMIT = -1;
+    private static final double STATOR_CURRENT_LIMIT = 80;
 
     private static SpinningMagazine instance;
 
@@ -39,8 +39,8 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
         talonFX.setIdleMode(NeutralModeValue.Coast);
         talonFX.setInverted(false);
         talonFX.getConfigurator().apply(new CurrentLimitsConfigs()
-                        .withSupplyCurrentLimit(SUPPLY_CURRENT_LIMIT)
-//                .withStatorCurrentLimit(STATOR_CURRENT_LIMIT)
+                .withSupplyCurrentLimit(SUPPLY_CURRENT_LIMIT)
+                .withStatorCurrentLimit(STATOR_CURRENT_LIMIT)
         );
     }
 

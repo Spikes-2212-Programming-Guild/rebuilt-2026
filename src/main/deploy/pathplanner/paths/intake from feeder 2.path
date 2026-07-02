@@ -69,7 +69,7 @@
   "folder": "intake from feeder",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 164.7448812969423
+    "rotation": -14.931417178137625
   },
   "useDefaultConstraints": true
 }

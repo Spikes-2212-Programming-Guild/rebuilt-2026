@@ -16,7 +16,7 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
     private static final double GEAR_RATIO = 1;
     private static final double WHEEL_DIAMETER_IN_METERS = Units.inchesToMeters(4);
     private static final double SUPPLY_CURRENT_LIMIT = 40;
-    private static final double STATOR_CURRENT_LIMIT = -1;
+    private static final double STATOR_CURRENT_LIMIT = 100;
 
     private final TalonFXWrapper leftTalonFX;
     private final TalonFXWrapper middleTalonFX;
@@ -66,8 +66,8 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
         rightTalonFX.setInverted(LEFT_MOTOR_INVERTED);
 
         CurrentLimitsConfigs limitsConfigs = new CurrentLimitsConfigs()
-                .withSupplyCurrentLimit(SUPPLY_CURRENT_LIMIT);
-//                .withStatorCurrentLimit(STATOR_CURRENT_LIMIT);
+                .withSupplyCurrentLimit(SUPPLY_CURRENT_LIMIT)
+                .withStatorCurrentLimit(STATOR_CURRENT_LIMIT);
         leftTalonFX.getConfigurator().apply(limitsConfigs);
         middleTalonFX.getConfigurator().apply(limitsConfigs);
         rightTalonFX.getConfigurator().apply(limitsConfigs);

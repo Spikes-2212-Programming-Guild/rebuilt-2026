@@ -20,15 +20,17 @@ public class VisionService {
     private VisionService(String limelightName) {
         limelight = new Limelight(limelightName);
     }
-    
+
     public double getX() {
         return limelight.getEntry("tx").getDouble(0);
     }
 
     public double getZ() {
+        long id = limelight.getID();
+//        boolean correctTag = (id == 26 || id == 24 || id == 27 || id == 9 || id == 10 || id == 8 || id == 11);
         if (hasTarget()) {
             double[] pose = limelight.getEntry("targetpose_cameraspace").getDoubleArray(new double[0]);
-            if(pose.length > 2) {
+            if (pose.length > 2) {
                 return pose[2];
             }
         }
@@ -37,5 +39,9 @@ public class VisionService {
 
     public boolean hasTarget() {
         return limelight.hasTarget();
+    }
+
+    public long getTagID() {
+        return limelight.getID();
     }
 }

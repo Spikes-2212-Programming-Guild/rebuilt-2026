@@ -10,9 +10,8 @@ public class Kicker extends MotoredGenericSubsystem {
 
     private static final String NAMESPACE_NAME = "transport";
 
-    public static final double SPEED = -1;
+    public static final double SPEED = 0.5;
     private static final int SMART_CURRENT_LIMIT = 40;
-    private static final int SECONDARY_CURRENT_LIMIT = 40;
 
     private final SparkWrapper sparkMax;
 
@@ -39,8 +38,8 @@ public class Kicker extends MotoredGenericSubsystem {
         sparkMax.setIdleMode(SparkBaseConfig.IdleMode.kCoast);
         sparkMax.setInverted(false);
         sparkMax.getSparkConfiguration().apply(sparkMax.getSparkConfiguration()
-                        .smartCurrentLimit(SMART_CURRENT_LIMIT)
-//                .secondaryCurrentLimit(SECONDARY_CURRENT_LIMIT)
+                .smartCurrentLimit(SMART_CURRENT_LIMIT)
+                .voltageCompensation(12)
         );
     }
 

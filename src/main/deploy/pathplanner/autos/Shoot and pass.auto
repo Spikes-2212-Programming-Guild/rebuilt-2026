@@ -29,10 +29,22 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "collect and pass"
+                  "name": "collect"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot and toss 5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pass"
           }
         }
       ]
