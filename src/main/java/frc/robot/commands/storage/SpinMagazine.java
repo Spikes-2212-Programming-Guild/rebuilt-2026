@@ -7,15 +7,13 @@ import java.util.function.Supplier;
 
 public class SpinMagazine extends MoveGenericSubsystem {
 
-    public SpinMagazine(SpinningMagazine spinningMagazine) {
-        super(spinningMagazine, SpinningMagazine.SPEED);
-    }
+    private static final double SPEED = 0.1;
 
     public SpinMagazine(Supplier<Double> speed) {
         super(SpinningMagazine.getInstance(), speed);
     }
 
     public SpinMagazine() {
-        super(SpinningMagazine.getInstance(), 0.25);
+        super(SpinningMagazine.getInstance(), SPEED);
     }
 }

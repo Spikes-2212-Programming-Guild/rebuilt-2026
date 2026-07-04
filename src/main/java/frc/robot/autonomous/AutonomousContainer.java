@@ -10,8 +10,10 @@ import com.spikes2212.control.PIDSettings;
 import com.spikes2212.dashboard.AutoChooser;
 import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,20 +38,21 @@ public class AutonomousContainer {
     private static final double ROBOT_POSE_LATENCY = 0;
     private static final double TIME_STEP = 0.02;
     private static final double PID_TO_POSE_TIMEOUT = 0.1;
-    private static final Supplier<Double> FF_SCALER = namespace.addConstantDouble("ff scaler", 1);
+    private static final double FF_SCALER = 1;
 
-    private static final PIDSettings X_CONTROLLER_SETTINGS =
-            namespace.addPIDNamespace("x controller settings", PIDSettings.EMPTY_PID_SETTINGS);
-    private static final PIDSettings Y_CONTROLLER_SETTINGS =
-            namespace.addPIDNamespace("y controller settings", PIDSettings.EMPTY_PID_SETTINGS);
-    private static final PIDSettings ROTATIONAL_CONTROLLER_SETTINGS =
-            namespace.addPIDNamespace("rotational controller settings", PIDSettings.EMPTY_PID_SETTINGS);
+//    private static final PIDSettings X_CONTROLLER_SETTINGS =
+//            namespace.addPIDNamespace("x controller settings", PIDSettings.EMPTY_PID_SETTINGS);
+//    private static final PIDSettings Y_CONTROLLER_SETTINGS =
+//            namespace.addPIDNamespace("y controller settings", PIDSettings.EMPTY_PID_SETTINGS);
+//    private static final PIDSettings ROTATIONAL_CONTROLLER_SETTINGS =
+//            namespace.addPIDNamespace("rotational controller settings", PIDSettings.EMPTY_PID_SETTINGS);
+
 
     private final SendableChooser<Command> autoChooser;
 
     private final PIDController xPidController;
     private final PIDController yPidController;
-    private final PIDController rotationalPidController;
+    private final ProfiledPIDController rotationalPidController;
 
     private final Drivetrain drivetrain;
     private static final PathContainer pathContainer = PathContainer.getInstance();
@@ -59,9 +62,9 @@ public class AutonomousContainer {
     public AutonomousContainer(Drivetrain drivetrain) {
         this.drivetrain = drivetrain;
 
-        xPidController = buildPIDControllerFromSettings(drivetrain.getBackLeftModule().getDriveMotorPIDSettings());
-        yPidController = buildPIDControllerFromSettings(drivetrain.getBackRightModule().getTurnMotorPIDSettings());
-        rotationalPidController = buildPIDControllerFromSettings(RotateAccordingToGyro.rotatePIDSettings);
+        xPidController = buildPIDControllerFromSettings();
+        yPidController = buildPIDControllerFromSettings();
+        rotationalPidController = buildProfiledPIDControllerFromSettings();
 
 //          PathfindingCommand.warmupCommand().execute();
 //        PathContainer.createAutos();
@@ -103,7 +106,7 @@ public class AutonomousContainer {
     }
 
     private ChassisSpeeds getScaledFFSpeeds(ChassisSpeeds feedForwardSpeeds) {
-        return feedForwardSpeeds.times(FF_SCALER.get());
+        return feedForwardSpeeds.times(FF_SCALER);
     }
 
     private void driveByCorrectedSpeed(ChassisSpeeds feedForwardSpeeds) {
@@ -164,8 +167,12 @@ public class AutonomousContainer {
         return autoChooser.getSelected();
     }
 
-    private static PIDController buildPIDControllerFromSettings(PIDSettings pidSettings) {
-        return new PIDController(pidSettings.getkP(), pidSettings.getkI(), pidSettings.getkD());
+    private static PIDController buildPIDControllerFromSettings() {
+        return new PIDController(0.5, 0, 0.25);
+    }
+
+    private static ProfiledPIDController buildProfiledPIDControllerFromSettings() {
+        return new ProfiledPIDController(0.2, 0, 0.1, new TrapezoidProfile.Constraints(2, 4));
     }
 
     public static boolean shouldMirror() {

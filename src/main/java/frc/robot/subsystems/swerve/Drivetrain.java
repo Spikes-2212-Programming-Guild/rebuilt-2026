@@ -130,6 +130,10 @@ public class Drivetrain extends SwerveDrivetrain {
         return atPose && robotStill;
     }
 
+    public void setGyro(double angle) {
+        gyro.setYaw(angle);
+    }
+
     private boolean atRotation(Rotation2d rotation2d) {
         double error = rotation2d.minus(getAngle()).getDegrees();
         boolean isAtRotation = Math.abs(error) <= ROTATION_TOLERANCE_IN_DEGREES;

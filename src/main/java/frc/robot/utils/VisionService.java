@@ -2,9 +2,13 @@ package frc.robot.utils;
 
 import com.spikes2212.util.Limelight;
 
+import java.util.List;
+
 public class VisionService {
 
     private static final String LIMELIGHT_NAME = "limelight";
+
+    private static final List<Long> allowedTags = List.of(10L, 9L);
 
     private final Limelight limelight;
 
@@ -26,9 +30,9 @@ public class VisionService {
     }
 
     public double getZ() {
-        long id = limelight.getID();
-//        boolean correctTag = (id == 26 || id == 24 || id == 27 || id == 9 || id == 10 || id == 8 || id == 11);
-        if (hasTarget()) {
+        if (hasTarget()
+//                && allowedTags.contains(getTagId())
+        ) {
             double[] pose = limelight.getEntry("targetpose_cameraspace").getDoubleArray(new double[0]);
             if (pose.length > 2) {
                 return pose[2];

@@ -7,10 +7,6 @@ import java.util.function.Supplier;
 
 public class MoveCollection extends MoveGenericSubsystem {
 
-    public MoveCollection(CollectionMovement collection, Supplier<Double> speed) {
-        super(collection, speed);
-    }
-
     public MoveCollection(Supplier<Double> speed) {
         super(CollectionMovement.getInstance(), speed);
     }

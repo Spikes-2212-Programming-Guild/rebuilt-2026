@@ -6,6 +6,7 @@ import com.spikes2212.control.FeedForwardController;
 import com.spikes2212.control.FeedForwardSettings;
 import com.spikes2212.control.PIDSettings;
 import com.spikes2212.dashboard.RootNamespace;
+import frc.robot.subsystems.swerve.Drivetrain;
 
 import java.util.function.Supplier;
 
@@ -27,8 +28,13 @@ public class RotateAccordingToGyro extends RotateSwerveWithPID {
                 rotateFeedForwardSettings, useVelocityPID);
     }
 
-    public RotateAccordingToGyro(SwerveDrivetrain drivetrain, Supplier<Double> setpoint, boolean useVelocityPID) {
-        super(drivetrain, setpoint, () -> (drivetrain.getAngle().getDegrees() % DEGREES_IN_ROTATION),
+    public RotateAccordingToGyro(double setpoint, boolean useVelocityPID) {
+        super(Drivetrain.getInstance(), () -> setpoint,
+                () -> (Drivetrain.getInstance().getAngle().getDegrees() % DEGREES_IN_ROTATION),
                 rotatePIDSettings, rotateFeedForwardSettings, useVelocityPID);
+    }
+
+    public static void updateNamespace() {
+        namespace.update();
     }
 }

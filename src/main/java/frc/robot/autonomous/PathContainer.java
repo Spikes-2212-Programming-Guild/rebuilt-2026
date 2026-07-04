@@ -34,9 +34,9 @@ public class PathContainer {
         shootAndPass = new PathPlannerAuto("Shoot and pass", shouldMirror);
         flippedCollectAndShoot = new PathPlannerAuto("flipped collect and shoot", shouldMirror);
         collectAndShoot = new PathPlannerAuto("collect and shoot", shouldMirror);
-        justShoot = new PathPlannerAuto(new DriveAndShoot(Drivetrain.getInstance(), Shooter.getInstance(),
-                Kicker.getInstance(), SpinningMagazine.getInstance(), VisionService.getInstance(),
-                Collection.getInstance()));
+//        justShoot = new PathPlannerAuto(new DriveAndShoot(Drivetrain.getInstance(), Shooter.getInstance(),
+//                Kicker.getInstance(), SpinningMagazine.getInstance(), VisionService.getInstance(),
+//                Collection.getInstance()));
     }
 
 

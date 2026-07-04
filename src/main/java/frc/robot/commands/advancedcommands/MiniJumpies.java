@@ -6,14 +6,14 @@ import frc.robot.subsystems.intake.CollectionMovement;
 
 public class MiniJumpies extends SequentialCommandGroup {
 
-    private static final double UP_SPEED = -0.45;
-    private static final double DOWN_SPEED = 0.45;
+    private static final double SPEED = 0.35;
+    private static final double TIMEOUT = 0.35;
 
     public MiniJumpies(CollectionMovement collectionMovement) {
         addCommands(
                 new SequentialCommandGroup(
-                new MoveGenericSubsystem(collectionMovement, UP_SPEED).withTimeout(0.35),
-                new MoveGenericSubsystem(collectionMovement, DOWN_SPEED).withTimeout(0.35)
-        ));
+                        new MoveGenericSubsystem(collectionMovement, -SPEED).withTimeout(TIMEOUT),
+                        new MoveGenericSubsystem(collectionMovement, SPEED).withTimeout(TIMEOUT)
+                ));
     }
 }

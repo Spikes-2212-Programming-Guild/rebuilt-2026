@@ -4,19 +4,12 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.auto.NamedCommands;
 import com.spikes2212.dashboard.RootNamespace;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.autonomous.AutonomousContainer;
-import frc.robot.commands.advancedcommands.Collect;
-import frc.robot.commands.advancedcommands.CollectAndPass;
-import frc.robot.commands.advancedcommands.Shoot;
-import frc.robot.commands.advancedcommands.TuneToAprilTag;
-import frc.robot.commands.shoot.JustShoot;
-import frc.robot.commands.shoot.ShootWithPID;
+import frc.robot.commands.autonomous.DriveAndShoot;
 import frc.robot.commands.swerve.Drive;
 import frc.robot.subsystems.intake.Collection;
 import frc.robot.subsystems.intake.CollectionMovement;
@@ -24,12 +17,11 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.spindexer.Kicker;
 import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.subsystems.swerve.Drivetrain;
-import frc.robot.subsystems.swerve.SwerveModuleHolder;
 import frc.robot.utils.VisionService;
 
 public class Robot extends TimedRobot {
 
-    private static final RootNamespace namespace = new RootNamespace("robot");
+    public static final RootNamespace namespace = new RootNamespace("robot");
 
     private Drivetrain drivetrain;
     private Collection collection;
@@ -40,47 +32,22 @@ public class Robot extends TimedRobot {
 
     private VisionService visionService;
 
-    private AutonomousContainer autonomousContainer;
+//    private AutonomousContainer autonomousContainer;
 
     @Override
     public void robotInit() {
         CommandScheduler.getInstance().cancelAll();
         initialize();
-//        namespace.putCommand("shoot pid", new ShootWithPID(shooter, namespace.addConstantDouble("pid speed", 0), 10));
-//        namespace.putCommand("shoot with camera", new ShootToHub(shooter, Kicker.getInstance(), SpinningMagazine.getInstance(),
-//               VisionService.getInstance()));
-//        namespace.putNumber("distance", visionService::getZ);
-//
-//        Supplier<Double> magazineSpeed = namespace.addConstantDouble("magazine speed", 0);
-//        Supplier<Double> transportSpeed = namespace.addConstantDouble("transport speed", 0);
-//        namespace.putCommand("magazine", new SpinMagazine(magazineSpeed));
-//        namespace.putCommand("transport", new Transport(kicker, transportSpeed));
-
-//        namespace.putCommand("move down", new MoveDown());
-//        namespace.putCommand("move up", new MoveUp());
-//        namespace.putCommand("spin collection",
-//                new SpinCollection(namespace.addConstantDouble("collection speed", 0.0)));
-//        namespace.putCommand("shoot", new JustShoot(shooter,
-//                namespace.addConstantDouble("shooting speed", 0.0)));
-//        namespace.putCommand("small up", new MoveGenericSubsystem(collectionMovement, -0.45)
-//                .withTimeout(namespace.addConstantDouble("up time", 0.2).get()));
-//        namespace.putCommand("mini jumpies", new MiniJumpies(collectionMovement));
-//        namespace.putCommand("gyro rotate", new RotateAccordingToGyro(drivetrain,
-//                namespace.addConstantDouble("gyro target", 0), true));
-//        namespace.putCommand("test subsystems", new TestSubsystems());
-        namespace.putCommand("just shoot", new JustShoot(shooter, () -> 0.4));
-        namespace.putCommand("shoot w pid", new ShootWithPID(shooter, () -> 0.4, 3));
-//        namespace.putNumber("distance from april tag", () -> VisionService.getInstance().getX());
-//        namespace.putNumber("z vision", () -> VisionService.getInstance().getZ());
     }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         namespace.update();
-        ShootWithPID.updateNamespace();
         drivetrain.periodic();
-        SwerveModuleHolder.updateNamespace();
+//        ShootWithPID.updateNamespace();
+//        SwerveModuleHolder.updateNamespace();
+//        RotateAccordingAprilTags.namespace.update();
     }
 
     @Override
@@ -100,19 +67,14 @@ public class Robot extends TimedRobot {
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
         drivetrain.resetPose(new Pose2d());
-//        Command auto = PathContainer.getCollectAndShoot();
-//        CommandScheduler.getInstance().schedule(auto);
 
-//        Command auto = new DriveAndShoot(drivetrain, shooter, kicker, spinningMagazine, visionService, collection);
-        Command auto = new Shoot();
-        if (auto != null) {
-            CommandScheduler.getInstance().schedule(auto);
-        }
+        Command auto = new DriveAndShoot(drivetrain);
+        CommandScheduler.getInstance().schedule(auto);
     }
 
     @Override
     public void autonomousPeriodic() {
-        drivetrain.updateOdometry();
+//        drivetrain.updateOdometry();
     }
 
     @Override
@@ -122,11 +84,18 @@ public class Robot extends TimedRobot {
         drivetrain.resetPose(new Pose2d());
 
         OI oi = new OI();
+        double ySpeed = 1;
+        double xSpeed = 1;
+        double rotationSpeed = 2;
         drivetrain.setDefaultCommand(new Drive(drivetrain,
-                () -> oi.getLeftY() * -5,
-                () -> oi.getLeftX() * -5,
-                () -> oi.getRightX() * 3,
+                () -> squareInputs(oi.getLeftY() * xSpeed),
+                () -> squareInputs(oi.getLeftX() * ySpeed),
+                () -> squareInputs(oi.getRightX() * rotationSpeed),
                 true, true));
+    }
+
+    private static double squareInputs(double input) {
+        return Math.signum(input) * (input * input);
     }
 
     @Override
@@ -162,17 +131,5 @@ public class Robot extends TimedRobot {
         kicker = Kicker.getInstance();
         shooter = Shooter.getInstance();
         visionService = VisionService.getInstance();
-//        registerNamedCommands();
-//        autonomousContainer = new AutonomousContainer(drivetrain);
-    }
-
-    public void registerNamedCommands() {
-        NamedCommands.registerCommand("collect and pass", new CollectAndPass());
-        NamedCommands.registerCommand("collect", new Collect());
-        NamedCommands.registerCommand("pass", new Shoot());
-        NamedCommands.registerCommand("aligned shoot", new TuneToAprilTag(drivetrain, visionService, shooter,
-                kicker, spinningMagazine, collection, 1));
-//        NamedCommands.registerCommand("shoot", new JustShoot(shooter, () -> 0.3));
-//        NamedCommands.registerCommand("spin", new SpinMagazine(spinningMagazine));
     }
 }

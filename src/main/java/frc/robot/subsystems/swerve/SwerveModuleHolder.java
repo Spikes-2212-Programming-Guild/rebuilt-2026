@@ -55,7 +55,7 @@ public class SwerveModuleHolder {
 
     public static SwerveModuleRebuilt getFrontLeft() {
         if (frontLeft == null) {
-            frontLeft = new SwerveModuleRebuilt(FRONT_LEFT_NAMESPACE_NAME,
+            frontLeft = new SwerveModuleRebuilt(60, FRONT_LEFT_NAMESPACE_NAME,
                     new TalonFXWrapper(RobotMap.CAN.SWERVE_FRONT_LEFT_DRIVE_TALON_FX_ID, CANIVORE),
                     SparkWrapper.createSparkMax(RobotMap.CAN.SWERVE_FRONT_LEFT_TURN_SPARK_MAX_ID,
                             SparkLowLevel.MotorType.kBrushless), FRONT_LEFT_DRIVE_INVERTED,
@@ -68,7 +68,7 @@ public class SwerveModuleHolder {
 
     public static SwerveModuleRebuilt getFrontRight() {
         if (frontRight == null) {
-            frontRight = new SwerveModuleRebuilt(FRONT_RIGHT_NAMESPACE_NAME,
+            frontRight = new SwerveModuleRebuilt(60, FRONT_RIGHT_NAMESPACE_NAME,
                     new TalonFXWrapper(RobotMap.CAN.SWERVE_FRONT_RIGHT_DRIVE_TALON_FX_ID, CANIVORE),
                     SparkWrapper.createSparkMax(RobotMap.CAN.SWERVE_FRONT_RIGHT_TURN_SPARK_MAX_ID,
                             SparkLowLevel.MotorType.kBrushless), FRONT_RIGHT_DRIVE_INVERTED,
@@ -81,7 +81,7 @@ public class SwerveModuleHolder {
 
     public static SwerveModuleRebuilt getBackLeft() {
         if (backLeft == null) {
-            backLeft = new SwerveModuleRebuilt(BACK_LEFT_NAMESPACE_NAME,
+            backLeft = new SwerveModuleRebuilt(60, BACK_LEFT_NAMESPACE_NAME,
                     new TalonFXWrapper(RobotMap.CAN.SWERVE_BACK_LEFT_DRIVE_TALON_FX_ID, CANIVORE),
                     SparkWrapper.createSparkMax(RobotMap.CAN.SWERVE_BACK_LEFT_TURN_SPARK_MAX_ID,
                             SparkLowLevel.MotorType.kBrushless), BACK_LEFT_DRIVE_INVERTED,
@@ -94,7 +94,7 @@ public class SwerveModuleHolder {
 
     public static SwerveModuleRebuilt getBackRight() {
         if (backRight == null) {
-            backRight = new SwerveModuleRebuilt(BACK_RIGHT_NAMESPACE_NAME,
+            backRight = new SwerveModuleRebuilt(60, BACK_RIGHT_NAMESPACE_NAME,
                     new TalonFXWrapper(RobotMap.CAN.SWERVE_BACK_RIGHT_DRIVE_TALON_FX_ID, CANIVORE),
                     SparkWrapper.createSparkMax(RobotMap.CAN.SWERVE_BACK_RIGHT_TURN_SPARK_MAX_ID,
                             SparkLowLevel.MotorType.kBrushless), BACK_RIGHT_DRIVE_INVERTED,
@@ -106,6 +106,6 @@ public class SwerveModuleHolder {
     }
 
     public static void updateNamespace() {
-        namespace.update();
+//        namespace.update();
     }
 }

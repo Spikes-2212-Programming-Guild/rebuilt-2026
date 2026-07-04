@@ -28,8 +28,12 @@ public class RotateAccordingAprilTags extends RotateSwerveWithPID {
     }
 
     public RotateAccordingAprilTags(SwerveDrivetrain drivetrain, Supplier<Double> setpoint,
-                                    VisionService visionService, Boolean useVelocityPID) {
-        super(drivetrain, setpoint, visionService::getX, rotatePIDSettings,
+                                    Supplier<Double> distance, Boolean useVelocityPID) {
+        super(drivetrain, setpoint, distance, rotatePIDSettings,
                 rotateFeedForwardSettings, useVelocityPID);
+    }
+
+    public static void updateNamespace() {
+        namespace.update();
     }
 }

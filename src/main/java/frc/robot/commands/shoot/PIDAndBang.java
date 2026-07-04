@@ -15,11 +15,11 @@ import static java.lang.Math.abs;
 
 public class PIDAndBang extends MoveSmartMotorControllerGenericSubsystem {
 
-    private static final RootNamespace namespace = new RootNamespace("shoot with pid command");
+    private static final RootNamespace namespace = new RootNamespace("bang and pid command");
 
     private static final PIDSettings PID_SETTINGS = namespace.
             addPIDNamespace("shoot", new PIDSettings(0.16, 0.0005, 0.006,
-                    0, 0.1, 0));
+                    0, 0.5, 0));
 
     private static final FeedForwardSettings FEED_FORWARD_SETTINGS = namespace.
             addFeedForwardNamespace("shoot", new FeedForwardSettings(0.0395, 0.1, 0,
@@ -43,11 +43,16 @@ public class PIDAndBang extends MoveSmartMotorControllerGenericSubsystem {
     @Override
     public void execute() {
         super.execute();
+        namespace.putNumber("setpoint", setpoint);
         if (abs(shooter.getVelocity()) <= abs(setpoint.get()) - PID_SETTINGS.getTolerance()) {
             double bangBangOutput = bangBangController.calculate(shooter.getVelocity(), setpoint.get());
             double ffOutput = feedForwardController.calculate(shooter.getVelocity(), setpoint.get());
             double output = ffOutput + bangBangOutput;
             shooter.move(output);
         }
+    }
+
+    public static void updateNamespace() {
+        namespace.update();
     }
 }

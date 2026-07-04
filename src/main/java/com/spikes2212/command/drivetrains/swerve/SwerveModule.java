@@ -153,7 +153,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
      */
     public void setTargetAngle(Rotation2d targetAngle) {
         turnMotor.pidSet(UnifiedControlMode.POSITION, targetAngle.getDegrees(), turnMotorPIDSettings,
-                turnMotorFeedForwardSettings, true);
+                turnMotorFeedForwardSettings, false);
     }
 
     /**
@@ -166,7 +166,7 @@ public abstract class SwerveModule extends DashboardedSubsystem {
     public void setTargetVelocity(double targetVelocity, double maxPossibleVelocity, boolean useVelocityPID) {
         if (useVelocityPID) {
             driveMotor.pidSet(UnifiedControlMode.VELOCITY, targetVelocity, driveMotorPIDSettings,
-                    driveMotorFeedForwardSettings, true);
+                    driveMotorFeedForwardSettings, false);
         } else {
             driveMotor.set(targetVelocity / maxPossibleVelocity);
         }

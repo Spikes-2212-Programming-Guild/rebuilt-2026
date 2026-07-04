@@ -13,7 +13,6 @@ public class SpinningMagazine extends MotoredGenericSubsystem {
 
     private final TalonFXWrapper talonFX;
 
-    public static final double SPEED = 1;
     private static final double SUPPLY_CURRENT_LIMIT = 40;
     private static final double STATOR_CURRENT_LIMIT = 80;
 

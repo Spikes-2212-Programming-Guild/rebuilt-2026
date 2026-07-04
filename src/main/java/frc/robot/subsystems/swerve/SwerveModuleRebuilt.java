@@ -3,22 +3,17 @@ package frc.robot.subsystems.swerve;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.revrobotics.spark.config.SparkBaseConfig;
 import com.spikes2212.command.drivetrains.swerve.SwerveModule;
-import com.spikes2212.control.FeedForwardController;
 import com.spikes2212.control.FeedForwardSettings;
 import com.spikes2212.control.PIDSettings;
 import com.spikes2212.control.TrapezoidProfileSettings;
-import com.spikes2212.util.UnifiedControlMode;
 import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.units.Units;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-
-import java.util.function.Supplier;
 
 public class SwerveModuleRebuilt extends SwerveModule {
 
@@ -46,7 +41,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
     private final SparkWrapper turnMotor;
     private final CANcoder cancoder;
 
-    public SwerveModuleRebuilt(String namespaceName, TalonFXWrapper driveMotor, SparkWrapper turnMotor,
+    public SwerveModuleRebuilt(int limit, String namespaceName, TalonFXWrapper driveMotor, SparkWrapper turnMotor,
                                boolean driveMotorInverted, boolean turnMotorInverted,
                                double absoluteEncoderOffset, PIDSettings driveMotorPIDSettings,
                                PIDSettings turnMotorPIDSettings, FeedForwardSettings driveMotorFeedForwardSettings,
@@ -54,11 +49,16 @@ public class SwerveModuleRebuilt extends SwerveModule {
         super(namespaceName, driveMotor, turnMotor, driveMotorInverted, turnMotorInverted, absoluteEncoderOffset,
                 driveMotorPIDSettings, turnMotorPIDSettings, driveMotorFeedForwardSettings,
                 turnMotorFeedForwardSettings, MIN_SPEED_LIMIT);
+//        TURN_SMART_CURRENT_LIMIT = limit;
         this.driveMotor = driveMotor;
         this.turnMotor = turnMotor;
         this.cancoder = cancoder;
+        driveMotor.restoreFactoryDefaults();
+        turnMotor.restoreFactoryDefaults();
+
         driveMotor.setInverted(driveMotorInverted);
         turnMotor.setInverted(!turnMotorInverted);
+
         configureTurnController();
         configureDriveController();
         configureAbsoluteEncoder();
@@ -68,6 +68,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     @Override
     protected void configureDriveController() {
+        driveMotor.setIdleMode(NeutralModeValue.Brake);
         driveMotor.setEncoderConversionFactor(DRIVE_MOTOR_ROTATION_TO_WHEEL_ROTATIONS);
         driveMotor.configureLoop(driveMotorPIDSettings, driveMotorFeedForwardSettings,
                 TrapezoidProfileSettings.EMPTY_TRAPEZOID_PROFILE_SETTINGS);
@@ -75,6 +76,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     @Override
     protected void configureTurnController() {
+        turnMotor.setIdleMode(SparkBaseConfig.IdleMode.kBrake);
         turnMotor.setPositionConversionFactor(TURN_POSITION_IN_ROTATION);
         turnMotor.setVelocityConversionFactor(TURN_VELOCITY_IN_ROTATION);
         turnMotor.configureLoop(turnMotorPIDSettings, turnMotorFeedForwardSettings,
@@ -108,12 +110,12 @@ public class SwerveModuleRebuilt extends SwerveModule {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("absolute encoder", () -> this.getAbsoluteModuleAngle().getDegrees());
-        namespace.putNumber("relative angle", this::getRelativeModuleAngle);
-        namespace.putNumber("current drive velocity", driveMotor::getVelocity);
-        namespace.putNumber("current turn position", turnMotor::getPosition);
-        namespace.putNumber("current turn velocity", turnMotor::getVelocity);
-        namespace.putNumber("voltage drive", driveMotor::getVoltage);
+//        namespace.putNumber("absolute encoder", () -> this.getAbsoluteModuleAngle().getDegrees());
+//        namespace.putNumber("relative angle", this::getRelativeModuleAngle);
+//        namespace.putNumber("current drive velocity", driveMotor::getVelocity);
+//        namespace.putNumber("current turn position", turnMotor::getPosition);
+//        namespace.putNumber("current turn current", turnMotor::getCurrent);
+//        namespace.putNumber("voltage drive", driveMotor::getVoltage);
 
 //        namespace.putCommand("turn pid", new FunctionalCommand(() -> {},() -> turnMotor.pidSet(UnifiedControlMode.POSITION,
 //                0, namespace.addPIDNamespace("try"), namespace.addFeedForwardNamespace(
@@ -142,29 +144,29 @@ public class SwerveModuleRebuilt extends SwerveModule {
 //                        driveMotorFeedForwardSettings, true),
 //                b -> stop(), () -> false));
 //
-//        namespace.putCommand("drive at speed", new RunCommand(() -> driveMotor.set(0.2)) {
+//        namespace.putCommand("drive at 0.2", new RunCommand(() -> driveMotor.set(0.2)) {
 //            @Override
 //            public void end(boolean interrupted) {
 //                driveMotor.stopMotor();
 //            }
 //        });
 
-//        namespace.putCommand("turn at speed", new RunCommand(() -> turnMotor.set(0.2)) {
+//        namespace.putCommand("turn at 0.2", new RunCommand(() -> turnMotor.set(0.2)) {
 //            @Override
 //            public void end(boolean interrupted) {
 //                turnMotor.stopMotor();
 //            }
 //        });
+//
+//        Supplier<Double> t = namespace.addConstantDouble("target angle", 0);
+//        namespace.putCommand("turn pid", new FunctionalCommand(() -> {},
+//                () -> setTargetAngle(Rotation2d.fromDegrees(t.get())), b -> stop(), () -> false));
 
-        Supplier<Double> t = namespace.addConstantDouble("target angle", 0);
-        namespace.putCommand("turn pid", new FunctionalCommand(() -> {},
-                () -> setTargetAngle(Rotation2d.fromDegrees(t.get())), b -> stop(), () -> false));
-
-        Supplier<Double> k = namespace.addConstantDouble("target speed", 0);
-        namespace.putCommand("drive pid", new FunctionalCommand(() -> {},
-                () -> setTargetState(new SwerveModuleState(k.get(), Rotation2d.fromDegrees(0)),
-                        Drivetrain.MAX_POSSIBLE_VELOCITY, true),
-                b -> stop(), () -> false));
+//        Supplier<Double> k = namespace.addConstantDouble("target speed", 0);
+//        namespace.putCommand("drive pid", new FunctionalCommand(() -> {},
+//                () -> setTargetState(new SwerveModuleState(k.get(), Rotation2d.fromDegrees(0)),
+//                        Drivetrain.MAX_POSSIBLE_VELOCITY, true),
+//                b -> stop(), () -> false));
 
     }
 }
