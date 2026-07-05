@@ -34,6 +34,12 @@ public class RotateAccordingToGyro extends RotateSwerveWithPID {
                 rotatePIDSettings, rotateFeedForwardSettings, useVelocityPID);
     }
 
+    public RotateAccordingToGyro(Supplier<Double> setpoint, boolean useVelocityPID) {
+        super(Drivetrain.getInstance(), setpoint,
+                () -> (Drivetrain.getInstance().getAngle().getDegrees() % DEGREES_IN_ROTATION),
+                rotatePIDSettings, rotateFeedForwardSettings, useVelocityPID);
+    }
+
     public static void updateNamespace() {
         namespace.update();
     }

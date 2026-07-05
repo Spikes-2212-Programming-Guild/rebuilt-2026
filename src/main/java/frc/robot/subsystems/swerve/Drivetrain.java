@@ -5,11 +5,12 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.spikes2212.command.drivetrains.swerve.SwerveDrivetrain;
 import com.spikes2212.command.drivetrains.swerve.SwerveModule;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
@@ -27,6 +28,9 @@ public class Drivetrain extends SwerveDrivetrain {
     private static final double TRACK_LENGTH = 0.55;
     private static final int GYRO_OFFSET = 180;
 
+    public static final Translation2d BLUE_HUB_CENTER = new Translation2d(4.625, 4.03);
+    public static final Translation2d RED_HUB_CENTER = new Translation2d(11.915, 4.03);
+
     private final StructArrayPublisher<SwerveModuleState> currentStates = NetworkTableInstance.getDefault()
             .getStructArrayTopic("current states", SwerveModuleState.struct).publish();
     private final StructArrayPublisher<SwerveModuleState> desiredStates = NetworkTableInstance.getDefault()
@@ -39,7 +43,7 @@ public class Drivetrain extends SwerveDrivetrain {
     private final static double ROTATION_TOLERANCE_IN_DEGREES = -1;
     private static final double ROTATION_VELOCITY_TOLERANCE = -1;
 
-    private final SwerveDriveOdometry odometry;
+    private final SwerveDrivePoseEstimator odometry;
 
     private static Drivetrain instance;
 
@@ -75,7 +79,7 @@ public class Drivetrain extends SwerveDrivetrain {
                         new SwerveModuleState(),
                         new SwerveModuleState()
                 });
-        odometry = new SwerveDriveOdometry(getKinematics(), getAngle(), getSwerveModulePositions());
+        odometry = new SwerveDrivePoseEstimator(getKinematics(), getAngle(), getSwerveModulePositions(), new Pose2d());
         configureDashboard();
     }
 
@@ -113,7 +117,7 @@ public class Drivetrain extends SwerveDrivetrain {
     }
 
     public Pose2d getEstimatedPose() {
-        return odometry.getPoseMeters();
+        return odometry.getEstimatedPosition();
     }
 
     public void resetPose(Pose2d newPose) {
@@ -162,16 +166,59 @@ public class Drivetrain extends SwerveDrivetrain {
     @Override
     public void configureDashboard() {
         namespace.putNumber("gyro", () -> this.getAngle().getDegrees());
-        namespace.putNumber("x", () -> odometry.getPoseMeters().getX());
-        namespace.putNumber("y", () -> odometry.getPoseMeters().getY());
+        namespace.putNumber("x", () -> getEstimatedPose().getX());
+        namespace.putNumber("y", () -> getEstimatedPose().getY());
         namespace.putRunnable("reset odometry", () ->
                 odometry.resetPosition(getAngle(), getSwerveModulePositions(), new Pose2d()));
         namespace.putRunnable("reset gyro to 0", () -> gyro.setYaw(0));
+    }
+
+    public void updateVision() {
+        LimelightHelpers.SetRobotOrientation(
+                "limelight", getAngle().getDegrees(), 0, 0, 0, 0, 0);
+
+        LimelightHelpers.PoseEstimate limelightMeasurement =
+                LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+
+        Pose2d pose = limelightMeasurement.pose;
+        double timestamp = limelightMeasurement.timestampSeconds;
+
+        if (pose == null) return;
+        addVisionMeasurement(pose, timestamp);
+    }
+
+    public void addVisionMeasurement(Pose2d visionPose, double timestamp) {
+        odometry.addVisionMeasurement(visionPose, timestamp);
+    }
+
+    public double getDistanceFromHub() {
+        Pose2d robotPose = getEstimatedPose();
+
+        Translation2d hub = BLUE_HUB_CENTER;
+//        if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Red).equals(DriverStation.Alliance.Red)) {
+//            hub = RED_HUB_CENTER;
+//        }
+
+        Translation2d delta = hub.minus(robotPose.getTranslation());
+        return delta.getNorm();
+    }
+
+    public double getAngleFromHub() {
+        Pose2d robotPose = getEstimatedPose();
+
+        Translation2d hub = BLUE_HUB_CENTER;
+//        if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Red).equals(DriverStation.Alliance.Red)) {
+//            hub = RED_HUB_CENTER;
+//        }
+
+        Translation2d delta = hub.minus(robotPose.getTranslation());
+        return delta.getAngle().getDegrees();
     }
 
     @Override
     public void periodic() {
         super.periodic();
         updateOdometry();
+        updateVision();
     }
 }

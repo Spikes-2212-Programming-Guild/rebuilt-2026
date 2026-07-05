@@ -49,7 +49,7 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
         configureDashboard();
     }
 
-    private void configureMotors() {
+    public void configureMotors() {
         leftTalonFX.restoreFactoryDefaults();
         middleTalonFX.restoreFactoryDefaults();
         rightTalonFX.restoreFactoryDefaults();
@@ -73,7 +73,7 @@ public class Shooter extends SmartMotorControllerGenericSubsystem {
         rightTalonFX.getConfigurator().apply(limitsConfigs);
     }
 
-    private void configureRelativeEncoder() {
+    public void configureRelativeEncoder() {
         leftTalonFX.setEncoderConversionFactor(GEAR_RATIO * WHEEL_DIAMETER_IN_METERS);
         middleTalonFX.setEncoderConversionFactor(GEAR_RATIO * WHEEL_DIAMETER_IN_METERS);
         rightTalonFX.setEncoderConversionFactor(GEAR_RATIO * WHEEL_DIAMETER_IN_METERS);

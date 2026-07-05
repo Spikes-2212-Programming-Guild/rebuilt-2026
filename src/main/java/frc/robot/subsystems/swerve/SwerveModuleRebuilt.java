@@ -14,6 +14,9 @@ import com.spikes2212.util.smartmotorcontrollers.SparkWrapper;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+
+import java.util.function.Supplier;
 
 public class SwerveModuleRebuilt extends SwerveModule {
 
@@ -144,19 +147,21 @@ public class SwerveModuleRebuilt extends SwerveModule {
 //                        driveMotorFeedForwardSettings, true),
 //                b -> stop(), () -> false));
 //
-//        namespace.putCommand("drive at 0.2", new RunCommand(() -> driveMotor.set(0.2)) {
-//            @Override
-//            public void end(boolean interrupted) {
-//                driveMotor.stopMotor();
-//            }
-//        });
+        Supplier<Double> driveSpeed = namespace.addConstantDouble("drive speed", 0);
+        namespace.putCommand("drive at speed", new RunCommand(() -> driveMotor.set(driveSpeed.get())) {
+            @Override
+            public void end(boolean interrupted) {
+                driveMotor.stopMotor();
+            }
+        });
 
-//        namespace.putCommand("turn at 0.2", new RunCommand(() -> turnMotor.set(0.2)) {
-//            @Override
-//            public void end(boolean interrupted) {
-//                turnMotor.stopMotor();
-//            }
-//        });
+        Supplier<Double> turnSpeed = namespace.addConstantDouble("turn speed", 0);
+        namespace.putCommand("turn at speed", new RunCommand(() -> turnMotor.set(turnSpeed.get())) {
+            @Override
+            public void end(boolean interrupted) {
+                turnMotor.stopMotor();
+            }
+        });
 //
 //        Supplier<Double> t = namespace.addConstantDouble("target angle", 0);
 //        namespace.putCommand("turn pid", new FunctionalCommand(() -> {},

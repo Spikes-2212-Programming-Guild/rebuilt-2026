@@ -1,18 +1,18 @@
 package frc.robot.utils;
 
 import com.spikes2212.util.Limelight;
-
-import java.util.List;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 public class VisionService {
 
     private static final String LIMELIGHT_NAME = "limelight";
 
-    private static final List<Long> allowedTags = List.of(10L, 9L);
-
     private final Limelight limelight;
 
     private static VisionService instance;
+
+    private double LAST_VAL = 0;
 
     public static VisionService getInstance() {
         if (instance == null) {
@@ -30,15 +30,36 @@ public class VisionService {
     }
 
     public double getZ() {
-        if (hasTarget()
-//                && allowedTags.contains(getTagId())
-        ) {
+        if (hasTarget()) {
             double[] pose = limelight.getEntry("targetpose_cameraspace").getDoubleArray(new double[0]);
             if (pose.length > 2) {
+                LAST_VAL = pose[2];
                 return pose[2];
             }
         }
-        return 0.0; //@TODO find a better default speed
+        return LAST_VAL; //@TODO find a better default speed
+    }
+
+    public Pose2d getRobotPose() {
+        double[] pose = limelight.getEntry("botpose_orb_wpiblue").getDoubleArray(new double[11]);
+
+        if (pose.length < 6) {
+            return null;
+        }
+
+        double x = pose[0];
+        double y = pose[1];
+        double yaw = pose[5];
+
+        return new Pose2d(x, y, Rotation2d.fromDegrees(yaw));
+    }
+
+    public double getLatencyMs() {
+        double[] pose = limelight
+                .getEntry("botpose_orb_wpiblue")
+                .getDoubleArray(new double[0]);
+
+        return pose.length > 6 ? pose[6] : 0.0;
     }
 
     public boolean hasTarget() {

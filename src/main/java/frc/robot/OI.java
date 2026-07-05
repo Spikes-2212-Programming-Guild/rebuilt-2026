@@ -1,17 +1,13 @@
 package frc.robot;
 
-import com.spikes2212.util.PlaystationControllerWrapper;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.advancedcommands.MoveDown;
 import frc.robot.commands.advancedcommands.RotateToTag;
 import frc.robot.commands.advancedcommands.ShootToHub;
-import frc.robot.commands.advancedcommands.UpWithJumpies;
-import frc.robot.commands.intake.MoveCollection;
-import frc.robot.commands.intake.SpinCollection;
 import frc.robot.commands.swerve.ModuleRotateWithPID;
+import frc.robot.commands.swerve.RotateAccordingAprilTags;
 import frc.robot.commands.swerve.RotateAccordingToGyro;
 import frc.robot.subsystems.swerve.Drivetrain;
 
@@ -19,7 +15,7 @@ public class OI /*GEVALD*/ {
 
     private final Joystick driverRight = new Joystick(0);
     private final Joystick driverLeft = new Joystick(1);
-    private final PlaystationControllerWrapper navigator = new PlaystationControllerWrapper(2);
+//    private final PlaystationControllerWrapper navigator = new PlaystationControllerWrapper(2);
 
     public OI() {
         configureDriver();
@@ -36,31 +32,37 @@ public class OI /*GEVALD*/ {
         new JoystickButton(driverRight, 4).whileTrue(
                 new RotateAccordingToGyro(90.0, true));
 
-        new JoystickButton(driverLeft, 1).whileTrue(new ShootToHub());
-        new JoystickButton(driverLeft, 3).whileTrue(new RotateToTag(-2));
-        new JoystickButton(driverLeft, 4).whileTrue(new RotateToTag(2));
+        new JoystickButton(driverLeft, 1).onTrue(new ShootToHub(() -> 0.0));
+//        new JoystickButton(driverLeft, 3)
+//                .onTrue(new RotateAccordingToGyro(drivetrain::getAngleFromHub, true));
+
+        new JoystickButton(driverLeft, 4).onTrue(new RotateToTag(2));
+        new JoystickButton(driverLeft, 3).onTrue(new RotateToTag(-2));
         new JoystickButton(driverLeft, 2).whileTrue(new ModuleRotateWithPID(drivetrain,
                 45.0, 135.0, 135.0, 45.0));
     }
 
     private void configureNavigator() {
-        navigator.getR2Button().whileTrue(new SpinCollection());
-        navigator.getTriangleButton().onTrue(new UpWithJumpies());
-        navigator.getUpButton().whileTrue(new MoveCollection(-0.4));
-        navigator.getDownButton().whileTrue(new MoveCollection(0.4));
-        navigator.getCrossButton().onTrue(new MoveDown());
-        navigator.getLeftButton().onTrue(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
+//        navigator.getR2Button().whileTrue(new SpinCollection());
+//        navigator.getTriangleButton().onTrue(new UpWithJumpies());
+//        navigator.getUpButton().whileTrue(new MoveCollection(-0.4));
+//        navigator.getDownButton().whileTrue(new MoveCollection(0.4));
+//        navigator.getCrossButton().onTrue(new MoveDown());
+//        navigator.getLeftButton().onTrue(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
     }
 
     public double getLeftX() {
         return driverLeft.getX();
+//        return 0;
     }
 
     public double getLeftY() {
         return driverLeft.getY();
+//        return 0;
     }
 
     public double getRightX() {
         return driverRight.getX();
+//        return 0;
     }
 }
