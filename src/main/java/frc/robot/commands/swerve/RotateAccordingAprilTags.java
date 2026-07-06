@@ -14,11 +14,11 @@ public class RotateAccordingAprilTags extends RotateSwerveWithPID {
 
     private static final RootNamespace namespace = new RootNamespace("rotate according april tag");
 
-    private static final PIDSettings rotatePIDSettings = namespace.addPIDNamespace("april tag",
-            new PIDSettings(0.025, 0.001, 0.0, 0, 1.5, 0.5));
+    private static final PIDSettings rotatePIDSettings =
+            new PIDSettings(0.025, 0.001, 0.0, 0, 1.5, 0.5);
 
-    private static final FeedForwardSettings rotateFeedForwardSettings = namespace.addFeedForwardNamespace(
-            "april tag", new FeedForwardSettings(FeedForwardController.ControlMode.LINEAR_POSITION));
+    private static final FeedForwardSettings rotateFeedForwardSettings =
+            new FeedForwardSettings(FeedForwardController.ControlMode.LINEAR_POSITION);
 
     public RotateAccordingAprilTags(SwerveDrivetrain drivetrain, Supplier<Double> setpoint,
                                     VisionService visionService, Supplier<Double> xSpeed, Supplier<Double> ySpeed,

@@ -2,13 +2,6 @@ package frc.robot.autonomous;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.autonomous.DriveAndShoot;
-import frc.robot.subsystems.intake.Collection;
-import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.spindexer.Kicker;
-import frc.robot.subsystems.spindexer.SpinningMagazine;
-import frc.robot.subsystems.swerve.Drivetrain;
-import frc.robot.utils.VisionService;
 
 public class PathContainer {
 

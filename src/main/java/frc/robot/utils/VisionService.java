@@ -12,7 +12,7 @@ public class VisionService {
 
     private static VisionService instance;
 
-    private double LAST_VAL = 0;
+    private double lastZ = 0;
 
     public static VisionService getInstance() {
         if (instance == null) {
@@ -33,11 +33,10 @@ public class VisionService {
         if (hasTarget()) {
             double[] pose = limelight.getEntry("targetpose_cameraspace").getDoubleArray(new double[0]);
             if (pose.length > 2) {
-                LAST_VAL = pose[2];
-                return pose[2];
+                lastZ = pose[2];
             }
         }
-        return LAST_VAL; //@TODO find a better default speed
+        return lastZ;
     }
 
     public Pose2d getRobotPose() {

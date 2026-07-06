@@ -31,7 +31,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
     private static final int DRIVE_SUPPLY_CURRENT_LIMIT = 40;
     private static final int DRIVE_STATOR_CURRENT_LIMIT = 80;
 
-    private static final int TURN_SMART_CURRENT_LIMIT = 40;
+    private static final int TURN_SMART_CURRENT_LIMIT = 60;
 
     private static final double DRIVE_MOTOR_ROTATION_TO_WHEEL_ROTATIONS =
             DRIVE_GEAR_RATIO * WHEEL_DIAMETER_METERS * Math.PI;
@@ -44,7 +44,7 @@ public class SwerveModuleRebuilt extends SwerveModule {
     private final SparkWrapper turnMotor;
     private final CANcoder cancoder;
 
-    public SwerveModuleRebuilt(int limit, String namespaceName, TalonFXWrapper driveMotor, SparkWrapper turnMotor,
+    public SwerveModuleRebuilt(String namespaceName, TalonFXWrapper driveMotor, SparkWrapper turnMotor,
                                boolean driveMotorInverted, boolean turnMotorInverted,
                                double absoluteEncoderOffset, PIDSettings driveMotorPIDSettings,
                                PIDSettings turnMotorPIDSettings, FeedForwardSettings driveMotorFeedForwardSettings,
@@ -52,7 +52,6 @@ public class SwerveModuleRebuilt extends SwerveModule {
         super(namespaceName, driveMotor, turnMotor, driveMotorInverted, turnMotorInverted, absoluteEncoderOffset,
                 driveMotorPIDSettings, turnMotorPIDSettings, driveMotorFeedForwardSettings,
                 turnMotorFeedForwardSettings, MIN_SPEED_LIMIT);
-//        TURN_SMART_CURRENT_LIMIT = limit;
         this.driveMotor = driveMotor;
         this.turnMotor = turnMotor;
         this.cancoder = cancoder;
@@ -147,21 +146,21 @@ public class SwerveModuleRebuilt extends SwerveModule {
 //                        driveMotorFeedForwardSettings, true),
 //                b -> stop(), () -> false));
 //
-        Supplier<Double> driveSpeed = namespace.addConstantDouble("drive speed", 0);
-        namespace.putCommand("drive at speed", new RunCommand(() -> driveMotor.set(driveSpeed.get())) {
-            @Override
-            public void end(boolean interrupted) {
-                driveMotor.stopMotor();
-            }
-        });
-
-        Supplier<Double> turnSpeed = namespace.addConstantDouble("turn speed", 0);
-        namespace.putCommand("turn at speed", new RunCommand(() -> turnMotor.set(turnSpeed.get())) {
-            @Override
-            public void end(boolean interrupted) {
-                turnMotor.stopMotor();
-            }
-        });
+//        Supplier<Double> driveSpeed = namespace.addConstantDouble("drive speed", 0);
+//        namespace.putCommand("drive at speed", new RunCommand(() -> driveMotor.set(driveSpeed.get())) {
+//            @Override
+//            public void end(boolean interrupted) {
+//                driveMotor.stopMotor();
+//            }
+//        });
+//
+//        Supplier<Double> turnSpeed = namespace.addConstantDouble("turn speed", 0);
+//        namespace.putCommand("turn at speed", new RunCommand(() -> turnMotor.set(turnSpeed.get())) {
+//            @Override
+//            public void end(boolean interrupted) {
+//                turnMotor.stopMotor();
+//            }
+//        });
 //
 //        Supplier<Double> t = namespace.addConstantDouble("target angle", 0);
 //        namespace.putCommand("turn pid", new FunctionalCommand(() -> {},

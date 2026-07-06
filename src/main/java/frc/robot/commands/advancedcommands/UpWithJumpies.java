@@ -10,9 +10,6 @@ public class UpWithJumpies extends SequentialCommandGroup {
         addCommands(
                 new MiniJumpies(collectionMovement),
                 new MiniJumpies(collectionMovement),
-                new MiniJumpies(collectionMovement),
-                new MiniJumpies(collectionMovement),
-                new MiniJumpies(collectionMovement),
                 new MoveUp()
         );
     }

@@ -14,6 +14,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.RobotMap;
 
 public class Drivetrain extends SwerveDrivetrain {
@@ -165,26 +166,26 @@ public class Drivetrain extends SwerveDrivetrain {
 
     @Override
     public void configureDashboard() {
-        namespace.putNumber("gyro", () -> this.getAngle().getDegrees());
-        namespace.putNumber("x", () -> getEstimatedPose().getX());
-        namespace.putNumber("y", () -> getEstimatedPose().getY());
-        namespace.putRunnable("reset odometry", () ->
-                odometry.resetPosition(getAngle(), getSwerveModulePositions(), new Pose2d()));
-        namespace.putRunnable("reset gyro to 0", () -> gyro.setYaw(0));
+//        namespace.putNumber("gyro", () -> this.getAngle().getDegrees());
+//        namespace.putNumber("x", () -> getEstimatedPose().getX());
+//        namespace.putNumber("y", () -> getEstimatedPose().getY());
+//        namespace.putRunnable("reset odometry", () ->
+//                odometry.resetPosition(getAngle(), getSwerveModulePositions(), new Pose2d()));
+//        namespace.putRunnable("reset gyro to 0", () -> gyro.setYaw(0));
     }
 
     public void updateVision() {
-        LimelightHelpers.SetRobotOrientation(
-                "limelight", getAngle().getDegrees(), 0, 0, 0, 0, 0);
-
-        LimelightHelpers.PoseEstimate limelightMeasurement =
-                LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
-
-        Pose2d pose = limelightMeasurement.pose;
-        double timestamp = limelightMeasurement.timestampSeconds;
-
-        if (pose == null) return;
-        addVisionMeasurement(pose, timestamp);
+//        LimelightHelpers.SetRobotOrientation(
+//                "limelight", getAngle().getDegrees(), 0, 0, 0, 0, 0);
+//
+//        LimelightHelpers.PoseEstimate limelightMeasurement =
+//                LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+//
+//        Pose2d pose = limelightMeasurement.pose;
+//        double timestamp = limelightMeasurement.timestampSeconds;
+//
+//        if (pose == null) return;
+//        addVisionMeasurement(pose, timestamp);
     }
 
     public void addVisionMeasurement(Pose2d visionPose, double timestamp) {
@@ -195,9 +196,9 @@ public class Drivetrain extends SwerveDrivetrain {
         Pose2d robotPose = getEstimatedPose();
 
         Translation2d hub = BLUE_HUB_CENTER;
-//        if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Red).equals(DriverStation.Alliance.Red)) {
-//            hub = RED_HUB_CENTER;
-//        }
+        if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Red).equals(DriverStation.Alliance.Red)) {
+            hub = RED_HUB_CENTER;
+        }
 
         Translation2d delta = hub.minus(robotPose.getTranslation());
         return delta.getNorm();
@@ -207,9 +208,9 @@ public class Drivetrain extends SwerveDrivetrain {
         Pose2d robotPose = getEstimatedPose();
 
         Translation2d hub = BLUE_HUB_CENTER;
-//        if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Red).equals(DriverStation.Alliance.Red)) {
-//            hub = RED_HUB_CENTER;
-//        }
+        if (DriverStation.getAlliance().orElse(DriverStation.Alliance.Red).equals(DriverStation.Alliance.Red)) {
+            hub = RED_HUB_CENTER;
+        }
 
         Translation2d delta = hub.minus(robotPose.getTranslation());
         return delta.getAngle().getDegrees();

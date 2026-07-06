@@ -13,6 +13,10 @@ public class SpinMagazine extends MoveGenericSubsystem {
         super(SpinningMagazine.getInstance(), speed);
     }
 
+    public SpinMagazine(double speed) {
+        super(SpinningMagazine.getInstance(), speed);
+    }
+
     public SpinMagazine() {
         super(SpinningMagazine.getInstance(), SPEED);
     }

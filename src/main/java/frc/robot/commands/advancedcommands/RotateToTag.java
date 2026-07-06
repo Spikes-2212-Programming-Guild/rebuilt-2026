@@ -9,10 +9,8 @@ import frc.robot.utils.VisionService;
 public class RotateToTag extends SequentialCommandGroup {
 
     public RotateToTag(double rotationSpeed) {
-        Drivetrain drivetrain = Drivetrain.getInstance();
         addCommands(
                 new Drive(
-                        drivetrain,
                         () -> 0.0,
                         () -> 0.0,
                         () -> rotationSpeed,
@@ -21,7 +19,7 @@ public class RotateToTag extends SequentialCommandGroup {
                 )
                         .until(VisionService.getInstance()::hasTarget),
                 new RotateAccordingAprilTags(
-                        drivetrain,
+                        Drivetrain.getInstance(),
                         () -> 0.0,
                         () -> VisionService.getInstance().getX(),
                         true
