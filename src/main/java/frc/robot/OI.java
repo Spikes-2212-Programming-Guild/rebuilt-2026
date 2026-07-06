@@ -10,6 +10,7 @@ import frc.robot.commands.intake.MoveCollection;
 import frc.robot.commands.intake.SpinCollection;
 import frc.robot.commands.swerve.ModuleRotateWithPID;
 import frc.robot.commands.swerve.RotateAccordingToGyro;
+import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.swerve.Drivetrain;
 
 public class OI /*GEVALD*/ {
@@ -34,8 +35,8 @@ public class OI /*GEVALD*/ {
         new JoystickButton(driverRight, 4).whileTrue(
                 new RotateAccordingToGyro(90.0, true));
 
-        new JoystickButton(driverLeft, 4).onTrue(new RotateToTag(2));
-        new JoystickButton(driverLeft, 3).onTrue(new RotateToTag(-2));
+        new JoystickButton(driverLeft, 4).whileTrue(new RotateToTag(2));
+        new JoystickButton(driverLeft, 3).whileTrue(new RotateToTag(-2));
         new JoystickButton(driverLeft, 2).whileTrue(new ModuleRotateWithPID(drivetrain,
                 45.0, 135.0, 135.0, 45.0));
     }
@@ -46,15 +47,25 @@ public class OI /*GEVALD*/ {
         navigator.getUpButton().whileTrue(new MoveCollection(-0.4));
         navigator.getDownButton().whileTrue(new MoveCollection(0.4));
         navigator.getCrossButton().onTrue(new MoveDown());
+        navigator.getSquareButton().onTrue(new MoveUp());
 
         navigator.getL1Button().whileTrue(new ShootToHub());
         navigator.getL2Button().whileTrue(new Pass());
-        navigator.getCircleButton().whileTrue(new ShootFromTrench());
+        navigator.getCircleButton().onTrue(new ShootFromTrench());
 
-        navigator.getLeftButton().onTrue(new RotateToTag(2));
-        navigator.getRightButton().onTrue(new RotateToTag(-2));
+        navigator.getOptionsButton().onTrue(new InstantCommand(
+                () -> Robot.offset += 0.05
+        ));
+        navigator.getShareButton().onTrue(new InstantCommand(
+                () -> Robot.offset -= 0.05
+        ));
 
-        navigator.getLeftButton().onTrue(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
+        navigator.getRightButton().onTrue(new ShootTest());
+
+        navigator.getLeftButton().onTrue(new InstantCommand(() -> {
+            Shooter.getInstance().stop();
+            CommandScheduler.getInstance().cancelAll();
+        }));
     }
 
     public double getLeftX() {

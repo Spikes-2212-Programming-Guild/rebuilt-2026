@@ -5,9 +5,12 @@
 package frc.robot;
 
 import com.spikes2212.dashboard.RootNamespace;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.autonomous.HubAuto;
+import frc.robot.commands.shooter.ShootWithPID;
+import frc.robot.commands.swerve.Drive;
 import frc.robot.subsystems.intake.Collection;
 import frc.robot.subsystems.intake.CollectionMovement;
 import frc.robot.subsystems.shooter.Shooter;
@@ -16,9 +19,13 @@ import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.subsystems.swerve.Drivetrain;
 import frc.robot.utils.VisionService;
 
+import java.util.function.Supplier;
+
 public class Robot extends TimedRobot {
 
     public static final RootNamespace namespace = new RootNamespace("robot");
+    public static final Supplier<Double> speed = namespace.addConstantDouble("speed", 0);
+    public static Supplier<Double> offset = () -> 0.0;
 
     private Drivetrain drivetrain;
     private Collection collection;
@@ -56,11 +63,11 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
-        drivetrain.resetPose(new Pose2d());
+//        drivetrain.resetPose(new Pose2d());
 
-//        Command hubAuto = new HubAuto();
-//        Command trenchAuto = new ShootFromTrench();
-//        CommandScheduler.getInstance().schedule(hubAuto);
+        Command auto = new HubAuto();
+//        Command auto = new ShootFromTrench();
+        CommandScheduler.getInstance().schedule(auto);
     }
 
     @Override
@@ -72,17 +79,18 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
-        drivetrain.resetPose(new Pose2d());
+
+//        drivetrain.resetPose(new Pose2d());
 
         OI oi = new OI();
         double ySpeed = 5;
         double xSpeed = 5;
         double rotationSpeed = 3;
-//        drivetrain.setDefaultCommand(new Drive(
-//                () -> squareInputs(oi.getLeftY() * xSpeed),
-//                () -> squareInputs(oi.getLeftX() * ySpeed),
-//                () -> squareInputs(oi.getRightX() * rotationSpeed),
-//                true, true));
+        drivetrain.setDefaultCommand(new Drive(
+                () -> squareInputs(oi.getLeftY()) * xSpeed,
+                () -> squareInputs(oi.getLeftX()) * ySpeed,
+                () -> squareInputs(oi.getRightX()) * rotationSpeed,
+                true, true));
     }
 
     private static double squareInputs(double input) {
@@ -93,6 +101,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         drivetrain.periodic();
         namespace.update();
+        ShootWithPID.updateNamespace();
     }
 
     @Override

@@ -13,20 +13,20 @@ import frc.robot.subsystems.swerve.Drivetrain;
 public class HubAuto extends SequentialCommandGroup {
 
     private static final double SPEED_TO_DRIVE_X_AXIS = 2.5;
-    private static final double TIME_TO_DRIVE = 0.7;
-    private static final double SHOOT_SPEED = 2.9;
+    private static final double TIME_TO_DRIVE = 1;
+    private static final double SHOOT_SPEED = 3.2;
 
     public HubAuto() {
         addCommands(
                 new InstantCommand(() -> Drivetrain.getInstance().setGyro(90)),
                 new Drive(() -> SPEED_TO_DRIVE_X_AXIS, () -> 0.0,
                         () -> 0.0, true, true).withTimeout(TIME_TO_DRIVE),
-                new RotateToTag(1).withTimeout(0.5),
-                new ShootWithPID(SHOOT_SPEED, 0.25),
-                new SpinMagazine().withTimeout(0.25),
+//                new RotateToTag(1).withTimeout(0.5),
+                new ShootWithPID(SHOOT_SPEED, 0.5).withTimeout(4),
+                new Transport().withTimeout(0.5),
                 new ParallelCommandGroup(
-                        new SpinMagazine(),
                         new Transport(),
+                        new SpinMagazine(0.05),
                         new ShootWithPID(SHOOT_SPEED, 15)
                 )
         );

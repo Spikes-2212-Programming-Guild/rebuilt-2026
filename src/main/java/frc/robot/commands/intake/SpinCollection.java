@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 public class SpinCollection extends MoveGenericSubsystem {
 
-    private static final Supplier<Double> SPEED = Robot.namespace.addConstantDouble("spin speed", 0.55);
+    private static final Supplier<Double> SPEED = Robot.namespace.addConstantDouble("spin speed", 0.75);
 
     public SpinCollection(Supplier<Double> speed) {
         super(Collection.getInstance(), speed);
