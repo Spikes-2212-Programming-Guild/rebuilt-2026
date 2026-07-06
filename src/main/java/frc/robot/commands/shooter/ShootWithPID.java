@@ -25,7 +25,7 @@ public class ShootWithPID extends MoveSmartMotorControllerGenericSubsystem {
                         PID_SETTINGS.getkP(), PID_SETTINGS.getkI(), PID_SETTINGS.getkD(),
                         PID_SETTINGS.getIZone(), PID_SETTINGS.getTolerance(), waitTime
                 ), FEED_FORWARD_SETTINGS,
-                UnifiedControlMode.VELOCITY, speed, true);
+                UnifiedControlMode.VELOCITY, speed, false);
     }
 
     public ShootWithPID(double speed, double waitTime) {

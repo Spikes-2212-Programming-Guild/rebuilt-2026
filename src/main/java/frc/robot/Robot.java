@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.autonomous.HubAuto;
-import frc.robot.commands.shooter.ShootWithPID;
 import frc.robot.commands.swerve.Drive;
 import frc.robot.subsystems.intake.Collection;
 import frc.robot.subsystems.intake.CollectionMovement;
@@ -25,7 +24,6 @@ public class Robot extends TimedRobot {
 
     public static final RootNamespace namespace = new RootNamespace("robot");
     public static final Supplier<Double> speed = namespace.addConstantDouble("speed", 0);
-    public static Supplier<Double> offset = () -> 0.0;
 
     private Drivetrain drivetrain;
     private Collection collection;
@@ -101,7 +99,6 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         drivetrain.periodic();
         namespace.update();
-        ShootWithPID.updateNamespace();
     }
 
     @Override

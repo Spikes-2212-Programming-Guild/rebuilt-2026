@@ -19,6 +19,8 @@ public class OI /*GEVALD*/ {
     private final Joystick driverLeft = new Joystick(1);
     private final PlaystationControllerWrapper navigator = new PlaystationControllerWrapper(2);
 
+    private double offset = 0;
+
     public OI() {
         configureDriver();
         configureNavigator();
@@ -49,15 +51,15 @@ public class OI /*GEVALD*/ {
         navigator.getCrossButton().onTrue(new MoveDown());
         navigator.getSquareButton().onTrue(new MoveUp());
 
-        navigator.getL1Button().whileTrue(new ShootToHub());
+        navigator.getL1Button().whileTrue(new ShootToHub(this::getOffset));
         navigator.getL2Button().whileTrue(new Pass());
         navigator.getCircleButton().onTrue(new ShootFromTrench());
 
-        navigator.getOptionsButton().onTrue(new InstantCommand(
-                () -> Robot.offset += 0.05
+        navigator.getOptionsButton().onTrue(new InstantCommand(() ->
+                offset += 0.05
         ));
-        navigator.getShareButton().onTrue(new InstantCommand(
-                () -> Robot.offset -= 0.05
+        navigator.getShareButton().onTrue(new InstantCommand(() ->
+                offset -= 0.05
         ));
 
         navigator.getRightButton().onTrue(new ShootTest());
@@ -66,6 +68,10 @@ public class OI /*GEVALD*/ {
             Shooter.getInstance().stop();
             CommandScheduler.getInstance().cancelAll();
         }));
+    }
+
+    private double getOffset() {
+        return offset;
     }
 
     public double getLeftX() {
