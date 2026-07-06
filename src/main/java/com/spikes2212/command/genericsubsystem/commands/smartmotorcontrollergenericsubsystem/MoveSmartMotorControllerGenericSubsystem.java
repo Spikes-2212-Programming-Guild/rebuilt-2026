@@ -3,9 +3,9 @@ package com.spikes2212.command.genericsubsystem.commands.smartmotorcontrollergen
 import com.spikes2212.command.genericsubsystem.smartmotorcontrollersubsystem.SmartMotorControllerGenericSubsystem;
 import com.spikes2212.control.FeedForwardSettings;
 import com.spikes2212.control.PIDSettings;
-import com.spikes2212.util.UnifiedControlMode;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import com.spikes2212.util.UnifiedControlMode;
 
 import java.util.function.Supplier;
 
@@ -111,8 +111,7 @@ public class MoveSmartMotorControllerGenericSubsystem extends Command {
      */
     @Override
     public boolean isFinished() {
-        if (!subsystem.onTarget(controlMode, pidSettings.getTolerance(), setpoint.get()) ||
-                !subsystem.canMove(subsystem.getSpeed())) {
+        if (!subsystem.onTarget(controlMode, pidSettings.getTolerance(), setpoint.get())) {
             lastTimeNotOnTarget = Timer.getFPGATimestamp();
         }
         return Timer.getFPGATimestamp() - lastTimeNotOnTarget >= pidSettings.getWaitTime();

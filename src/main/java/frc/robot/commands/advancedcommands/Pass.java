@@ -1,34 +1,33 @@
 package frc.robot.commands.advancedcommands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.difficultcommands.RotateHood;
-import frc.robot.commands.simplecommands.SimpleShoot;
-import frc.robot.commands.simplecommands.SimpleSpin;
-import frc.robot.commands.simplecommands.SimpleTransport;
-import frc.robot.subsystems.Hood;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.SpinningMagazine;
-import frc.robot.subsystems.Transport;
-
-import java.util.function.Supplier;
+import frc.robot.commands.shooter.ShootWithPID;
+import frc.robot.commands.spindexer.SpinMagazine;
+import frc.robot.commands.spindexer.Transport;
+import frc.robot.subsystems.shooter.Shooter;
 
 public class Pass extends SequentialCommandGroup {
 
-    public Pass(Hood hood, Shooter shooter, Supplier<Double> shootingSpeed,
-                SpinningMagazine spinningMagazine,
-                Transport transport
-                ) {
+    private static final double SHOOT_SPEED = 3.7;
+
+    public Pass() {
         addCommands(
-                new ParallelDeadlineGroup(
-                        new RotateHood(hood, Hood.HoodPose.PASS_ANGLE),
-                        new SimpleShoot(shooter, shootingSpeed)
-                ),
+                new ShootWithPID(SHOOT_SPEED, 0.75).withTimeout(4),
                 new ParallelCommandGroup(
-                        new SimpleSpin(spinningMagazine),
-                        new SimpleTransport(transport),
-                        new SimpleShoot(shooter, shootingSpeed)
+                        new Transport(),
+                        new SpinMagazine(0.1),
+                        new ShootWithPID(SHOOT_SPEED, 20) {
+                            @Override
+                            public void end(boolean interrupted) {
+                                Shooter.getInstance().stop();
+                            }
+
+                            @Override
+                            public boolean isFinished() {
+                                return false;
+                            }
+                        }
                 )
         );
     }
