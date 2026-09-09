@@ -5,7 +5,6 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.spikes2212.command.genericsubsystem.MotoredGenericSubsystem;
 import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
-import edu.wpi.first.wpilibj.Timer;
 import frc.robot.RobotMap;
 
 public class CollectionMovement extends MotoredGenericSubsystem {
@@ -14,11 +13,11 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 
     private static final double SUPPLY_CURRENT_LIMIT = 40;
     private static final double STATOR_CURRENT_LIMIT = 30;
+    private final TalonFXWrapper talonFX;
 
 //    private static final double MOTION_EPSILON = -1.0;     // Minimum degrees change to be considered "moving"
 //    private static final double STALL_TIME_LIMIT = -1.0;   // Seconds to wait before triggering stall protection
 
-    private final TalonFXWrapper talonFX;
 
 //    private double lastPositionDegrees = 0;
 //    private double lastMoveTime = 0;
@@ -52,12 +51,7 @@ public class CollectionMovement extends MotoredGenericSubsystem {
         talonFX.resetPosition();
     }
 
-
-    public double getAbsDegrees() {
-        return talonFX.getPosition();
-    }
-
-//    private void checkForStall() {
+    //    private void checkForStall() {
 //        double currentPos = getAbsDegrees();
 //        double currentTime = Timer.getFPGATimestamp();
 //
@@ -75,10 +69,6 @@ public class CollectionMovement extends MotoredGenericSubsystem {
 //            }
 //        }
 //    }
-    @Override
-    public boolean canMove(double speed) {
-        return true;
-    }
 
     @Override
     public void configureDashboard() {

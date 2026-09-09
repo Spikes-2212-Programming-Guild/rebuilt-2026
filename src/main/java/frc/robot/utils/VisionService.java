@@ -1,6 +1,8 @@
 package frc.robot.utils;
 
 import com.spikes2212.util.Limelight;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 public class VisionService {
 
@@ -9,6 +11,8 @@ public class VisionService {
     private final Limelight limelight;
 
     private static VisionService instance;
+
+    private double lastZ = 0;
 
     public static VisionService getInstance() {
         if (instance == null) {
@@ -26,15 +30,35 @@ public class VisionService {
     }
 
     public double getZ() {
-        long id = limelight.getID();
-//        boolean correctTag = (id == 26 || id == 24 || id == 27 || id == 9 || id == 10 || id == 8 || id == 11);
         if (hasTarget()) {
             double[] pose = limelight.getEntry("targetpose_cameraspace").getDoubleArray(new double[0]);
             if (pose.length > 2) {
-                return pose[2];
+                lastZ = pose[2];
             }
         }
-        return 0.0; //@TODO find a better default speed
+        return lastZ;
+    }
+
+    public Pose2d getRobotPose() {
+        double[] pose = limelight.getEntry("botpose_orb_wpiblue").getDoubleArray(new double[11]);
+
+        if (pose.length < 6) {
+            return null;
+        }
+
+        double x = pose[0];
+        double y = pose[1];
+        double yaw = pose[5];
+
+        return new Pose2d(x, y, Rotation2d.fromDegrees(yaw));
+    }
+
+    public double getLatencyMs() {
+        double[] pose = limelight
+                .getEntry("botpose_orb_wpiblue")
+                .getDoubleArray(new double[0]);
+
+        return pose.length > 6 ? pose[6] : 0.0;
     }
 
     public boolean hasTarget() {

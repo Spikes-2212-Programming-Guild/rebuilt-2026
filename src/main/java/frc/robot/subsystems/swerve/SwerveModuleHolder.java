@@ -106,6 +106,6 @@ public class SwerveModuleHolder {
     }
 
     public static void updateNamespace() {
-        namespace.update();
+//        namespace.update();
     }
 }

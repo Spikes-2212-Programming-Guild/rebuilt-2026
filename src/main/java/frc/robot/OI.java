@@ -10,13 +10,8 @@ import frc.robot.commands.intake.MoveCollection;
 import frc.robot.commands.intake.SpinCollection;
 import frc.robot.commands.swerve.ModuleRotateWithPID;
 import frc.robot.commands.swerve.RotateAccordingToGyro;
-import frc.robot.subsystems.intake.Collection;
-import frc.robot.subsystems.intake.CollectionMovement;
 import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.spindexer.Kicker;
-import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.subsystems.swerve.Drivetrain;
-import frc.robot.utils.VisionService;
 
 public class OI /*GEVALD*/ {
 
@@ -24,13 +19,7 @@ public class OI /*GEVALD*/ {
     private final Joystick driverLeft = new Joystick(1);
     private final PlaystationControllerWrapper navigator = new PlaystationControllerWrapper(2);
 
-    private final Collection collection = Collection.getInstance();
-    private final Drivetrain drivetrain = Drivetrain.getInstance();
-    private final CollectionMovement collectionMovement = CollectionMovement.getInstance();
-    private final Shooter shooter = Shooter.getInstance();
-    private final SpinningMagazine spinningMagazine = SpinningMagazine.getInstance();
-    private final Kicker kicker = Kicker.getInstance();
-    private final VisionService visionService = VisionService.getInstance();
+    private double offset = 0;
 
     public OI() {
         configureDriver();
@@ -38,32 +27,51 @@ public class OI /*GEVALD*/ {
     }
 
     private void configureDriver() {
+        Drivetrain drivetrain = Drivetrain.getInstance();
         new JoystickButton(driverRight, 1).onTrue(new InstantCommand(drivetrain::resetFieldRelativity));
-        new JoystickButton(driverRight, 3).whileTrue(new RotateAccordingToGyro(drivetrain, () -> 270.0,
-                true));
-        new JoystickButton(driverRight, 4).whileTrue(new RotateAccordingToGyro(drivetrain, () -> 90.0,
-                true));
+        new JoystickButton(driverRight, 2).onTrue(
+                new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
 
-        new JoystickButton(driverLeft, 3).whileTrue(new TuneToAprilTag(drivetrain, visionService,
-                shooter, kicker, spinningMagazine, collection, 1).
-                andThen(new ShootToHub(shooter, kicker, spinningMagazine, visionService)));
-        new JoystickButton(driverLeft, 4).whileTrue(new TuneToAprilTag(drivetrain, visionService,
-                shooter, kicker, spinningMagazine, collection, -1).
-                andThen(new ShootToHub(shooter, kicker, spinningMagazine, visionService)));
+        new JoystickButton(driverRight, 3).whileTrue(
+                new RotateAccordingToGyro(270.0, true));
+        new JoystickButton(driverRight, 4).whileTrue(
+                new RotateAccordingToGyro(90.0, true));
+
+        new JoystickButton(driverLeft, 4).whileTrue(new RotateToTag(2));
+        new JoystickButton(driverLeft, 3).whileTrue(new RotateToTag(-2));
         new JoystickButton(driverLeft, 2).whileTrue(new ModuleRotateWithPID(drivetrain,
                 45.0, 135.0, 135.0, 45.0));
     }
 
     private void configureNavigator() {
-        navigator.getL1Button().whileTrue(new Shoot());
-        navigator.getL2Button().whileTrue(new ShootToHub(shooter, kicker, spinningMagazine, visionService));
-        navigator.getR2Button().whileTrue(new SpinCollection(0.55));
-        navigator.getTriangleButton().onTrue(new UpWithJumpies(collectionMovement));
+        navigator.getR2Button().whileTrue(new SpinCollection());
+        navigator.getTriangleButton().onTrue(new UpWithJumpies());
         navigator.getUpButton().whileTrue(new MoveCollection(-0.4));
         navigator.getDownButton().whileTrue(new MoveCollection(0.4));
         navigator.getCrossButton().onTrue(new MoveDown());
-        navigator.getSquareButton().whileTrue(new SpinCollection(-0.75));
-        navigator.getLeftButton().onTrue(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
+        navigator.getSquareButton().onTrue(new MoveUp());
+
+        navigator.getL1Button().whileTrue(new ShootToHub(this::getOffset));
+        navigator.getL2Button().whileTrue(new Pass());
+        navigator.getCircleButton().onTrue(new ShootFromTrench());
+
+        navigator.getOptionsButton().onTrue(new InstantCommand(() ->
+                offset += 0.05
+        ));
+        navigator.getShareButton().onTrue(new InstantCommand(() ->
+                offset -= 0.05
+        ));
+
+        navigator.getRightButton().onTrue(new ShootTest());
+
+        navigator.getLeftButton().onTrue(new InstantCommand(() -> {
+            Shooter.getInstance().stop();
+            CommandScheduler.getInstance().cancelAll();
+        }));
+    }
+
+    private double getOffset() {
+        return offset;
     }
 
     public double getLeftX() {
@@ -76,9 +84,5 @@ public class OI /*GEVALD*/ {
 
     public double getRightX() {
         return driverRight.getX();
-    }
-
-    public double getRightY() {
-        return driverRight.getY();
     }
 }
