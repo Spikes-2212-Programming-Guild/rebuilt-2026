@@ -34,11 +34,11 @@ public class AutonomousContainer {
     private static final RootNamespace namespace = new RootNamespace("autonomouss");
 
     private static final PathConstraints pathConstraints = new PathConstraints(5.1,
-            2, 8, 2);
+            -1, -1, -1);
 
-    private static final double ROBOT_POSE_LATENCY = 0;
+    private static final double ROBOT_POSE_LATENCY = -1;
     private static final double TIME_STEP = 0.02;
-    private static final double PID_TO_POSE_TIMEOUT = 0.1;
+    private static final double PID_TO_POSE_TIMEOUT = -1;
     private static final double FF_SCALER = 1;
 
     private static final PIDSettings X_CONTROLLER_SETTINGS =
@@ -56,16 +56,16 @@ public class AutonomousContainer {
     private final ProfiledPIDController rotationalPidController;
 
     private final Drivetrain drivetrain;
-    private static final PathContainer pathContainer = PathContainer.getInstance();
+//    private static final PathContainer pathContainer = PathContainer.getInstance();
 
     private Pose2d pathplannerTargetPose;
 
     public AutonomousContainer(Drivetrain drivetrain) {
         this.drivetrain = drivetrain;
 
-        xPidController = buildPIDControllerFromSettings();
-        yPidController = buildPIDControllerFromSettings();
-        rotationalPidController = buildProfiledPIDControllerFromSettings();
+        xPidController = buildPIDControllerFromSettings(X_CONTROLLER_SETTINGS);
+        yPidController = buildPIDControllerFromSettings(Y_CONTROLLER_SETTINGS);
+        rotationalPidController = buildProfiledPIDControllerFromSettings(ROTATIONAL_CONTROLLER_SETTINGS);
 
         PathfindingCommand.warmupCommand().execute();
         PathContainer.createAutos();
@@ -164,16 +164,18 @@ public class AutonomousContainer {
         namespace.putBoolean("mirror", AutonomousContainer::shouldMirror);
     }
 
-    public Command getSelectedCommand() {
-        return autoChooser.getSelected();
+//    public Command getSelectedCommand() {
+//        return autoChooser.getSelected();
+//    }
+
+    private static PIDController buildPIDControllerFromSettings(PIDSettings settings) {
+        return new PIDController(settings.getkP(), settings.getkI(), settings.getkD());
     }
 
-    private static PIDController buildPIDControllerFromSettings() {
-        return new PIDController(0.5, 0, 0.25);
-    }
-
-    private static ProfiledPIDController buildProfiledPIDControllerFromSettings() {
-        return new ProfiledPIDController(0.2, 0, 0.1, new TrapezoidProfile.Constraints(2, 4));
+    private static ProfiledPIDController buildProfiledPIDControllerFromSettings(PIDSettings settings) {
+        return new ProfiledPIDController(settings.getkP(), settings.getkI(), settings.getkD(),
+                new TrapezoidProfile.Constraints(pathConstraints.maxAngularVelocityRadPerSec(),
+                        pathConstraints.maxAngularAccelerationRadPerSecSq()));
     }
 
     public static boolean shouldMirror() {

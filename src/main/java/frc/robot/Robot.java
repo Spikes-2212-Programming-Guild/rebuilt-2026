@@ -5,9 +5,11 @@
 package frc.robot;
 
 import com.spikes2212.dashboard.RootNamespace;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.autonomous.PathContainer;
 import frc.robot.commands.autonomous.HubAuto;
 import frc.robot.commands.swerve.Drive;
 import frc.robot.subsystems.intake.Collection;
@@ -61,24 +63,21 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
-//        drivetrain.resetPose(new Pose2d());
+        drivetrain.resetPose(new Pose2d());
 
-        Command auto = new HubAuto();
-//        Command auto = new ShootFromTrench();
+        Command auto = PathContainer.getIntakeAndShoot();
         CommandScheduler.getInstance().schedule(auto);
     }
 
     @Override
     public void autonomousPeriodic() {
-//        drivetrain.updateOdometry();
+        drivetrain.updateOdometry();
     }
 
     @Override
     public void teleopInit() {
         drivetrain.resetFieldRelativity();
         drivetrain.resetRelativeEncoders();
-
-//        drivetrain.resetPose(new Pose2d());
 
         OI oi = new OI();
         double ySpeed = 5;

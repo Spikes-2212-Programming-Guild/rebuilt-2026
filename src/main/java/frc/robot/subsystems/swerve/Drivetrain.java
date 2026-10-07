@@ -117,6 +117,10 @@ public class Drivetrain extends SwerveDrivetrain {
         states.set(desiredStatesToSet);
     }
 
+    public void setGyro(double angle) {
+        gyro.setYaw(angle);
+    }
+
     public Pose2d getEstimatedPose() {
         return odometry.getEstimatedPosition();
     }
@@ -133,10 +137,6 @@ public class Drivetrain extends SwerveDrivetrain {
         boolean atPose = MathUtil.isNear(targetAxisPose, currentAxisPose, TRANSLATION_POSE_TOLERANCE);
         boolean robotStill = Math.abs(currentVelocity) <= TRANSLATION_VELOCITY_TOLERANCE;
         return atPose && robotStill;
-    }
-
-    public void setGyro(double angle) {
-        gyro.setYaw(angle);
     }
 
     private boolean atRotation(Rotation2d rotation2d) {
