@@ -10,36 +10,20 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.PathContainer;
-import frc.robot.commands.autonomous.HubAuto;
 import frc.robot.commands.swerve.Drive;
-import frc.robot.subsystems.intake.Collection;
-import frc.robot.subsystems.intake.CollectionMovement;
-import frc.robot.subsystems.shooter.Shooter;
-import frc.robot.subsystems.spindexer.Kicker;
-import frc.robot.subsystems.spindexer.SpinningMagazine;
 import frc.robot.subsystems.swerve.Drivetrain;
 import frc.robot.utils.VisionService;
-
-import java.util.function.Supplier;
 
 public class Robot extends TimedRobot {
 
     public static final RootNamespace namespace = new RootNamespace("robot");
-    public static final Supplier<Double> speed = namespace.addConstantDouble("speed", 0);
-
-    private Drivetrain drivetrain;
-    private Collection collection;
-    private CollectionMovement collectionMovement;
-    private SpinningMagazine spinningMagazine;
-    private Kicker kicker;
-    private Shooter shooter;
+    public static final Drivetrain drivetrain = Drivetrain.getInstance();
 
     private VisionService visionService;
 
     @Override
     public void robotInit() {
         CommandScheduler.getInstance().cancelAll();
-        initialize();
     }
 
     @Override
@@ -50,8 +34,6 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         CommandScheduler.getInstance().cancelAll();
-        shooter.stop();
-        collectionMovement.setCoast();
     }
 
     @Override
@@ -119,21 +101,4 @@ public class Robot extends TimedRobot {
     public void simulationPeriodic() {
 
     }
-
-    public void initialize() {
-        drivetrain = Drivetrain.getInstance();
-        collection = Collection.getInstance();
-        collectionMovement = CollectionMovement.getInstance();
-        spinningMagazine = SpinningMagazine.getInstance();
-        kicker = Kicker.getInstance();
-        shooter = Shooter.getInstance();
-        visionService = VisionService.getInstance();
-    }
-
-//    public void registerNamedCommands(){
-//        NamedCommands.registerCommand("collect", new Collect());
-//        NamedCommands.registerCommand("aligned shoot", new ShootToTag());
-//        NamedCommands.registerCommand("collect and pass", new CollectAndPass());
-//        NamedCommands.registerCommand("");
-//    }
 }

@@ -53,7 +53,7 @@ public class Drivetrain extends SwerveDrivetrain {
             instance = new Drivetrain(NAMESPACE_NAME, SwerveModuleHolder.getFrontLeft(),
                     SwerveModuleHolder.getFrontRight(), SwerveModuleHolder.getBackLeft(),
                     SwerveModuleHolder.getBackRight(), TRACK_WIDTH, TRACK_LENGTH, MAX_POSSIBLE_VELOCITY,
-                    new Pigeon2(RobotMap.CAN.SWERVE_GYRO_PIGEON_2_ID, CANIVORE));
+                    new Pigeon2(RobotMap.CAN.SWERVE_GYRO_PIGEON_2_ID));
         }
         return instance;
     }
